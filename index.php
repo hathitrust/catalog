@@ -55,9 +55,9 @@ $configArray = parse_ini_file('conf/config.ini', true);
 
 ## Now munge it based on the hostname
 
-$hn = gethostname();
-if (preg_match('/koolaid/', $hn)) {
-  foreach ($configArray['LocalDev'] as $key => $val) {
+$hn = preg_replace('/^(.+?)[-.].*$/', "$1", $_SERVER['SERVER_NAME']);
+if (isset($configArray[$hn])) {
+  foreach ($configArray[$hn] as $key => $val) {
     $configArray['Site'][$key] = $val;
   }
 }

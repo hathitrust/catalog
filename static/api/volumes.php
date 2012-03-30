@@ -17,7 +17,7 @@ function sample_autoloader($class) {
 }
 spl_autoload_register('sample_autoloader');
 
-$solr = new Apache_Solr_Service('solr-vufind', '8026', '/solr/biblio');
+$solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/catalog');
 
 // Map api fields to solr fields
 $fieldmap = array(

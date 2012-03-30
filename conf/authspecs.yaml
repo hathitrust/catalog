@@ -7,8 +7,7 @@ DSessionCookie:
   domain: lib.umich.edu
 
 DSessionDB:
-#  host: mysql-web
-  host:  mysql-htdev
+  host:  mysql-sdr
   db: vufind
   username: vufind
   password: villanova

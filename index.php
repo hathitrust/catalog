@@ -33,6 +33,8 @@ require_once 'sys/VFUser.php';
 require_once 'services/Tags/TaggedItem.php';
 require_once 'sys/ActivityLog.php';
 
+require_once 'sys/mobile_device_detect.php';
+
 // Set up for autoload
 function sample_autoloader($class) {
   require str_replace('_', '/', $class) . '.php';
@@ -50,22 +52,46 @@ PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, 'handlePEARError');
 
 $configArray = parse_ini_file('conf/config.ini', true);
 
+
+## Now munge it based on the hostname
+
+$hn = gethostname();
+if (preg_match('/koolaid/', $hn)) {
+  foreach ($configArray['LocalDev'] as $key => $val) {
+    $configArray['Site'][$key] = $val;
+  }
+}
+
+
 #######################################
 # Mobile detection
 #######################################
-
-
-if (preg_match('/\.lib\.umich\.edu$/', $_SERVER['SERVER_NAME'])) {
-
-  if( isset($configArray['Site']['mobile_url']) ) { 
-    if(strlen($_SERVER['REQUEST_URI'])<=1){ // check at top level only... (ie, mirlyn.lib.umich.edu/)
-        if(mobile_device_detect()){
-        header("Location: " . $configArray['Site']['mobile_url'] . $_SERVER['REQUEST_URI']);
-        exit();
-      }
-    }
-  }
+# IF we're hitting the top page, 
+#  AND it's a hathitrust.org
+#  AND there's a mobile site configured
+#  AND we're not already *at* the mobile site
+#  AND it's a mobile device
+# THEN redirect to the mobile site
+$sname = $_SERVER['SERVER_NAME'];
+if ( (strlen($_SERVER['REQUEST_URI']) <=1) &&
+     (preg_match('/\.hathitrust\.org$/', $sname)) &&
+     (isset($configArray['Site']['mobile_machine']))  &&
+     ($sname != $configArray['Site']['mobile_machine']) &&
+     mobile_device_detect()
+   ) {
+     header("Location: http://" . $configArray['Site']['mobile_machine'] . "/");
+     exit();
 }
+
+##############################################
+# Use mobile theme and stuff?
+##############################################
+
+if ($sname == $configArray['Site']['mobile_machine']) {
+  $configArray['Site']['url'] = 'http://' . $configArray['Site']['mobile_machine'];
+  $configArray['Site']['theme'] = $configArray['Site']['mobile_theme'];
+}
+
 
 $session = VFSession::singleton();
 $alog = ActivityLog::singleton();

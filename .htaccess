@@ -1,0 +1,65 @@
+# Friendly URLs
+#
+# You may need to adjust the RewriteBase to match your VuFind path.
+# You can remove the line if your vufind instance will be located at the web
+# server root.
+#
+
+# Set timezone
+
+<IfModule mod_rewrite.c>
+  RewriteEngine	On
+
+  RewriteRule  ^static/(.+)$              static/$1 [L,QSA]
+  RewriteRule  ^google9b54b263f38b0e46.html$ static/google9b54b263f38b0e46.html [L]
+
+  # Efficient marcxml output
+  RewriteRule   ^Record/([0-9]+).xml$        static/api/marcxml_from_bibnum.php?id=$1 [L]
+
+  RewriteRule   ^images/(.*)              images/$1 [L]
+  RewriteRule   ^favicon.ico$             static/favicon.ico [L]
+  RewriteRule   ^unapi$                   static/unapi.php [L,QSA]
+  
+  # Record view with merged items based on query for oclc
+  RewriteRule   ^api/volumes/oclc/([0-9]+)[.]html$ index.php?fromoclc=1&module=Record&action=Home&mergesearch=id:1;oclc:$1 [QSA,L]
+  
+  # API
+  RewriteRule   ^api/volumes/(.*)/(json|html|inlinehtml)/(.*)$  static/api/volumes.php?q=$3&type=$2&brevity=$1 [QSA,L]
+  RewriteRule   ^api/volumes/(full|brief)/([^/]+)/(.+)[.](json|html|oclcscrape) static/api/volumes.php?q=$2:$3&type=$4&single=1&brevity=$1 [QSA,L]
+  
+  RewriteRule   ^api/volumes/(json|html|inlinehtml)/(.*)$  static/api/volumes.php?q=$2&type=$1 [QSA,L]
+  RewriteRule   ^api/volumes/(recordid|sysid|oclc|htid|issn|isbn|lccn|umid)/(.*)[.](.*)$ static/api/volumes.php?q=$1:$2&type=$3&single=1 [QSA,L]
+     
+  
+  
+  RewriteRule   ^robots.txt$              static/robots.txt                     [L]
+  RewriteRule   ^F                        static/rewrite.php                    [L]
+  RewriteRule   ^cgi-bin/(.+)$            static/rewrite.php                    [L]  
+  
+  # Hold
+  RewriteRule   ^(Record)/([^/]+)/(Hold)/(.+)$   index.php?module=$1&id=$2&action=$3&barcode=$4   [QSA,L]
+  
+  # Export, using extension as type
+  RewriteRule   ^(Record)/([0-9]+)\.([^/]+)$ index.php?module=Search&action=SearchExport&handpicked=$2&method=$3 [QSA,L]
+  
+  
+  
+  RewriteRule   ^(Record)/([0-9]+)/(.+)$   index.php?module=$1&id=$2&action=$3   [QSA,L]
+  RewriteRule   ^(Record)/(AJAX)$         index.php?module=$1&action=$2         [QSA,L]
+  RewriteRule   ^(Record)/([0-9]+)$           index.php?module=$1&id=$2&action=Home [QSA,L]
+  RewriteRule   ^(Search)/(Advanced)/(.+)$ index.php?module=$1&action=$2&inst=$3 [QSA,L]
+  
+  
+  RewriteRule   ^([^/]+)/(.+)$            index.php?module=$1&action=$2         [QSA,L]
+</IfModule>
+
+# Disable Magic Quotes
+php_value magic_quotes_gpc false
+
+# Dynamic CSS
+AddType application/x-httpd-php .css
+
+## Uncomment these lines if you wish to show all errors on the screen.
+php_value display_errors 1
+php_value error_reporting 2047
+

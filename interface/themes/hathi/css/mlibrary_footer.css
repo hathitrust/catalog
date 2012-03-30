@@ -1,0 +1,101 @@
+<?php header("Content-type: text/css"); ?>
+/* $Id */
+
+/**
+ * mlibrary_footer, for Drupal 6.x
+ * Scott Ash, umich [dot] edu
+ *
+ */
+ 
+/**
+ * Global Settings for MLibrary Footer Blocks
+ */
+
+.block-mlibrary_footer {
+  float: left;
+  text-align: left;
+  height: 210px;
+  width: 28.3%;
+}
+.block-mlibrary_footer h2 {
+  display: none;
+}
+.block-mlibrary_footer .content {
+  background: inherit;
+  background-image: none;
+  padding: 0 4px;
+  border: none;
+}
+.block-mlibrary_footer a.parent {
+  font-size: 100%;
+  font-weight: bold;
+  display: block;
+  line-height: 120%;
+}
+.block-mlibrary_footer a.child {
+  font-size: 80%;
+  display: block;
+  line-height: 100%;
+  margin-bottom: .5em;
+}
+
+/**
+ * MLibrary Extras Block
+ */
+#block-mlibrary_footer-0 {
+  background: #9fc4d6;
+  color: #345477;
+  overflow: hidden;
+  width: 43.4%;
+}
+#block-mlibrary_footer-0 h2 {
+  display: block;
+  width: 252px;
+  text-align: left;
+  font-size: 90%;
+  line-height: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+  color: #666;
+  margin: 25px 0;
+  padding: 0 4px;
+}
+
+/**
+ * MTagger Block
+ */
+#block-mlibrary_footer-1 {
+  background: #ccc;
+  color: #333;
+}
+
+/**
+ * Creative Commons Block
+ */
+#block-mlibrary_footer-2 {
+  background: #a7b5bf;
+  color: #666;
+}
+#block-mlibrary_footer-2 img {
+  float: left;
+  padding: 50px 10px 0 10px;
+}
+#block-mlibrary_footer-2 p {
+  font-family: arial;
+}
+#block-mlibrary_footer-2 .cc {
+  padding: 50px 4px 0 4px;
+  font-size: 75%;
+  line-height: 100%;
+}
+#block-mlibrary_footer-2 .regents {
+  padding: 20px 4px 0 8px;
+  font-size: 100%;
+  line-height: 100%;
+}
+#block-mlibrary_footer-2 .qc {
+  padding: 0 4px 0 8px;
+  font-size: 80%;
+  line-height: 100%;
+}

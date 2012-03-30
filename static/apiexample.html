@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>untitled</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Bill Dueber">
+	<!-- Date: 2010-02-19 -->
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+	   jQuery.fn.hathiItemsByOCLC = function(oclcnum) {
+	    url = 'http://catalog.hathitrust.org/api/volumes/brief/oclc/' + oclcnum + '.json?callback=?';
+      var target = this	    
+	    jQuery.getJSON(
+	      url,
+        function(data) {
+          jQuery.each(data['items'], function(i,item) {
+            var newlink = jQuery('<a></a>');
+            newlink.attr('href', item['itemURL']);
+            newlink.html(item['usRightsString']);
+            if (item['enumcron'] ) {
+              newlink.html(item['enumcron'] + ": " + newlink.html() )
+            }
+            target.append(jQuery('<p></p>').append(newlink))
+          })
+          return target;
+        }
+      );
+    };
+    
+    
+	  
+	  jQuery(document).ready(function() {
+      jQuery('#book').hathiItemsByOCLC('01728911');
+      jQuery('#serial').hathiItemsByOCLC('01567622');
+	  });
+	</script>
+	
+</head>
+<body>
+  
+  <h1>Hathi items for "Forever"</h1>
+  <div id="book"></div>
+  
+  <h1>Hathi items for "Educational Technology"</h1>
+  <div id="serial"></div>
+  
+  
+
+</body>
+</html>

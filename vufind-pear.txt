@@ -1,0 +1,12 @@
+pear install channel://pear.php.net/Structures_LinkedList-0.1.4
+pear install channel://pear.php.net/File_MARC-0.2.3
+pear channel-discover pear.horde.org
+pear install horde/yaml
+pear install channel://pear.php.net/XML_Serializer-0.19.1
+pear install DB_DataObject
+pear install HTTP_Request
+pear install Pager
+pear install Mail
+pear install channel://pear.php.net/Structures_DataGrid-0.9.0
+pear install MDB2
+

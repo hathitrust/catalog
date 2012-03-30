@@ -1,0 +1,19 @@
+---
+turnOnLogging: false
+DSessionCookie:
+  cookiename: m2beta
+  expires_in_seconds: 3600
+  path: /
+  domain: lib.umich.edu
+
+DSessionDB:
+#  host: mysql-web
+  host:  mysql-htdev
+  db: vufind
+  username: vufind
+  password: villanova
+  table: vfsession  
+
+RedirectAuth:
+  loginURLBase: https://www.lib.umich.edu/vf/vflogin_dbsess.php?returnto=
+  logoutURLBase:    http://www.lib.umich.edu/vf/vflogout_dbsess.php?returnto=

@@ -1,0 +1,75 @@
+<?php header("Content-type: text/css"); ?>
+/* Print CSS Definitions for VuFind.
+   Chris Barr, August 2008
+*/
+
+<?php
+$configArray = parse_ini_file('../../../../conf/config.ini', true);
+?>
+
+body, .holdings {
+    font-size: 80%;
+}
+
+h1, h2, h3 {font-weight: normal;
+font-family: Helvetica,Arial,sans-serif;
+}
+h1 {font-size: 110%;}
+
+#wrapper,.searchbox, #recordleftcol, #listleftcol, .pagination, .resulthead, .pagination, .searchtools, #ft, #footer-container,
+#recordheader, #listleftcol, .correction, #tabnav, .fav, #header_links, .temptoggle, #tempBoxes, #recordTools
+{
+    display: none;
+}
+
+#content, .contentbox, #yui-main.content .contentbox, #content.recordcontent
+{
+/* margin: 1em;
+*/}
+
+img {
+  border: none;
+}
+
+#title_collection, a.title {
+    font-size: 110%;
+    font-weight: bold;
+}
+
+a.title {
+    font-size: 110%;
+    font-weight: bold;
+}
+
+div.result  {
+    border-top: 2pt solid black;
+    margin-top: 2em;
+    padding-top: 1em;
+}
+
+div.result img {
+    padding-right: 1em;
+}
+
+div.result table td {
+    border-bottom: 1pt solid gray;
+    border-collapse: collapse;
+}
+
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+table.citation input, #all_holdings .toggle {
+    display: none;
+}
+
+#all_holdings h4 {
+    margin-left: 3em;
+    padding-top: 0.5em;
+    margin-top: 0em;
+    padding-bottom: 0em;
+    margin-bottom: 0em;
+}    

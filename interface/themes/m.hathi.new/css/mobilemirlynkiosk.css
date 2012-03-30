@@ -1,0 +1,13 @@
+<?php header("Content-type: text/css"); ?>
+
+<?php
+$configArray = parse_ini_file('../../../../conf/config.ini', true);
+?>
+
+.nokiosk{
+  display:none;
+}
+
+.kiosk{
+  display:inherit;
+}

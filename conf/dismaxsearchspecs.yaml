@@ -1,0 +1,16 @@
+# dismax stuff; for now, just all
+
+
+Junk
+  pf:
+    - [serialTitle_ab, 25000]
+    - [serialTitle_a, 15000]
+    - [serialTitleProper, 1200]
+    - [serialTitle_restProper, 400]
+  qf:
+    - [serialTitleProper, 120]
+    - [serialTitle_restProper, 40]
+    - [serialTitle, 30]
+    - [serialTitle_rest, 10]
+  mm: "100%"
+  tie: 0.1

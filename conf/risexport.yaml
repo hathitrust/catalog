@@ -1,0 +1,123 @@
+# Format is
+#
+# - RISTag
+#   - [taginds, "subfields", joiner]
+#   - [tag, offset, length] # for control fields
+#
+# e.g.
+# - AV
+#   - [77312, atw, <joiner>]
+# 
+# All three tag codes and both indicator codes are required. <joiner>, used to paste together
+# the fields, defaults to the null string and is optional
+#
+# NOTES ON THE OUTPUT
+#  * identical tags are deleted. So, for example, if you get a PY (pubyear)
+#    from two different places, if they agree you'll only get one PY tag
+#  * Any leading and trailing spaces are deleted
+#  * Any trailing characters in [;:,/] are deleted
+#  * A trailing period is deleted if preceded by a number (to allow better matching)
+#
+# RULES FOR CONTROL TAGS IN THE FIELDMAPS
+#  * A control tag is identified by having only three characters in the tag
+#  * Offset is 1-based, not 0-based
+#  * No checks are done on offset and length
+#
+#
+# RULES FOR DATA TAGS IN THE FIELDMAPS
+#
+# To make things a little easier, you can use the following subsitutions
+#  * A '.' in a tag or indicator matches anything (so, 5..2x will match any 5XX tag with 2 in indicator 1)
+#  * In an indicator, '.' means "any charcter"; '~' means "space"
+#  * A subfield list is either a set of letters or '~', meaning "all subfields"
+#  * For subfields that repeat, all will be included unless you capitalize the letter.
+#    So a subfield string of 'Ab' will give the first A plus all the b's
+#  * Obviously, then, a subfield string of just 'B' will give nothing but the first subfield b
+#  * The joiner defaults to the empty string. 
+#  * The joiner string 'SPACE' (captialization required) means join on a single space
+#  * A spec that has a single word in it is filled in interally by code. As of now, these are:
+#    * TYPE (the type of reference)
+#    * ID (the bibnum)
+#    * RECORDURL (a full URL linking to this record in the OPAC)
+
+tagprefix: 
+tagsuffix: "  - "
+
+fieldmap:
+  - TY:
+      - [TYPE]
+  - TP:
+      - [ALEPHTYPE]
+  - ID:
+      - [ID]
+  - AU:
+      - [100.., a]
+      - [110.., a]
+      - [700.., a]
+      - [710.., a]
+      - [711.., a]
+  - AV:
+      - [773.., atw]
+  - TI:
+      - [TITLE]
+  - T2:
+      - [246.., ~]
+  - T3:
+      - [240.., ~]
+      - [440.., ~]
+      - [490.., ~]
+  - PY:
+      - [008, 8, 4]
+      - [260.., c]
+  - SP:
+      - [300.., a]
+  - M1:
+      - [300.., a]
+  - CY:
+      - [260.., A, SPACE]
+  - PB:
+      - [260.., b, SPACE]
+  - SN:
+      - [020.., a]
+      - [022.., a]
+      - [974~~, u]
+  - N1:
+      - [5...., ~]
+      - [245.., h]
+  - AB:
+      - [520.., ~]
+  - KW:
+      - [65..., ~, ' / ']
+      - [97500, c]
+  - UR:
+      - [856.., u]
+      - [RECORDURL]
+      - [HTLINK]
+  - CN:
+      - [8520., h]
+
+# We also need to map our formats to RIS types
+
+typemap:
+  - [Journal      , JOUR]
+  - [Newspaper    , NEWS]
+  - [Serial       , SER]
+  - [Book         , BOOK]
+  - [Musical Score, MUSIC ]
+  - [Audio (spoken word), SOUND ]
+  - [Audio CD     , SOUND]
+  - [Audio LP     , SOUND]
+  - [Audio        , SOUND]
+  - [Video (DVD)  , VIDEO]
+  - [Video (VHS)  , VIDEO]
+  - [Video(VHS)   , VIDEO]
+  - [Motion Picture, VIDEO]
+  - [Visual Material, ADVS]
+  - [Available online, ELEC]
+  - [Electronic Resource, ELEC]
+  - [Map          , MAP]
+  - [Archive      , GEN]
+  - [Manuscript   , GEN]
+  - [Mixed Material, GEN]
+  - [Microform    , GEN]
+  - [Video Games  , GEN]

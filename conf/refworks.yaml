@@ -1,0 +1,13 @@
+defaultBaseURL : http://www.refworks.com.proxy.lib.umich.edu/express/expressimport.asp?
+baseURLs:
+  aa:  http://www.refworks.com.proxy.lib.umich.edu/express/expressimport.asp?
+  flint: http://libproxy.umflint.edu:2048/login?url=http%3A%2F%2Fwww.refworks.com%2Fexpress%2Fexpressimport.asp%3F
+
+urlArgs:
+    vendor : University of Michigan Mirlyn
+    encoding : 65001
+    # filter : MARC Format
+    # database : All MARC Formats
+    filter: RefWorks Tagged Format
+    database: Tagged Format
+

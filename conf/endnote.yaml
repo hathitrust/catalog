@@ -1,0 +1,128 @@
+# Format is
+#
+# - Tag
+#   - [taginds, "subfields", joiner]
+#   - [tag, offset, length] # for control fields
+#
+# e.g.
+# - AV
+#   - [77312, atw, <joiner>]
+# 
+# All three tag codes and both indicator codes are required. <joiner>, used to paste together
+# the fields, defaults to the null string and is optional
+#
+# NOTES ON THE OUTPUT
+#  * identical tags are deleted. So, for example, if you get a PY (pubyear)
+#    from two different places, if they agree you'll only get one PY tag
+#  * Any leading and trailing spaces are deleted
+#  * Any trailing characters in [;:,/] are deleted
+#  * A trailing period is deleted if preceded by a number (to allow better matching)
+#
+# RULES FOR CONTROL TAGS IN THE FIELDMAPS
+#  * A control tag is identified by having only three characters in the tag
+#  * Offset is 1-based, not 0-based
+#  * No checks are done on offset and length
+#
+#
+# RULES FOR DATA TAGS IN THE FIELDMAPS
+#
+# To make things a little easier, you can use the following subsitutions
+#  * A '.' in a tag or indicator matches anything (so, 5..2x will match any 5XX tag with 2 in indicator 1)
+#  * In an indicator, '.' means "any charcter"; '~' means "space"
+#  * A subfield list is either a set of letters or '~', meaning "all subfields"
+#  * For subfields that repeat, all will be included unless you capitalize the letter.
+#    So a subfield string of 'Ab' will give the first A plus all the b's
+#  * Obviously, then, a subfield string of just 'B' will give nothing but the first subfield b
+#  * The joiner defaults to the empty string. 
+#  * The joiner string 'SPACE' (captialization required) means join on a single space
+#  * A spec that has a single word in it is filled in interally by code. As of now, these are:
+#    * TYPE (the type of reference)
+#    * ID (the bibnum)
+#    * RECORDURL (a full URL linking to this record in the OPAC)
+
+tagprefix: %
+tagsuffix: " "
+
+fieldmap:
+  - 0:
+      - [TYPE]
+  - M:
+      - [ID]
+  - A:
+      - [100.., a]
+      - [110.., a]
+      - [700.., a]
+      - [710.., a]
+      - [711.., a]
+  - 2:
+      - [773.., atw]
+  - T:
+      - [TITLE]
+  - B:
+      - [246.., ~]
+  - S:
+      - [240.., ~]
+      - [440.., ~]
+      - [490.., ~]
+  - D:
+      - [008, 8, 4]
+      - [260.., c]
+  - 3:
+      - [300.., a]
+  - C:
+      - [260.., A]
+  - I:
+      - [260.., b]
+  - @:
+      - [020.., a]
+      - [022.., a]
+      - [974~~, u]
+  - Z:
+      - [5...., ~]
+      - [245.., h]
+  - X:
+      - [520.., ~]
+  - K:
+      - [65..., ~, ' / ']
+      - [97500, c]
+  - U:
+      - [856.., u]
+      - [RECORDURL]
+  - L:
+      - [8520., h]
+
+# We also need to map our formats to RIS types
+
+typemap:
+  - [Conference, "Conference Proceedings"]
+  - [Audio, "Sound Recording"]
+  - [Audio (music), "Sound Recording"]
+  - [Audio (spoken word), "Sound Recording"]
+  - [Audio CD, "Sound Recording"]
+  - [Audio LP, "Sound Recording"]
+  - [Biography, "Book, Whole"]
+  - [Book, "Book, Whole"]
+  - [Computer File, Computer Program]
+  - [Dictionaries, "Book, Whole"]
+  - [Directories, "Book, Whole"]
+  - [Encyclopedias, "Book, Whole"]
+  - [Journal, "Journal, Electronic"]
+  - [Manuscript, "Book, Whole"]
+  - [Map, Map ]
+  - ["Maps-Atlas", Map ]
+  - [Motion Picture, Motion Picture]
+  - [Musical Score, Music Score]
+  - [Music, "Sound Recording"]  
+  - [Newspaper, "Newspaper Article"]
+  - [Photographs & Pictorial Works, Artwork]
+  - [Serial, "Book, Whole"]
+  - [Video (DVD), "Video/DVD"]
+  - [Video (VHS), "Video/DVD" ]
+  - [Video Games, Computer Program]
+  - [Visual Material, Artwork]
+  - [Archive, Generic]
+  - [Electronic Resource, Generic ]
+  - [Microform, Generic]
+  - [Mixed Material, Generic]
+  - [Statistics, Generic]
+  - [DEFAULT, Generic]

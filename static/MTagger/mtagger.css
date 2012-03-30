@@ -1,0 +1,33 @@
+div.tagcloud {
+  height: 15em;
+}
+span.mtagger_count {
+  display: none;
+}
+span.mtagger_small {
+  font-size: .5em;
+}
+span.mtagger_medium {
+  font-size: 1em;
+}
+span.mtagger_large {
+  font-size: 1.5em;
+}
+div.mtagger_body {
+  height: 13em;
+  background-color: #efefef;
+  overflow: hidden;
+}
+div.mtagger_body table {
+ height: 13em;
+}
+div.mtagger_body tr, div.mtagger_body td, div.mtagger_body table  {
+  padding: 0px;
+  margin: 0px;
+}
+img.mtagger_mtag {
+    margin-bottom: -20px;
+    position: relative;
+    vertical-align: text-top;
+
+}

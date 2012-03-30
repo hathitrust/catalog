@@ -1,0 +1,249 @@
+<?php header("Content-type: text/css"); ?>
+/* $Id */
+
+/**
+ * MLibrary_Blocks, for Drupal 6.x
+ * Scott Ash, umich [dot] edu
+ *
+ */
+ 
+/**
+ * Global Settings for MLibrary Blocks
+ */
+
+.block-mlibrary_blocks {
+  float: left;
+  width: 33.3%;
+  text-align: center;
+  position: relative;
+}
+.block-mlibrary_blocks h2 {
+  display: block;
+  padding: 0 4px;
+  width: 252px;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 140%;
+  line-height: 140%;
+  font-weight: normal;
+  font-family: Verdana, sans-serif;
+}
+.block-mlibrary_blocks .content {
+  background: inherit;
+  background-image: none;
+  position: relative;
+  border: none;
+}
+.block-mlibrary_blocks .content .tabs {
+  margin: auto;
+  min-width: 252px;
+  max-width: 284px;
+  height: 18px;
+  position: absolute;
+  top: -19px;
+  text-align: right;
+  font-size: 10px;
+  word-spacing: 5px;
+}
+.block-mlibrary_blocks .content form {
+  padding: 0 4px;
+  margin: 0 auto;
+  width: 252px;
+  text-align: left;
+  position: relative;
+  line-height: 100%;
+}
+.block-mlibrary_blocks .content #edit-search-wrapper {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.block-mlibrary_blocks .content #edit-search-wrapper .form-text {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: url("images/bg-search-form-text.png") repeat-x;
+  height: 18px;
+  width: 225px;
+}
+.block-mlibrary_blocks .content #edit-opt1-wrapper,
+.block-mlibrary_blocks .content #edit-opt3-wrapper,
+.block-mlibrary_blocks .content #edit-opt5-wrapper {
+  float: left;
+  width: 126px;
+  margin: .2em 0;
+  padding: 0;
+  border: 0;
+}
+.block-mlibrary_blocks .content #edit-opt2-wrapper,
+.block-mlibrary_blocks .content #edit-opt4-wrapper,
+.block-mlibrary_blocks .content #edit-opt6-wrapper {
+  float: right;
+  width: 126px;
+  margin: .2em 0;
+  padding: 0;
+  border: 0;
+}
+.block-mlibrary_blocks .content .form-submit {
+  display: inline;
+  margin: 0 0 1em 0;
+  padding: 0;
+  border: 0;
+  background: url("images/bg-search-form-submit.png") repeat-x;
+  height: 18px;
+  width: 22px;
+  position: relative;
+  left: -5px;
+  font-size: .8em;
+  font-weight: bold;
+  cursor: pointer;
+}
+.block-mlibrary_blocks .content .form-submit:hover {
+  color: #ffffff;
+  cursor: pointer;
+}
+
+/**
+ * Search Block
+ */
+#block-mlibrary_blocks-0 {
+  background: #d0c281 url("images/bg-search.png") repeat-x;
+  color: #345477;
+  left: 0;
+  z-index: 55;
+  height: 52px;
+}
+#block-mlibrary_blocks-0 .option:hover {
+  color: #333;
+}
+#block-mlibrary_blocks-0 .menu-drop,
+#block-mlibrary_blocks-1 .menu-drop {
+  background-color: inherit;
+  color: #345477;
+  height: 90px;
+  display: none;
+  position: relative;
+  z-index: 1000;
+}
+
+/**
+ * Browse Block
+ */
+#block-mlibrary_blocks-1 {
+  background: #71859f url("images/bg-browse.png") repeat-x;
+  color: #d6dce1;
+  z-index: 54;
+  height: 52px;
+}
+
+/**
+ * Get Help Block
+ */
+#block-mlibrary_blocks-2 {
+  background: #a7b5bf url("images/bg-help.png") repeat-x;
+  color: #ffffff;
+  z-index: 53;
+  height: 52px;
+}
+
+/* $Id */
+
+/**
+ * mlibrary_footer, for Drupal 6.x
+ * Scott Ash, umich [dot] edu
+ *
+ */
+ 
+/**
+ * Global Settings for MLibrary Footer Blocks
+ */
+
+.block-mlibrary_footer {
+  float: left;
+  text-align: left;
+  height: 210px;
+  width: 28.3%;
+}
+.block-mlibrary_footer h2 {
+  display: none;
+}
+.block-mlibrary_footer .content {
+  background: inherit;
+  background-image: none;
+  padding: 0 4px;
+}
+.block-mlibrary_footer a.parent {
+  font-size: 100%;
+  font-weight: bold;
+  display: block;
+  line-height: 120%;
+}
+.block-mlibrary_footer a.child {
+  font-size: 80%;
+  display: block;
+  line-height: 100%;
+  margin-bottom: .5em;
+}
+
+/**
+ * MLibrary Extras Block
+ */
+#block-mlibrary_footer-0 {
+  background: #9fc4d6;
+  color: #345477;
+  overflow: hidden;
+  width: 43.4%;
+}
+#block-mlibrary_footer-0 h2 {
+  display: block;
+  width: 252px;
+  text-align: left;
+  font-size: 90%;
+  line-height: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: Arial, sans-serif;
+  color: #666;
+  margin: 25px 0;
+  padding: 0 4px;
+}
+
+/**
+ * MTagger Block
+ */
+#block-mlibrary_footer-1 {
+  background: #ccc;
+  color: #333;
+}
+
+/**
+ * Creative Commons Block
+ */
+#block-mlibrary_footer-2 {
+  background: #a7b5bf;
+  color: #666;
+}
+#block-mlibrary_footer-2 img {
+  float: left;
+  padding: 50px 10px 0 10px;
+}
+#block-mlibrary_footer-2 p {
+  font-family: arial;
+}
+#block-mlibrary_footer-2 .cc {
+  padding: 50px 4px 0 4px;
+  font-size: 75%;
+  line-height: 100%;
+}
+#block-mlibrary_footer-2 .regents {
+  padding: 20px 4px 0 8px;
+  font-size: 100%;
+  line-height: 100%;
+}
+#block-mlibrary_footer-2 .qc {
+  padding: 0 4px 0 8px;
+  font-size: 80%;
+  line-height: 100%;
+}

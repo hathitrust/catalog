@@ -1,0 +1,29 @@
+
+<div class="headerlight2darkgrad"><!----></div>
+	
+<form method="get" id="searchForm" action="{$path}/Search/Home" name="searchForm" onsubmit="fixform(this)">	
+	<div class="contentbox searchform">
+		<input type="hidden" name="checkspelling" value="true" />
+		<input type="hidden" value="true" name="sethtftonly">
+		{*<input type="hidden" id="fullonly" value="true" name="htftonly">*}
+		
+		<fieldset id="searchboxfieldset" class="inputcombo emphasized">
+			<input type="text" class="forminput" name="lookfor" id="lookfor" value="{$lookfor|escape:"html"}" placeholder="Enter Search Term(s)">
+		</fieldset>
+		<p><input type="checkbox" id="fullonly" value="true" name="htftonly" checked><span >  Full view only</span></p>
+        <p><select name="type" id="searchtype">
+	        <option value="all">All Fields</option>
+	        <option value="title">Title</option>
+	        <option value="author">Author</option>
+	        <option value="subject">Subject</option>
+	        <!--<option value="hlb">Academic Discipline</option>-->
+	        <!--<option value="callnumber">Call Number / in progress</option>-->
+	        <option value="isn">ISBN/ISSN</option>
+	        <option value="publisher">Publisher</option>
+	        <option value="series">Series Title</option>
+	        <option value="year">Year of Publication</option>
+	        <!-- <option value="tag">Tag</option> -->
+		</select></p>    	
+		<p><input type="submit" name="submit" value={translate text="Find"}></p>					
+	</div>	
+</form>

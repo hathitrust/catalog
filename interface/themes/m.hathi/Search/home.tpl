@@ -1,0 +1,2 @@
+
+  {include file="searchbox.tpl"}

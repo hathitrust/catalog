@@ -1,0 +1,6 @@
+Sitemap: http://catalog.hathitrust.org/static/sitemaps/sitemapindex.xml
+User-agent: *
+Disallow: /Search
+Disallow: /static/api
+Disallow: /Tags
+

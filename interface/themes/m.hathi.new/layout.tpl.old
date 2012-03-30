@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+
+<html lang="{$userLang}" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />		
+		<meta name="HandheldFriendly" content="true" />
+		<link rel="alternate" media="handheld" href="" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" /> 
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1; minimum-scale=1; user-scalable=0;" />
+		<meta name="format-detection" content="telephone=no" />
+		
+		{if $smarty.server.REQUEST_URI=="/"}
+			<title>HathiTrust Mobile</title>
+		{else}
+			<title>HathiTrust Mobile: {$pageTitle|truncate:64:"..."}</title>
+		{/if}
+		
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" charset="utf-8"></script>
+		{literal}
+		<script type="text/javascript" charset="utf-8">
+		
+    		var HT = HT || {};
+    		HT.update_status = function(status) {
+	      		$(document).ready(function() {
+        			if ( status.message ) {
+          			//	$("#message").html(status.message + "<br />" + "Authenticated via: " + status.authType);
+          				console.log(status.message + "  \n" + "Authenticated via: " + status.authType);
+        			}
+
+        			if ( status.logged_in ) {
+          				if ( status.affiliation ) {
+            			//	$("#affiliation").html(status.affiliation + "<br />" + "Member, HathiTrust");
+            				console.log(status.affiliation + "  \n" + "Member, HathiTrust");
+          				}
+        			}
+      			})
+    		}
+  		</script>
+  		{/literal}
+
+  		<script type="text/javascript" src="https://bkammin.babel.hathitrust.org/cgi/ping?debug=local;callback=HT.update_status"></script>
+		
+		<script type="text/javascript" charset="utf-8">
+			var jq = jQuery.noConflict();						 
+		</script>
+		{*<script src="/js/favorites.js" type="text/javascript" charset="utf-8"></script>*}
+		{*<script src="/js/MobileMirlyn.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/download_helper.js" type="text/javascript" charset="utf-8"></script>*}
+		
+		<script src="/js/htm-concat-min.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script language="JavaScript" type="text/javascript" charset="utf-8">
+			path = '{$url}';
+			{literal}
+			function fixform(f) {
+				if (jq('#searchtype').val() == 'journaltitle') {
+					jq(f).append('<input type="hidden" name="filter[]" value=\'format:Serial\'>');
+				}
+			}
+			{/literal}
+		</script>
+		{*
+		<link rel="stylesheet" type="text/css" charset="utf-8" href="{$path}/interface/themes/{$configArray.Site.theme}/css/mobilemirlyn.css" />
+		<link rel="stylesheet" type="text/css" charset="utf-8" href="{$path}/interface/themes/{$configArray.Site.theme}/css/download_helper.css" />
+		<link rel="stylesheet" type="text/css" charset="utf-8" href="/js/boxy/boxy.css" /> 
+		*}
+		<link rel="stylesheet" type="text/css" charset="utf-8" href="{$path}/interface/themes/{$configArray.Site.theme}/css/htm-concat-min.css" />
+		
+	</head>
+
+	<body onload="scrollTo(0,1);">
+           
+          <div class="headerwrapper">
+            <div class="header2">
+              <a href="http://bkammin.vufind.lib.umich.edu" class="htlogobutton" >&nbsp;</a>Digital Library
+            </div>
+          </div>
+		  
+		{* this is where the page content is invoked... *}
+		{include file="$module/$pageTemplate"}
+   	     
+		<div class="footer" id="footerDiv">
+		    <div>
+		    {literal}<script>
+    			document.write(HT.login_link());
+    		</script>{/literal}
+    		</div>
+    		
+			<a href="/Search/Feedback">Feedback</a> | <a href="">Help</a> | <a href="">Takedown</a> 
+			<br /> 
+			<span style="color:black">Mobile</span> | <a href="{$regular_url}?mdetect=no">Regular Site</a>
+			<br />
+			<div>Remote Address: {$smarty.server.REMOTE_ADDR}</div>
+			<div>Server Address: {$smarty.server.SERVER_ADDR}</div>
+			<div id="footerspacer">&nbsp;</div>
+		</div>
+		{*
+		<script type="text/javascript">		
+		{literal}
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+		<script type="text/javascript">
+		try {
+		var pageTracker = _gat._getTracker("UA-1341620-9");
+		pageTracker._trackPageview();
+		} catch(err) {} 
+		{/literal}
+		</script>
+		*}				
+	</body>
+</html>

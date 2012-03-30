@@ -1,0 +1,76 @@
+
+
+<img id="htlogo" alt="Hathi Trust Logo" src="/images/hathimobile/HTLogo_big2.png">
+<img id="httitle" alt="Hathi Trust Title" src="/images/hathimobile/HTDL.png">
+
+
+	
+
+
+<form method="get" id="searchForm" action="{$path}/Search/Home" name="searchForm" onsubmit="fixform(this)">	
+	<div id="searchpagelogin" >
+		{literal}
+			<script>
+				document.write(HT.login_link());
+				if(!HT.login_status.logged_in){
+					jq("#searchpagelogin a").attr('href',jq("#searchpagelogin a").attr('href') + "&skin=mobilewayf");
+				}
+			</script>
+		{/literal}
+	</div>
+        
+	<div class="contentbox searchform">
+	    {if $noresult eq "true"}
+		<div id="noresult">
+			{if $newPhrase}
+				<p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p>
+			{/if}
+			<p>Your search - <b>{$lookfor}</b> - did not match any resources.</p>
+			<p>You may want to try to revise your search phrase by removing some words.</p>
+		</div>
+    	{/if}
+    	
+		<input type="hidden" name="checkspelling" value="true" />
+		<input type="hidden" value="true" name="sethtftonly">
+{*
+		<fieldset id="searchboxfieldset" class="inputcombo emphasized">
+		
+			<input type="text" class="forminput" name="lookfor" id="lookfor" 
+				{if $lookfor eq ''}value="Search Catalog" style="color:#888;"{else}value="{$lookfor|escape:"html"}" style="color:#000;"{/if}
+				 placeholder="Search Catalog"
+				 title="Search Catalog"
+				 onfocus="inputFocus(this)" onblur="inputBlur(this)">
+		</fieldset>
+*}
+			<div style="padding:0 0 10px 0;font-size:1.1em;">Search Catalog:</div>
+			<fieldset id="searchboxfieldset" class="inputcombo emphasized">
+			<input type="text" class="forminput" name="lookfor" id="lookfor" value="{$lookfor|escape:"html"}" 
+				 placeholder="Search Catalog"
+				 title="Search Catalog">
+			</fieldset>
+		        <p><select name="type" id="searchtype">
+	        <option value="all">All Fields</option>
+	        <option value="title">Title</option>
+	        <option value="author">Author</option>
+	        <option value="subject">Subject</option>
+	        <!--<option value="hlb">Academic Discipline</option>-->
+	        <!--<option value="callnumber">Call Number / in progress</option>-->
+	        <option value="isn">ISBN/ISSN</option>
+	        <option value="publisher">Publisher</option>
+	        <option value="series">Series Title</option>
+	        <option value="year">Year of Publication</option>
+	        <!-- <option value="tag">Tag</option> -->
+		</select></p>   
+		
+		<p><input class="autowidth" type="checkbox" id="fullonly" value="true" name="htftonly" checked><span >  Full view only</span>
+ 		<input id="findbutton" class="autowidth" type="submit" name="submit" value={translate text="Find"}></p>					
+
+<div style="width:80%; margin-left: 10%; text-align: center">
+  <a style="color: #C4630F" href="http://tinyurl.com/7wf8ljc">
+    Take a mobile reading habits survey for a chance to win a $50 Amazon gift card!
+  </a>
+</div>
+	</div>	
+	<div class="footergrad"><!----></div>
+</form>
+

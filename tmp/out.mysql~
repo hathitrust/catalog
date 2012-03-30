@@ -1,0 +1,303 @@
+-- MySQL dump 10.11
+--
+-- Host: mysql-web    Database: vufind
+-- ------------------------------------------------------
+-- Server version	5.1.49-3-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `activities`
+--
+
+DROP TABLE IF EXISTS `activities`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `activities` (
+  `dumbid` int(10) unsigned NOT NULL DEFAULT '0',
+  `sessionid` char(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `action` tinyint(3) unsigned NOT NULL,
+  `data1` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data2` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data3` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data4` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `logday` tinyint(3) unsigned DEFAULT NULL,
+  `logdate` int(10) unsigned DEFAULT NULL,
+  `logtime` mediumint(9) DEFAULT NULL,
+  KEY `a_s` (`sessionid`),
+  KEY `a_a` (`action`),
+  KEY `a_d1` (`data1`),
+  KEY `a_d2` (`data2`),
+  KEY `a_ld` (`logdate`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `basactivity`
+--
+
+DROP TABLE IF EXISTS `basactivity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `basactivity` (
+  `dumbid` int(10) unsigned NOT NULL DEFAULT '0',
+  `sessionid` char(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `action` tinyint(3) unsigned NOT NULL,
+  `data1` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data2` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data3` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data4` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `logday` tinyint(3) unsigned DEFAULT NULL,
+  `logdate` int(10) unsigned DEFAULT NULL,
+  `logtime` mediumint(9) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `bmcsession`
+--
+
+DROP TABLE IF EXISTS `bmcsession`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bmcsession` (
+  `id` varchar(32) NOT NULL,
+  `cookie` varchar(32) DEFAULT NULL,
+  `expires` int(10) DEFAULT NULL,
+  `data` mediumblob
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `favsessions`
+--
+
+DROP TABLE IF EXISTS `favsessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `favsessions` (
+  `sessionid` char(30) CHARACTER SET utf8 NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `feedback`
+--
+
+DROP TABLE IF EXISTS `feedback`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `feedback` (
+  `submitted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `uniqname` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `comment` text
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `libstaff`
+--
+
+DROP TABLE IF EXISTS `libstaff`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `libstaff` (
+  `uniqname` char(9) NOT NULL,
+  PRIMARY KEY (`uniqname`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `logkey`
+--
+
+DROP TABLE IF EXISTS `logkey`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `logkey` (
+  `action` tinyint(3) unsigned NOT NULL,
+  `data1` varchar(255) DEFAULT NULL,
+  `data2` varchar(255) DEFAULT NULL,
+  `data3` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`action`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary table structure for view `nonisn`
+--
+
+DROP TABLE IF EXISTS `nonisn`;
+/*!50001 DROP VIEW IF EXISTS `nonisn`*/;
+/*!50001 CREATE TABLE `nonisn` (
+  `dumbid` int(10) unsigned,
+  `sessionid` char(30),
+  `action` tinyint(3) unsigned,
+  `data1` varchar(255),
+  `data2` varchar(255),
+  `data3` varchar(255),
+  `data4` varchar(255),
+  `logday` tinyint(3) unsigned,
+  `logdate` int(10) unsigned,
+  `logtime` mediumint(9)
+) ENGINE=MyISAM */;
+
+--
+-- Table structure for table `refworks_redirects`
+--
+
+DROP TABLE IF EXISTS `refworks_redirects`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `refworks_redirects` (
+  `uuid` char(30) DEFAULT NULL,
+  `expires` int(11) DEFAULT NULL,
+  `results` longblob,
+  KEY `rwridx` (`uuid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `searchsessions`
+--
+
+DROP TABLE IF EXISTS `searchsessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `searchsessions` (
+  `sessionid` char(32) NOT NULL,
+  KEY `sidx` (`sessionid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary table structure for view `staffips`
+--
+
+DROP TABLE IF EXISTS `staffips`;
+/*!50001 DROP VIEW IF EXISTS `staffips`*/;
+/*!50001 CREATE TABLE `staffips` (
+  `data1` varchar(255)
+) ENGINE=MyISAM */;
+
+--
+-- Temporary table structure for view `staffsessions`
+--
+
+DROP TABLE IF EXISTS `staffsessions`;
+/*!50001 DROP VIEW IF EXISTS `staffsessions`*/;
+/*!50001 CREATE TABLE `staffsessions` (
+  `uniqname` char(9),
+  `sessionid` char(30)
+) ENGINE=MyISAM */;
+
+--
+-- Temporary table structure for view `stats`
+--
+
+DROP TABLE IF EXISTS `stats`;
+/*!50001 DROP VIEW IF EXISTS `stats`*/;
+/*!50001 CREATE TABLE `stats` (
+  `logdate` int(10) unsigned,
+  `Sessions` decimal(23,0),
+  `SimpleSearch` decimal(23,0),
+  `AdvPageView` decimal(23,0),
+  `AdvSearch` decimal(23,0),
+  `Facet` decimal(23,0),
+  `ExportSelected` decimal(23,0),
+  `ExportRecord` decimal(23,0),
+  `SelectRec` decimal(23,0),
+  `Favorite` decimal(23,0)
+) ENGINE=MyISAM */;
+
+--
+-- Table structure for table `test`
+--
+
+DROP TABLE IF EXISTS `test`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `test` (
+  `t` datetime DEFAULT NULL,
+  `i` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vfsession`
+--
+
+DROP TABLE IF EXISTS `vfsession`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vfsession` (
+  `id` varchar(32) NOT NULL,
+  `cookie` varchar(32) DEFAULT NULL,
+  `expires` int(10) DEFAULT NULL,
+  `data` mediumblob,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Final view structure for view `nonisn`
+--
+
+/*!50001 DROP TABLE `nonisn`*/;
+/*!50001 DROP VIEW IF EXISTS `nonisn`*/;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`dueberb`@`192.168.0.%` SQL SECURITY DEFINER */
+/*!50001 VIEW `nonisn` AS select `activities`.`dumbid` AS `dumbid`,`activities`.`sessionid` AS `sessionid`,`activities`.`action` AS `action`,`activities`.`data1` AS `data1`,`activities`.`data2` AS `data2`,`activities`.`data3` AS `data3`,`activities`.`data4` AS `data4`,`activities`.`logday` AS `logday`,`activities`.`logdate` AS `logdate`,`activities`.`logtime` AS `logtime` from `activities` where ((`activities`.`action` = 2) and (`activities`.`data1` <> 'isn')) */;
+
+--
+-- Final view structure for view `staffips`
+--
+
+/*!50001 DROP TABLE `staffips`*/;
+/*!50001 DROP VIEW IF EXISTS `staffips`*/;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`dueberb`@`192.168.0.%` SQL SECURITY DEFINER */
+/*!50001 VIEW `staffips` AS select `activities`.`data1` AS `data1` from (`activities` join `staffsessions`) where ((`activities`.`sessionid` = `staffsessions`.`sessionid`) and (`activities`.`action` = 1)) */;
+
+--
+-- Final view structure for view `staffsessions`
+--
+
+/*!50001 DROP TABLE `staffsessions`*/;
+/*!50001 DROP VIEW IF EXISTS `staffsessions`*/;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`dueberb`@`192.168.0.%` SQL SECURITY DEFINER */
+/*!50001 VIEW `staffsessions` AS select `libstaff`.`uniqname` AS `uniqname`,`activities`.`sessionid` AS `sessionid` from (`activities` join `libstaff`) where ((`activities`.`action` = 11) and (`activities`.`data1` = convert(`libstaff`.`uniqname` using utf8))) */;
+
+--
+-- Final view structure for view `stats`
+--
+
+/*!50001 DROP TABLE `stats`*/;
+/*!50001 DROP VIEW IF EXISTS `stats`*/;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`dueberb`@`192.168.0.%` SQL SECURITY DEFINER */
+/*!50001 VIEW `stats` AS select `activities`.`logdate` AS `logdate`,sum((case `activities`.`action` when 1 then 1 else 0 end)) AS `Sessions`,sum((case `activities`.`action` when 2 then 1 else 0 end)) AS `SimpleSearch`,sum((case `activities`.`action` when 21 then 1 else 0 end)) AS `AdvPageView`,sum((case `activities`.`action` when 32 then 1 else 0 end)) AS `AdvSearch`,sum((case `activities`.`action` when 3 then 1 else 0 end)) AS `Facet`,sum(if((`activities`.`action` in (22,24,26,29)),1,0)) AS `ExportSelected`,sum(if((`activities`.`action` in (23,25,27,30)),1,0)) AS `ExportRecord`,sum((case `activities`.`action` when 13 then 1 else 0 end)) AS `SelectRec`,sum(if((`activities`.`action` in (16,17)),1,0)) AS `Favorite` from `activities` group by `activities`.`logdate` */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2012-03-09 14:04:41

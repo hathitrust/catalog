@@ -22,6 +22,22 @@ spl_autoload_register('sample_autoloader');
 
 $solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/catalog');
 
+
+# Get configArray
+$configArray = parse_ini_file('../../conf/config.ini', true);
+
+
+## Now munge it based on the hostname
+
+$hn = preg_replace('/^(.+?)[-.].*$/', "$1", $_SERVER['SERVER_NAME']);
+if (isset($configArray[$hn])) {
+  foreach ($configArray[$hn] as $key => $val) {
+    $configArray['Site'][$key] = $val;
+  }
+}
+
+
+
 // Map api fields to solr fields
 $fieldmap = array(
   'umid' => 'id',
@@ -55,7 +71,7 @@ $rightsmap = array(
 
 
 
-$namespacemap = eval(file_get_contents('/htapps/dueberb.catalog/web/derived_data/ht_namespaces.php'));
+$namespacemap = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_namespaces.php'));
 
 $commonargs = array(
   'fl' => 'score,id,ht_json,title,year,publishDate,oclc,lccn,isbn,issn',

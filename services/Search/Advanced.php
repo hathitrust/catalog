@@ -23,7 +23,7 @@ require_once 'sys/ActivityLog.php';
 
 class Advanced extends Home {
 
-  public $facetDir = '/n1/vufind/facetlists';
+  public $facetDir;
     
     function launch()
     {

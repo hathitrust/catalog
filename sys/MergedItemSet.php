@@ -16,8 +16,7 @@ class MergedItemSet
   public $solrQueryComponents = array();
   private $_data;
   public $commonargs = array(
-    'fl' => 'score,id,ht_json,title,year,publishDate,oclc,lccn,isbn,issn',
-    'fq' => 'availability:HathiTrust'
+    'fl' => 'score,id,ht_json,title,year,publishDate,oclc,lccn,isbn,issn'
   );
   public $docs = array();
   public $options = array();
@@ -26,13 +25,9 @@ class MergedItemSet
   
   
   function __construct($qst = array(), $options = array()) {
-    $this->solr = new Apache_Solr_Service('solr-vufind', '8026', '/solr/biblio');
+    
+    $this->solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/catalog');
     $this->options = array_merge($this->options, $options);
-    
-    
-    // if (preg_match('/hathitrust/', $_SERVER['SERVER_NAME'])) {
-    //   $this->commonargs['fq'] = 'availability:HathiTrust';
-    // }
     
     $qst = is_array($qst)? $qst : array($qst);
     foreach ($qst as $qs) {
@@ -53,6 +48,7 @@ class MergedItemSet
   
   function fetch() {
     $results = $this->solr->search($this->solrQuery(), 0, 200, $this->commonargs);
+
     // Index the docs
     foreach ($results->response->docs as $doc) {
       $this->docs[$doc->id] = $doc;

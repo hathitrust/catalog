@@ -33,8 +33,8 @@ class Advanced extends Home {
         
         
         // Change the facet dir if we have it
-        if (isset($configArray['FileLocations']['facetDir'])) {
-	  $this->facetDir = $configArray['FileLocations']['facetDir'];
+        if (isset($configArray['Site']['facetDir'])) {
+	  $this->facetDir = $configArray['Site']['facetDir'];
 	}
         
         $this->setup();
@@ -66,13 +66,6 @@ class Advanced extends Home {
         }
         fclose($langhandle);
 
-        //Get the list of HLB3 topics into an array
-        $hlb3 = array();
-        $hlb3handle = fopen($this->facetDir . '/hlb3.txt', 'r');
-        while (!feof($hlb3handle)) {
-          $hlb3[] = stream_get_line($hlb3handle, 1000000, "\n");
-        }
-        fclose($hlb3handle);
 
         // ...And the formats
         $formatlist = array();
@@ -91,7 +84,6 @@ class Advanced extends Home {
 
         $interface->assign('formatList', $formatlist);
         $interface->assign('languageList', $languages);
-        $interface->assign('hlb3List', $hlb3);
 
         // following is now done in index.php--tlp
         //if (isset($_GET['inst']) and $_GET['inst'] != '') {

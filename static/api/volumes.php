@@ -1,5 +1,8 @@
 <?php
 
+
+set_include_path(get_include_path() . ':../..');
+
 // Bail immediately if there's no query
 
 // print_r($_REQUEST);
@@ -52,7 +55,7 @@ $rightsmap = array(
 
 
 
-$namespacemap = eval(file_get_contents('/n1/vufind/facetlists/ht_namespaces.php'));
+$namespacemap = eval(file_get_contents('/htapps/dueberb.catalog/web/derived_data/ht_namespaces.php'));
 
 $commonargs = array(
   'fl' => 'score,id,ht_json,title,year,publishDate,oclc,lccn,isbn,issn',
@@ -62,9 +65,6 @@ if ($_REQUEST['brevity'] == 'full') {
   $commonargs['fl']  = $commonargs['fl']  . ',fullrecord';
 }
 
-if (preg_match('/hathitrust/', $_SERVER['SERVER_NAME'])) {
-  $commonargs['fq'] = 'availability:HathiTrust';
-}
 
 $validField = array(
   'htid' => 'passthrough',

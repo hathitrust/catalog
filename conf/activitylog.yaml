@@ -1,7 +1,6 @@
 style: db
 DBLogging:
-#    host: mysql-web
-    host:  mysql-htdev
+    host:  mysql-sdr
     db:   vufind
     username: vufind
     password: villanova

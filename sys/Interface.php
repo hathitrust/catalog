@@ -32,7 +32,15 @@ class UInterface extends Smarty
 
         $this->template_dir  = "$local/interface/themes/$theme";
 
-        $this->compile_dir   = "$local/interface/compile";
+	# Set up the space for compiled files
+        $comp = "$local/interface/compile/$theme";
+        
+        if (!is_dir($comp)) {
+          mkdir($comp, 0777);
+          chmod($comp, 0777);
+        }
+
+        $this->compile_dir   = $comp;
         $this->cache_dir     = "$local/interface/cache";
         $this->plugins_dir   = array('plugins', "$local/interface/plugins");
         $this->caching       = false;

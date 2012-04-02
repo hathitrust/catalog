@@ -51,9 +51,11 @@ class QObj
   
   function __construct($str) {
 
+    global $configArray;
+
     
     $this->string = $str;
-    $this->namespacemap =  eval(file_get_contents('/n1/vufind/facetlists/ht_namespaces.php'));
+    $this->namespacemap =  eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_namespaces.php'));
     
     $specs = explode(';', $str);
     foreach ($specs as $spec) {

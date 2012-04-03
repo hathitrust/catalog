@@ -1,0 +1,79 @@
+-- MySQL dump 10.11
+--
+-- Host: mysql-web    Database: vufind
+-- ------------------------------------------------------
+-- Server version	5.1.49-3-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `activities`
+--
+
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE IF NOT EXISTS `activities` (
+  `dumbid` int(10) unsigned NOT NULL DEFAULT '0',
+  `sessionid` char(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `action` tinyint(3) unsigned NOT NULL,
+  `data1` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data2` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data3` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data4` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `logday` tinyint(3) unsigned DEFAULT NULL,
+  `logdate` int(10) unsigned DEFAULT NULL,
+  `logtime` mediumint(9) DEFAULT NULL,
+  KEY `a_s` (`sessionid`),
+  KEY `a_a` (`action`),
+  KEY `a_d1` (`data1`),
+  KEY `a_d2` (`data2`),
+  KEY `a_ld` (`logdate`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+
+--
+-- Table structure for table `refworks_redirects`
+--
+
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE IF NOT EXISTS `refworks_redirects` (
+  `uuid` char(30) DEFAULT NULL,
+  `expires` int(11) DEFAULT NULL,
+  `results` longblob,
+  KEY `rwridx` (`uuid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
+-- Table structure for table `vfsession`
+--
+
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE IF NOT EXISTS `vfsession` (
+  `id` varchar(32) NOT NULL,
+  `cookie` varchar(32) DEFAULT NULL,
+  `expires` int(10) DEFAULT NULL,
+  `data` mediumblob,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+

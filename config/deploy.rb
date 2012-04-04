@@ -20,7 +20,8 @@ set :current_dir, "web"
 # Do we need to mess with the schema?
 
 set :branch do
-  tags = `git tag`.split("\n")
+  tags = `git for-each-ref refs/tags --sort=authordate --format='%(refname)'`.split("\n").map {|a| a.split('/').last}
+#  tags = `git tag`.split("\n")
   default_tag = tags.last
   puts "\n\nTags:\n  " + tags.join("\n  ");
   

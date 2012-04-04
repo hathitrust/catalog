@@ -47,6 +47,7 @@ namespace :vf do
     migrate = nil
     until ['Y', 'N'].include? migrate
       migrate =  Capistrano::CLI.ui.ask "Do you need to run a db migration as Bill (Y/N) [N] "
+      migrate = 'N' if migrate.empty?
     end
 
     if migrate == 'Y'

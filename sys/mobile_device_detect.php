@@ -21,9 +21,6 @@ function mobile_device_detect()
     // class of devices.
     $mobile = new uagent_info();
     
-    if ($_SERVER['REMOTE_ADDR'] == '141.211.43.192') {
-      // return true;
-    }
     return $mobile->DetectMobileLong();
 }
 

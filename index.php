@@ -55,8 +55,10 @@ $configArray = parse_ini_file('conf/config.ini', true);
 
 ## Now munge it based on the hostname
 
-$hn = preg_replace('/^(.+?)[-.].*$/', "$1", $_SERVER['SERVER_NAME']);
+$hn =  $_SERVER['HTTP_HOST'];
+
 if (isset($configArray[$hn])) {
+echo "Changing to stuff in $hn<br>";
   foreach ($configArray[$hn] as $key => $val) {
     $configArray['Site'][$key] = $val;
   }

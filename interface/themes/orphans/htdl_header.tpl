@@ -32,7 +32,8 @@
     </div>
   </div>
 
-{*  {if $pageTitle eq 'Search Home'}
+{*
+ {if $pageTitle eq 'Search Home'}
   <div id="SubNavHeader">
     <div id="SubNavHeaderCont">
       <div class="CollPage">
@@ -51,7 +52,7 @@
     </div>
   </div>
   {/if}
-  *}
+*}
 </div>  
   
 <a name="skipNav"></a>  

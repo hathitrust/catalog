@@ -58,12 +58,14 @@ $configArray = parse_ini_file('conf/config.ini', true);
 $hn =  $_SERVER['HTTP_HOST'];
 
 if (isset($configArray[$hn])) {
-echo "Changing to stuff in $hn<br>";
   foreach ($configArray[$hn] as $key => $val) {
     $configArray['Site'][$key] = $val;
   }
 }
 
+if (isset($configArray[$hn], $configArray[$hn]['extraFilters'])) {
+  $configArray['extraFilters'] = array('ht' => $configArray[$hn]['extraFilters']);
+}
 
 #######################################
 # Mobile detection

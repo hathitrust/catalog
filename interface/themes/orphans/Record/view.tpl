@@ -491,8 +491,12 @@
               {if $field|getvalue:'r' eq 'pd'}
                 class="fulltext">Full view
               {elseif $field|getvalue:'r' eq 'pdus' && $session->get('inUSA')}
-                class="fulltext">Full view
+                class="fulltext">Full vie
               {elseif $field|getvalue:'r' eq 'world'}
+                class="fulltext">Full view
+              {elseif $field|getvalue:'r' eq 'ic-world'}
+                class="fulltext">Full view
+              {elseif $field|getvalue:'r' eq 'und-world'}
                 class="fulltext">Full view
       {elseif $field|getvalue:'r' eq 'cc-by'}class="fulltext">Full view
       {elseif $field|getvalue:'r' eq 'cc-by-nd'}class="fulltext">Full view
@@ -535,11 +539,16 @@
            {else}
          {/if}
          </em>
-         
-         {assign var=expdate value=$field|getvalue:'o'}
+
+
+
+     {*    {assign var=expdate value=$field|getvalue:'o'} *}
+         {assign var=expdate value=$field|getvalue:'d'}
          {if $expdate}
            <div style="margin-left: 32px" class="IndItem">
            This volume will be identified as an orphan work on {$expdate|dateadd:90:'%B %e, %Y'}
+           (using rights=opd and date=974$$d for testing only)
+ 
            </div>
          {/if}
          

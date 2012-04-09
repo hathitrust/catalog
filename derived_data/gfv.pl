@@ -7,13 +7,19 @@ use Encode qw(encode_utf8);
 my $json = new JSON::XS;
 $json->utf8(1);
 
-my ($facet, $include_count) = @ARGV;
+my ($facet, $include_count, $q) = @ARGV;
 
 binmode STDOUT, ":utf8";
 
 my $select = "http://solr-sdr-catalog:9033/catalog/select";
 
-my $url = "$select?q=*:*&rows=0&facet=true&facet.limit=-1&facet.field=$facet&wt=json&json.nl=arrarr&indent=1";
+
+$q ||= '*:*';
+
+
+my $url = "$select?q=$q&rows=0&facet=true&facet.mincount=1&facet.limit=-1&facet.field=$facet&wt=json&json.nl=arrarr&indent=1";
+
+
 print STDERR "$url\n";
 my $json = $json->decode(encode_utf8(get($url)));
 

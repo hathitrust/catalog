@@ -57,7 +57,7 @@ namespace :vf do
     end
   end
   
-  taks :generateFacetLists do
+  task :generateFacetLists do
     run "#{deploy_to}/web/derived_data/getall.sh"
     run "#{deploy_to}/web/derived_data/getallOrphans.sh"
   end

@@ -17,8 +17,8 @@
   # Normally, we send / to /Search/Home for orphanworks
   # For right now, send *everything* to the index page
   RewriteCond %{HTTP_HOST} orphanworks
-  RewriteRule ^/? / [L, QSA]
-  # RewriteRule ^/?$ /Search/Home [L,QSA]
+  RewriteRule ^/.*$ /Search/Home [L,QSA]
+  #RewriteRule ^/?$ /Search/Home [L,QSA]
 
   # Efficient marcxml output
   RewriteRule   ^Record/([0-9]+).xml$        static/api/marcxml_from_bibnum.php?id=$1 [L]

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 HOST=`hostname | perl -ne '@h = split(/[-.]/); print $h[0]'`
 
 if [ $HOST == 'koolaid' ]

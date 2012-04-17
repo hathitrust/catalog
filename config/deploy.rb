@@ -58,6 +58,8 @@ namespace :vf do
   end
   
   task :generateFacetLists do
+    run "chmod +x #{deploy_to}/web/derived_data/getall.sh"
+    run "chmod +x #{deploy_to}/web/derived_data/getallOrphans.sh"
     run "#{deploy_to}/web/derived_data/getall.sh"
     run "#{deploy_to}/web/derived_data/getallOrphans.sh"
   end

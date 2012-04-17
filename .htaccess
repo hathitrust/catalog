@@ -13,6 +13,11 @@
   RewriteRule  ^static/(.+)$              static/$1 [L,QSA]
   RewriteRule  ^google9b54b263f38b0e46.html$ static/google9b54b263f38b0e46.html [L]
 
+
+  # Send / to /Search/Home for orphanworks
+  RewriteCond %{HTTP_HOST} orphanworks
+  RewriteRule ^/?$ /Search/Home [L,QSA]
+
   # Efficient marcxml output
   RewriteRule   ^Record/([0-9]+).xml$        static/api/marcxml_from_bibnum.php?id=$1 [L]
 

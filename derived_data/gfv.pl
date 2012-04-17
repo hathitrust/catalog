@@ -20,7 +20,6 @@ $q ||= '*:*';
 my $url = "$select?q=$q&rows=0&facet=true&facet.mincount=1&facet.limit=-1&facet.field=$facet&wt=json&json.nl=arrarr&indent=1";
 
 
-print STDERR "$url\n";
 my $json = $json->decode(encode_utf8(get($url)));
 
 foreach my $a (@{$json->{facet_counts}{facet_fields}{$facet}}) {

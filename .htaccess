@@ -9,15 +9,15 @@
 
 <IfModule mod_rewrite.c>
   RewriteEngine	On
-
+  
   RewriteRule  ^static/(.+)$              static/$1 [L,QSA]
   RewriteRule  ^google9b54b263f38b0e46.html$ static/google9b54b263f38b0e46.html [L]
 
   
   # Normally, we send / to /Search/Home for orphanworks
   # For right now, send *everything* to the index page
-  RewriteCond %{HTTP_HOST} orphanworks
-  RewriteRule ^/.*$ /Search/Home [L,QSA]
+  RewriteCond %{HTTP_HOST} ^orphanworks
+  RewriteRule (.*)  index.php [L,QSA]
   #RewriteRule ^/?$ /Search/Home [L,QSA]
 
   # Efficient marcxml output

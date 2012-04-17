@@ -56,12 +56,18 @@ namespace :vf do
       run "mysql -u dueberb -h mysql-sdr -p #{password} vufind < #{schemafile}"
     end
   end
+  
+  taks :generateFacetLists do
+    run "#{deploy_to}/web/derived_data/getall.sh"
+    run "#{deploy_to}/web/derived_data/getallOrphans.sh"
+  end
+  
 end
 
 before "deploy:update", "vf:mkreleases"
 after "deploy:create_symlink", "vf:mkDBTables"
 after "deploy:create_symlink", "vf:mkcompile"
-
+after "deploy:create_symlink", "vf:generateFacetLists"
 
 # Undefine stuff we don't use
 

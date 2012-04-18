@@ -107,6 +107,9 @@ $authspecs = AuthSpecs::singleton();
 $interface = new UInterface();
 $interface->assign('machine', $_SERVER['SERVER_ADDR']);
 $interface->assign('session', $session);
+$interface->assign('regular_url', isset($configArray['Site']['regular_url']) ? 
+                                  $configArray['Site']['regular_url'] :
+                                  $configArray['Site']['url']);
 
 # Should we log?
 if (isset($_REQUEST['donotlog'])) {

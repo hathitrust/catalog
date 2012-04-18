@@ -65,11 +65,6 @@
 		<p><input class="autowidth" type="checkbox" id="fullonly" value="true" name="htftonly" checked><span >  Full view only</span>
  		<input id="findbutton" class="autowidth" type="submit" name="submit" value={translate text="Find"}></p>					
 
-<div style="width:80%; margin-left: 10%; text-align: center">
-  <a style="color: #C4630F" href="http://tinyurl.com/7wf8ljc">
-    Take a mobile reading habits survey for a chance to win a $50 Amazon gift card!
-  </a>
-</div>
 	</div>	
 	<div class="footergrad"><!----></div>
 </form>

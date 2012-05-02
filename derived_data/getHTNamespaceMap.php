@@ -3,7 +3,6 @@
 $parent = dirname(__FILE__) . '/..';
 
 set_include_path(get_include_path() . ':' . $parent);
-echo get_include_path();
 
 
 // Set up for autoload

@@ -2,7 +2,8 @@ set :stages, %w(production staging)
 set :default_stage, "staging"
 require 'capistrano/ext/multistage'
 
-
+set :keep_releases, 3
+set :use_sudo, false
 set :application, "catalog"
 
 ssh_options[:forward_agent] = true

@@ -114,15 +114,22 @@ class QObj
     
     $specs = explode(';', $str);
     foreach ($specs as $spec) {
-      $fv = explode(':', $spec);
-      if (count($fv) > 2) {
-        $fv[1] = implode(':', array_slice($fv, 1));
-      }
+      $fv = explode(':', $spec, 2);
+#      if (count($fv) > 2) {
+#        $fv[1] = implode(':', array_slice($fv, 1));
+#      }
       $field = trimlower($fv[0]);
       if ($field == 'id') {
         $this->_id = $fv[1];
       }
+      if (!isset($fv[1])) {
+        continue;
+      }
+      if (! ( preg_match('/\S/', $field) || preg_match('/\S/', $fv[1]))) {
+        continue;
+      }
 
+      // error_log("Working on $field for val " . $fv[1]);
       $val = trimlower($fv[1]);
       // 
       // echo "Q is " . $_REQUEST['q'];

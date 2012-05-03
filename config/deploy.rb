@@ -22,9 +22,9 @@ set :current_dir, "web"
 
 set :branch do
   tags = `git for-each-ref refs/tags --sort=authordate --format='%(refname)'`.split("\n").map {|a| a.split('/').last}
-#  tags = `git tag`.split("\n")
+  displaytags = Hash[*(`git tag -n`.split("\n").map{|a| a.split(/\s+/, 2)}.flatten)]
   default_tag = tags.last
-  puts "\n\nTags:\n  " + tags.join("\n  ");
+  puts "\n\nTags:\n  " + tags.map {|a| '%-10s %s' % [a, displaytags[a]] }.join("\n  ");
   
   tag = Capistrano::CLI.ui.ask "\n Tag to deploy (make sure to push the tag first): [#{default_tag}] "
   tag = default_tag if tag.empty?

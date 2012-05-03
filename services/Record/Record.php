@@ -237,6 +237,19 @@ class Record extends Action
         // Set legacy catalog record  URL
         if (isset($configArray['Catalog']['recordURL']))
           $interface->assign('recordURL', $configArray['Catalog']['recordURL']);
+          
+        // Set flag for MDL records (035 subfield a starting with sdr-mdl)
+        $mdl = 0;
+        if ($f035List = $this->marcRecord->getFields('035')) {
+          foreach ($f035List as $field) {
+            if ($suba = $field->getSubfield('a')) {
+              $suba_data = $suba->getData();
+              if (preg_match('/^sdr-mdl/i', $suba_data)) $mdl = 1;
+            }
+          }
+        }
+        $interface->assign('mdl', $mdl);
+          
     }
     
     function getEditions()

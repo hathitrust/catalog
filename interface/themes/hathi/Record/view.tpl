@@ -325,6 +325,27 @@
   </tr>
   {/if}
 
+  {if $mdl}
+    <!-- mdl -->
+    {assign var=marcField value=$marc->getFields('540')}
+    {if $marcField}
+    <tr valign="top">
+      <th>{translate text='Use and Reproduction Note'}: </th>
+      <td>
+        {foreach from=$marcField item=field name=loop}
+          {foreach from=$field->getSubfields() item=subfield key=subcode}
+            {if $subcode != '6'}
+              {$subfield->getData()}
+            {/if}
+          {/foreach}
+          <br>
+        {/foreach}
+      </td>
+    </tr>
+    {/if}
+  {/if}
+
+
   {assign var=marcField value=$marc->getFields('300')}
   {if $marcField}
   <tr valign="top">

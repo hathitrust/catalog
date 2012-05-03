@@ -68,7 +68,7 @@ namespace :vf do
 end
 
 before "deploy:update", "vf:mkreleases"
-after "deploy:create_symlink", "vf:mkDBTables"
+# after "deploy:create_symlink", "vf:mkDBTables"
 after "deploy:create_symlink", "vf:mkcompile"
 after "deploy:create_symlink", "vf:generateFacetLists"
 

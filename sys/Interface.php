@@ -58,6 +58,9 @@ class UInterface extends Smarty
         $this->assign('fullPath', $_SERVER['REQUEST_URI']);
         $this->assign('openUrlLink', $configArray['OpenURL']['url']);
         $this->assign('supportEmail', $configArray['Site']['email']);
+        $this->assign('regular_url', $configArray['Site']['regular_url']);
+        $this->assign('ht_url', $configArray['Site']['ht_url']);
+        $this->assign('home_url', $configArray['Site']['home_url']);
         
         if (isset($configArray['LDAP'])) {
             $this->assign('authMethod', 'LDAP');

@@ -102,12 +102,10 @@ class Cite extends Record
                 $publisherA = $publisherField->getSubfield('a');
                 if ($publisherA) {
                   $publisher = trim($publisherA->getData());
+                } elseif ($publisherB = $publisherField->getSubfield('b')) {
+                  $publisher = trim($publisherB->getData());
                 }
             }
-        } else if ($publisherB = $publisherField->getSubfield('b')) {
-          if ($publisherB) {
-            $publisher = trim($publisherB->getData());
-          }
         }
         $interface->assign('publisher', cleanTitle($publisher));
         
@@ -131,7 +129,10 @@ class Cite extends Record
 function abbreviateName($name)
 {
     $parts = explode(', ', $name);
-    $fnameParts = explode(' ' , $parts[1]);
+    $fnameParts = array();
+    if (isset($parts[1])) {
+      $fnameParts = explode(' ' , $parts[1]);
+    }
     $name = $parts[0] . ', ' . substr($fnameParts[0], 0, 1);
     array_shift($fnameParts);
     $name .= '. ' . implode(' ', $fnameParts);

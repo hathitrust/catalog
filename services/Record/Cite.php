@@ -154,8 +154,12 @@ function cleanTitle($title)
 
 function reverse($str)
 {
-    $arr = explode(', ', $str);
-    return $arr[1] . ' ' . $arr[0];
+    if (preg_match('/,/', $str)) {
+      $arr = explode(', ', $str);
+      return $arr[1] . ' ' . $arr[0];
+    } else {
+      return $str;
+    }
 }
 
 

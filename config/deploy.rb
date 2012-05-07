@@ -65,8 +65,8 @@ namespace :vf do
   task :generateFacetLists do
     run "chmod +x #{release_path}/derived_data/getall.sh"
     run "chmod +x #{release_path}/derived_data/getallOrphans.sh"
-    run "#{release_path}/derived_data/getall.sh"
-    run "#{release_path}/derived_data/getallOrphans.sh"
+    run "#{release_path}/derived_data/getall.sh  #{release_path}/derived_data/"
+    run "#{release_path}/derived_data/getallOrphans.sh  #{release_path}/derived_data/"
   end
   
 end

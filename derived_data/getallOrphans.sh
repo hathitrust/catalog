@@ -1,14 +1,7 @@
 #!/bin/bash
 
-HOST=`hostname | perl -ne '@h = split(/[-.]/); print $h[0]'`
 
-if [ $HOST == 'koolaid' ]
-then
-  DIR=/htapps/dueberb.catalog/web/derived_data
-else
-  DIR=/htapps/catalog/web/derived_data
-fi
-
+DIR=$1
 
 #RIGHTS=orphcand
 RIGHTS=opb

@@ -38,7 +38,7 @@ namespace :vf do
   end
 
   task :mkcompile do
-    compileDir = "#{deploy_to}/#{release_name}/interface/compile"
+    compileDir = "#{release_path}/interface/compile"
     run "mkdir -p #{compileDir}"
     run "chmod 777 #{compileDir}"
   end
@@ -63,10 +63,10 @@ namespace :vf do
   end
   
   task :generateFacetLists do
-    run "chmod +x #{deploy_to}/#{release_name}/derived_data/getall.sh"
-    run "chmod +x #{deploy_to}/#{release_name}/derived_data/getallOrphans.sh"
-    run "#{deploy_to}/#{release_name}/derived_data/getall.sh"
-    run "#{deploy_to}/#{release_name}/derived_data/getallOrphans.sh"
+    run "chmod +x #{release_path}/derived_data/getall.sh"
+    run "chmod +x #{release_path}/derived_data/getallOrphans.sh"
+    run "#{release_path}/derived_data/getall.sh"
+    run "#{release_path}/derived_data/getallOrphans.sh"
   end
   
 end

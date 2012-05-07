@@ -32,9 +32,13 @@ set :branch do
 end
 
 namespace :vf do
+  task :ddd do
+    puts "Hello there"
+    puts "Will deploy to #{release_name}"
+  end
 
   task :mkcompile do
-    compileDir = "#{deploy_to}/web/interface/compile"
+    compileDir = "#{deploy_to}/#{release_name}/interface/compile"
     run "mkdir -p #{compileDir}"
     run "chmod 777 #{compileDir}"
   end
@@ -52,25 +56,25 @@ namespace :vf do
     end
 
     if migrate == 'Y'
-      schemafile = "#{deploy_to}/web/mysql/schema.mysql"
+      schemafile = "#{deploy_to}/#{release_name}/mysql/schema.mysql"
       password = Capistrano::CLI.ui.ask "Password: "
       run "mysql -u dueberb -h mysql-sdr -p #{password} vufind < #{schemafile}"
     end
   end
   
   task :generateFacetLists do
-    run "chmod +x #{deploy_to}/web/derived_data/getall.sh"
-    run "chmod +x #{deploy_to}/web/derived_data/getallOrphans.sh"
-    run "#{deploy_to}/web/derived_data/getall.sh"
-    run "#{deploy_to}/web/derived_data/getallOrphans.sh"
+    run "chmod +x #{deploy_to}/#{release_name}/derived_data/getall.sh"
+    run "chmod +x #{deploy_to}/#{release_name}/derived_data/getallOrphans.sh"
+    run "#{deploy_to}/#{release_name}/derived_data/getall.sh"
+    run "#{deploy_to}/#{release_name}/derived_data/getallOrphans.sh"
   end
   
 end
 
 before "deploy:update", "vf:mkreleases"
 # after "deploy:create_symlink", "vf:mkDBTables"
-after "deploy:create_symlink", "vf:mkcompile"
-after "deploy:create_symlink", "vf:generateFacetLists"
+before "deploy:create_symlink", "vf:mkcompile"
+before "deploy:create_symlink", "vf:generateFacetLists"
 
 # Undefine stuff we don't use
 

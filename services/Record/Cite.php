@@ -128,6 +128,9 @@ class Cite extends Record
 
 function abbreviateName($name)
 {
+    if (!(isset($name) && preg_match('/\S/', $name))) {
+      return '';
+    }
     $parts = explode(', ', $name);
     $fnameParts = array();
     if (isset($parts[1])) {

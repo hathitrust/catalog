@@ -652,7 +652,11 @@ if ($type == 'allTest') {
         foreach ($res['record'] as &$record) {
           $record['baseFormat'] = $record['format'];
           if (!isset($record['availability'])) { $record['availability'] = ""; }
-          $record['format'] = $ff->filter(array_merge((array)$record['format'], (array)$record['availability']));        
+          if (isset($record['format'])) {
+            $record['format'] = $ff->filter(array_merge((array)$record['format'], (array)$record['availability']));
+          } else {
+            $record['format'] = $ff->filter((array)$record['availability']);
+          }
        }
        
        // print_r($res);

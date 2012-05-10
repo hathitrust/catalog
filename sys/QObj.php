@@ -162,7 +162,7 @@ class QObj
         $iinfo['rightsCode'] = $ht['rights'];
         $iinfo['lastUpdate'] = $ht['ingest'];
         $iinfo['enumcron'] = isset($ht['enumcron'])? $ht['enumcron'] : false;
-        $iinfo['usRightsString'] = $this->usrights[$ht['rights']];
+        $iinfo['usRightsString'] = $this->usrights($ht['rights']);
         
         $items[] = $iinfo;
       }

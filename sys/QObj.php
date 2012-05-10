@@ -162,11 +162,24 @@ class QObj
         $iinfo['rightsCode'] = $ht['rights'];
         $iinfo['lastUpdate'] = $ht['ingest'];
         $iinfo['enumcron'] = isset($ht['enumcron'])? $ht['enumcron'] : false;
-        $iinfo['usRightsString'] = $this->rightsmap[$ht['rights']];
+        $iinfo['usRightsString'] = $this->usrights[$ht['rights']];
+        
         $items[] = $iinfo;
       }
     }
     return $items;
+  }
+  
+  function usrights($r) {
+    if (isset($this->rightrsmap[$r])) {
+      return $this->rightsmap[$r];
+    }
+    
+    if (preg_match('/^cc/', $r)) {
+      return $this->rightsmap['pd'];
+    }
+    
+    return $this->rightsmap['ic'];
   }
   
 }

@@ -26,10 +26,10 @@ $solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/catalog');
 # Get configArray
 $configArray = parse_ini_file('../../conf/config.ini', true);
 
-
 ## Now munge it based on the hostname
 
-$hn = preg_replace('/^(.+?)[-.].*$/', "$1", $_SERVER['SERVER_NAME']);
+$hn =  $_SERVER['HTTP_HOST'];
+
 if (isset($configArray[$hn])) {
   foreach ($configArray[$hn] as $key => $val) {
     $configArray['Site'][$key] = $val;

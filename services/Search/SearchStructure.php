@@ -823,7 +823,11 @@ class SearchStructure
     
     
     function facetDisplayName($facet) {
-        return isset($this->indexDisplayName[$facet])? $this->indexDisplayName[$facet] : $this->facetConfig[$facet];
+        if (isset($this->indexDisplayName[$facet])) {
+          return $this->indexDisplayName[$facet];
+        } else {
+          return isset($this->facetConfig[$facet])? $this->facetConfig[$facet] : $facet;
+        }
     }
     
     

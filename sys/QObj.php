@@ -171,7 +171,7 @@ class QObj
   }
   
   function usrights($r) {
-    if (isset($this->rightrsmap[$r])) {
+    if (isset($this->rightsmap[$r])) {
       return $this->rightsmap[$r];
     }
     

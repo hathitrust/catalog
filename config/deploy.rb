@@ -48,6 +48,7 @@ namespace :vf do
   end
 
 
+  desc "Update (as user dueberb, so you'll need password) mysql tables from mysql/schema.mysql"
   task :mkDBTables do
     migrate = nil
     until ['Y', 'N'].include? migrate
@@ -67,6 +68,12 @@ namespace :vf do
     run "chmod +x #{release_path}/derived_data/getallOrphans.sh"
     run "#{release_path}/derived_data/getall.sh  #{release_path}/derived_data/"
     run "#{release_path}/derived_data/getallOrphans.sh  #{release_path}/derived_data/"
+  end
+  
+  desc "Update the facet lists (for advanced search) and ht namespaces map"
+  task :updateFacetLists do
+    run "#{latest_release}/derived_data/getall.sh #{latest_release}/derived_data"
+    run "#{latest_release}/derived_data/getallOrphans.sh #{latest_release}/derived_data"
   end
   
 end

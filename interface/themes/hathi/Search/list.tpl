@@ -107,8 +107,12 @@
       <h3>{translate text='Results refined by:'}</h3>
         <ul class="filters">
           {foreach from=$currentFacets item=facet}
+            {assign var=rurl value=$facet.removalURL}
+            {if $facet.valueDisplay == 'Full text' && $facet.indexDisplay == 'Viewability'}
+              {assign var=rurl value="$rurl&amp;sethtftonly=true"}
+            {/if}
             <li>
-              <a href="{$url}/Search/{$action}?{$facet.removalURL}"><img  class="facetbutton" src="{$path}/images/silk/cancel.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>
+              <a href="{$url}/Search/{$action}?{$rurl}"><img  class="facetbutton" src="{$path}/images/silk/cancel.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>
           {/foreach}
         </ul>        
     </div>

@@ -64,12 +64,28 @@
     							{if $field|getvalue:'r' eq 'pd'}<div class="viewrights fullview">Full view</div>
       							{elseif $field|getvalue:'r' eq 'pdus'}<div class="viewrights fullview">Full view</div>
       							{elseif $field|getvalue:'r' eq 'world'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-by'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-by-nd'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-by-nc-nd'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-by-nc'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-by-nc-sa'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-by-sa'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-zero'}<div class="viewrights fullview">Full view</div>
+
       							{else}<div class="viewrights limitedview">Limited (search-only)</div>
     							{/if}
   							{else}
     							{if $field|getvalue:'r' eq 'pd'}<div class="viewrights fullview">Full view</div>
       							{elseif $field|getvalue:'r' eq 'pdus'}<div class="viewrights limitedview">Limited (search-only)</div>
       							{elseif $field|getvalue:'r' eq 'world'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-by'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-by-nd'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-by-nc-nd'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-by-nc'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-by-nc-sa'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-by-sa'}<div class="viewrights fullview">Full view</div>
+                    {elseif $field|getvalue:'r' eq 'cc-zero'}<div class="viewrights fullview">Full view</div>
+      							
       							{else}<div class="viewrights limitedview">Limited (search-only)</div>
     							{/if}
   							{/if}

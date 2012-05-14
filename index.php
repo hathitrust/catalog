@@ -103,6 +103,8 @@ $session = VFSession::singleton();
 $alog = ActivityLog::singleton();
 $user = VFUser::singleton();
 
+# Set up the interface
+
 $authspecs = AuthSpecs::singleton();
 $interface = new UInterface();
 $interface->assign('machine', $_SERVER['SERVER_ADDR']);
@@ -132,6 +134,7 @@ if (!$session->is_set('country')) {
 }
 
 
+
 // if ($_SERVER['REMOTE_ADDR'] == '141.211.43.192') {
 //   $session->set('inUSA', true);
 // }
@@ -153,6 +156,13 @@ if (isset($configArray['Index']['urlFile'])) {
   $configSolrURL = parse_ini_file("conf/" . $configArray['Index']['urlFile']);
   $configArray['Index']['url'] = $configSolrURL['url'];
 }
+
+//#####################################
+// Load up ht HT namespace map
+//#####################################
+
+$interface->assign('ht_namespace_map', eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_namespaces.php')));
+
 
 //######################################
 // Language translation

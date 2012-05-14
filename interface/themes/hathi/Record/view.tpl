@@ -522,41 +522,8 @@
           {/if}
         
          <span class="IndItem">{if $field|getvalue:'z'}{$field|getvalue:'z'}{else}{/if}</span></a> 
-         <em>
-         {if $nmspace eq 'mdp'} (original from University of Michigan) 
-           {elseif $nmspace eq 'miua'} (original from University of Michigan)
-           {elseif $nmspace eq 'miun'} (original from University of Michigan)
-           {elseif $nmspace eq 'wu'} (original from University of Wisconsin)
-           {elseif $nmspace eq 'inu'} (original from Indiana University)
-           {elseif $nmspace eq 'uc1'} (original from University of California)
-           {elseif $nmspace eq 'uc2'} (original from University of California)
-           {elseif $nmspace eq 'pst'} (original from Penn State University)
-           {elseif $nmspace eq 'umn'} (original from University of Minnesota)
-           {elseif $nmspace eq 'nnc1'} (original from Columbia University)
-           {elseif $nmspace eq 'nnc2'} (original from Columbia University)
-           {elseif $nmspace eq 'nyp'} (original from New York Public Library)
-           {elseif $nmspace eq 'uiuo'} (original from University of Illinois)
-           {elseif $nmspace eq 'njp'} (original from Princeton University)
-           {elseif $nmspace eq 'yale'} (original from Yale University)
-           {elseif $nmspace eq 'chi'} (original from University of Chicago)
-           {elseif $nmspace eq 'coo'} (original from Cornell University)
-           {elseif $nmspace eq 'ucm'} (original from Universidad Complutense de Madrid)
-           {elseif $nmspace eq 'loc'} (original from Library of Congress)
-           {elseif $nmspace eq 'ien'} (original from Northwestern University)
-           {elseif $nmspace eq 'hvd'} (original from Harvard University)
-           {elseif $nmspace eq 'uva'} (original from University of Virginia)
-           {elseif $nmspace eq 'dul1'} (original from Duke University)
-           {elseif $nmspace eq 'ncs1'} (original from North Carolina State University)
-           {elseif $nmspace eq 'nc01'} (original from University of North Carolina)
-           {elseif $nmspace eq 'pur1'} (original from Purdue University)
-           {elseif $nmspace eq 'pur2'} (original from Purdue University)
-           {elseif $nmspace eq 'usu'} (original from Utah State University)
-	   {elseif $nmspace eq 'mdl'} (original from Minnesota Digital Library)
-	   {elseif $nmspace eq 'gri'} (original from Getty Research Institute)
-	   {elseif $nmspace eq 'uiug'} (original from University of Illinois)
-           {else}
-         {/if}</li>
-         </em>
+         <em>(original from {$ht_namespace_map[$nmspace]})</em>
+         </li>
         {/foreach}
     {/if} {* $marcField *}
   {/if} {* $mergedItems  *}

@@ -186,7 +186,6 @@ class RecordUtils
     }
     return 'UCAL';
   }
-
    function getLinkNums($marc) {
     $links = array();
     // hathi id (974 subfield u)
@@ -230,7 +229,6 @@ class RecordUtils
   
   function getStatuses($result) {
     global $configArray;
-    
     $session = VFSession::singleton();
     
     $ids = array();
@@ -244,37 +242,6 @@ class RecordUtils
       $url_list[$record['id']] = $this->getURLs($marcRecord);
     }  
   
-    //$holdingList = $this->catalog->getStatuses($ids);
-    $holdingList = $this->catalog->getStatuses($result);
-    
-    
-    $usft  = array('pd', 'pdus' ,'world', 'umall', 'opb');
-    $intlft = array('pd', 'world', 'umall', 'opb');
-    
-    if ($session->get('inUSA')) {
-      $ft = $usft;
-    } else {
-      $ft = $intlft;
-    }
-    
-    foreach ($holdingList as $id => $h) {
-      if ( isset($holdingList[$id]["NA"])) return $holdingList;
-      foreach ($h as $locindex => $location) {
-        if ($location['sub_library'] == 'HATHI') {
-          foreach ($location['item_info'] as $index => $volume) {          
-            if (in_array($volume['rights'], $ft) || preg_match('/^cc/', $volume['rights'])) {
-              $holdingList[$id][$locindex]['item_info'][$index]['isHTFT'] = true;
-            } else {
-              $holdingList[$id][$locindex]['item_info'][$index]['isHTSO'] = true;
-              $holdingList[$id][$locindex]['item_info'][$index]['status'] = "Search only (no full text)";              
-            }
-          }
-        }
-      }
-    }
-    
-    
-    
     if (PEAR::isError($holdingList)) {
         PEAR::raiseError($holdingList);
     }

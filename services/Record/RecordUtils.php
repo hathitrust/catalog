@@ -19,6 +19,26 @@ class RecordUtils
     'p' => true
     );  
   
+  
+  private $ns_google_prefix = array(
+    'chi' => 'CHI',
+    'coo' => 'CORNELL',
+    'hvd' => 'HARVARD',
+    'ien' => 'NWU',
+    'inu' => 'IND',
+    'mdp' => 'UOM',
+    'njp' => 'PRNC',
+    'nnc1' => 'COLUMBIA',
+    'nyp' => 'NYPL',
+    'pst' => 'PSU',
+    'pur1' => 'PURD',
+    'uc1' => 'UCAL',
+    'ucm' => 'UCM',
+    'umn' => 'MINN',
+    'uva' => 'UVA',
+    'wu' => 'WISC'
+  );
+  
   function __construct() {
     global $configArray;
   }
@@ -134,9 +154,60 @@ class RecordUtils
     return $titles[0];
   }
 
+
+  function getGooglePrefix($ns, $id) {
+    if (!isset( $this->ns_google_prefix[$ns])) return '';
+    $google_prefix = $this->ns_google_prefix[$ns];
+    if ($google_prefix == 'UCAL') return $this->getGooglePrefixUCAL($id);
+    return $google_prefix;
+  }
+ 
+  function getGooglePrefixUCAL($id) {
+    $id_len = strlen($id);
+    if ($id_len == 11 and substr($id, 0, 1) == 'L') return 'UCLA';
+    if ($id_len == 10) return 'UCB';
+    if ($id_len == 14) {
+      switch (substr($id, 1, 4)) {
+        case '1822':
+          return 'UCSD';
+        case '1970':
+          return 'UCI';
+        case '1378':
+          return 'UCSF';
+        case '2106':
+          return 'UCSC';
+        case '1205':
+          return 'UCSB';
+        case '1175':
+          return 'UCD';
+        case '1158':
+          return 'UCLA';
+        case '1210':
+          return 'UCR';
+      }
+    }
+    return 'UCAL';
+  }
+
+
    function getLinkNums($marc) {
     // ISBN 
     $links = array();
+    
+    // hathi id (974 subfield u)
+    if ($f974List = $marc->getFields('974')) {
+      foreach ($f974List as $field) {
+        if ($subu = $field->getSubfield('u')->getData()) {
+          list($ns, $id) = explode(".", $subu, 2);
+          $id = strtoupper($id);
+          if ($google_prefix = $this->getGooglePrefix($ns, $id)) {
+            $links[] = implode(":", array($google_prefix, $id));
+            break;
+          }
+        }
+      }
+    }
+    
     // oclc number
     if ($f035List = $marc->getFields('035')) {
       foreach ($f035List as $field) {
@@ -163,6 +234,8 @@ class RecordUtils
   
   function getStatuses($result) {
     global $configArray;
+    $session = VFSession::singleton();
+    
     $ids = array();
     $url_list = array();
     if (!isset($this->catalog)) {
@@ -174,7 +247,8 @@ class RecordUtils
       $url_list[$record['id']] = $this->getURLs($marcRecord);
     }  
   
-    $holdingList = $this->catalog->getStatuses($ids);
+     $holdingList = $this->catalog->getStatuses($ids);
+    
     if (PEAR::isError($holdingList)) {
         PEAR::raiseError($holdingList);
     }

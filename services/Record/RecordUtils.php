@@ -242,6 +242,8 @@ class RecordUtils
       $url_list[$record['id']] = $this->getURLs($marcRecord);
     }  
   
+    $holdingList = $this->catalog->getStatuses($ids);
+  
     if (PEAR::isError($holdingList)) {
         PEAR::raiseError($holdingList);
     }

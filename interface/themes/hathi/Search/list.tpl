@@ -108,8 +108,8 @@
         <ul class="filters">
           {foreach from=$currentFacets item=facet}
             {assign var=rurl value=$facet.removalURL}
-            {if $facet.valueDisplay == 'Full text' && $facet.indexDisplay == 'Viewability'}
-              {assign var=rurl value="$rurl&amp;sethtftonly=true"}
+            {if $facet.value == 'Full text' && $facet.index == 'ht_availability'}              
+			  {assign var=rurl value="$rurl&amp;sethtftonly=true"}
             {/if}
             <li>
               <a href="{$url}/Search/{$action}?{$rurl}"><img  class="facetbutton" src="{$path}/images/silk/cancel.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>

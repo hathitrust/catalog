@@ -66,7 +66,8 @@ $rightsmap = array(
   'cc-by-nc-nd' => 'Full view',
   'cc-by-nc' => 'Full view',
   'cc-by-nc-sa' => 'Full view',
-  'cc-by-sa' => 'Full view'
+  'cc-by-sa' => 'Full view',
+  'cc-zero' => 'Full view'
 );
 
 

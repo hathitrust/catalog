@@ -1,6 +1,6 @@
-<!--  
+<!--
   ###################### BEGIN POPOUT DISPLAY TEXT########################
--->    
+-->
 <!--
   <div id="favorite_help" style="display: none">
     <h2>Add to favorites</h2>
@@ -34,22 +34,22 @@
     <div id="searchhistory_help" style="display:none;" >
       <h2>Search History</h2>
       <p>We’re still working on Search History.  We hope to have it available soon. Once it’s here, it will provide a list of your recent searches and allow you to revisit them within a browser session.</p>
-      
+
     </div>
-    
+
     <div  id="browse_help" style="display:none;" >
       <h2>Browse the catalog</h2>
       <p>Sequential browsing of the catalog is not currently functional, but you can try another type of browsing by searching for nothing at all (just click the search button with an empty box) and then narrowing the results.</p>
-      
+
       <p>We have not yet determined if we'll be able to make browsing available when the initial public Mirlyn2 beta rolls out in January.</p>
-      
+
     </div>
 
 
     <div  id="hold_help" style="display:none;" >
       <h2>Hold/Recall an item</h2>
       <p>The ability to hold or recall an item is not yet functional; it will be working by the time we go live.</p>
-      
+
     </div>
 -->
 <!--
@@ -57,7 +57,7 @@
     <div  id="feedback" style="display:none">
     <div class="hd">Feedback</div>
       <h2>HathiTrust Catalog Feedback</h2>
-            
+
       <form method="POST" id="feedbackform" action="mailto:hathitrust-info@umich.edu"      onsubmit="submitFeedback();return true;">
       <script language="JavaScript" type="text/javascript">
       {literal}
@@ -70,26 +70,26 @@
 <!--          <tr><td style="text-align:left; vertical-align: top padding-right: 2em;">Comment or Question</td><td style="text-align:left; vertical-align: top"><textarea style="width: 250px; height: 100px;" name="comment"></textarea></td></tr>
         </table>
 -->
-<!--      
+<!--
       <div id="feedback_thanks" style="display:none"><div style="padding: 1em; color: red;" >Thank you for taking the time to provide feedback.</div></div>
       <div id="submitbutton"><input type="submit" /></div>
       </form>
     </div>
-    
+
     <div  id="reserves_help" style="display:none;" >
       <h2>Reserves</h2>
-      <p>Currently, this application doesn't support an integrated reserves system with Aleph. We will likely 
+      <p>Currently, this application doesn't support an integrated reserves system with Aleph. We will likely
       send users to the <a href="http://mirlyn.lib.umich.edu/F/?local_base=miu30_pub">reserves system in Mirlyn</a>.</p>
     </div>
--->    
+-->
 <!--
     <div  id="newbooks_help" style="display:none;" >
       <h2>New Items</h2>
-      <p>It's not clear how to support "New Items" in this software; for the moment, we're just going to send people 
+      <p>It's not clear how to support "New Items" in this software; for the moment, we're just going to send people
       to  <a href="http://www.lib.umich.edu/newbooks/">the regular Newly Cataloged Items page</a>.</p>
     </div>
- 
- 
+
+
     <div  id="askus_help" style="display:none;" >
       <h2>Ask a Librarian</h2>
       <p>Any "Ask a Librarian" links will likely be turned into our normal AskUs link, e.g., <p style="padding-top: 1em; padding-left: 3em"><a href="http://www.lib.umich.edu/ask/"><img src="http://www.lib.umich.edu/graphics/phase1/askus-sidebar.jpg" alt="Ask a Librarian" title="Ask a Librarian" border="0" height="11" width="17">Ask a Librarian</a></p></p>
@@ -138,7 +138,7 @@ Create your own <a class="inline" target="_blank" href="http://babel.hathitrust.
 </div>
 <span class="container-close"> </span>
 </div>
- 
+
 <div id="searchtips_help">
 <div class="bd">
 <h2>Search Tips</h2>
@@ -174,12 +174,12 @@ uppercase. </p>
   {if $message}<div class="error">{$message}</div>{/if}
 
   <form action="{$url}/Record/{$id}/Email" method="post" id="popupForm" name="popupForm" onSubmit="SendEmail('{$id}', this.elements['to'].value, this.elements['from'].value, this.elements['message'].value); return false;">
-    <label for="to"><strong>To:</strong></label><br>
-    <input type="text" name="to" size="40" id="to"><br>
-    <label for="from"><strong>From:</strong></label><br>
-    <input type="text" name="from" size="40" id="from"><br>
-    <label for="message"><strong>Message:</strong></label><br>
-    <textarea name="message" rows="3" cols="40" id="message"></textarea><br>
+    <label for="er_to"><strong>To:</strong></label><br>
+    <input type="text" name="to" size="40" id="er_to"><br>
+    <label for="er_from"><strong>From:</strong></label><br>
+    <input type="text" name="from" size="40" id="er_from"><br>
+    <label for="er_message"><strong>Message:</strong></label><br>
+    <textarea name="message" rows="3" cols="40" id="er_message"></textarea><br>
     <input id="emailRecord_close" type="submit" name="submit" value="Send">
   </form>
   </div>
@@ -191,88 +191,17 @@ uppercase. </p>
 
   <form action="{$url}/Search/Email" method="post" onSubmit="SendEmail(this); return false;">
     <input id="url" type="hidden" name="url" value="">
-    <label for="to"><strong>To:</strong></label><br>
-    <input type="text" id="to" name="to" size="40"><br>
-    <label for="from"><strong>From:</strong></label><br>
-    <input type="text" id="from" name="from" size="40"><br>
-    <label for="message"><strong>Message:</strong></label><br>
-    <textarea id="message" name="message" rows="3" cols="40"></textarea><br>
+    <label for="es_to"><strong>To:</strong></label><br>
+    <input type="text" id="es_to" name="to" size="40"><br>
+    <label for="es_from"><strong>From:</strong></label><br>
+    <input type="text" id="es_from" name="from" size="40"><br>
+    <label for="es_message"><strong>Message:</strong></label><br>
+    <textarea id="es_message" name="message" rows="3" cols="40"></textarea><br>
     <input id="emailSearch_close" type="submit" name="submit" value="Send">
   </form>
   </div>
 </div>
 
-
-<!-- Record view.tpl -->    
 <!--
-<div  id="email_help" style="display: none">
-  <h2>Email</h2>
-  <p>Emailing a record is not yet working correctly and will be fixed before launch.</p>
-
-  <p>Decisions about exactly what data to email (e.g., just the ALA-formatted citation as it appears under the "Cite This" link?)
-     are ongoing.</p>
-</div>
-
-<div id="export_help" style="display:none">
-<h2>Export Record</h2>
-<p>Exporting of records &mdash; to Endnote, Refworks, and possibly others &mdash; is currently being worked on and will be added
-  as soon as possible.
-</div>
-
-<div  id="refworks_help" style="display:none;" >
-<h2>Export to RefWorks</h2>
-<p>The export to RefWorks functionality is not yet working correctly; we hope to have it in place by launch.</p>
-</div>
-
-<div   id="endnote_help" style="display:none;" >
-<h2>Export to Endnote</h2>
-<p>The export to Endnote functionality is not yet working correctly; we hope to have it in place by launch.</p>
-</div>
-
-<div   id="zotero_help" style="display:none;" >
-<h2>Export to Zotero</h2>
-<p>The export to Zotero functionality is not yet working correctly; we hope to have it in place by launch.</p>
-</div>
--->
-<!-- Home.tpl -->
-<!--
-<div style="display:none;margin: .75em;" id="m2beta_help">
-  <h2>Welcome to the Mirlyn2 Staff Only Beta</h2>
-  <p>We're hoping staff will take the time to provide us with feedback about the application -- what seems to work well,
-    what doesn't, features you'd like to see, bugs you've found...any comments at all are appreciated!</p>
--->    
-<!--
-  <p>To submit a comment, just click on the big green "Provide Feedback" link at the top of any page, or send email
-    directly to <a href="mailto:mirlyn2-beta-feedback@umich.edu">mirlyn2-beta-feedback@umich.edu</a>.
-  </p>
-</div>
-
-<div style="display:none; text-align: left" id="searchtips_text">
-  {include file="searchtips.tpl"}
-</div>
-
-
-<div id="feedback_form" style="display:none">
-  <div style="padding: 1.5em;" id="feedback_form_wrapper">
-  <h2>Tell us what you think about the new HathiTrust Catalog!</h2>
-  <form  method="POST" action="" onsubmit="SubmitFeedback(this); return false;">
-    <table>
-      <tr><td>Email</td><td><input name="uniqname" value="{$uniqname}"><br>(only if you want a reply)</td></tr>
-      <tr><td>Comment on:</td><td><input type="radio" name="url" value="none" checked="checked"> Whole site<br>
-                                  <input id="feedback_url" type="radio" name="url" value="">Just this page</td></tr>
-      <tr><td>Subject: </td><td><input name="subject" type="text" size="40"></td></tr>                            
-      <tr><td>Your comment:</td><td><textarea name="comment" rows="8" cols="40"></textarea></td></tr>
-      <tr><td></td><td><input type="submit" value="Submit your feedback"></td></tr>
-    </table>
-    
- </form>                                  
-
- <script language="JavaScript" type="text/javascript">
-  jq('#feedback_url').val( window.location.href);
-</script>
-</div>  
-</div>
--->
-<!--  
   ###################### END POPOUT DISPLAY TEXT########################
 -->

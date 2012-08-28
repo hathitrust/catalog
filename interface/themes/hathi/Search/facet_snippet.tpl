@@ -1,5 +1,5 @@
 {foreach from=$indexes item=cluster}
-<div class="narrowList navmenu narrow_begin" id="facet_begin_{$clusterName}">
+<div class="narrowList navmenu narrow_begin" id="facet_begin_{$facetConfig.$cluster}">
     <h3>{$facetConfig.$cluster}</h3>
     <ul>
     {foreach from=$counts.$cluster item=facet name="facetLoop"}

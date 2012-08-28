@@ -7,7 +7,7 @@ More info at:  http: //developer.yahoo.com/yui/grids/
 
 Copyright (c) 2007,
  Yahoo! Inc. All rights reserved.
-Code licensed under the BSD License: 
+Code licensed under the BSD License:
 http: //developer.yahoo.net/yui/license.txt
 version:  2.2.2
 */
@@ -165,25 +165,25 @@ pre,
 	_position: static;
 }
 
-#yui-main .yui-b {
+.yui-main .yui-b {
 	position: static;
 }
 
-#yui-main {
+.yui-main {
 	width: 100%;
 }
 
-.yui-t1 #yui-main,
-.yui-t2 #yui-main,
-.yui-t3 #yui-main,
-.yui-t8 #yui-main {
+.yui-t1 .yui-main,
+.yui-t2 .yui-main,
+.yui-t3 .yui-main,
+.yui-t8 .yui-main {
 	float: right;
 	margin-left: -25em;
 }
 
-.yui-t4 #yui-main,
-.yui-t5 #yui-main,
-.yui-t6 #yui-main {
+.yui-t4 .yui-main,
+.yui-t5 .yui-main,
+.yui-t6 .yui-main {
 	float: left;
 	margin-right: -25em;
 }
@@ -194,7 +194,7 @@ pre,
 	*width: 12.0106em;
 }
 
-.yui-t1 #yui-main .yui-b {
+.yui-t1 .yui-main .yui-b {
 	margin-left: 13.3207em;
 	*margin-left: 13.0106em;
 }
@@ -205,7 +205,7 @@ pre,
 	*width: 13.512em;
 }
 
-.yui-t2 #yui-main .yui-b {
+.yui-t2 .yui-main .yui-b {
 	margin-left: 14.8456em;
 	*margin-left: 14.512em;
 }
@@ -216,7 +216,7 @@ pre,
 	*width: 22.52em;
 }
 
-.yui-t3 #yui-main .yui-b {
+.yui-t3 .yui-main .yui-b {
 	margin-left: 24.0759em;
 	*margin-left: 23.52em;
 }
@@ -227,7 +227,7 @@ pre,
 	*width: 18.016em;
 }
 
-.yui-t8 #yui-main .yui-b {
+.yui-t8 .yui-main .yui-b {
 	margin-left: 19.4608em;
 	*margin-left: 19.016em;
 }
@@ -238,7 +238,7 @@ pre,
 	*width: 13.512em;
 }
 
-.yui-t4 #yui-main .yui-b {
+.yui-t4 .yui-main .yui-b {
 	margin-right: 14.8456em;
 	*margin-right: 14.512em;
 }
@@ -249,7 +249,7 @@ pre,
 	*width: 18.016em;
 }
 
-.yui-t5 #yui-main .yui-b {
+.yui-t5 .yui-main .yui-b {
 	margin-right: 19.4608em;
 	*margin-right: 19.016em;
 }
@@ -260,17 +260,17 @@ pre,
 	*width: 22.52em;
 }
 
-.yui-t6 #yui-main .yui-b {
+.yui-t6 .yui-main .yui-b {
 	margin-right: 24.0759em;
 	*margin-right: 23.52em;
 }
 
-.yui-t7 #yui-main .yui-b {
+.yui-t7 .yui-main .yui-b {
 	display: block;
 	margin: 0 0 1em 0;
 }
 
-#yui-main .yui-b {
+.yui-main .yui-b {
 	float: none;
 	width: auto;
 }

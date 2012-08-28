@@ -176,7 +176,7 @@ function hideMenu(elemId)
       <h2 class="SkipLink">Main Content</h2>
 <!-- Searchbox -->
       {if !$isTheHomePage}
-      <div id="bd">
+      <div>
         <div class="yui-main">
             {include file="searchbox.tpl"}
         </div>

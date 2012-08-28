@@ -17,7 +17,7 @@
       </div>
 
         <div class="resultitem">
-          <div id="resultItemLine1" class="results_title">
+          <div class="resultItemLine1 results_title">
             {if $showscores}
             (<span class="score">{$record.score}</span>)
             {/if}
@@ -39,7 +39,7 @@
 
           </div>
 
-          <div id="resultItemLine2" class="results_author">
+          <div class="resultItemLine2 results_author">
           {if $record.author}
           {translate text='by'}
           {if is_array($record.author)}
@@ -55,7 +55,7 @@
           {/if}
           </div>
 
-          <div id="resultItemLine3" class="results_published">
+          <div class="resultItemLine3 results_published">
           {if $record.publishDate}{translate text='Published'} {$record.publishDate.0}{/if}
           </div>
 
@@ -134,7 +134,7 @@
 
           </div>
 
-{*        <div id="resultItemLine4" class="results_format">
+{*        <div class="resultItemLine4 results_format">
 
           {if $record.format}
           {assign var=id value=$record.id}

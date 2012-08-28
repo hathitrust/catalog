@@ -43,7 +43,7 @@ a {color:#000; text-decoration: none;}
     border-bottom: 1px solid #ccc;
 }
 
-#resultItemLine1{
+.resultItemLine1{
 font-weight: bold;
 }
 
@@ -58,7 +58,7 @@ padding-bottom: 1em;
   border-bottom: 1px solid #ccc;
 }
 .citation tr {
-  
+
 }
 .citation td {
   padding:.3em 0 .3em 1em;
@@ -73,20 +73,20 @@ padding-bottom: 1em;
 	padding: 4px;
 	margin: 0 0 2px 15px;
 }
-	
-	
+
+
 /* Icon Classes */
 
 #stabnav a.catalog {
   background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/book.png);
   background-repeat:no-repeat;
-  background-position: left; 
+  background-position: left;
   padding-left:20px;
 }
 #stabnav a.articles {
   background-image:url(<?php echo $configArray['Site']['path'];?>/images/articles.png);
   background-repeat:no-repeat;
-  background-position: left; 
+  background-position: left;
   padding-left:20px;
 }
 

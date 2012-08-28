@@ -5,7 +5,7 @@
   {else}
   <div class="result record{$smarty.foreach.recordLoop.iteration}">
   {/if}
-  
+
 <!--
   <script type="text/javascript">
      getStatuses('{$record.id}');
@@ -25,20 +25,20 @@
 <!-- title array -->
             {foreach from=$record.title item=title}
             <!-- <a href="/Record/{$record.id}" class="title">{$title|truncate:180:"..."|highlight:$lookfor|default:'Title not available'}</a><br> -->
-            <span class="title">{$title|truncate:180:"..."|highlight:$lookfor|default:'Title not available'}</span><br>            {/foreach}
+            <h3 class="title"><span class="title">{$title|truncate:180:"..."|highlight:$lookfor|default:'Title not available'}</span></h3><br>            {/foreach}
           {else}
 <!-- title non-array -->
           <!-- <a href="{$url}/Record/{$record.id}" class="title">{$record.title|truncate:180:"..."|highlight:$lookfor|default:'Title not aavailable'}</a> -->
-          <span class="title">{$record.title|truncate:180:"..."|highlight:$lookfor|default:'Title not aavailable'}</span>
-          
+          <h3 class="title"><span class="title">{$record.title|truncate:180:"..."|highlight:$lookfor|default:'Title not aavailable'}</span></h3>
+
           {/if}
           {if $record.title2}
           <br>
           <span class="results_title2">{$record.title2|truncate:180:"..."|highlight:$lookfor}</span>
           {/if}
-          
+
           </div>
-  
+
           <div id="resultItemLine2" class="results_author">
           {if $record.author}
           {translate text='by'}
@@ -50,28 +50,28 @@
           {else}
           <!-- <a href="/Search/Home?lookfor=%22{$record.author|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$record.author|highlight:$lookfor}</a> -->
           {$record.author|highlight:$lookfor}
-          
+
           {/if}
           {/if}
           </div>
-    
+
           <div id="resultItemLine3" class="results_published">
           {if $record.publishDate}{translate text='Published'} {$record.publishDate.0}{/if}
           </div>
-          
-          
+
+
           <div>
-            
+
           </div>
-          
+
           <!-- Viewability Link -->
-          
+
           <div class="AccessLink">
             <ul>
               <li>
                 <a href="/Record/{$record.id}" class="cataloglinkhref">Catalog Record</a>
               </li>
-              
+
               <li>
                {assign var=marcField value=$record.marc->getFields('974')}
                 {if $marcField}
@@ -87,10 +87,10 @@
                     {if $smarty.foreach.myLoop.index gt 0}
                         <!-- <a href="/Record/{$record.id}" class="multivolLink">Multiple volumes</a> -->
                         <span class="multivolLink">(view record to see multiple volumes)</span>
-                    
-                    {php}break;{/php} 
+
+                    {php}break;{/php}
                     {else}
-<a href="http://hdl.handle.net/2027/{$url}" class="rights-{$field|getvalue:'r'} 
+<a href="http://hdl.handle.net/2027/{$url}" class="rights-{$field|getvalue:'r'}
   {if $session->get('inUSA')}
     {if $field|getvalue:'r' eq 'pd'}fulltext">Full view
       {elseif $field|getvalue:'r' eq 'pdus'}fulltext">Full view
@@ -121,7 +121,7 @@
       {else}searchonly">Limited (search-only)
     {/if}
   {/if}
-  
+
 </a>
 
                     {/if}
@@ -129,13 +129,13 @@
                 {/if}
               </li>
             </ul>
-            
-            
-  
-          </div>              
+
+
+
+          </div>
 
 {*        <div id="resultItemLine4" class="results_format">
-       
+
           {if $record.format}
           {assign var=id value=$record.id}
           {assign var=formatList value=$format.$id}
@@ -183,8 +183,8 @@
 *}
        </div>
       </div>
-  
-  
+
+
       <!--<div class="yui-u">
         <div id="saveLink{$record.id}"> -->
 <!--          <a href="{$url}/Record/{$record.id}/Save" onClick="getLightbox('Record', 'Save', '{$record.id}', null, '{translate text="Add to Favorites"}'); return false;" class="fav tool">{translate text='Add to favorites'}</a> -->
@@ -198,10 +198,10 @@
         {/if}
       </div>
     -->
-    
+
     </div>
 
-<!-- 
+<!--
           {if $record.format=="Book"}
     <span class="Z3988"
           title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rfr_id=info%3Asid%2F{$coinsID}%3Agenerator&amp;rft.genre=book&amp;rft.btitle={$record.title|escape:"url"}&amp;rft.title={$record.title|escape:"url"}&amp;rft.series={$record.series}&amp;rft.au={$record.author|escape:"url"}&amp;rft.date={$record.publishDate}&amp;rft.pub={$record.publisher|escape:"url"}&amp;rft.edition={$record.edition|escape:"url"}&amp;rft.isbn={$record.isbn}">
@@ -216,7 +216,7 @@
 
   </div>
 
-<!--   {if !$record.url} 
+<!--   {if !$record.url}
   <script type="text/javascript">
      getStatuses('{$record.id}');
   </script>

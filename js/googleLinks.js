@@ -19,7 +19,7 @@ function getGoogleBookInfo(link_nums, record_num, record_counter)
           jQuery('#ELEC_holdings').append('<tr><th></th><td style="width: 50%;"></td><td>' + googleLink.link + '</td></tr>');
           jQuery('#dummyElec').show();
           // deal with elec copy on results page
-          if (jQuery('#ELEC_'+ record_num).length ) { 	// replace link 
+          if (jQuery('#ELEC_'+ record_num).length ) { 	// replace link
             //alert("replace elec copy for record num" + record_num);
             jQuery('#ELEC_' + record_num).replaceWith('<tr><td class="holdingLocation">Electronic Resources</td><td><a href="/Record/' + record_num + '/Holdings#holdings">See Holdings</a></td>');
           } else {	// add a row

@@ -33,7 +33,7 @@
       <div class="searchtools">
         <!-- <a href="{$url}/Search/{$action}?lookfor={$lookfor|escape}&amp;type={$type}&amp;view=rss" class="feed">{translate text='Get RSS Feed'}</a> -->
 
-        <!-- fixme:suz RSS doesn't work so well 
+        <!-- fixme:suz RSS doesn't work so well
         <a href="" id="RSSFeed">{translate text='Get RSS Feed'}</a>
         <script language="JavaScript" type="text/javascript">
           loc = window.location.href;
@@ -48,6 +48,7 @@
       </div>
 
       <!-- Listing Options -->
+      <h2 class="hidden">Search Results</h2>
       <div class="yui-ge resulthead">
         <div class="yui-u first">
         {if $recordCount}
@@ -63,12 +64,12 @@
           <select id="sortOption" name="sort" onChange="document.location.href='{$fullPath}&amp;sort=' + this.options[this.selectedIndex].value;">
             <option value="">Relevance</option>
             <option value="year"{if $sort == "year"} selected{/if}>Date (newest first)</option>
-            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>            
+            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>
      <!--       <option value="author"{if $sort == "author"} selected{/if}>{translate text='Author'}</option>-->
             <option value="title"{if $sort == "title"} selected{/if}>{translate text='Title'}</option>
           </select>
         </div>
-      
+
 
       </div>
       <!-- End Listing Options -->
@@ -104,22 +105,22 @@
   <div id="listleftcol" class="yui-b"><div class="box submenu narrow">
   {if $currentFacets}
     <div id="applied_filters">
-      <h3>{translate text='Results refined by:'}</h3>
+      <h2>{translate text='Results refined by:'}</h2>
         <ul class="filters">
           {foreach from=$currentFacets item=facet}
             {assign var=rurl value=$facet.removalURL}
-            {if $facet.value == 'Full text' && $facet.index == 'ht_availability'}              
+            {if $facet.value == 'Full text' && $facet.index == 'ht_availability'}
 			  {assign var=rurl value="$rurl&amp;sethtftonly=true"}
             {/if}
             <li>
               <a href="{$url}/Search/{$action}?{$rurl}"><img  class="facetbutton" src="{$path}/images/silk/cancel.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>
           {/foreach}
-        </ul>        
+        </ul>
     </div>
   {/if}
-      
+
       <div class="narrowList navmenu" id="narrowList">
-      <h3>{translate text='Refine Search'}</h3>
+      <h2>{translate text='Refine Search'}</h2>
         {include file="Search/facet_snippet.tpl"}
       </div>
 

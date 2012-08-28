@@ -1,37 +1,37 @@
 <div class="searchbox">
-  <h3 class="SkipLink">Search Catalog</h3>
+  <h2 class="SkipLink">Search Catalog</h2>
   <div class="yui-b" style="margin-left: 0em; *margin-left: 0em;">
-  
+
     {if $suppress_searchbox}
-      <!-- 
-        <div style="margin: none; padding: none;">            
+      <!--
+        <div style="margin: none; padding: none;">
           <div style="margin-left: 5em; padding-bottom: 1em; padding-top: 15px">
             <a href="/?&amp;inst={$inst}">&lt; Back to basic search</a>
           </div>
           <div>
-            <span style="position: absolute; right: 2em;">             
+            <span style="position: absolute; right: 2em;">
                 {if $username}
                     <a href="{$path}/MyResearch/Home" title="Account information for {$username}">My Account</a> |
                     <a href="{$path}/MyResearch/Logout">{translate text="Log Out"}</a></span>
                 {else}
                   <a href="{$path}/MyResearch/Home" title="Log in and view your  account information">My Account</a> |
-                  <a href="{$loginURL}">{translate text="Login"}</a> 
+                  <a href="{$loginURL}">{translate text="Login"}</a>
                 {/if}
             </span>
-          </div> 
+          </div>
         </div>-->
 
-    {else}  
-    
-    
-      <form method="GET" id="searchForm" 
-            action="{$path}/Search/Home" name="searchForm" class="search" 
+    {else}
+
+
+      <form method="GET" id="searchForm"
+            action="{$path}/Search/Home" name="searchForm" class="search"
             onsubmit="trimForm(this.lookfor); return true;">
         <div id="searchGraphic">
           <img src="/images/hathi/SearchArrow_Cat.png" alt="Catalog Search">
         </div>
         <input type="hidden" name="checkspelling" value="true" />
-       
+
         <div id="searchboxCont">
 
            <!-- Index selection -->
@@ -54,52 +54,52 @@
                <input type="hidden" name="sethtftonly" value="true">
                <input type="checkbox" name="htftonly" value="true" id="fullonly" {if $ht_fulltextonly}checked="checked"{/if}/>&nbsp;<label for="fullonly">Full view only</label>
                <input  type="submit" name="submit" value="{translate text="Find"}">
-        {*       
+        {*
                {if $lookfor }
-               
+
                   <br>
                   <input type="radio" name="search" value="new" checked="on"> New Search
                   <!--<input type="radio" name="search" value="within" onClick="document.forms['searchForm'].elements['lookfor'].value=''; document.forms['searchForm'].elements['lookfor'].focus();"> Search Within-->
                   <input type="radio" name="search" value="within"> Search Within
               {/if}
         *}
-        
-        
-          <!-- fixme:suz hidden until advanced search can work better --> 
+
+
+          <!-- fixme:suz hidden until advanced search can work better -->
             <!-- <a style="padding-right: 2.5em; position: relative; " href="{$path}/Search/Advanced/{$inst}" class="small">{translate text="Advanced"}</a>           -->
-          
+
             <span id="searchLinks">
               <a href="{$path}/Search/Advanced">{translate text="Advanced Catalog Search"}</a>
               <a href="#" id="searchTips">Search Tips</a>
             </span>
-        
-        <!-- 
-            <span style="position: absolute; right: 2em;">             
+
+        <!--
+            <span style="position: absolute; right: 2em;">
             {if $username}
                 <a href="{$path}/MyResearch/Home&amp;inst={$inst}" title="Account information for {$username}">Your Account</a> |
                 <a href="{$path}/MyResearch/Logout">{translate text="Log Out"}</a></span>
              {else}
                 <a href="{$path}/MyResearch/Home" title="Log in and view your  account information">My Account</a> |
-                 <a href="{$loginURL}&amp;inst={$inst}">{translate text="Login"}</a> 
+                 <a href="{$loginURL}&amp;inst={$inst}">{translate text="Login"}</a>
              {/if}
           </span>
       -->
 
-        
-        <!-- Login 
+
+        <!-- Login
 {*         <div style="float:right;">
            <div style="margin-left: 5em; margin-right: 2em;">
-          
+
            {if $username}
               <a href="{$path}/MyResearch/Home&amp;inst={$inst}" title="Account information for {$username}">Your Account</a> |
               <a href="{$path}/MyResearch/Logout">{translate text="Log Out"}</a></span>
            {else}
-               <a href="{$loginURL}&amp;inst={$inst}">{translate text="Login"}</a> 
+               <a href="{$loginURL}&amp;inst={$inst}">{translate text="Login"}</a>
            {/if}
            </div>
          </div>
 *}-->
-       
+
        </div> <!-- End of the margin:none padding:none -->
       </form>
     {/if}

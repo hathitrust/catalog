@@ -28,7 +28,7 @@ html, body {
   background-color:#FFF;
   border: 1px solid #cccccc;
   padding:5px;
-  margin-left:15px; 
+  margin-left:15px;
 }
 
 .box {
@@ -72,7 +72,7 @@ ul.tools {
     text-align:left;
     margin-bottom:1em;
     margin-top: 1em;
-    
+
 }
 ul.tools li {
     float: left;
@@ -139,7 +139,7 @@ ul.menu li{
 
 .record {
   /* border-right: 1px dashed #cccccc; */
-  padding:10px 15px 10px 10px; 
+  padding:10px 15px 10px 10px;
 }
 .result.unavailable {
   background-color:#fff5ee;
@@ -164,7 +164,7 @@ ul.menu li{
 }
 
 .searchbox {
-  padding: 10px 15px 20px 0px; 
+  padding: 10px 15px 20px 0px;
   height: 3em;
   line-height:1em;
 }
@@ -192,17 +192,31 @@ ul.menu li{
   list-style-type: none;
   border-bottom: 1px solid #e3e3e3;
 }
-.navmenu dd {
+.navmenu li {
   padding:.1em 0 .1em .5em;
+  margin: 0 0 .5em 1.5em;
   list-style-type: none;
   border-bottom: 1px solid #e3e3e3;
 }
-.navmenu dt {
+
+.navmenu h2 {
+  font-size: 130%;
+  font-weight: bold;
+}
+
+.navmenu h3 {
   margin-top:.75em;
   font-weight:bold;
+  font-size: 95%;
 }
+
+h3.title {
+  font-size: 100%;
+}
+
 .title {
   font-size:1.15em;
+  display: inline;
 }
 .narrow dd {
   color:#999;
@@ -359,7 +373,7 @@ ul.browse {
   border-right: 1px solid #ccc;
   color:#333;
   }
-  
+
 
 #tabnav a:hover {
   background:url("<?php echo $configArray['Site']['path'];?>/images/tabs_hover_bg.jpg") repeat-x right top;
@@ -367,17 +381,17 @@ ul.browse {
 #tabnav .active a:hover {
   background:url("<?php echo $configArray['Site']['path'];?>/images/tab_active_bg.jpg") repeat-x right top;
   }
-  
-  
+
+
  #tabnav a.first {
  border-left: 1px solid #ccc;
- } 
+ }
 
 #tabnav a:hover {
-  
+
   }
 #tabnav .active {
- 
+
   }
 #tabnav .active a {
   background-image:url("<?php echo $configArray['Site']['path'];?>/images/tab_active_bg.jpg");
@@ -597,7 +611,7 @@ table.datagrid tr.oddrow {
 .cite {
   background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/report.png);
   background-repeat:no-repeat;
-  background-position: left; 
+  background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em;
 }
@@ -611,21 +625,21 @@ table.datagrid tr.oddrow {
 .sms {
   background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/phone.png);
   background-repeat:no-repeat;
-  background-position: left; 
+  background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em;
 }
 .tag {
   background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/tag_blue.png);
   background-repeat:no-repeat;
-  background-position: left; 
+  background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em;
 }
 .mail {
   background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/email.png);
   background-repeat:no-repeat;
-  background-position: left; 
+  background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em;
 }
@@ -633,35 +647,35 @@ table.datagrid tr.oddrow {
 #RSSFeed {
   background-image:url(<?php echo $configArray['Site']['path'];?>/images/feed-icon.png);
   background-repeat:no-repeat;
-  background-position: left; 
+  background-position: left;
   padding-left: 18px;
-  
+
 }
 .fav {
-/*  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/heart.png); 
+/*  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/heart.png);
   background-repeat:no-repeat;
-  background-position: left; 
+  background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em; */
 }
 .edit {
   background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/edit.png);
   background-repeat:no-repeat;
-  background-position: left; 
+  background-position: left;
   padding:.5em 0 .5em 18px;
   margin-right:.7em;
 }
 .delete {
   background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/delete.png);
   background-repeat:no-repeat;
-  background-position: left; 
+  background-position: left;
   padding:.5em .5em .5em 18px;
   margin-right:0;
 }
 .feed {
   background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/feed.png);
   background-repeat:no-repeat;
-  background-position: left; 
+  background-position: left;
   padding:.5em .5em .5em 20px;
   margin-left:1em;
 }
@@ -718,7 +732,7 @@ table.datagrid tr.oddrow {
   background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em;
-}  
+}
 
 .electronic, .electronicresource {
   background-image:url(<?php echo $configArray['Site']['path'];?>/images/computer.png);
@@ -899,7 +913,7 @@ img.centered {
 	margin-left: auto;
 	margin-right: auto;
 	}
-	
+
 alignright {
 	padding: 4px;
 	margin: 0 0 2px 7px;
@@ -917,7 +931,7 @@ alignleft {
 	padding: 4px;
 	margin: 0 7px 2px 0;
 	}
-	
+
 .alignleft {
 	float: left;
 	padding: 4px;

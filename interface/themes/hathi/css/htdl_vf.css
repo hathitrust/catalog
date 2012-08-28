@@ -9,7 +9,7 @@
 /*links for navigating collection builder functionality */
 
 
-/* === Hathi Trust Color Key === 
+/* === Hathi Trust Color Key ===
 
 bright orange: #ef7a06 (logo)
 med orange: #c4630f (links)
@@ -102,14 +102,14 @@ a:hover, a:focus, a:active {
   text-decoration: underline;
 }
 
-a.inlineLink:link, a.inlineLink:visited, 
+a.inlineLink:link, a.inlineLink:visited,
 .mbHomeContainer a:link, .mbHomeContainer a:visited,
 #HelpContent a:link, #HelpContent a:visited {
   color: #777777;
   text-decoration: underline;
 }
 
-a.inlineLink:hover, a.inlineLink:focus, a.inlineLink:active, 
+a.inlineLink:hover, a.inlineLink:focus, a.inlineLink:active,
 .mbHomeContainer a:hover, .mbHomeContainer a:focus, .mbHomeContainer a:active,
 #HelpContent a:hover, #HelpContent a:focus, #HelpContent a:active {
   color: #ef7a06;
@@ -138,14 +138,16 @@ em {
   overflow:hidden;
 }
 
-/* use to hide code from display AND screenreaders */
+/* use to hide code from display but NOT screenreaders */
 .hidden {
-  visibility:hidden;
-  display:none;
-  padding: 0;
-  margin: 0;
-  font-size: 0.1em;
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
 }
+
 
 
 /* New containers etc to replace yui divs */
@@ -247,7 +249,7 @@ em {
 
 .MBooksNav ul li a {
   padding: 5px 8px 7px;
-  line-height: 18px;  
+  line-height: 18px;
   color: #eeeeee !important;
 }
 
@@ -464,7 +466,7 @@ em {
   padding : 5px 3px 0 8px;
   top: 6px;
   width : 11.5em;
-  
+
 }
 
 .tr, .tl {
@@ -491,7 +493,7 @@ em {
 .bl {
   background : transparent url(/images/hathi/OrangeTab_BL.png) no-repeat;
   width : 18px;
-  height : 12px;  
+  height : 12px;
   margin-bottom : -1px;  /* this is for IE */
   top : -8px;
   left : -2px;
@@ -549,7 +551,7 @@ form {
 .SearchForm input#fullonly {
   margin-left: 8px;
 }
-	
+
 .itemList {
   clear: both;
   padding-top:10px;
@@ -748,18 +750,18 @@ table.citation {
         position:absolute;
     }
 
-    /*  
+    /*
         The following CSS is added to prevent scrollbar bleedthrough on
         Gecko browsers (e.g. Firefox) on MacOS.
     */
 
     /*
-        PLEASE NOTE: It is necessary to toggle the "overflow" property 
-        of the body element between "hidden" and "auto" in order to 
-        prevent the scrollbars from remaining visible after the the 
-        Resizable Panel is hidden.  For more information on this issue, 
+        PLEASE NOTE: It is necessary to toggle the "overflow" property
+        of the body element between "hidden" and "auto" in order to
+        prevent the scrollbars from remaining visible after the the
+        Resizable Panel is hidden.  For more information on this issue,
         read the comments in the "container-core.css" file.
-       
+
         We use the #reziablepanel_c id based specifier, so that the rule
         is specific enough to over-ride the .bd overflow rule above.
     */
@@ -774,20 +776,20 @@ table.citation {
 
     /*
         PLEASE NOTE: It is necessary to set the "overflow" property of
-        the underlay element to "visible" in order for the 
-        scrollbars on the body of a Resizable Panel instance to be 
-        visible.  By default the "overflow" property of the underlay 
+        the underlay element to "visible" in order for the
+        scrollbars on the body of a Resizable Panel instance to be
+        visible.  By default the "overflow" property of the underlay
         element is set to "auto" when a Panel is made visible on
         Gecko for Mac OS X to prevent scrollbars from poking through
-        it on that browser + platform combintation.  For more 
-        information on this issue, read the comments in the 
+        it on that browser + platform combintation.  For more
+        information on this issue, read the comments in the
         "container-core.css" file.
     */
 
     #formWidget_c.show-scrollbars .underlay {
         overflow: visible;
     }
-    
+
 
 
 /* Added by bill to make it look like fulltext search */
@@ -795,7 +797,7 @@ table.citation {
 #applied_filters {
   margin-bottom: 1.5em;
   padding: 0.5em 0.5em 0.5em 0em;
-  background-color: #fafafa; 
+  background-color: #fafafa;
   border: 1pt solid #ebece4
 }
 

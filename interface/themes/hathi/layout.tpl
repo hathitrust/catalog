@@ -63,7 +63,7 @@
       <h2 class="SkipLink">Main Content</h2>
 <!-- Searchbox -->
       {if !$isTheHomePage}
-      <div>
+      <div class="bd">
         <div class="yui-main">
             {include file="searchbox.tpl"}
         </div>

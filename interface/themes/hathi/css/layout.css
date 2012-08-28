@@ -345,7 +345,7 @@ pre,
 	width: 95%;
 }
 
-#bd:after,
+.bd:after,
 .yui-g:after,
 .yui-gb:after,
 .yui-gc:after,
@@ -359,7 +359,7 @@ pre,
 	visibility: hidden;
 }
 
-#bd,
+.bd,
 .yui-g,
 .yui-gb,
 .yui-gc,

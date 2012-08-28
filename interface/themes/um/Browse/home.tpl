@@ -1,7 +1,7 @@
 <script language="JavaScript" type="text/javascript" src="{$path}/services/Browse/ajax.js"></script>
 
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="contentbox" style="margin-right: 15px;">
 
      <h2>{translate text='Choose a Column to Begin Browsing'}:</h2>
@@ -43,7 +43,7 @@
           </div>
         </div>
       </div>
-  
+
     </div>
   </div>
 </div>

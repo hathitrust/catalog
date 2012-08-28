@@ -1,9 +1,9 @@
 <script language="JavaScript" type="text/javascript" src="{$path}/services/Search/ajax.js"></script>
 
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
-    
+
       <div class="record">
         {if $lastsearch}
           <p>  <a href="{$url}/Search/Home?{$lastsearch}" class="backtosearch">&laquo; Back to Search Results</a></p>
@@ -11,7 +11,7 @@
 
         {if $info}
         <h2>{$info.name}</h2><br>
-  
+
         {if $info.image}
         <img src="{$info.image}" alt="{$info.altimage}" class="alignleft">
         {/if}
@@ -20,7 +20,7 @@
           <br clear="All"><a href="http://en.wikipedia.org/wiki/{$info.name}" target="new"><span class="note">Provided by Wikipedia</span></a>
         </p>
         {/if}
-  
+
         <div class="resulthead">
           {translate text="Showing"}
           <b>{$recordStart}</b> - <b>{$recordEnd}</b>
@@ -31,14 +31,14 @@
         {include file="Search/list-list.tpl"}
 
         <script language="JavaScript" type="text/javascript">DoAjaxQueue();</script>
-  
+
         {assign var=pageLinks value=$pager->getLinks()}
         <div class="pagination">{$pageLinks.all}</div>
-  
+
       </div>
     </div>
   </div>
-  
+
   <!-- Subject Options -->
   <div class="yui-b">
     <div class="box submenu narrow">

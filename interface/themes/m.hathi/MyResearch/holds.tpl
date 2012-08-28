@@ -1,5 +1,5 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
       <h4>{translate text='Your Holds and Recalls'}</h4>
       {if is_array($recordList)}
@@ -35,7 +35,7 @@
                 <strong>{translate text='Created'}:</strong> {$record.createdate} |
                 <strong>{translate text='Expires'}:</strong> {$record.expiredate}<br>
                 <strong>{translate text='Status'}:</strong> {$record.status} |
-                <strong>{translate text='Pickup location'}:</strong> {$record.pickup_loc} 
+                <strong>{translate text='Pickup location'}:</strong> {$record.pickup_loc}
                 <br>
 
                 {assign var=formatList value=$record.format}

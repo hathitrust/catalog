@@ -1,5 +1,5 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
     {if $transList}
       <h4>{translate text='Your Fines'}</h4>
@@ -14,7 +14,7 @@
         {/if}
         <p>You have {$numdisp}</p>
       {/if}
-          
+
       {if $numItems ge 1}
         <table class="filters">
           <tr>

@@ -4,7 +4,7 @@
 
 <!-- Main Listing -->
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
 
 
@@ -24,14 +24,14 @@
           {translate text='Sort'}&nbsp;<select name="sort" onChange="document.location.href='{$urlbase}sort=' + this.options[this.selectedIndex].value;">
             <option value="">Relevance</option>
             <option value="year"{if $sort == "year"} selected{/if}>Date (newest first)</option>
-            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>            
+            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>
             <option value="author"{if $sort == "author"} selected{/if}>{translate text='Author'}</option>
           </select>
         </div>
       </div>
 
-        {include file="tempbox.tpl"}      
-    
+        {include file="tempbox.tpl"}
+
       <!-- End Listing Options -->
       {assign var=pageLinks value=$pager->getLinks()}
       <div class="pagination">{$pageLinks.all}</div>
@@ -43,7 +43,7 @@
       {/if}
 
       <div class="pagination">{$pageLinks.all}</div>
-      
+
     </div>
     <!-- End Main Listing -->
   </div>

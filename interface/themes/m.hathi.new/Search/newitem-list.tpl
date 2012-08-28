@@ -2,7 +2,7 @@
 
 <!-- Main Listing -->
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
 
       <!-- Listing Options -->
@@ -37,7 +37,7 @@
 *}
       {assign var=pageLinks value=$pager->getLinks()}
       <div class="pagination">{$pageLinks.all}</div>
-      
+
       <div class="searchtools">
         <strong>{translate text='Search Tools'}:</strong>
         <a href="{$path}/Search/{$action}?lookfor={$lookfor|escape}&type={$type}&view=rss" class="feed">{translate text='Get RSS Feed'}</a>

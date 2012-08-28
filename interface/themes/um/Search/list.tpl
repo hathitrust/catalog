@@ -5,7 +5,7 @@
 
 <!-- Main Listing -->
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
 
       <!-- Narrow Options for an Author Search-->
@@ -50,7 +50,7 @@
           {translate text='Sort'}&nbsp;<select name="sort" onChange="document.location.href='/Search/Home?{$searchcomps|escape:'html'}&amp;sort=' + this.options[this.selectedIndex].value;">
             <option value="">Relevance</option>
             <option value="year"{if $sort == "year"} selected{/if}>Date (newest first)</option>
-            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>            
+            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>
             <!-- <option value="callnumber"{if $sort == "callnumber"} selected{/if}>{translate text='Call Number'}</option> -->
             <option value="author"{if $sort == "author"} selected{/if}>{translate text='Author'}</option>
 <!--            <option value="title"{if $sort == "title"} selected{/if}>{translate text='Title'}</option>  -->
@@ -59,8 +59,8 @@
         </div>
       </div>
 
-        {include file="tempbox.tpl"}      
-    
+        {include file="tempbox.tpl"}
+
       <!-- End Listing Options -->
       {assign var=pageLinks value=$pager->getLinks()}
       <div class="pagination">{$pageLinks.all}</div>
@@ -72,7 +72,7 @@
       {/if}
 
       <div class="pagination">{$pageLinks.all}</div>
-      
+
       <div class="searchtools">
 
         <a class="feed" style="margin-left: 2em;" href="/Search/SearchExport?{$searchcomps|escape:'html'}&amp;method=atom" id="Feed">{translate text='Get Feed'}</a>
@@ -93,7 +93,7 @@
           <li><a class="clickpostlog" ref="{$facet.logargs}" href="{$url}/Search/{$action}?{$facet.removalURL}"><img  src="{$path}/images/silk/delete.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>
         {/foreach}
       </ul>
-      
+
 
       <div class="narrowList navmenu" id="narrowList">
         {include file="Search/facet_snippet.tpl"}
@@ -106,10 +106,10 @@
 
 <div id="emailSearch" style="background-color: #fff; display: none">
   <div style=" padding:3em; ">
-    <p><strong>Email this search</strong></p>    
+    <p><strong>Email this search</strong></p>
     <p>By filling out the form below, you can email a link to this search (and the first few results) to yourself or someone else.</p>
     <p>Note that both the "To" and "From" addresses must be complete (e.g., user@umich.edu).</p>
-    
+
     <form type="GET" action="/Search/SearchExport">
       <input type="hidden" name="method" value="emailRecords">
       <input type="hidden" name="tag" value="{$uuid}">
@@ -128,9 +128,9 @@
         </table>
         <input type="button" value="Send email" onclick="emailSearch(this); return false;">
     </form>
-    
+
     <div class="erError"></div>
-    
+
   </div>
 </div>
 </div>

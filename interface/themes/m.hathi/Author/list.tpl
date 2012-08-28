@@ -1,5 +1,5 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
 
       <div class="record">
@@ -37,7 +37,7 @@
 
             <div class="yui-ge">
               <div class="yui-u first">
-                <a href="{$url}/Search/Home?lookfor=%22{$valcount[0]}%22&amp;type=realauth">{$valcount[0]}</a> 
+                <a href="{$url}/Search/Home?lookfor=%22{$valcount[0]}%22&amp;type=realauth">{$valcount[0]}</a>
               </div>
               <div class="yui-u">
                 {$valcount[1]}
@@ -45,7 +45,7 @@
             </div>
           </div>
         {/foreach}
-        
+
         {assign var=pageLinks value=$pager->getLinks()}
         <div class="pagination">{$pageLinks.all}</div>
 

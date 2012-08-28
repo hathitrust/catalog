@@ -12,7 +12,7 @@
 
 <!-- Main Listing -->
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
 
       <!-- Narrow Options -->
@@ -42,7 +42,7 @@
        <div class="searchtools">
         <!-- <a href="{$url}/Search/{$action}?lookfor={$lookfor|escape}&amp;type={$type}&amp;view=rss" class="feed">{translate text='Get RSS Feed'}</a> -->
 
-        <!-- fixme:suz RSS doesn't work so well 
+        <!-- fixme:suz RSS doesn't work so well
         <a href="" id="RSSFeed">{translate text='Get RSS Feed'}</a>
         <script language="JavaScript" type="text/javascript">
           loc = window.location.href;
@@ -55,7 +55,7 @@
 
       <a href="#" id="emailSearch" class="mail" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search top');">{translate text='Email this Search'}</a>
     </div>
-*}  
+*}
       <!-- Listing Options -->
       <div class="yui-ge resulthead">
         <div class="yui-u first">
@@ -77,12 +77,12 @@
           <select id="sortOption" name="sort" onChange="document.location.href='/Search/Home?{$searchcomps|escape:'html'}&amp;sort=' + this.options[this.selectedIndex].value;">
             <option value="">Relevance</option>
             <option value="year"{if $sort == "year"} selected{/if}>Date (newest first)</option>
-            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>            
+            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>
            <option value="author"{if $sort == "author"} selected{/if}>{translate text='Author'}</option>
             <option value="title"{if $sort == "title"} selected{/if}>{translate text='Title'}</option>
           </select>
         </div>
-      
+
 
       </div>
       <!-- End Listing Options -->
@@ -110,7 +110,7 @@
           <li>
             <a href="{$url}/Search/{$action}?{$facet.removalURL}"><img  src="{$path}/images/silk/delete.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>
         {/foreach}
-      </ul>        
+      </ul>
       <div class="narrowList navmenu" id="narrowList">
         {include file="Search/facet_snippet.tpl"}
       </div>

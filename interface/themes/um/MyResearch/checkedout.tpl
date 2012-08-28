@@ -18,9 +18,9 @@ function SetAllCheckBoxes(FormName, FieldName, CheckValue)
 {/literal}
 
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
-    
+
         {if $user->patron}
           <h4>{translate text='Your Checked Out Items'}</h4>
           {assign var="numItems" value=$transList|@count}
@@ -32,7 +32,7 @@ function SetAllCheckBoxes(FormName, FieldName, CheckValue)
             {/if}
             <p>You have {$numdisp} checked out</p>
           {/if}
-          
+
           {if $transList}
           <ul class="filters">
           <form name=renewItems method="post">
@@ -46,7 +46,7 @@ function SetAllCheckBoxes(FormName, FieldName, CheckValue)
             {translate text='Sort'}&nbsp;<select name="sort" onChange="document.location.href='{$fullPath}&amp;sort=' + this.options[this.selectedIndex].value;">
               <option value="duedate_sort_a"{if $sort == "duedate_sort_a"} selected{/if}>{translate text='Due date (ascending)'}</option>
               <option value="duedate_sort_d"{if $sort == "duedate_sort_d"} selected{/if}>{translate text='Due date (descending)'}</option>
-              <option value="title_sort"{if $sort == "title_sort"} selected{/if}>{translate text='Title'}</option> 
+              <option value="title_sort"{if $sort == "title_sort"} selected{/if}>{translate text='Title'}</option>
               <option value="author"{if $sort == "author"} selected{/if}>{translate text='Author'}</option>
             </select>
           </div>
@@ -76,7 +76,7 @@ function SetAllCheckBoxes(FormName, FieldName, CheckValue)
 {*                   {foreach from=$resource.tags item=tag name=tagLoop}
                        <a href="{$url}/Search/Home?tag={$tag->tag}">{$tag->tag}</a>{if !$smarty.foreach.tagLoop.last},{/if}
                      {/foreach}
-*}                    
+*}
                     <br>
                     {/if}
                     {if $resource.notes}
@@ -95,7 +95,7 @@ function SetAllCheckBoxes(FormName, FieldName, CheckValue)
                       {if $resource.description} {$resource.description}{/if}
                       <br>
                     {/if}
-                    
+
                     <b>Due: {$resource.duedate}</b>
                     {if $resource.status} ({$resource.status}){/if}
                     <br>
@@ -115,7 +115,7 @@ function SetAllCheckBoxes(FormName, FieldName, CheckValue)
           {translate text="Can't get patron information from Mirlyn for $username"}.
         {/if}
 
-    
+
     </div>
   </div>
 

@@ -1,5 +1,5 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
 
       <div class="yui-gf resulthead">
@@ -56,7 +56,7 @@
             <li>No Record Views</li>
             {/foreach}
           </ul>
-          
+
           <h2>Usage Summary</h2>
           <table class="citation">
             <tr>

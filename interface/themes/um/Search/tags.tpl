@@ -3,7 +3,7 @@
 
 <!-- Main Listing -->
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
 
       <!-- Narrow Options for an Author Search-->
@@ -46,7 +46,7 @@
           {translate text='Sort'}&nbsp;<select name="sort" onChange="document.location.href='/Search/Home?{$searchcomps}&amp;sort=' + this.options[this.selectedIndex].value;">
             <option value="">Relevance</option>
             <option value="year"{if $sort == "year"} selected{/if}>Date (newest first)</option>
-            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>            
+            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>
             <!-- <option value="callnumber"{if $sort == "callnumber"} selected{/if}>{translate text='Call Number'}</option> -->
             <option value="author"{if $sort == "author"} selected{/if}>{translate text='Author'}</option>
 <!--            <option value="title"{if $sort == "title"} selected{/if}>{translate text='Title'}</option>  -->
@@ -85,7 +85,7 @@
           <li><a href="{$url}/Search/{$action}?{$facet.removalURL}"><img  src="{$path}/images/silk/delete.png" alt="Delete"></a>{$facet.indexDisplay} : {$facet.valueDisplay}</li>
         {/foreach}
       </ul>
-      
+
       <!-- <dl class="narrowList navmenu" id="narrowList">
       </dl> -->
       <div class="narrowList navmenu" id="narrowList">

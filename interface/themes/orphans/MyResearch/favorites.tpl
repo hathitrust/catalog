@@ -1,5 +1,5 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
 
       <!-- Internal Grid -->
@@ -8,7 +8,7 @@
           <h3 class="fav">{translate text='Your Favorites'}</h3>
 
 <p>Display of Your Favorites and Your Tags Will Be Coming Soon</p>
-          
+
 {*       {if $resourceList}
           <ul>
           {foreach from=$resourceList item=resource name="recordLoop"}
@@ -74,15 +74,15 @@
             </li>
           {/foreach}
           </ul>
-*}          
+*}
         </div>
       </div>
       <!-- End of Internal Grid -->
-      
+
     </div>
     <!-- End of first Body -->
   </div>
-  
+
   {include file="MyResearch/menu.tpl"}
 
 </div>

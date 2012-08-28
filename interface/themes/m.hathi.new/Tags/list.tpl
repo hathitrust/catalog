@@ -3,13 +3,13 @@
 
 {literal}
 <script type="text/javascript" charset="utf-8">
-  
+
 </script>
 {/literal}
 
 <!-- Main Listing -->
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
 
 
@@ -29,23 +29,23 @@
           {translate text='Sort'}&nbsp;<select name="sort" onChange="document.location.href='{$urlbase}sort=' + this.options[this.selectedIndex].value;">
             <option value="">Relevance</option>
             <option value="year"{if $sort == "year"} selected{/if}>Date (newest first)</option>
-            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>            
+            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>
             <option value="author"{if $sort == "author"} selected{/if}>{translate text='Author'}</option>
           </select>
         </div>
       </div>
 
       {if !$selectedItemsPage}
-        {include file="tempbox.tpl"}      
+        {include file="tempbox.tpl"}
       {/if}
-      
+
       <!-- End Listing Options -->
       {assign var=pageLinks value=$pager->getLinks()}
-      
+
       {if strlen($pageLinks.all)}
       <div class="pagination">{$pageLinks.all}</div>
       {/if}
-      
+
       {if $subpage}
         {include file=$subpage}
       {else}
@@ -53,7 +53,7 @@
       {/if}
 
       <div class="pagination">{$pageLinks.all}</div>
-      
+
     </div>
     <!-- End Main Listing -->
   </div>
@@ -74,10 +74,10 @@
 
 <div id="emailSearch" style="background-color: #fff; display: none">
   <div style=" padding:3em; ">
-    <p><strong>Email this search</strong></p>    
+    <p><strong>Email this search</strong></p>
     <p>By filling out the form below, you can email a link to this search (and the first few results) to yourself or someone else.</p>
     <p>Note that both the "To" and "From" addresses must be complete (e.g., user@umich.edu).</p>
-    
+
     <form type="GET" action="/Search/SearchExport">
       <input type="hidden" name="method" value="emailRecords">
       <input type="hidden" name="tag" value="{$uuid}">
@@ -96,8 +96,8 @@
         </table>
         <input type="button" value="Send email" onclick="emailSearch(this); return false;">
     </form>
-    
+
     <div class="erError"></div>
-    
+
   </div>
 </div>

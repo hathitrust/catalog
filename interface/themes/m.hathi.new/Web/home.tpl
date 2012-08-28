@@ -4,8 +4,8 @@
       width : 100%;
     }
   </style>
-   
-    {/literal} 
+
+    {/literal}
     <script src="http://www.google.com/jsapi?key={$googleKey}" type="text/javascript"></script>
     {literal}
     <script language="Javascript" type="text/javascript">
@@ -56,17 +56,17 @@
 {/literal}
 
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
 
     <div class="yui-b first contentbox">
       <div id="searchcontrol">Loading...</div>
     </div>
   </div>
-   
+
   <div class="yui-b">
     <div class="box submenu catalogMini">
       <h4>Catalog Results</h4>
-      
+
       <ul class="similar">
         {foreach from=$results item=record}
         <li>
@@ -85,7 +85,7 @@
       <hr>
       <p><a href="{$url}/Search/Home?lookfor={$lookfor}">More catalog results...</a></p>
     </div>
-    
+
   </div>
 </div>
 

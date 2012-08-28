@@ -1,6 +1,6 @@
 <div id="bd">
-  <div id="yui-main" class="content">
-  
+  <div class="yui-main content">
+
     <div class="yui-b first contentbox">
 
       <div class="yui-ge">
@@ -18,7 +18,7 @@
               <div class="yui-ge">
                 <div class="yui-u first">
                   <img src="{$path}/bookcover.php?isn={$resource.isbn|truncate:10:""}&size=small" class="alignleft">
-                
+
                 <div class="resultitem">
                   <a href="{$url}/Record/{$resource.id}" class="title">{$resource.title}</a><br>
                   {if $resource.author}
@@ -35,10 +35,10 @@
                   Notes: {$resource.notes}<br>
                   {/if}
                   <img src="{$path}/images/{$resource.format|lower}-icon.gif" alt="{$resource.format}"> {$resource.format}
-                  
+
                   </div>
                   </div>
-                  
+
                   <div class="yui-u">
                   <a href="{$url}/MyResearch/Edit?id={$resource.id}" class="edit tool">{translate text='Edit'}</a>
                   <a href="{$url}/MyResearch/Home?delete={$resource.id}" class="delete tool" onClick="confirm('Are you sure you want to delete this?');">{translate text='Delete'}</a>
@@ -55,7 +55,7 @@
 
         <div class="yui-u">
           <h3 class="tag">{translate text='Your Tags'}</h3>
-          
+
           {if $tags}
           <ul>
           {foreach from=$tags item=tag}
@@ -64,7 +64,7 @@
           {/foreach}
           </ul>
           {/if}
-          
+
           <ul>
           {foreach from=$tagList item=tag}
             <li>
@@ -107,5 +107,5 @@
         {/if}
       </div>
     </div>
-    
+
 </div>

@@ -1,8 +1,8 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
       <div class="record">
-    	
+
         <form method="GET" action="{$url}/Search/NewItem" name="searchForm" class="search">
           <h2>Find New Items</h2>
           <br>

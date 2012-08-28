@@ -1,5 +1,5 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
     {if $user->cat_username}
       <h3>{translate text='Your Profile'}</h3>

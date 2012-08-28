@@ -1,7 +1,7 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
-  
+
       <h2>{translate text='Login'}</h2><br>
 
       {if $message}<div class="error">{$message}</div>{/if}
@@ -30,8 +30,8 @@
       <a href="{$url}/MyResearch/Account">Create New Account</a>
       {/if}
       </div>
-  
-  
+
+
     </div>
   </div>
 </div>

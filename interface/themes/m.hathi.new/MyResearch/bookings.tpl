@@ -1,5 +1,5 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
     {if $recordList}
       <h4>{translate text='Your bookings'}</h4>
@@ -39,7 +39,7 @@
                   {/foreach}
                   <br>
                 {/if}
-               
+
                 {if $record.call_num}
                   {translate text='Call number'}: {$record.call_num}
                   {if $record.description} {$record.description}{/if}
@@ -49,7 +49,7 @@
                 <strong>{translate text='Start'}:</strong> {$record.start} |
                 <strong>{translate text='End'}:</strong> {$record.end}<br>
                 <strong>{translate text='Status'}:</strong> {$record.status} |
-                <strong>{translate text='Pickup location'}:</strong> {$record.pickup_loc} 
+                <strong>{translate text='Pickup location'}:</strong> {$record.pickup_loc}
                 <br>
 
                </div>

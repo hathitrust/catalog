@@ -1,5 +1,5 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
 
       <div class="yui-gf resulthead">
@@ -37,7 +37,7 @@
               <td>{$data.biblio.uptime._content|printms}</td>
             </tr>
           </table>
-          
+
           <h2>Authority Index</h2>
           <table class="citation">
             <tr>
@@ -99,7 +99,7 @@
           </table>
         </div>
       </div>
-      
+
     </div>
   </div>
 </div>

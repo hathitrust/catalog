@@ -9,18 +9,18 @@
   xmlns:xhv="http://www.w3.org/1999/xhtml/vocab#"
   xmlns:xml="http://www.w3.org/XML/1998/namespace"
 >
-  
+
   <rdf:Description rdf:about="{$url}/Record/{$record.id}#record">
   {if $record.lccn}
     {foreach from=$record.lccn item=lccn}
-    <owl:sameAs rdf:resource="http://purl.org/NET/lccn/{$lccn}#i"/>
+    <owl:sameAs rdf:resource="http://purl.org/NET/lccn/{$lccn}#i">
     {/foreach}
   {/if}
   {if $record.isbn}
     {foreach from=$record.isbn item=isbn}
-      <owl:sameAs rdf:resource="http://purl.org/NET/book/isbn/{$isbn}#book"/>
+      <owl:sameAs rdf:resource="http://purl.org/NET/book/isbn/{$isbn}#book">
     {/foreach}
   {/if}
-  
+
   </rdf:Description>
 </rdf:RDF>

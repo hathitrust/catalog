@@ -154,7 +154,7 @@ include("./static/phase2/php/newheader_bottom2.php");
         </table>
 
       <div id="feedback_thanks" style="display:none"><div style="padding: 1em; color: red;" >Thank you for taking the time to provide feedback.</div></div>
-      <div id="submitbutton"><input type="submit" /></div>
+      <div id="submitbutton"><input type="submit" ></div>
       </form>
     </div>
 
@@ -245,7 +245,7 @@ include("./static/phase2/php/newheader_bottom2.php");
           <div class="searchbox">
             <div class="yui-b">
               <form method="GET" action="{$path}/Search/Home" name="searchForm" class="search" onsubmit="trimForm(this.lookfor); return true;">
-                <input type="hidden" name="checkspelling" value="true" />
+                <input type="hidden" name="checkspelling" value="true" >
                 <input type="text" name="lookfor" size="30" value="{$lookfor|escape:"html"}">
                 <select name="type">
                   <option value="all">{translate text="All Fields"}</option>

@@ -34,7 +34,7 @@ class UInterface extends Smarty
 
 	# Set up the space for compiled files
         $comp = "$local/interface/compile/$theme";
-        
+
         if (!is_dir($comp)) {
           mkdir($comp, 0777);
           chmod($comp, 0777);
@@ -46,27 +46,30 @@ class UInterface extends Smarty
         $this->caching       = false;
         $this->debug         = true;
         $this->compile_check = true;
-        
+
         unset($local);
-        
+
         $this->register_function('translate', 'translate');
         $this->register_function('char', 'char');
-        
+
         $this->assign('site', $configArray['Site']);
         $this->assign('path', $configArray['Site']['path']);
         $this->assign('url', $configArray['Site']['url']);
+
         $this->assign('fullPath', $_SERVER['REQUEST_URI']);
+        $this->assign('fullPath_esc', preg_replace('/&/', '&amp;', $_SERVER['REQUEST_URI']));
+
         $this->assign('openUrlLink', $configArray['OpenURL']['url']);
         $this->assign('supportEmail', $configArray['Site']['email']);
         $this->assign('regular_url', $configArray['Site']['regular_url']);
         $this->assign('ht_url', $configArray['Site']['ht_url']);
         $this->assign('home_url', $configArray['Site']['home_url']);
-        
+
         if (isset($configArray['LDAP'])) {
             $this->assign('authMethod', 'LDAP');
         }
     }
-    
+
     function setTemplate($tpl)
     {
         $this->assign('pageTemplate', $tpl);

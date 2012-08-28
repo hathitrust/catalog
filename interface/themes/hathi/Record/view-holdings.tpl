@@ -4,9 +4,9 @@
 <h3>Internet</h3>
 {foreach from=$marcField item=field name=loop}
 {if $proxy}
-<a href="{$proxy}/login?url={$field|getvalue:'u'}">{if $field|getvalue:'z'}{$field|getvalue:'z'}{else}{$field|getvalue:'u'}{/if}</a><br/>
+<a href="{$proxy}/login?url={$field|getvalue:'u'}">{if $field|getvalue:'z'}{$field|getvalue:'z'}{else}{$field|getvalue:'u'}{/if}</a><br>
 {else}
-<a href="{$field|getvalue:'u'}">{if $field|getvalue:'z'}{$field|getvalue:'z'}{else}{$field|getvalue:'u'}{/if}</a><br/>
+<a href="{$field|getvalue:'u'}">{if $field|getvalue:'z'}{$field|getvalue:'z'}{else}{$field|getvalue:'u'}{/if}</a><br>
 {/if}
 {/foreach}
 {/if}
@@ -18,7 +18,7 @@
 
 suffixes = ['holdings', 'on', 'off'];
 
-function holdings_set_initial_state(prefix) 
+function holdings_set_initial_state(prefix)
 {
   table = jq('#' + prefix + '_holdings');
   if (jq('tr', table).size() <= 3) {
@@ -57,11 +57,11 @@ function holdings_toggle(prefix)
      <th></th>
   {/if}
   <td style="width: 50%;">{$item.note}</td>
-  
--->  
+
+-->
   <!-- <td><a target=link href="{$item.link}">{$item.status}</a></td>  -->
 <!--
-    <td><a target=link href="{$item_link}">{$item.status}</a></td> 
+    <td><a target=link href="{$item_link}">{$item.status}</a></td>
 </tr>
 {/foreach}
 </table>

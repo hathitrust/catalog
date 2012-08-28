@@ -61,7 +61,7 @@
 
         <div class="yui-u toggle" style="width: auto">
           <label for="sortOption">{translate text='Sort'}</label>
-          <select id="sortOption" name="sort" onChange="document.location.href='{$fullPath}&amp;sort=' + this.options[this.selectedIndex].value;">
+          <select id="sortOption" name="sort" onChange="document.location.href='{$fullPath_esc}&amp;sort=' + this.options[this.selectedIndex].value;">
             <option value="">Relevance</option>
             <option value="year"{if $sort == "year"} selected{/if}>Date (newest first)</option>
             <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>
@@ -108,7 +108,7 @@
       <h2>{translate text='Results refined by:'}</h2>
         <ul class="filters">
           {foreach from=$currentFacets item=facet}
-            {assign var=rurl value=$facet.removalURL}
+            {assign var=rurl value=$facet.removalURL|regex_replace:"/&/":"&amp;"}
             {if $facet.value == 'Full text' && $facet.index == 'ht_availability'}
 			  {assign var=rurl value="$rurl&amp;sethtftonly=true"}
             {/if}
@@ -128,4 +128,3 @@
   </div>
   <!-- End Narrow Search Options -->
 </div> <!-- ??? -->
-</div>

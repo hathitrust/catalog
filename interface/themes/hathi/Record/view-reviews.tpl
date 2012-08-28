@@ -14,6 +14,6 @@
     {if $provider == "amazon" || $provider == "amazoneditorial"}
     <div><a target="new" href="http://amazon.com/dp/{$isbn}">Supplied by Amazon</a></div>
     {/if}
-    <hr/>
+    <hr>
   {/foreach}
 {/foreach}

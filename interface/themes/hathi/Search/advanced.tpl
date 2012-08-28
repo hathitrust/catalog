@@ -223,11 +223,11 @@
 
           </table>
 
-          <br/>
+          <br>
           <h3>{translate text='Limit To'}:</h3>
 
-              <input type="hidden" name="sethtftonly" value="true"/>
-              <input type="checkbox" name="htftonly" value="true" id="fullonly" />&nbsp;<label for="fullonly">Full view only</label>
+              <input type="hidden" name="sethtftonly" value="true">
+              <input type="checkbox" name="htftonly" value="true" id="fullonly" >&nbsp;<label for="fullonly">Full view only</label>
 
               <span style="margin-left: 4em">
                 <span style="margin-right: 1em;">Year of publication:</span>

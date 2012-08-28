@@ -30,7 +30,7 @@
         <div id="searchGraphic">
           <img src="/images/hathi/SearchArrow_Cat.png" alt="Catalog Search">
         </div>
-        <input type="hidden" name="checkspelling" value="true" />
+        <input type="hidden" name="checkspelling" value="true" >
 
         <div id="searchboxCont">
 
@@ -52,7 +52,7 @@
                  <!-- <option value="tag"{if $type == 'tag'} selected{/if}>Tag</option> -->
                </select>
                <input type="hidden" name="sethtftonly" value="true">
-               <input type="checkbox" name="htftonly" value="true" id="fullonly" {if $ht_fulltextonly}checked="checked"{/if}/>&nbsp;<label for="fullonly">Full view only</label>
+               <input type="checkbox" name="htftonly" value="true" id="fullonly" {if $ht_fulltextonly}checked="checked"{/if}>&nbsp;<label for="fullonly">Full view only</label>
                <input  type="submit" name="submit" value="{translate text="Find"}">
         {*
                {if $lookfor }

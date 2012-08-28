@@ -45,7 +45,7 @@ function trimForm(infrm) {
     <!-- header -->
     <div id="header">
       <div id="logo-wrapper">
-        <a href="{$url}"><img src="{$path}/static/umichwebsite/images/logo.png" alt="mlibrary" id="logo" /></a>
+        <a href="{$url}"><img src="{$path}/static/umichwebsite/images/logo.png" alt="mlibrary" id="logo" ></a>
       </div>
       <div class="adjustable">
         <div id="alerts" class="floating-block">
@@ -65,7 +65,7 @@ function trimForm(infrm) {
     <div id="search-options">
       <div id="logo-tag-wrapper">
         <a href="{$url}">
-        <img src="{$path}/static/umichwebsite/images/logo-tag.png" alt="university of michigan" id="logo-tag" /></a>
+        <img src="{$path}/static/umichwebsite/images/logo-tag.png" alt="university of michigan" id="logo-tag" ></a>
       </div>
       <div class="adjustable">
         <div id="block-mlibrary_blocks-0" class="clear-block block block-mlibrary_blocks">
@@ -79,32 +79,32 @@ function trimForm(infrm) {
             <!--<form action="/"  accept-charset="UTF-8" method="post" id="mlibrary-blocks-search-form">
               <div>
                 <div class="form-item" id="edit-search-wrapper">
-                  <input type="text" maxlength="128" name="search" id="edit-search" size="23" value="" class="form-text" />
+                  <input type="text" maxlength="128" name="search" id="edit-search" size="23" value="" class="form-text" >
                 </div>
-                  <input type="submit" name="op" id="edit-submit" value="GO"  class="form-submit" />
+                  <input type="submit" name="op" id="edit-submit" value="GO"  class="form-submit" >
                 <div class="menu-drop">
                   <div class="form-item" id="edit-opt1-wrapper">
-                    <label class="option"><input type="checkbox" name="opt1" id="edit-opt1" value="1"   class="form-checkbox" /> opt 1</label>
+                    <label class="option"><input type="checkbox" name="opt1" id="edit-opt1" value="1"   class="form-checkbox" > opt 1</label>
                   </div>
                   <div class="form-item" id="edit-opt2-wrapper">
-                    <label class="option"><input type="checkbox" name="opt2" id="edit-opt2" value="1"   class="form-checkbox" /> opt 2</label>
+                    <label class="option"><input type="checkbox" name="opt2" id="edit-opt2" value="1"   class="form-checkbox" > opt 2</label>
                   </div>
                   <div class="form-item" id="edit-opt3-wrapper">
-                    <label class="option"><input type="checkbox" name="opt3" id="edit-opt3" value="1"   class="form-checkbox" /> opt 3</label>
+                    <label class="option"><input type="checkbox" name="opt3" id="edit-opt3" value="1"   class="form-checkbox" > opt 3</label>
                   </div>
                   <div class="form-item" id="edit-opt4-wrapper">
-                    <label class="option"><input type="checkbox" name="opt4" id="edit-opt4" value="1"   class="form-checkbox" /> opt 4</label>
+                    <label class="option"><input type="checkbox" name="opt4" id="edit-opt4" value="1"   class="form-checkbox" > opt 4</label>
                   </div>
                   <div class="form-item" id="edit-opt5-wrapper">
-                    <label class="option"><input type="checkbox" name="opt5" id="edit-opt5" value="1"   class="form-checkbox" /> opt 5</label>
+                    <label class="option"><input type="checkbox" name="opt5" id="edit-opt5" value="1"   class="form-checkbox" > opt 5</label>
                   </div>
                   <div class="form-item" id="edit-opt6-wrapper">
-                    <label class="option"><input type="checkbox" name="opt6" id="edit-opt6" value="1"   class="form-checkbox" /> opt 6</label>
+                    <label class="option"><input type="checkbox" name="opt6" id="edit-opt6" value="1"   class="form-checkbox" > opt 6</label>
                   </div>
                 </div>
-                <input type="hidden" name="form_build_id" id="form-138525087a249f31a3602dbc2b45738b" value="form-138525087a249f31a3602dbc2b45738b"  />
-                <input type="hidden" name="form_token" id="edit-mlibrary-blocks-search-form-form-token" value="aba939d9194c7ce8fda0324ca6b922b4"  />
-                <input type="hidden" name="form_id" id="edit-mlibrary-blocks-search-form" value="mlibrary_blocks_search_form"  />
+                <input type="hidden" name="form_build_id" id="form-138525087a249f31a3602dbc2b45738b" value="form-138525087a249f31a3602dbc2b45738b"  >
+                <input type="hidden" name="form_token" id="edit-mlibrary-blocks-search-form-form-token" value="aba939d9194c7ce8fda0324ca6b922b4"  >
+                <input type="hidden" name="form_id" id="edit-mlibrary-blocks-search-form" value="mlibrary_blocks_search_form"  >
               </div>
             </form>-->
           </div>
@@ -118,13 +118,13 @@ function trimForm(infrm) {
               <div>
                 <div class="menu-drop">
                   <div class="form-item" id="edit-search-1-wrapper">
-                    <input type="text" maxlength="128" name="search" id="edit-search-1" size="15" value="" class="form-text" />
+                    <input type="text" maxlength="128" name="search" id="edit-search-1" size="15" value="" class="form-text" >
                   </div>
-                  <input type="submit" name="op" id="edit-submit-1" value="GO"  class="form-submit" />
+                  <input type="submit" name="op" id="edit-submit-1" value="GO"  class="form-submit" >
                 </div>
-                <input type="hidden" name="form_build_id" id="form-0567a340403c45c80dfa9ab68631cdee" value="form-0567a340403c45c80dfa9ab68631cdee"  />
-                <input type="hidden" name="form_token" id="edit-mlibrary-blocks-browse-form-form-token" value="73fdc753ff65f81421d3cd469ded1362"  />
-                <input type="hidden" name="form_id" id="edit-mlibrary-blocks-browse-form" value="mlibrary_blocks_browse_form"  />
+                <input type="hidden" name="form_build_id" id="form-0567a340403c45c80dfa9ab68631cdee" value="form-0567a340403c45c80dfa9ab68631cdee"  >
+                <input type="hidden" name="form_token" id="edit-mlibrary-blocks-browse-form-form-token" value="73fdc753ff65f81421d3cd469ded1362"  >
+                <input type="hidden" name="form_id" id="edit-mlibrary-blocks-browse-form" value="mlibrary_blocks_browse_form"  >
               </div>
             </form>-->
           </div>
@@ -269,7 +269,7 @@ function trimForm(infrm) {
           <h2>MTagger</h2>
 
           <div class="content">
-            <img src="http://www.lib.umich.edu/mtagger/img/tag(45deg).gif" />
+            <img src="http://www.lib.umich.edu/mtagger/img/tag(45deg).gif" >
           </div>
         </div>
         <div id="block-mlibrary_footer-2" class="clear-block block block-mlibrary_footer">
@@ -277,8 +277,8 @@ function trimForm(infrm) {
           <h2>Creative Commons</h2>
 
           <div class="content">
-            <img src="{$path}/static/umichwebsite/images/creative-commons.gif" />
-            <p class="cc">Except where otherwise noted, this work is subject to a Creative Commons license.<br /><a href="/%2523">Additional permissions are available</a></p>
+            <img src="{$path}/static/umichwebsite/images/creative-commons.gif" >
+            <p class="cc">Except where otherwise noted, this work is subject to a Creative Commons license.<br ><a href="/%2523">Additional permissions are available</a></p>
             <p class="regents">&copy;2008, Regents of the University of Michigan</p>
             <p class="qc">Do you have <a href="/%2523">questions or comments</a> about this page?</p>
           </div>

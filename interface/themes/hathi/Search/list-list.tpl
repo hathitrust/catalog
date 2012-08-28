@@ -1,4 +1,4 @@
-<form name="addForm">
+<form name="addForm" action="#" method="GET">
 {foreach from=$recordSet item=record name="recordLoop"}
   {if ($smarty.foreach.recordLoop.iteration % 2) == 0}
   <div class="result alt record{$smarty.foreach.recordLoop.iteration}">

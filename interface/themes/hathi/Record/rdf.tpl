@@ -9,7 +9,7 @@
   xmlns:xhv="http://www.w3.org/1999/xhtml/vocab#"
   xmlns:xml="http://www.w3.org/XML/1998/namespace"
 >
-  
+
 <rdf:Description rdf:about="{$url}/Record/{$record.id}#record">
   {if $record.title && $record.title[0]}
   <dcterms:title>{$record.title[0]}</dcterms:title>
@@ -17,11 +17,11 @@
    <dcterms:alternative>{$record.title[1]}</dcterms:alternative>
   {/if}
   {/if}
-  
+
   {if $record.publishDate[0]}
   <dcterms:date>{$record.publishDate[0]}</dcterms:date>
   {/if}
-  
+
   {if $record.author}
   {foreach from=$record.author item=author}
     <dcterms:creator>{$author}</dcterms:creator>
@@ -32,16 +32,16 @@
   {if $record.lccn}
     {foreach from=$record.lccn item=lccn}
 
-  <owl:sameAs rdf:resource="http://purl.org/NET/lccn/{$lccn}#i"/>
+  <owl:sameAs rdf:resource="http://purl.org/NET/lccn/{$lccn}#i">
   <bibo:lccn>{$lccn}</bibo:lccn>
 
     {/foreach}
   {/if}
-  
+
   {if $record.isbn}
     {foreach from=$record.isbn item=isbn}
 
-  <owl:sameAs rdf:resource="http://purl.org/NET/book/isbn/{$isbn}#book"/>
+  <owl:sameAs rdf:resource="http://purl.org/NET/book/isbn/{$isbn}#book">
   <bibo:isbn>{$isbn}</bibo:isbn>
     {/foreach}
   {/if}
@@ -58,8 +58,8 @@
   <bibo:issn>{$issn}</bibo:issn>
     {/foreach}
   {/if}
-  
-  
-  
+
+
+
   </rdf:Description>
 </rdf:RDF>

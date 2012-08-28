@@ -14,7 +14,7 @@
   <link rel="alternate" type="application/marc+xml" href="/Record/{$id}.xml" >
   <link rel="alternate" type="application/x-Research-Info-Systems" href="/Record/{$id}.ris" >
   <link rel="alternate" type="application/x-endnote-refer" href="/Record/{$id}.endnote" >
-  <link rel="alternate" href="/Record/{$id}.rdf" type="application/rdf+xml" />
+  <link rel="alternate" href="/Record/{$id}.rdf" type="application/rdf+xml" >
 {/if}
 
 <!-- Jeremy's additions 3/27/09 -->

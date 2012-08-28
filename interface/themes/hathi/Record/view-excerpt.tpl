@@ -1,7 +1,7 @@
 {foreach from=$reviews item=review}
   <p class="summary">{$review.Content}</p>
   {$review.Copyright}
-  <hr/>
+  <hr>
 {foreachelse}
 No excerpts were found for this record.
 {/foreach}

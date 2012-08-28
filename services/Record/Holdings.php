@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
- 
+
 require_once 'CatalogConnection.php';
 
 require_once 'Record.php';
@@ -33,10 +33,11 @@ class Holdings extends Record
 
         // Do not cache holdings page
         $interface->caching = 0;
+        $titleTitle = preg_replace('/\p{P}+$/', '', $this->record['title'][0]);
 
-        $interface->setPageTitle('Holdings: ' . $this->record['title'][0]);
+        $interface->setPageTitle('Catalog Record: ' . $titleTitle);
         $ru = new RecordUtils();
- 
+
         try {
             $catalog = new CatalogConnection($configArray['Catalog']['driver']);
         } catch (PDOException $e) {
@@ -59,13 +60,13 @@ class Holdings extends Record
             PEAR::raiseError($result);
         }
         $interface->assign('history', $result);
-        
+
         if (isset($configArray['Catalog']['showBooking']))
           $interface->assign('showBooking', $configArray['Catalog']['showBooking']);
 
         $interface->assign('subTemplate', 'view-holdings.tpl');
         $interface->setTemplate('view.tpl');
-        
+
         // Display Page
         $interface->display('layout.tpl');
     }

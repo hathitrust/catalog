@@ -42,7 +42,7 @@ require_once 'services/Tags/TagLine.php';
 require_once 'services/Record/RecordUtils.php';
 
 class Home extends Action {
-    
+
     private $db;
     private $query;
     private $filterQuery;
@@ -50,17 +50,17 @@ class Home extends Action {
     private $ss;
     private $tags;
     private $session;
-    
-    
+
+
     function setup() {
         global $configArray;
         global $interface;
-        
+
         $this->ss = new SearchStructure;
         $this->tags = Tags::singleton();
         $this->session = VFSession::singleton();
         TagLine::initialize();
-                
+
          // Setup Search Engine Connection
          $class = $configArray['Index']['engine'];
          $this->db = new $class($configArray['Index']['url']);
@@ -71,7 +71,7 @@ class Home extends Action {
          // Setup Catalog Connection.
         $this->catalog = new CatalogConnection($configArray['Catalog']['driver']);
     }
-    
+
     function launch()
     {
         global $interface;
@@ -82,31 +82,36 @@ class Home extends Action {
 
         // module and action are set in the rewrite rules; they'll still be here even
         // if we change to using POST from the browser. If we've got them, do the search
-        
+
         if (isset($_GET['module']) && isset($_GET['action'])) {
-            // Must have atleast Action and Module set to continue
-            $interface->setPageTitle('Search Results');
-            $this->search();
+          // Must have atleast Action and Module set to continue
+          // If we're using dismax or edismax, it's not an advanced search
+          if (isset($_REQUEST['adv'])) {
+            $interface->setPageTitle('Catalog Advanced Search Results');
+          } else {
+            $interface->setPageTitle('Catalog Search Results');
+          }
+          $this->search();
         } else {
             // Otherwie, display the home page
             $interface->setPageTitle('Search Home');
-	    $interface->assign('isTheHomePage', true);
+	          $interface->assign('isTheHomePage', true);
             $interface->assign('searchTemplate', 'search.tpl');
             $interface->setTemplate('home.tpl');
             $interface->display('layout.tpl');
 
         }
     }
-    
-    
+
+
     // The main search function
-    
+
     function search()
     {
         global $interface;
         global $configArray;
 
-        
+
         //******************************************************
         //    SET UP BASIC DISPLAY VARIABLES
         //******************************************************
@@ -114,37 +119,37 @@ class Home extends Action {
         $interface->assign('proxy', $configArray['EZproxy']['host']);
 
         // The sort option, if set
-        
+
         if (isset($this->ss->sort)) {
             $interface->assign('sort', $this->ss->sort);
         }
-        
+
         $interface->assign('uuid', $this->session->uuid);
-        
+
         # Add the whole damn session, too
-        
+
         $interface->assign('session', $this->session);
-        
+
         // If it was a simple search (lookfor is not an array)
         // go ahead and put them in the interface. Otherwise,
         // leave it blank.
         //
-        // We need to figure out how/where to display the 
+        // We need to figure out how/where to display the
         // actual search, ala Blacklight, though, too.
-        
+
         if (count($this->ss->search) == 1) {
             $interface->assign('lookfor', $this->ss->search[0][1]);
             $interface->assign('type', $this->ss->search[0][0]);
         }
-        
+
         // The action
         $interface->assign('action', $_GET['action']);
 
         // The Query URL
         $interface->assign('searchcomps', $this->ss->asURL());
-        
+
         $this->session->set('lastsearch', '/Search/Home?' . $this->ss->asURL());
-        
+
         // The existing facets
         $interface->assign('currentFacets', $this->ss->currentFacetsStructure());
         #print_r($this->ss);
@@ -159,7 +164,7 @@ class Home extends Action {
 
         // Get similar search terms
         $type = isset($_REQUEST['type'])? $_REQUEST['type'] : false;
-        
+
         ###### DISABLE FOR NOW ########
         #switch ($type) {
         switch (false) {
@@ -174,7 +179,7 @@ class Home extends Action {
         if (isset($suggestIndex) && count($this->ss->activeInbandFilters()) == 0) {
             $ss = new SearchStructure(true);
             $ss->search[] = array($suggestSearchType, $lf);
-            
+
             #                            $ss, facetfield,     sort,  skip, limit
             $list = $this->db->facetlist($ss, array($suggestIndex), 'count', 0,    10);
             $interface->assign('narrowcount', $list['total']);
@@ -204,9 +209,9 @@ class Home extends Action {
 
         $limit = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : $configArray['Site']['itemsPerPage'];
 	  // $limit = $configArray['Site']['itemsPerPage'];
- 
+
         // Kick it up to 100 if we've got tag(s)
-        
+
         if (count($this->ss->tags()) > 0) {
           $limit = 100;
         }
@@ -220,59 +225,59 @@ class Home extends Action {
         if (PEAR::isError($result)) {
             PEAR::raiseError($result->getMessage());
         }
-        
-        
+
+
         //******************************************************
         //     GET SPELLING RESULTS
         //******************************************************
-                
+
         if (isset($result['SpellcheckSuggestion']) && $result['RecordCount'] == 0) {
           $interface->assign('newPhrase', $result['SpellcheckSuggestion']);
         }
-        
+
         //******************************************************
         //     NO RESULTS? Just return
         //******************************************************
-        
+
         if (count($result['record']) == 0) {
             $interface->setTemplate('list-none.tpl');
             $interface->display('layout.tpl');
             return;
         }
-        
-        
+
+
         //******************************************************
         //    TURN IT INTO AN ARRAY IF WE ONLY GOT ONE ITEM
         //******************************************************
-        
-        
+
+
         //if ($result['RecordCount'] == 1) {
         //    $result['record'] = array($result['record']);
         //}
-        
-        
-        
-        
+
+
+
+
 
         //******************************************************
         //    SET UP DISPLAY
         //******************************************************
-        
+
         $interface->assign('sitepath', $configArray['Site']['path']);
         $interface->assign('subpage', 'Search/list-list.tpl');
         $interface->setTemplate('list.tpl');
         $interface->assign('atom', 1);
         $interface->assign('tagobj', Tags::singleton());
 
-        
+
         //******************************************************
         //    DEAL WITH PAGINATION
         //******************************************************
-        
-        
+
+
         $recordCount =  $result['RecordCount'];
         $recordStart = (($page-1)*$limit)+1;
-        
+
         $interface->assign('recordStart', $recordStart);
         $interface->assign('recordCount', $recordCount);
 
@@ -283,7 +288,7 @@ class Home extends Action {
         }
         $interface->assign('recordEnd', $recordEnd);
 
-        
+
         // Process Paging
         $link = 'Search/Home?' . $this->ss->asURL() . '&page=%d';
         $rlink = '/' . $link; 	// rlink used to build record-level paging urls
@@ -306,7 +311,7 @@ class Home extends Action {
 
 
         $pager =& Pager::factory($options);
-        
+
         $interface->assign('pager', $pager);
 
 
@@ -314,8 +319,8 @@ class Home extends Action {
         //******************************************************
         //    SAVE SEARCH IN COOKIE
         //******************************************************
-        
-        
+
+
         $qargs = explode("&", $_SERVER['QUERY_STRING']);
         $ignore = array('module' => true, 'action' => true, 'submit' => true);
         foreach ($qargs as $keyval) {
@@ -324,9 +329,9 @@ class Home extends Action {
                 unset($qargs[$keyval]);
             }
         }
-        
+
         $newQS = implode('&', $qargs);
-   
+
        // Store Search in Cookie
         $sHistory = array();
         if (isset($_COOKIE['search'])) {
@@ -371,12 +376,12 @@ class Home extends Action {
         }
         if (isset($_REQUEST['rec'])) {
           $newOffset = $_REQUEST['rec'];
-          $recPath = $resultIDs[$newOffset][0]; 
+          $recPath = $resultIDs[$newOffset][0];
           header("Location: {$configArray['Site']['path']}{$recPath}");
           exit();
         }
 
-        
+
         //******************************************************
         //   GET HOLDINGS DATA AND TAGGED INFO
         //******************************************************
@@ -397,43 +402,43 @@ class Home extends Action {
           if ($this->tags->inSubset($id)) {
             $result['record'][$num]['inSubset'] = true;
           }
-          
+
           if ($this->tags->isFavorite($id)) {
             $result['record'][$num]['isFavorite'] = true;
           }
-          
+
           if (isset($this->tags->item[$id]) && $this->tags->item[$id]->permanentTags()) {
             $result['record'][$num]['tags'] = $this->tags->item[$id]->permanentTags();
           }
         }
-        
-        
-        
+
+
+
         $interface->assign('recordSet', $result['record']);
         $interface->assign('resultHoldings', $ru->getStatuses($result));
-    
+
         //******************************************************
         //  COINS
         //******************************************************
         $interface->assign('coinsID', $configArray['COinS']['identifier']);
-        
+
         //******************************************************
         //   SCORE
         //******************************************************
-        
+
         // Want to put the scores in the output? Gods, but I hate having to do 'isset' all the time
         if (isset($configArray['Site']['showscores']) && $configArray['Site']['showscores']) {
             $interface->assign('showscores', true);
         }
-        
+
         //******************************************************
         //   DISPLAY
         //******************************************************
- 
+
         $this->getFacetCounts();
         $interface->display('layout.tpl');
     }
-    
+
 
 
 //===========================================
@@ -443,11 +448,11 @@ class Home extends Action {
 
     function newprocessSearch($page = 1, $limit = 20)
     {
-        
-        
+
+
         // If we've got a simple (one-type) clause, do a simple search
-        
-        return $this->db->simpleSearch($this->ss, 
+
+        return $this->db->simpleSearch($this->ss,
                                        ($page-1)*$limit, $limit
                                       );
     }
@@ -457,7 +462,7 @@ class Home extends Action {
     function getFacetCounts() {
         global $configArray;
         global $interface;
-        
+
         $rawcounts = $this->db->facetlist($this->ss, $this->ss->facetFields(), 'count', 0, 30);
         $counts = array();
         foreach ($rawcounts['values'] as $index => $valcountpairs) {
@@ -471,8 +476,8 @@ class Home extends Action {
                 $logargs = "addfacet|$index|" . $vc[0] . "|$i";
                 $url = $this->ss->asURLPlusFilter($index, $vc[0]);
                 $url = preg_replace('/&page=\d+/', '', $url);
-                $counts[$index][] = array('cluster' => $index, 
-                                             'value' => $vc[0], 
+                $counts[$index][] = array('cluster' => $index,
+                                             'value' => $vc[0],
                                              'count' => $vc[1],
                                              'url' => $url,
                                              'logargs' => $logargs);

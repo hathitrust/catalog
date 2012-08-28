@@ -7,15 +7,10 @@ my $user = 'vufind';
 $user = 'dueberb';
 my $pass = 'villanova';
 $pass = 'LlrxdaPa';
-my $host = 'mysql-web';
+my $host = 'mysql-sdr';
 my $dsn = "DBI:mysql:database=$db;host=$host";
 my $dbh = DBI->connect($dsn,$user,$pass);
 
 my $sth = $dbh->prepare("delete from vfsession where expires < unix_timestamp(NOW())");
 $sth->execute;
-
-
-# Now do the tempresults
-
-$dbh->do("delete from tempresults where expires <  unix_timestamp(NOW())");
 

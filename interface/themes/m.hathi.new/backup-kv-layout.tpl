@@ -41,7 +41,7 @@ function trimForm(infrm) {
     <!-- -->
     <!-- MLibrary Header -->
     <!-- -->
-    
+
     <!-- header -->
     <div id="header">
       <div id="logo-wrapper">
@@ -60,7 +60,7 @@ function trimForm(infrm) {
         </div>
       </div>
     </div><!-- /header -->
-      
+
     <!-- search-options -->
     <div id="search-options">
       <div id="logo-tag-wrapper">
@@ -71,7 +71,7 @@ function trimForm(infrm) {
         <div id="block-mlibrary_blocks-0" class="clear-block block block-mlibrary_blocks">
 
           <h2>Search</h2>
-        
+
           <div class="content">
             <div class="tabs">
               <a href="javascript:">MLibrary</a> <a href="javascript:">Journals</a> <a href="javascript:">Mirlyn</a>
@@ -110,9 +110,9 @@ function trimForm(infrm) {
           </div>
         </div>
         <div id="block-mlibrary_blocks-1" class="clear-block block block-mlibrary_blocks">
-        
+
           <h2>Browse</h2>
-        
+
           <div class="content"><!--
             <form action="/"  accept-charset="UTF-8" method="post" id="mlibrary-blocks-browse-form">
               <div>
@@ -130,37 +130,37 @@ function trimForm(infrm) {
           </div>
         </div>
         <div id="block-mlibrary_blocks-2" class="clear-block block block-mlibrary_blocks">
-        
+
           <h2>Get Help</h2>
-        
+
           <div class="content">
             <!--<p>Get Help Links...</p>-->
           </div>
         </div>
       </div>
     </div><!-- /search-options -->
-        
+
     <!-- -->
     <!-- /MLibrary Header -->
     <!-- -->
-    
+
     <!-- LightBox -->
     <a onClick="hideLightbox(); return false;"><div id="lightbox"></div></a>
     <div id="popupbox" class="popupBox"></div>
     <!-- End LightBox -->
-  
+
     <div id="doc3" class="yui-t5"> <!-- Change id for page width, class for menu layout. -->
 
       <!--<div id="hd">-->
         <!-- Your header. Could be an include. -->
         <!--<a href="{$url}"><img src="{$path}/images/vufind.jpg" alt="vufinder"></a>-->
       <!--</div>-->
-        
-        
-    
+
+
+
       <!-- Search box. This should really be coming from the include. -->
       <div id="bd">
-        <div id="yui-main">
+        <div class="yui-main">
           <div class="searchbox">
             <div class="yui-b">
               <form method="GET" action="{$path}/Search/Home" name="searchForm" class="search" onsubmit="trimForm(this.lookfor); return true;">
@@ -237,16 +237,16 @@ function trimForm(infrm) {
               <li><a href="#">FAQs</a></li>
             </ul>
         </div>
-        
+
         <br clear="all">
       </div>
     </div>
-    
+
     </div>
     <!-- -->
     <!-- MLibrary Footer -->
     <!-- -->
-    
+
     <!-- footer-container -->
     <div id="footer-container">
       <!-- footer -->
@@ -254,7 +254,7 @@ function trimForm(infrm) {
         <div id="block-mlibrary_footer-0" class="clear-block block block-mlibrary_footer">
 
           <h2>MLibrary Extras</h2>
-        
+
           <div class="content">
             <a href="http://www.flickr.com/photos/mlibrary/" class="parent">Flickr photostream</a>
             <a href="http://www.flickr.com/photos/mlibrary/" class="child">Your photos from around the Library</a>
@@ -265,17 +265,17 @@ function trimForm(infrm) {
           </div>
         </div>
         <div id="block-mlibrary_footer-1" class="clear-block block block-mlibrary_footer">
-        
+
           <h2>MTagger</h2>
-        
+
           <div class="content">
             <img src="http://www.lib.umich.edu/mtagger/img/tag(45deg).gif" />
           </div>
         </div>
         <div id="block-mlibrary_footer-2" class="clear-block block block-mlibrary_footer">
-        
+
           <h2>Creative Commons</h2>
-        
+
           <div class="content">
             <img src="{$path}/static/umichwebsite/images/creative-commons.gif" />
             <p class="cc">Except where otherwise noted, this work is subject to a Creative Commons license.<br /><a href="/%2523">Additional permissions are available</a></p>
@@ -285,7 +285,7 @@ function trimForm(infrm) {
         </div>
       </div><!-- /footer -->
     </div> <!-- /footer-container -->
-    
+
     <!-- -->
     <!-- /MLibrary Footer -->
     <!-- -->

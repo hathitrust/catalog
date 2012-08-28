@@ -1,5 +1,5 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
 
       <div class="yui-gf resulthead">
@@ -65,8 +65,8 @@
                   <select name="ils">
                     <option value="Sample"{if $config.Catalog.driver == "Sample"} selected{/if}>Sample</option>
                     <option value="Aleph"{if $config.Catalog.driver == "Aleph"} selected{/if}>Aleph</option>
-                    <option value="Evergreen"{if $config.Catalog.driver == "Evergreen"} selected{/if}>Evergreen</option>                    
-                    <option value="Koha"{if $config.Catalog.driver == "Koha"} selected{/if}>Koha</option>                    
+                    <option value="Evergreen"{if $config.Catalog.driver == "Evergreen"} selected{/if}>Evergreen</option>
+                    <option value="Koha"{if $config.Catalog.driver == "Koha"} selected{/if}>Koha</option>
                     <option value="III"{if $config.Catalog.driver == "III"} selected{/if}>Innovative</option>
                     <option value="Unicorn"{if $config.Catalog.driver == "Unicorn"} selected{/if}>Unicorn</option>
                     <option value="Voyager"{if $config.Catalog.driver == "Voyager"} selected{/if}>Voyager</option>

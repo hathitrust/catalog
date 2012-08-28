@@ -1,5 +1,5 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
 
       <div class="yui-gf resulthead">
@@ -15,7 +15,7 @@
            <input type="submit" name="submit" value="Edit" onClick="document.forms['recordEdit'].elements['util'].value='editRecord';">
            <input type="submit" name="submit" value="Delete" onClick="document.forms['recordEdit'].elements['util'].value='deleteRecord';">
           </form>
-          
+
           <h2>Utilities</h2>
           <dl>
             <dt><a href="{$url}/Admin/Records?util=deleteSuppressed">Delete Suppressed Records</a></dt>

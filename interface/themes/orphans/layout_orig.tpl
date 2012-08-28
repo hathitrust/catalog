@@ -3,7 +3,7 @@
 <!-- Machine is {$machine} -->
   <head>
     <title>Hathi Trust Digital Library Orphan works - {$pageTitle|truncate:64:"..."}</title>
-    <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">  
+    <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">
     <link rel="stylesheet" type="text/css" media="screen" href="{$path}/interface/themes/orphans/css/htdl_vf.css">
     <link rel="stylesheet" type="text/css" media="screen" href="{$path}/interface/themes/orphans/css/styles.css">
     <link rel="stylesheet" type="text/css" media="print" href="{$path}/interface/themes/orphans/css/print.css">
@@ -14,18 +14,18 @@
   <link rel="alternate" type="application/marc+xml" href="/Record/{$id}.xml" >
   <link rel="alternate" type="application/x-Research-Info-Systems" href="/Record/{$id}.ris" >
   <link rel="alternate" type="application/x-endnote-refer" href="/Record/{$id}.endnote" >
-  <link rel="alternate" href="/Record/{$id}.rdf" type="application/rdf+xml" />    
+  <link rel="alternate" href="/Record/{$id}.rdf" type="application/rdf+xml" />
 {/if}
 
 <!-- Jeremy's additions 3/27/09 -->
 
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/container-core.css"> 
-    <link rel="stylesheet" type="text/css" media="screen" href="{$path}/interface/themes/orphans/css/yui.css"> 
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/container-core.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="{$path}/interface/themes/orphans/css/yui.css">
 
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yuiloader/yuiloader-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/dom/dom-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/event/event-min.js"></script>
-    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script> 
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/dragdrop/dragdrop-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-min.js"></script>
@@ -35,7 +35,7 @@
     <script language="JavaScript" type="text/javascript" src="{$path}/js/scripts.js"></script>
 
 <!-- End Jeremy's additions -->
-    
+
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 
 
@@ -45,10 +45,10 @@
     {literal}
 
     var jq = jQuery.noConflict();
-    
+
 
   function SubmitFeedback(frm) {
-    jq.post('/static/feedback.php', 
+    jq.post('/static/feedback.php',
             {'comment': jq("[name='comment']", frm).val(),
              'uniqname': jq("[name='uniqname']", frm).val(),
              'subject':  jq("[name='subject']", frm).val(),
@@ -61,7 +61,7 @@
             }
 
           );
-    return false;        
+    return false;
   }
 
 String.prototype.trim = function() {
@@ -113,10 +113,10 @@ function pausecomp(millis)
   while(curDate-date < millis);
 }
 
-function submitFeedback() 
+function submitFeedback()
 {
   document.getElementById('popupbox').innerHTML +=  document.getElementById('feedback_thanks').innerHTML;
-  setTimeout("hideLightbox()", 1500); 
+  setTimeout("hideLightbox()", 1500);
   return true;
 }
 
@@ -138,13 +138,13 @@ function hideMenu(elemId)
     // }
   	return false;
   }
-  	
+
   function resumetop(A) {
   	var B=document.getElementById(A);
   	B.className="";
   	return false;
   }
-  
+
   </script>
 
   <!-- Suz, testing random featured collection -->
@@ -157,7 +157,7 @@ function hideMenu(elemId)
   	$("#featured .itemList:nth-child(" + ran + ")").show();
   };
 
-  $(document).ready(function(){	
+  $(document).ready(function(){
   	randomtip();
   });
 
@@ -177,10 +177,10 @@ function hideMenu(elemId)
 <!-- Searchbox -->
       {if !$isTheHomePage}
       <div id="bd">
-        <div id="yui-main">
+        <div class="yui-main">
             {include file="searchbox.tpl"}
         </div>
-      </div>        
+      </div>
       {/if}
 
 <!-- Content -->
@@ -206,10 +206,10 @@ function hideMenu(elemId)
         </div>
       </div>
     </div>
-    <div id="popupbox"> 
+    <div id="popupbox">
     </div>
       {include file="popout_help.html"}
-      
+
       <script type="text/javascript">
       {literal}
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -220,7 +220,7 @@ function hideMenu(elemId)
       var pageTracker = _gat._getTracker("UA-954893-23");
       pageTracker._setDomainName(".hathitrust.org");
       pageTracker._trackPageview();
-      } catch(err) {} 
+      } catch(err) {}
       {/literal}
       </script>
   </body>

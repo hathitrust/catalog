@@ -22,7 +22,7 @@ h1 {font-size: 110%;}
     display: none;
 }
 
-#content, .contentbox, #yui-main.content .contentbox, #content.recordcontent
+#content, .contentbox, .yui-main.content .contentbox, #content.recordcontent
 {
 /* margin: 1em;
 */}
@@ -72,4 +72,4 @@ table.citation input, #all_holdings .toggle {
     margin-top: 0em;
     padding-bottom: 0em;
     margin-bottom: 0em;
-}    
+}

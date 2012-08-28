@@ -9,13 +9,13 @@
 
 <!-- Jeremy's additions 3/27/09 -->
 
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/container-core.css"> 
-    <link rel="stylesheet" type="text/css" media="screen" href="{$path}/interface/themes/hathi/css/yui.css"> 
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/container-core.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="{$path}/interface/themes/hathi/css/yui.css">
 
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yuiloader/yuiloader-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/dom/dom-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/event/event-min.js"></script>
-    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script> 
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/dragdrop/dragdrop-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-min.js"></script>
@@ -25,19 +25,19 @@
     <script language="JavaScript" type="text/javascript" src="{$path}/js/scripts.js"></script>
 
 <!-- End Jeremy's additions -->
-    
+
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js" type="text/javascript"></script>
     <script language="JavaScript" type="text/javascript">
     path = '{$url}';
     {literal}
 
     var jq = jQuery.noConflict();
-    
+
 
   function SubmitFeedback(frm) {
-    jq.post('/static/feedback.php', 
+    jq.post('/static/feedback.php',
             {'comment': jq("[name='comment']", frm).val(),
              'uniqname': jq("[name='uniqname']", frm).val(),
              'subject':  jq("[name='subject']", frm).val(),
@@ -50,7 +50,7 @@
             }
 
           );
-    return false;        
+    return false;
   }
 
 String.prototype.trim = function() {
@@ -102,10 +102,10 @@ function pausecomp(millis)
   while(curDate-date < millis);
 }
 
-function submitFeedback() 
+function submitFeedback()
 {
   document.getElementById('popupbox').innerHTML +=  document.getElementById('feedback_thanks').innerHTML;
-  setTimeout("hideLightbox()", 1500); 
+  setTimeout("hideLightbox()", 1500);
   return true;
 }
 
@@ -127,13 +127,13 @@ function hideMenu(elemId)
     // }
   	return false;
   }
-  	
+
   function resumetop(A) {
   	var B=document.getElementById(A);
   	B.className="";
   	return false;
   }
-  
+
   </script>
 
 {/literal}
@@ -143,16 +143,16 @@ function hideMenu(elemId)
   <body id="yahoo-com" class="yui-skin-sam">
 
     {include file="htdl_header.html"}
-  
+
     <div id="doc3" class="yui-t8">
 
       <h2 class="SkipLink">Main Content</h2>
 <!-- Searchbox -->
       <div id="bd">
-        <div id="yui-main">
+        <div class="yui-main">
             {include file="searchbox.tpl"}
         </div>
-      </div>        
+      </div>
 
 <!-- Content -->
       <div id="contentContainer">
@@ -177,10 +177,10 @@ function hideMenu(elemId)
         </div>
       </div>
     </div>
-    <div id="popupbox"> 
+    <div id="popupbox">
     </div>
       {include file="popout_help.html"}
-      
+
       <script type="text/javascript">
       {literal}
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -190,7 +190,7 @@ function hideMenu(elemId)
       try {
       var pageTracker = _gat._getTracker("UA-954893-17");
       pageTracker._trackPageview();
-      } catch(err) {} 
+      } catch(err) {}
       {/literal}
       </script>
   </body>

@@ -19,40 +19,40 @@
   <link rel="alternate" type="application/x-Research-Info-Systems" href="/Record/{$id}.ris" >
   <link rel="alternate" type="application/x-endnote-refer" href="/Record/{$id}.endnote" >
   <link rel="alternate" type="application/marc+xml" href="/Record/{$id}.xml" >
-  <link rel="alternate" href="/Record/{$id}.rdf" type="application/rdf+xml" />  
+  <link rel="alternate" href="/Record/{$id}.rdf" type="application/rdf+xml" />
 {/if}
 
 <link rel="unapi-server" type="application/xml" title="unAPI" href="/unapi">
 
 
-    
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    
+
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
-    
+
 
   <!-- Fancybox -->
-  
+
   <script src="/static/jquery.fancybox/jquery.fancybox-1.2.1.js" type="text/javascript" charset="utf-8"></script>
   <link rel="stylesheet" href="/static/jquery.fancybox/jquery.fancybox.css" type="text/css" media="screen" title="no title" charset="utf-8">
-  
+
   <script type="text/javascript" charset="utf-8">
    var jq = jQuery.noConflict();
-  
+
    var tempAddLink = "{translate text="tempAddLink"}";
    var tempRemoveLink = "{translate text="tempRemoveLink"}";
    var tempset = "{translate text="tempset"}";
    var jssearchcomps = "{$searchcomps}";
-   var username = "{$username}"; 
+   var username = "{$username}";
   </script>
-  
+
   <script src="/js/favorites.js" type="text/javascript" charset="utf-8"></script>
-  
-                
+
+
     <script language="JavaScript" type="text/javascript">
     path = '{$url}';
-    
+
     {literal}
 
 
@@ -63,10 +63,10 @@ String.prototype.trim = function() {
 function trimForm(infrm) {
   infrm.value = infrm.value.trim()
  }
- 
+
 function fixform(f) {
   // jq('#lookfor').value = jq('#lookfor').value.trim();
-  
+
   if (jq('#searchtype').val() == 'journaltitle') {
     // jq('#searchtype').val('title');
     jq(f).append('<input type="hidden" name="filter[]" value=\'format:Serial\'>');
@@ -109,10 +109,10 @@ function pausecomp(millis)
   while(curDate-date < millis);
 }
 
-// function submitFeedback() 
+// function submitFeedback()
 // {
 //   document.getElementById('popupbox').innerHTML +=  document.getElementById('feedback_thanks').innerHTML;
-//   setTimeout("hideLightbox()", 1500); 
+//   setTimeout("hideLightbox()", 1500);
 //   return true;
 // }
 
@@ -126,7 +126,7 @@ function hideMenu(elemId)
 
 jq(function(){
   jq('.dolightbox').fancybox({hideOnContentClick: false, overlayShow: true, frameHeight: 410});
-  
+
 });
 
 
@@ -140,7 +140,7 @@ jq(function(){
 
 <script type="text/javascript" charset="utf-8">
   var isSelectedItemsPage = {if $selectedItemsPage}true{else}false{/if};
-  var isFavoritesPage     = {if $favoritesPage}true{else}false{/if};  
+  var isFavoritesPage     = {if $favoritesPage}true{else}false{/if};
 </script>
 
 <!-- Our CSS -->
@@ -154,27 +154,27 @@ jq(function(){
 
   <body>
 {include file="popout_help.html"}
-    
+
 {include file="mlibrary_header.html"}
 
 
-  
+
 <div id="doc3" class="yui-t8"> <!-- Change id for page width, class for menu layout. -->
 
   <!-- Searchbox -->
   <div id="bd">
-    <div id="yui-main" style="*margin-left: 0em;">
+    <div class="yui-main" style="*margin-left: 0em;">
         {include file="searchbox.tpl"}
     </div>
-  </div>        
+  </div>
 
   <!-- Content -->
   <div style="margin-top: 1em; width: 100%">
       {include file="$module/$pageTemplate"}
   </div>
-  
+
   <!-- VUFind Footer -->
-  <a name="footer"></a>        
+  <a name="footer"></a>
   <div id="ft">
       <div><p><strong>Search Options</strong></p>
         <ul>
@@ -183,7 +183,7 @@ jq(function(){
           <li><a href="{$path}/Search/Advanced">Advanced Search</a></li>
         </ul>
       </div>
-    
+
       <div>
       <p><strong>Find More</strong></p>
       <ul>
@@ -217,7 +217,7 @@ jq(function(){
             {/if}
           </ul>
       </div>
-  
+
       <br clear="all">
 </div>
 
@@ -235,7 +235,7 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
 try {
 var pageTracker = _gat._getTracker("UA-1341620-9");
 pageTracker._trackPageview();
-} catch(err) {} 
+} catch(err) {}
 {/literal}
 </script>
 

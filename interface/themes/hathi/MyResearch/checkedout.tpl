@@ -1,7 +1,7 @@
 <div id="bd">
-  <div id="yui-main" class="content">
+  <div class="yui-main content">
     <div class="yui-b first contentbox">
-    
+
         {if $user->cat_username}
           <h4>{translate text='Your Checked Out Items'}</h4>
           {assign var="numItems" value=$transList|@count}
@@ -13,7 +13,7 @@
             {/if}
             <p>You have {$numdisp} checked out</p>
           {/if}
-          
+
           <div style="margin: 1em; font-style: italic">Note: The ability to renew items from this screen will be added soon.</div>
           {if $transList}
           <ul class="filters">
@@ -59,7 +59,7 @@
                       {if $resource.description} {$resource.description}{/if}
                       <br>
                     {/if}
-                    
+
                     <b>Due: {$resource.duedate}</b>
 
                   </div>
@@ -84,7 +84,7 @@
           </form>
         {/if}
 
-    
+
     </div>
   </div>
 

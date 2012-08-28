@@ -11,23 +11,23 @@
       if (val == 'after') {
         jq('#' + name + '-start').show().val("");
       }
-      
+
       if (val == 'between') {
         jq('#' + name + '-start').show().val("");
         jq('#' + name + '-between').show();
         jq('#' + name + '-end').show().val("");
       }
-      
+
       if (val == 'in') {
-       jq('#' + name + '-in').show().val(''); 
+       jq('#' + name + '-in').show().val('');
       }
-      
+
     }
 
     function changeSublibs(inst) {
       var sublibSelect = jq("#sublib");
       sublibSelect.empty();
-      var instSublibs = 
+      var instSublibs =
 {/literal}
 {$instLocsJSON};
 {literal}
@@ -36,19 +36,19 @@
         var val = instSublibs[inst]["sublibs"][i];
         sublibSelect.append('<option value="' + i + '">' + val + '</option>');
       }
-      
-      
+
+
       // var firstSublib = jq("#sublib option")[0].value;
       var firstSublib = jq('#sublib option').attr('value');
-      
+
       changeCollections(firstSublib);
     }
-    
-    
-    
+
+
+
     function changeCollections(sublib) {
       jq("#sublibColl").empty();
-      var sublibCollections = 
+      var sublibCollections =
 {/literal}
 {$locCollJSON};
 {literal}
@@ -58,15 +58,15 @@
         var val = sublibCollections[sublib]["collections"][i];
         jq('#sublibColl').append('<option value="' + i + '">' + val + '</option>');
       }
-      
+
     }
-    
+
     jq(document).ready(function() {
       changeRange('yop');
 //{/literal} changeSublibs("{$inst}"); {literal}
     });
   </script>
-  
+
   <style type="text/css" media="screen">
     h2 {margin-top: 1.5em; margin-bottom: .75em;}
   </style>
@@ -75,18 +75,18 @@
 
 
 <div id="bd">
-  <div id="yui-main" class="content" style="*margin-left: 0em;">
+  <div class="yui-main content" style="*margin-left: 0em;">
 
     <div class="yui-b first contentbox"  style="margin-left: 1em;">
       <div class="record" style="text-align: left;" >
-    
+
         <form method="GET" action="{$url}/Search/Home" name="searchForm" class="search" onSubmit="clickpostlog(document, ['advsearch'])">
           <h2>{translate text='Advanced Catalog Search'}:</h2>
-        
+
           <table style="width: auto">
-                        
-{*  #### Just gonna do it by hand            
-            
+
+{*  #### Just gonna do it by hand
+
             {section name="searchLoop" loop=4}
             <tr>
               {if !$smarty.section.searchLoop.first}
@@ -118,8 +118,8 @@
               <td><input type="text" name="lookfor[]" size="50" value=""></td>
             </tr>
             {/section}
-*}            
- 
+*}
+
             <tr>
               <td></td>
               <td >
@@ -138,9 +138,9 @@
                 </select>
               </td>
               <td><input type="text" name="lookfor[]" size="50" value="{$lookfor1}"></td>
-              
+
             </tr>
-            
+
             <tr>
               <td>
                 <select name="bool[]">
@@ -192,7 +192,7 @@
               </td>
               <td><input type="text" name="lookfor[]" size="50" value="{$lookfor3}"></td>
             </tr>
-            
+
             <tr>
               <td>
                 <select name="bool[]">
@@ -219,17 +219,17 @@
               <td><input type="text" name="lookfor[]" size="50" value="{$lookfor2}"></td>
               <!-- <td><input  type="submit" name="submit" value="{translate text="Find"}"></td> -->
             </tr>
-            
+
           </table>
-                    
+
           <br/>
           <h3>{translate text='Limit To'}:</h3>
-          
+
               <input type="hidden" name="sethtftonly" value="true"/>
               <input type="checkbox" name="htftonly" value="true" id="fullonly" />&nbsp;<label for="fullonly">Full view only</label>
 
               <span style="margin-left: 4em">
-                <span style="margin-right: 1em;">Year of publication:</span> 
+                <span style="margin-right: 1em;">Year of publication:</span>
                 <select id="yop" name="yop" onchange="changeRange('yop')">
                 <option value="before">Before or during</option>
                 <option value="after" selected="selected">During or after</option>
@@ -243,14 +243,14 @@
               <input class="yop" id="yop-in" type="text" size="4" name="fqor-publishDateTrie[]">
             </span>
 
-          
+
           <table style="width: auto">
             <tr>
 {*              <th>{translate text="Category"}: </th>
 *}              <th>{translate text="Language"}: </th>
               <th>{translate text="Format"}: </th>
             </tr>
-            <tr> 
+            <tr>
 {*              <td>
                 <select multiple name="fqor-hlb3Str[]"  size="10">
                   <option value="">All</option>
@@ -269,7 +269,7 @@
               </td>
               <td>
                 <select multiple name="fqor-format[]" size="10">
-                  <option value="">All</option>                  
+                  <option value="">All</option>
                   {foreach from=$formatList item="format"}
                   <option value="{$format}">{$format|escape:"html"}</option>
                   {/foreach}

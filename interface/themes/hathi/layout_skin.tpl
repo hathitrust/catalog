@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!-- BEGIN PAGE CONFIGURATION -->
-{php} 
+{php}
 
         $title = $pageTitle;
-{/php}        
+{/php}
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
@@ -49,10 +49,10 @@ function pausecomp(millis)
   while(curDate-date < millis);
 }
 
-function submitFeedback() 
+function submitFeedback()
 {
   document.getElementById('popupbox').innerHTML +=  document.getElementById('feedback_thanks').innerHTML;
-  setTimeout("hideLightbox()", 1500); 
+  setTimeout("hideLightbox()", 1500);
   return true;
 }
 
@@ -83,10 +83,10 @@ function hideMenu(elemId)
 include("./static/phase2/php/newheader_bottom2.php");
 {/php}
 
-  
-<!--  
+
+<!--
   ###################### BEGIN POPOUT DISPLAY TEXT########################
--->    
+-->
 
   <div id="favorite_help" style="display: none">
     <h2>Add to favorites</h2>
@@ -119,28 +119,28 @@ include("./static/phase2/php/newheader_bottom2.php");
       <h2>Search History</h2>
       <p>Search History is not currently working correctly. When functional, it will keep track of your recent searches and allow
       you to revisit them within a browser session.</p>
-      
+
     </div>
-    
+
     <div  id="browse_help" style="display:none;" >
       <h2>Browse the catalog</h2>
       <p>Sequential browsing of the catalog is not currently functional, but you can try another type of browsing by searching for nothing at all (just click the search button with an empty box) and then narrowing the results.</p>
-      
+
       <p>We have not yet determined if we'll be able to make browsing available when the initial public Mirlyn2 beta rolls out in January.</p>
-      
+
     </div>
 
 
     <div  id="hold_help" style="display:none;" >
       <h2>Hold/Recall an item</h2>
       <p>The ability to hold or recall an item is not yet functional; it will be working by the time we go live.</p>
-      
+
     </div>
 
-    
+
     <div  id="feedback" style="display:none;" >
       <h2>Mirlyn2 Beta Feedback</h2>
-            
+
       <form method="POST" id="feedbackform" action="mailto:dueberb@umich.edu"      onsubmit="submitFeedback();return true;"
       >
       <script language="JavaScript" type="text/javascript">
@@ -152,36 +152,36 @@ include("./static/phase2/php/newheader_bottom2.php");
           <tr><td style="padding-right: 2em; text-align:left; vertical-align: top">Subject</td><td style="text-align:left; vertical-align: top"><input type="text" name="subject" size=40></td></tr>
           <tr><td style="text-align:left; vertical-align: top padding-right: 2em;">Comment or Question</td><td style="text-align:left; vertical-align: top"><textarea style="width: 250px; height: 100px;" name="comment"></textarea></td></tr>
         </table>
-      
+
       <div id="feedback_thanks" style="display:none"><div style="padding: 1em; color: red;" >Thank you for taking the time to provide feedback.</div></div>
       <div id="submitbutton"><input type="submit" /></div>
       </form>
     </div>
-    
+
     <div  id="reserves_help" style="display:none;" >
       <h2>Reserves</h2>
-      <p>Currently, this application doesn't support an integrated reserves system with Aleph. We will likely 
+      <p>Currently, this application doesn't support an integrated reserves system with Aleph. We will likely
       send users to the <a href="http://mirlyn.lib.umich.edu/F/?local_base=miu30_pub">reserves system in Mirlyn</a>.</p>
     </div>
-    
+
     <div  id="newbooks_help" style="display:none;" >
       <h2>New Items</h2>
-      <p>It's not clear how to support "New Items" in this software; for the moment, we're just going to send people 
+      <p>It's not clear how to support "New Items" in this software; for the moment, we're just going to send people
       to  <a href="http://www.lib.umich.edu/newbooks/">the regular Newly Cataloged Items page</a>.</p>
     </div>
- 
+
     <div  id="searchtips_help" style="display:none;" >
       <h2>Search Tips</h2>
       <p>Search tips are not functional at this point.  It has not yet been determined how searching guidance will be provided.</p>
     </div>
- 
+
     <div  id="askus_help" style="display:none;" >
       <h2>Ask a Librarian</h2>
       <p>Any "Ask a Librarian" links will likely be turned into our normal AskUs link, e.g., <p style="padding-top: 1em; padding-left: 3em"><a href="http://www.lib.umich.edu/ask/"><img src="http://www.lib.umich.edu/graphics/phase1/askus-sidebar.jpg" alt="Ask a Librarian" title="Ask a Librarian" border="0" height="11" width="17">Ask a Librarian</a></p></p>
     </div>
- 
-  
-<!-- Record view.tpl -->    
+
+
+<!-- Record view.tpl -->
 <div  id="email_help" style="display: none">
   <h2>Email</h2>
   <p>Emailing a record is not yet working correctly and will be fixed before launch.</p>
@@ -211,37 +211,37 @@ include("./static/phase2/php/newheader_bottom2.php");
   <h2>Welcome to the Mirlyn2 Staff Only Beta</h2>
   <p>We're hoping staff will take the time to provide us with feedback about the application -- what seems to work well,
     what doesn't, features you'd like to see, bugs you've found...any comments at all are appreciated!</p>
-    
+
   <p>To submit a comment, just click on the big green "Provide Feedback" link at the top of any page, or send email
     directly to <a href="mailto:mirlyn2-beta-feedback@umich.edu">mirlyn2-beta-feedback@umich.edu</a>.
   </p>
 </div>
 
 
-<!--  
+<!--
   ###################### END POPOUT DISPLAY TEXT########################
--->    
-    
+-->
+
     <div id="wrapper">
     <div id="container">
-  
+
     <!-- LightBox -->
     <a onClick="hideLightbox(); return false;"><div id="lightbox"></div></a>
     <div id="popupbox" class="popupBox"></div>
     <!-- End LightBox -->
-  
+
     <div id="doc3" class="yui-t8"> <!-- Change id for page width, class for menu layout. -->
 
       <!--<div id="hd">-->
         <!-- Your header. Could be an include. -->
         <!--<a href="{$url}"><img src="{$path}/images/vufind.jpg" alt="vufinder"></a>-->
       <!--</div>-->
-        
-        
-    
+
+
+
       <!-- Search box. This should really be coming from the include. -->
       <div id="bd">
-        <div id="yui-main">
+        <div class="yui-main">
           <div class="searchbox">
             <div class="yui-b">
               <form method="GET" action="{$path}/Search/Home" name="searchForm" class="search" onsubmit="trimForm(this.lookfor); return true;">
@@ -260,7 +260,7 @@ include("./static/phase2/php/newheader_bottom2.php");
                 </select>
                 <input type="submit" name="submit" value="{translate text="Find"}">
                 <a href="{$path}/Search/Advanced" class="small">{translate text="Advanced"}</a>
-                
+
                 <a style="color: darkgreen; padding-left: 3em;" href="mailto:mirlyn2-beta-feedback@umich.edu?subject=Mirlyn2 Beta Feedback">Provide Feedback<img style="vertical-align: text-bottom" src="{$path}/static/umichwebsite/images/feedback_icon.jpg"></a>
                 {if $lookfor }
                 <br>
@@ -301,7 +301,7 @@ include("./static/phase2/php/newheader_bottom2.php");
 
       <div id="ft">
         <!-- Your footer. Could be an include. -->
-<a name="footer"></a>        
+<a name="footer"></a>
           <div><p><strong>Search Options</strong></p>
             <ul>
 <!--              <li><a href="{$path}/Search/History">Search History</a></li> -->
@@ -317,7 +317,7 @@ include("./static/phase2/php/newheader_bottom2.php");
               <li><a href="http://mirlyn.lib.umich.edu/F/?local_base=miu30_pub">Course Reserves</a></li>
               <li><a href="http://www.lib.umich.edu/newbooks/">New Items</a></li>
 
-              
+
             </ul>
         </div>
 
@@ -329,20 +329,20 @@ include("./static/phase2/php/newheader_bottom2.php");
               <li> <a href="http://www.lib.umich.edu/ask/">Ask a Librarian</a></li>
             </ul>
         </div>
-        
+
         <br clear="all">
       </div>
     </div>
-    
+
     </div>
     <!-- -->
     <!-- MLibrary Footer -->
     <!-- -->
-     
+
     {php}
     include("./static/phase2/php/newfooter2.php");
-    {/php}      
-   
+    {/php}
+
     <!-- -->
     <!-- /MLibrary Footer -->
     <!-- -->

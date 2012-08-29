@@ -16,6 +16,6 @@ $sth->execute;
 
 
 # Now do the tempresults
-
-$dbh->do("delete from tempresults where expires <  unix_timestamp(NOW())");
+# NO TEMPRESULTS FOR HT
+#$dbh->do("delete from tempresults where expires <  unix_timestamp(NOW())");
 

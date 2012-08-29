@@ -253,7 +253,7 @@ class RecordUtils
       // for it (the ELEC copy will be first if it exists).
       // Insert it as the first entry if it doesn't exist
       if (count($urls)) {
-        if (!isset($holdingList[$id][0]) or $holdingList[$id][0]['sub_library'] != 'ELEC') {
+        if (!isset($holdingList[$id][0],  $holdingList[$id][0]['sub_library']) or $holdingList[$id][0]['sub_library'] != 'ELEC') {
           array_unshift($holdingList[$id], array('location' => 'Electronic Resources', 'sub_library' => 'ELEC'));
         }
         foreach ($urls as $url) {

@@ -52,23 +52,23 @@ class Solr {
      * @var object HTTP_Request
      */
     public $client;
-    
+
     /**
      * The host to connect to
      * @var string
      */
     public $host;
-    
+
     public $fields = '*,score';
-    
-    
+
+
     /**
       * A place to store log data
     **/
-    
+
     public $alogdata = array();
-    
-    
+
+
     /**
      * Constructor
      *
@@ -77,21 +77,23 @@ class Solr {
      * @param   string  $host       The URL for the local Solr Server
      * @param   string  $index      The solr index directory (default 'catalog')
      * @access  public
-     */     
+     */
     function __construct($host, $index = 'catalog')
     {
         global $configArray;
         $this->host = $host . '/' . $index;
         $this->client = new HTTP_Request(null, array('useBrackets' => false));
-        
-        if (isset($configArray['HathiTrust']) && 
+
+        $this->client->addHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+
+        if (isset($configArray['HathiTrust']) &&
             isset($configArray['HathiTrust']['onlyHathi']) &&
             $configArray['HathiTrust']['onlyHathi'] ) {
           $this->hathiOnly = true;
         } else {
               $this->hathiOnly = false;
         }
-        
+
     }
 
     /**
@@ -103,17 +105,17 @@ class Solr {
     * @param bool  $raw = false    return the raw solr query (without _process-ing)?
     * @return array record structure
     */
-    
+
     function simplesearch($ss, $start = 0, $limit = null, $raw=false)
     {
-        
+
         global $configArray;
         if (!isset($limit)) {
 	  $limit = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : $configArray['Site']['itemsPerPage'];
         }
 
 
-        
+
 
         // The initial query
         if ($ss->use_dismax) {
@@ -122,9 +124,9 @@ class Solr {
         } else {
           $args = $this->searchArguments($ss);
         }
-        
+
         $action = $ss->action;
-        
+
         // Set up logging for later if it's a simple (dismax) search
         if ($ss->use_dismax && isset($ss->search[0])) {
           if (isset($ss->originalHash, $ss->originalHash['origin'])) {
@@ -137,32 +139,32 @@ class Solr {
           }
           $this->alogdata['data1'] = $ss->search[0][0]; // the index
           $this->alogdata['data2'] = $ss->search[0][1]; // the terms searched
-        } 
-        
-        
-        
-        
+        }
+
+
+
+
         // Add the pagination
-        
+
         $args[] = array('start', $start);
-        $args[] = array('rows', $limit);          
-        
-        
-        
+        $args[] = array('rows', $limit);
+
+
+
         // Spell checking? Also used as a way to determine we came from simple search for logging
         if ($ss->checkSpelling) {
             $args = array_merge($args, $this->spellcheckComponents($ss));
         }
-        
+
         if (isset($ss->originalHash['checkspelling']) && count($ss->activeInbandFilters()) == 0) {
           $this->alogdata['logit'] = true;
         }
 
-        
+
         if ($raw) {
             return $this->rawSolrSearch($args, $action);
         }
-        
+
         // Otherwise...
         $rv = $this->solrSearch($args, $action);
         return $rv;
@@ -178,15 +180,15 @@ class Solr {
      * @param int   $limit  The number of records to get
      * @return RecordSet
    **/
-   
+
      function getRecordSet($ss, $start=0, $limit=null) {
        $rs = new RecordSet;
 
        $rs->add_records($this->simplesearch($ss, $start, $limit));
        return $rs;
      }
-     
-   
+
+
 
     /**
       * Get a list of facet values suitable for browsing
@@ -198,8 +200,8 @@ class Solr {
       * @return array An array of the form:
       *       (total => numFound, values=>(index1 => ((value1, count1), (value2, count2)), ...)),
     **/
-    
-    
+
+
     function facetlist($ss, $fields, $sort='index', $skip=0, $limit=20)
     {
         // Start by getting the ones to filter out,by regexp
@@ -214,8 +216,8 @@ class Solr {
                 $hide[$kv[0]][] = $kv[1];
             }
         }
-        
-        
+
+
         $args = array();
         $searchcomps = $ss->use_dismax? $this->dismaxSearchArguments($ss) : $this->standardSearchComponents($ss);
         if (isset($ss) and $ss) {
@@ -225,12 +227,12 @@ class Solr {
         } else {
             $args[] = array('q', '*:*');
         }
-        
+
         if (!is_array($fields)) {
             $fields = array($fields);
         }
-        
-        
+
+
         $args[] = array('rows', 0);
         $args[] = array('facet', 'true');
         $option['facet.enum.cache.minDf'] = 50;
@@ -240,30 +242,30 @@ class Solr {
         // Add the fields
         $args[] = array('facet.field', $fields);
 
-        $args[] = array('facet.sort', $sort);     
-        
+        $args[] = array('facet.sort', $sort);
+
         // Get the results back as json
         $args[] = array('wt','json');
         // ... in a sane format
         $args[] = array('json.nl', 'arrarr');
-        
+
         // Get the data.
         $body = json_decode($this->rawSolrSearch($args, $ss->action), true);
         $rv = array();
         $rv['total'] = $body['response']['numFound'];
         $rv['values'] = array();
-        
+
         // Turn it into the exposed return value
-        foreach ($fields as $field) {           
+        foreach ($fields as $field) {
             $values =& $body['facet_counts']['facet_fields'][$field];
             $rv['values'][$field] = array();
 
-            // skip the hidden ones                
+            // skip the hidden ones
             foreach ($values as $valcnt) {
-                if (isset($hide, $hide[$field])) { 
+                if (isset($hide, $hide[$field])) {
                     foreach ($hide[$field] as $regexp) {
                         if (preg_match('/' . $regexp . '/', $valcnt[0])) {
-                            continue(2); 
+                            continue(2);
                         }
                     }
                 }
@@ -273,7 +275,7 @@ class Solr {
         }
         return $rv;
     }
-    
+
 
 
     /**
@@ -282,7 +284,7 @@ class Solr {
       * @param SearchStructure $ss  A filled-in search structure
       * @return array An array of (key,value) duples to send to Solr
      */
-     
+
      function searchArguments($ss) {
        $ss->action = 'standard';
        // print_r($this->standardSearchComponents($ss));
@@ -290,8 +292,8 @@ class Solr {
                             $this->filterComponents($ss),
                             $this->sortComponents($ss));
      }
-     
-     
+
+
     /**
       * Build up a set of search arguments for a dismax request
       *
@@ -305,23 +307,23 @@ class Solr {
       $tvb = isset($ss->search[0])? $ss->search[0] : array('all', '*:*');
       $type = $tvb[0];
       $value = $tvb[1];
-  
+
       if (!preg_match('/\S/', $value)) {
         $value = '*:*';
       }
-      // Get the yaml file 
+      // Get the yaml file
       $allspecs = Horde_Yaml::load(file_get_contents('conf/dismaxsearchspecs.yaml'));
-      
+
       // If the type isn't set, back up to normal arguments
-      
+
       if (!isset($allspecs[$type])) {
         return $this->searchArguments($ss);
       }
-            
-      
+
+
       $spec = $allspecs[$type];
       $parsed = array();
-  
+
       foreach (array('pf', 'qf', 'pf1') as $param) {
         $parsed[$param] = array();
         if (!isset($spec[$param])) {
@@ -334,19 +336,19 @@ class Solr {
       }
       $rv[] = array('q', $value);
       $rv[] = array('qt', 'edismax');
-      $rv[] = array('mm', $this->mm($spec, $ss));          
-      
+      $rv[] = array('mm', $this->mm($spec, $ss));
+
 if ($type == 'allTest') {
   $this->debug = true;
-}      
-      return array_merge($rv, $this->filterComponents($ss), $this->sortComponents($ss));      
+}
+      return array_merge($rv, $this->filterComponents($ss), $this->sortComponents($ss));
     }
 
 
      /**
-       * Get the minmatch (mm) param for solr 
+       * Get the minmatch (mm) param for solr
      **/
-    
+
      function mm($spec, $ss) {
        return $spec['mm'];
      }
@@ -357,11 +359,11 @@ if ($type == 'allTest') {
        * @param SearchStructure $ss The Search Structure
        * @return array And array of duples of the form key=value (e.g, q=<text of the query>)
       */
-      
+
       function standardSearchComponents($ss) {
-          // Get a SearchSpecs singleton; we define searchable fields as 
+          // Get a SearchSpecs singleton; we define searchable fields as
           // those listed in the searchspecs file
-          
+
           $searchComponents = array();
 
           $specs = Horde_Yaml::load(file_get_contents('conf/searchspecs.yaml'));
@@ -379,29 +381,29 @@ if ($type == 'allTest') {
                   $query .= $comp;
               }
           }
-          
+
           if (!$ss->noExtraIDs()) {
             if (strlen($query) > 0) {
-             $query = '(' . $query . ') OR '; 
+             $query = '(' . $query . ') OR ';
             }
             $query .= "id:(" . implode(' OR ', $ss->extraIDs()) . ')';
           }
-          
+
           $ids = $this->tagIDs($ss);
           if (preg_match('/\S/', $query)) {
               $searchComponents[] = array('q', $query);
           } else {
               $searchComponents[] = array('q', '*:*');
           }
-          
+
           return $searchComponents;
       }
 
-      
+
       /** Quote a filter value, skipping it if it starts with a '[' (and hence is assumed
         * to be a range)
       **/
-      
+
       function quoteFilterValue($v) {
         if (preg_match('/^\[/', $v)) {
           return $v;
@@ -409,23 +411,23 @@ if ($type == 'allTest') {
           return '"' . $v . '"';
         }
       }
-      
+
      /**
        * Create key-value argument(s) to correctly apply the filters in $ss
        *
        * @param SearchStructure $ss
        * @return array An array of (key,value) duples
       */
-      
+
       function filterComponents($ss) {
           $rv = array();
           $filters = $ss->allActiveFilters() ;
-          
+
           if (count($filters) == 0 && count($ss->tags()) == 0) {
               return array();
           }
           // Otherwise...
-          
+
           foreach ($filters as $indexValue) {
               $index = $indexValue[0];
               $val = $indexValue[1];
@@ -446,18 +448,18 @@ if ($type == 'allTest') {
           }
           return array(array('fq', $rv));
       }
-     
-     
+
+
      /**
        * tagIDs($ss)
        *
        * Get a list of the IDs associated with all the tags
        *
       **/
-      
+
       function tagIDs($ss) {
-        $ids = array();       
-        
+        $ids = array();
+
         $tags = $ss->tags();
         if (count($tags) == 0) {
           return $ids;
@@ -468,7 +470,7 @@ if ($type == 'allTest') {
         }
         return $ids;
       }
-     
+
      /**
        * Create a simple ID filter based on tags
        * For now, we're kinda assuming only one tag
@@ -480,17 +482,17 @@ if ($type == 'allTest') {
        }
        return 'id:(' . implode(' OR ', $ids) . ')';
      }
-     
+
      /**
        * Create key-value args to apply any selected sort option(s)
        *
        * @param SearchStructure $ss
        * @return array An array of (key,value) duples
       */
-      
+
       function sortComponents($ss) {
           global $configArray;
-          
+
           $sort = array();
           if (isset($ss->sort, $configArray['SortMapping'], $configArray['SortMapping'][$ss->sort])) {
               $sort[] = array('sort', $configArray['SortMapping'][$ss->sort]);
@@ -504,9 +506,9 @@ if ($type == 'allTest') {
         * @param SearchStructure $ss
         * @return array An array of (key,value) duples
        */
-       
+
        function facetComponents($ss, $fields, $limit, $sort='count') {
-           
+
            $args = array();
            // Basic facet stuff
            $args[] = array('facet', 'true');
@@ -516,7 +518,7 @@ if ($type == 'allTest') {
            // Add the fields
            $args[] = array('facet.field', $fields);
            // Sort by count, desc
-           $args[] = array('facet.sort', 'count');      
+           $args[] = array('facet.sort', 'count');
            return $args;
        }
 
@@ -529,7 +531,7 @@ if ($type == 'allTest') {
            $args[] = array('spellcheck.extendedResults', 'false');
            $args[] = array('spellcheck.count', '1');
            $args[] = array('spellcheck.collate', 'true');
-           
+
            $args[] = array('spellcheck', 'true');
            $args[] = array('spellcheck.q', $ss->search[0][1]);
            $args[] = array('spellcheck.count', 1);
@@ -556,7 +558,7 @@ if ($type == 'allTest') {
        $clauses = array();
        foreach ($structure as $field => $clausearray) {
          // is_numeric($field) is true iff we've got an un-hashed array, used for grouping
-         if (is_numeric($field)) { 
+         if (is_numeric($field)) {
            // get the op (AND or OR) and weight from the first item
            $opweight = array_shift($clausearray);
            $op = $opweight[0];
@@ -573,7 +575,7 @@ if ($type == 'allTest') {
 
          foreach ($clausearray as $valweight) {
 
-           $val    = $valweight[0]; 
+           $val    = $valweight[0];
            $weight = $valweight[1];
            if (!isset($values[$val])) {
              if ($val == 'lcnormalized') {
@@ -585,7 +587,7 @@ if ($type == 'allTest') {
                  continue;
                }
              }
-             
+
              if ($val == 'stdnum') {
                if (preg_match('/^\s*0*([\d\-\.]+[xX]?).*$/', $values['asis'], $match)) {
                  $stdnum = $match[1];
@@ -611,18 +613,18 @@ if ($type == 'allTest') {
 
    /**
      * Turn solr output into a record structure (which shouuld probably be its own class...)
-     * 
+     *
      * @param string $result The XML returned by solr
      * @param string $xslfile The path of the XSL file to use to convert the data
      * @return array A structure representing the returned data after transformation via $xslfile
     */
 
 
-    
+
 	function _process($result, $xslfile='xsl/solr-convert.xsl')
 	{
         global $configArray;
-        
+
         if (preg_match('/^<html/', $result)) {
           if (preg_match('/ParseException/', $result)) {
             $errorMsg = "Error+in+search+syntax";
@@ -630,7 +632,7 @@ if ($type == 'allTest') {
             $errorMsg = "Unknown+error";
           }
           // header("Location: /Search/Error?error=$errorMsg");
-          return;            
+          return;
         }
         $resraw =  json_decode($result, true);
         $resp  = $resraw['response'];
@@ -639,14 +641,14 @@ if ($type == 'allTest') {
         // $res['record'] = $resp['numFound'] == 1? array($resp['docs']) : $resp['docs'];
         $res['record'] =  $resp['docs'];
         if (isset($resraw['spellcheck'],
-                  $resraw['spellcheck']['suggestions'], 
-                  $resraw['spellcheck']['suggestions'][1], 
+                  $resraw['spellcheck']['suggestions'],
+                  $resraw['spellcheck']['suggestions'][1],
                   $resraw['spellcheck']['suggestions'][1][1] )) {
           // $res['SpellcheckSuggestion'] = $resraw['spellcheck']['suggestions'][1][1];
           $spellcheck = array_pop($resraw['spellcheck']['suggestions']);
           $res['SpellcheckSuggestion'] = $spellcheck[1];
         }
-        
+
         $ff = new FilterFormat();
         if ($res['RecordCount'] == 0) return $res;
         foreach ($res['record'] as &$record) {
@@ -658,13 +660,13 @@ if ($type == 'allTest') {
             $record['format'] = $ff->filter((array)$record['availability']);
           }
        }
-       
+
        // print_r($res);
-        
+
        return $res;
 
 	}
-	
+
     /**
      * Input Tokenizer
      *
@@ -696,7 +698,7 @@ if ($type == 'allTest') {
               $newWords[] = $words[$i];
             }
         }
-        
+
         # Pull out any trailing + or -
         $fixedwords = array();
         foreach ($newWords as &$word) {
@@ -707,11 +709,11 @@ if ($type == 'allTest') {
           $fixedwords[] = $word;
 //          error_log("Token is $word");
         }
-        
+
         // return $newWords;
         return $fixedwords;
 	}
-	
+
     /**
      * Input Validater
      *
@@ -739,7 +741,7 @@ if ($type == 'allTest') {
         // Ensure ^ is used properly
         $cnt = preg_match_all('/\^/', $input, $tmp);
         $matches = preg_match_all('/.+\^[0-9]/', $input, $tmp);
-        
+
         if (($cnt) && ($cnt !== $matches)) {
             return str_replace('^', '', $input);
         }
@@ -751,7 +753,7 @@ if ($type == 'allTest') {
   	  * Transform the given string just as the exactmatcher type in our Solr install
   	  *
   	  * Unlike the solr exactmatcher, we leave * and ? alone and don't worry about unicode for now
-  	  * 
+  	  *
   	  * @param string $str String to exactmatcher-ify
   	  * @return string Transformed string
   	  * @access public
@@ -759,7 +761,7 @@ if ($type == 'allTest') {
 
   // <fieldType name="exactmatcher" class="solr.TextField" omitNorms="true">
   //        <analyzer>
-  //          <tokenizer class="solr.KeywordTokenizerFactory"/> 
+  //          <tokenizer class="solr.KeywordTokenizerFactory"/>
   //          <filter class="schema.UnicodeNormalizationFilterFactory" version="icu4j" composed="false" remove_diacritics="true" remove_modifiers="true" fold="true"/>
   //          <filter class="solr.LowerCaseFilterFactory"/>
   //          <filter class="solr.TrimFilterFactory"/>
@@ -780,7 +782,7 @@ if ($type == 'allTest') {
 	/**
      * Build AND, OR, and Phrase queries
      *
-     * Given a lookfor string, clean it up, tokenize it, and 
+     * Given a lookfor string, clean it up, tokenize it, and
      * return a structure that includes AND, OR, and Phrase
      * queries.
      *
@@ -788,38 +790,38 @@ if ($type == 'allTest') {
      * @return  array   $values     Includes 'and', 'or', and 'onephrase' elements
      * @access  public
      */
-    
+
 	public function build_and_or_onephrase($lookfor = null) {
 	    $values = array();
-        
+
         $illegal = array('!', ':', ';', '[', ']', '(',')', '+ ', '&', '- ');
         $lookfor = trim(str_replace($illegal, '', $lookfor));
-        
+
         // Replace fancy quotes
         $lookfor = str_replace(array('“', '”'), '"', $lookfor);
-        
+
         // If it looks like "..."*, pull out the quotes
-        
+
         if (preg_match('/^\s*"(.*)"\*\s*$/', $lookfor, $match)) {
           $em = $match[1];
           $lookfor = $em . '*';
           // $em = $this->exactmatcherify($em) . '*';
           // return array('exactmatcher' => $em, 'emstartswith' => $em, 'asis' => $lookfor);
         }
-        
+
         // Validate input
         $lookfor = $this->validateInput($lookfor);
-        
+
         if (!preg_match('/\S/', $lookfor)) {
             return false;
         }
-        
+
         // Tokenize Input
         $tokenized = $this->tokenizeInput($lookfor);
-        
-        $values['onephrase'] = '"' . preg_replace('/"/',  '', implode(' ', $tokenized)) . '"'; 
+
+        $values['onephrase'] = '"' . preg_replace('/"/',  '', implode(' ', $tokenized)) . '"';
         $values['and']       = implode(' AND ', $tokenized);
-        $values['or']        = implode(' OR ', $tokenized);        
+        $values['or']        = implode(' OR ', $tokenized);
         $values['asis']      = $lookfor;
         $values['compressed'] = preg_replace('/\s/', '', $lookfor);
         $values['exactmatcher'] = $this->exactmatcherify($lookfor);
@@ -827,7 +829,7 @@ if ($type == 'allTest') {
         return $values;
 	}
 
-    
+
     /**
       * Construct, perform, and process the search
       *
@@ -835,7 +837,7 @@ if ($type == 'allTest') {
       * @param string $action The solr action (either 'select' or one defined in solrconfig.xml)
       * @return mixed $result The standard vufind result object, as returned from _process
     **/
-    
+
     function solrSearch($args, $action='standard') {
         $raw = $this->rawSolrSearch($args, $action);
         if (!PEAR::isError($raw)) {
@@ -847,17 +849,17 @@ if ($type == 'allTest') {
 #                       $this->alogdata['data1'],
 #                       $this->alogdata['data2'],
 #                       $this->alogdata['data3'],
-#                       $data4 
+#                       $data4
 #                       );
 #          }
-          
+
           return $processed;
         } else {
             return $raw;
         }
     }
-        
-    
+
+
     /**
       * Do the low-level talking to Solr via the client using HTTP POST
       *
@@ -865,17 +867,17 @@ if ($type == 'allTest') {
       * @param string $action The solr action (either 'select' or one defined in solrconfig.xml)
       * @return string The XML (or JSON or whatever) returned from solr
     **/
-    
+
     function rawSolrSearch($args, $action='standard') {
         global $interface;
-      
+
         $this->client->setMethod(HTTP_REQUEST_METHOD_POST);
         $this->client->setURL($this->host . "/select/");
 
 
-        # Hack to get around edismax problem with mm; use dismax in the 
+        # Hack to get around edismax problem with mm; use dismax in the
         # absense of AND/OR/NOT
-        
+
         if ($action == 'edismax') {
           $q = '';
           foreach ($args as $kv) {
@@ -890,14 +892,14 @@ if ($type == 'allTest') {
             $action = 'dismax';
           }
         }
-        
+
         $args[] = array('qt', $action);
         $args[] = array('fl', $this->fields);
         $args[] = array('wt', 'json');
         $args[] = array('json.nl', 'arrarr');
-        
+
         $args[] = array('ps', 0);
-        
+
         if ($this->debug) {
           // $args[] = array('debugQuery', 'true');
           // $args[] = array('rows', 0);
@@ -905,8 +907,8 @@ if ($type == 'allTest') {
         }
         // print_r($args);
 
-        $nullsearch = false;        
-        
+        $nullsearch = false;
+
         # Again, if the action is edismax, we need to
         # translate pf to pf1
         foreach ($args as $kv) {
@@ -937,7 +939,7 @@ if ($type == 'allTest') {
         // if ($this->debug) {
   // print_r($this->client->getResponseBody());
         // }
-      
+
         if (!PEAR::isError($result)) {
             return $this->client->getResponseBody();
         } else {
@@ -945,7 +947,7 @@ if ($type == 'allTest') {
         }
 
     }
-     
+
     /**
      * Retrieves a document specified by the ID.
      *
@@ -980,15 +982,15 @@ if ($type == 'allTest') {
     function getMoreLikeThis($record, $id, $max = 5)
     {
        global $configArray;
-    
+
        if ($configArray['System']['debug']) {
          $this->debug = true;
        }
-  
+
        if ((!isset($record['title'])) || ($record['title'] == '')) {
            return null;
        }
-  
+
        $query = '(title:(' . str_replace(array('[', ']', '!', '&', ':', ';', '-', '/'), '', $record['title'][0]) . ')^75';
        if (isset($record['shorttitle'])) {
          $query .= ' OR title:(' . str_replace(array('[', ']', '!', '&', ':', ';', '-', '/'), '', $record['title'][0]) . ')^100';
@@ -999,20 +1001,20 @@ if ($type == 'allTest') {
            $query .= ' OR fulltopic:("' . $topic . '")^300';
          }
        }
-       
+
       if (isset($record['language'])) {
         foreach ($record['language'] as $language) {
           $query .= ' OR language:("' . $language . '")^30';
         }
       }
-      
+
       if (isset($record['author'])) {
         foreach ($record['author'] as $author) {
           $query .= ' OR author:("' . $author . '")^75';
         }
-        
+
       }
-      
+
       if (isset($record['publishDate'])) {
         $pubdate = $record['publishDate'][0];
         if (preg_match('/^\d+$/', $pubdate)) {
@@ -1021,13 +1023,13 @@ if ($type == 'allTest') {
           $query .= " OR publishDateTrie:[$start TO $end]";
         }
       }
-      
-      
+
+
       # Remove the current item
       $query .= ') NOT id:(' . $id . ')';
 
       $ss = new SearchStructure(true); // create a "blank" ss with just the filter queries
-  
+
       $args = array_merge(array(array('q', $query)), $this->filterComponents($ss));
       return $this->solrSearch($args);
     }
@@ -1059,7 +1061,7 @@ if ($type == 'allTest') {
 
         return $result['Facets']['Cluster']['item'];
     }
-    
+
 }
 
 

@@ -14,3 +14,6 @@ my $dbh = DBI->connect($dsn,$user,$pass);
 my $sth = $dbh->prepare("delete from vfsession where expires < unix_timestamp(NOW())");
 $sth->execute;
 
+# Now do the tempresults
+# NO TEMPRESULTS FOR HT
+#$dbh->do("delete from tempresults where expires <  unix_timestamp(NOW())");

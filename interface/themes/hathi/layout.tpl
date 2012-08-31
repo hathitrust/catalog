@@ -54,7 +54,7 @@
 
   </head>
 
-  <body id="yahoo-com" class="yui-skin-sam">
+  <body class="yui-skin-sam">
 
     {include file="htdl_header.tpl"}
 

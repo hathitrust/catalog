@@ -4,7 +4,7 @@ require_once 'Pager/Sliding.php';
 
 class Pager_LoggingPager extends Pager_Sliding
 {
-  
+
   function _renderLink($altText, $linkText)
      {
          if ($this->_httpMethod == 'GET') {
@@ -17,12 +17,11 @@ class Pager_LoggingPager extends Pager_Sliding
              if (array_key_exists($this->_urlVar, $this->_linkData)) {
                  $onclick = str_replace('%d', $this->_linkData[$this->_urlVar], $this->_onclick);
              }
-             return sprintf('<a class="clickpostlog" ref="pickpage|%s" href="%s"%s%s%s%s title="%s">%s</a>',
-                            $this->_linkData[$this->_urlVar],
+             return sprintf('<a  href="%s"%s%s%s%s title="%s">%s</a>',
                             htmlentities($this->_url . $href, ENT_COMPAT, 'UTF-8'),
                             empty($this->_classString) ? '' : ' '.$this->_classString,
                             empty($this->_attributes)  ? '' : ' '.$this->_attributes,
-                            
+
                             empty($this->_accesskey)   ? '' : ' accesskey="'.$this->_linkData[$this->_urlVar].'"',
                             empty($onclick)            ? '' : ' onclick="'.$onclick.'"',
                             $altText,
@@ -43,5 +42,5 @@ class Pager_LoggingPager extends Pager_Sliding
              );
          }
          return '';
-     }             
+     }
 }

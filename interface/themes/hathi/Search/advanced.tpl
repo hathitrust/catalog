@@ -63,7 +63,6 @@
 
     jq(document).ready(function() {
       changeRange('yop');
-//{/literal} changeSublibs("{$inst}"); {literal}
     });
   </script>
 
@@ -77,7 +76,7 @@
 <div id="bd">
   <div id="yui-main" class="content" style="*margin-left: 0em;">
 
-    <div class="yui-b first contentbox"  style="margin-left: 1em;">
+    <div class="first contentbox"  style="margin-left: 1em;">
       <div class="record" style="text-align: left;" >
 
         <form method="GET" action="{$url}/Search/Home" name="searchForm" class="search" onSubmit="clickpostlog(document, ['advsearch'])">
@@ -86,40 +85,6 @@
 
           <table style="width: auto">
 
-{*  #### Just gonna do it by hand
-
-            {section name="searchLoop" loop=4}
-            <tr>
-              {if !$smarty.section.searchLoop.first}
-              <td>
-                <select name="bool[]">
-                  <option value="AND">{translate text="AND"}</option>
-                  <option value="OR">{translate text="OR"}</option>
-                  <!-- <option value="NOT">{translate text="NOT"}</option> -->
-                </select>
-              </td>
-              {else}
-              <td></td>
-              {/if}
-              <td align="right">
-                <select name="type[]">
-                  <option value="all">{translate text="All Fields"}</option>
-                  <option value="title">{translate text="Title"}</option>
-                  <option value="author">{translate text="Author"}</option>
-                  <option value="subject">{translate text="Subject"}</option>
-                  <option value="hlb">{translate text="Categories"}</option>
-                  <option value="callnumber">{translate text="Call Number"} starts with </option>
-                  <option value="publisher">{translate text="Publisher"}</option>
-                  <option value="series">{translate text="Series"}</option>
-                  <option value="year">{translate text="Year of Publication"}</option>
-                  <option value="isn">ISBN / ISSN / etc.</option>
-                  <option value="toc">{translate text="Table of Contents"}</option>
-                </select>
-              </td>
-              <td><input type="text" name="lookfor[]" size="50" value=""></td>
-            </tr>
-            {/section}
-*}
 
             <tr>
               <td></td>

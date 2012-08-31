@@ -11,7 +11,7 @@
       {/if}
       <li><a href="{$url}/Search/Home?{$facet.url|regex_replace:"/&/":"&amp;"}">{translate text=$facet.value}</a> <span dir="ltr">({$facet.count})</span></li>
       {if ($smarty.foreach.facetLoop.iteration > 5) && $smarty.foreach.facetLoop.last}
-          <li><a href="#" onclick="hideThese('{$cluster}'); return false;"><i>less...</i></a></li>
+          <li><a href="#" onclick="hideThese('{$cluster}'); return false;"><em>less...</em></a></li>
       {/if}
     {/foreach}
 </ul>

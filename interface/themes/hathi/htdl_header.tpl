@@ -3,7 +3,7 @@
     <div class="branding">
       <div class="brandingLogo">
         <a class="SkipLink" accesskey="2" href="#skipNav">Skip navigation</a>
-        <h1 class="SkipLink">Hathi Trust Digital Library - {$pageTitle|truncate:64:"..."}</h1>
+        <h1 class="SkipLink">{$pageTitle|truncate:64:"..."} | Hathi Trust Digital Library</h1>
         <a href="http://catalog.hathitrust.org/">
           <img src="/images/hathi/HathiTrust.gif" alt="Hathi Trust Logo" ><span>Digital Library</span></a>
       </div>

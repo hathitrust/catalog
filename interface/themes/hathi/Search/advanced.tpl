@@ -83,13 +83,15 @@
           <input type='hidden' name='adv' value='1'>
           <h2>{translate text='Advanced Catalog Search'}:</h2>
 
+          <h3 class="hidden">Search by field</h3>
           <table style="width: auto">
 
 
             <tr>
               <td></td>
               <td >
-                <select name="type[]">
+                <label class="hidden" for="sf1">search field 1</label>
+                <select id="sf1" name="type[]">
                   <option value="all" {if $type1 == 'all'} selected{/if}>{translate text="All Fields"}</option>
                   <option value="title" {if $type1 == 'title'} selected{/if}>{translate text="Title"}</option>
                   <option value="author" {if $type1 == 'author'} selected{/if}>{translate text="Author"}</option>
@@ -103,20 +105,25 @@
                   <option value="isn" {if $type1 == 'isn'} selected{/if}>ISBN/ISSN</option>
                 </select>
               </td>
-              <td><input type="text" name="lookfor[]" size="50" value="{$lookfor1}"></td>
+              <td>
+                <label class="hidden" for="field1">search box 1</label>
+                <input id="field1" type="text" name="lookfor[]" size="50" value="{$lookfor1}"></td>
 
             </tr>
 
             <tr>
               <td>
-                <select name="bool[]">
+                <label class="hidden" for="op1">Operator 1</label>
+                <select id="op1" name="bool[]">
                   <option value="AND" {if $bool1 == 'AND'} selected{/if}>{translate text="AND"}</option>
                   <option value="OR" {if $bool1 == 'OR'} selected{/if}>{translate text="OR"}</option>
                   <!-- <option value="NOT" {if $bool1 == 'NOT'} selected{/if}>{translate text="NOT"}</option> -->
                 </select>
               </td>
               <td >
-                <select name="type[]">
+                <label class="hidden" for="sf2">search field 2</label>
+
+                <select id="sf2" name="type[]">
                   <option value="all" {if $type2 == 'all'} selected{/if}>{translate text="All Fields"}</option>
                   <option value="title" {if $type2 == 'title'} selected{/if}>{translate text="Title"}</option>
                   <option value="author" {if $type2 == 'author'} selected{/if}>{translate text="Author"}</option>
@@ -130,19 +137,25 @@
                   <option value="isn" {if $type2 == 'isn'} selected{/if}>ISBN/ISSN</option>
                 </select>
               </td>
-              <td><input type="text" name="lookfor[]" size="50" value="{$lookfor2}"></td>
+              <td>
+                <label class="hidden" for="field2">search box 2</label>
+                <input id="field2" type="text" name="lookfor[]" size="50" value="{$lookfor2}">
+              </td>
             </tr>
 
             <tr>
               <td>
-                <select name="bool[]">
+                <label class="hidden" for="op2">Operator 2</label>
+                <select id="op2" name="bool[]">
                   <option value="AND" {if $bool2 == 'AND'} selected{/if}>{translate text="AND"}</option>
                   <option value="OR" {if $bool2 == 'OR'} selected{/if}>{translate text="OR"}</option>
                   <!-- <option value="NOT" {if $bool2 == 'NOT'} selected{/if}>{translate text="NOT"}</option> -->
                 </select>
               </td>
               <td >
-                <select name="type[]">
+                <label class="hidden" for="sf3">search field 3</label>
+
+                <select id="sf3" name="type[]">
                   <option value="all" {if $type3 == 'all'} selected{/if}>{translate text="All Fields"}</option>
                   <option value="title" {if $type3 == 'title'} selected{/if}>{translate text="Title"}</option>
                   <option value="author" {if $type3 == 'author'} selected{/if}>{translate text="Author"}</option>
@@ -156,19 +169,21 @@
                   <option value="isn" {if $type3 == 'isn'} selected{/if}>ISBN/ISSN</option>
                 </select>
               </td>
-              <td><input type="text" name="lookfor[]" size="50" value="{$lookfor3}"></td>
+              <td><label class="hidden" for="field3">search box 3</label><input id="field3" type="text" name="lookfor[]" size="50" value="{$lookfor3}"></td>
             </tr>
 
             <tr>
               <td>
-                <select name="bool[]">
+                <label class="hidden" for="op3">Operator 3</label>
+                <select id="op3" name="bool[]">
                   <option value="AND" {if $bool3 == 'AND'} selected{/if}>{translate text="AND"}</option>
                   <option value="OR" {if $bool3== 'OR'} selected{/if}>{translate text="OR"}</option>
                   <!-- <option value="NOT" {if $bool3 == 'NOT'} selected{/if}>{translate text="NOT"}</option> -->
                 </select>
               </td>
               <td >
-                <select name="type[]">
+                <label class="hidden" for="sf4">search field 4</label>
+                <select id="sf4" name="type[]">
                   <option value="all" {if $type4 == 'all'} selected{/if}>{translate text="All Fields"}</option>
                   <option value="title" {if $type4 == 'title'} selected{/if}>{translate text="Title"}</option>
                   <option value="author" {if $type4 == 'author'} selected{/if}>{translate text="Author"}</option>
@@ -182,7 +197,7 @@
                   <option value="isn" {if $type4 == 'isn'} selected{/if}>ISBN/ISSN</option>
                 </select>
               </td>
-              <td><input type="text" name="lookfor[]" size="50" value="{$lookfor2}"></td>
+              <td><label class="hidden" for="field4">search box 4</label><input id="field4" type="text" name="lookfor[]" size="50" value="{$lookfor4}"></td>
               <!-- <td><input  type="submit" name="submit" value="{translate text="Find"}"></td> -->
             </tr>
 
@@ -194,6 +209,7 @@
               <input type="hidden" name="sethtftonly" value="true">
               <input type="checkbox" name="htftonly" value="true" id="fullonly" >&nbsp;<label for="fullonly">Full view only</label>
 
+              <label for="yop" class="hidden">Publication year restrictions</label>
               <span style="margin-left: 4em">
                 <span style="margin-right: 1em;">Year of publication:</span>
                 <select id="yop" name="yop" onchange="changeRange('yop')">
@@ -203,30 +219,26 @@
                 <option value="in">Only during</option>
               </select>
 
+              <label for="yop-start" class="hidden">Earliest allowable publication year</label>
               <input class="yop" id="yop-start" type="text" size="4" name="fqrange-start-publishDateTrie-1">
               <span class="yop" id="yop-between" > and </span>
+
+              <label for="yop-end" class="hidden">Latest allowable publication year</label>
               <input class="yop"  id="yop-end" type="text" size="4" name="fqrange-end-publishDateTrie-1">
+
+              <label for="yop-in" class="hidden">Publication year must be</label>
               <input class="yop" id="yop-in" type="text" size="4" name="fqor-publishDateTrie[]">
             </span>
 
 
           <table style="width: auto">
             <tr>
-{*              <th>{translate text="Category"}: </th>
-*}              <th>{translate text="Language"}: </th>
-              <th>{translate text="Original Format"}: </th>
+              <th><label for="fqor-language">{translate text="Language"}</label>: </th>
+              <th><label for="fqor-format">{translate text="Original Format"}</label>: </th>
             </tr>
             <tr>
-{*              <td>
-                <select multiple name="fqor-hlb3Str[]"  size="10">
-                  <option value="">All</option>
-                  {foreach from=$hlb3List item="hlb3"}
-                  <option value="{$hlb3}">{$hlb3|escape:"html"}</option>
-                  {/foreach}
-                </select>
-              </td>
-*}              <td>
-                <select multiple  name="fqor-language[]" size="10">
+              <td>
+                <select multiple  id="fqor-language" name="fqor-language[]" size="10">
                   <option value="">All</option>
                   {foreach from=$languageList item="language"}
                   <option value="{$language}">{$language|escape:"html"}</option>
@@ -234,7 +246,7 @@
                 </select>
               </td>
               <td>
-                <select multiple name="fqor-format[]" size="10">
+                <select multiple id="fqor-format" name="fqor-format[]" size="10">
                   <option value="">All</option>
                   {foreach from=$formatList item="format"}
                   <option value="{$format}">{$format|escape:"html"}</option>

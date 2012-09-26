@@ -415,7 +415,7 @@ class Home extends Action {
 
 
         $interface->assign('recordSet', $result['record']);
-        $interface->assign('resultHoldings', $ru->getStatuses($result));
+#        $interface->assign('resultHoldings', $ru->getStatuses($result));
 
         //******************************************************
         //  COINS

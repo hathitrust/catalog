@@ -51,8 +51,8 @@ class Holdings extends Record
 
         // Get Holdings Data
         $result['record'][] = $this->record;
-        $holdings = $ru->getStatuses($result);
-        $interface->assign('holdings', $holdings[$this->id]);
+#        $holdings = $ru->getStatuses($result);
+#        $interface->assign('holdings', $holdings[$this->id]);
 
         // Get Acquisitions Data
         $result = $catalog->getPurchaseHistory($this->id);

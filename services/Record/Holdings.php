@@ -18,7 +18,6 @@
  *
  */
 
-require_once 'CatalogConnection.php';
 
 require_once 'Record.php';
 require_once 'services/Record/RecordUtils.php';
@@ -38,31 +37,10 @@ class Holdings extends Record
         $interface->setPageTitle('Catalog Record: ' . $titleTitle);
         $ru = new RecordUtils();
 
-        try {
-            $catalog = new CatalogConnection($configArray['Catalog']['driver']);
-        } catch (PDOException $e) {
-            // What should we do with this error?
-            if ($configArray['System']['debug']) {
-                echo '<pre>';
-                echo 'DEBUG: ' . $e->getMessage();
-                echo '</pre>';
-            }
-        }
-
         // Get Holdings Data
         $result['record'][] = $this->record;
 #        $holdings = $ru->getStatuses($result);
 #        $interface->assign('holdings', $holdings[$this->id]);
-
-        // Get Acquisitions Data
-        $result = $catalog->getPurchaseHistory($this->id);
-        if (PEAR::isError($result)) {
-            PEAR::raiseError($result);
-        }
-        $interface->assign('history', $result);
-
-        if (isset($configArray['Catalog']['showBooking']))
-          $interface->assign('showBooking', $configArray['Catalog']['showBooking']);
 
         $interface->assign('subTemplate', 'view-holdings.tpl');
         $interface->setTemplate('view.tpl');

@@ -1,11 +1,10 @@
 <?php
 
 
-class RecordUtils 
+class RecordUtils
 {
-  
-  private $catalog;
-  
+
+
   # Which 245 subfields go in the long title?
   private $longTitleSubfields = array(
     'a' => true,
@@ -17,8 +16,8 @@ class RecordUtils
     'k' => true,
     'n' => true,
     'p' => true
-    );  
-  
+    );
+
   private $ns_google_prefix = array(
     'chi' => 'CHI',
     'coo' => 'CORNELL',
@@ -41,8 +40,8 @@ class RecordUtils
   function __construct() {
     global $configArray;
   }
-  
-   function getMarcRecord($record) 
+
+   function getMarcRecord($record)
   {
     $rawmarc = trim($record['fullrecord']);
     if (substr($rawmarc,0,1) == '<') {
@@ -52,7 +51,7 @@ class RecordUtils
     }
   }
 
-   function getMarcXMLRecord($rawmarc) 
+   function getMarcXMLRecord($rawmarc)
   {
     $marc = new File_MARCXML($rawmarc, File_MARC::SOURCE_STRING);
     if ($marcRecord = $marc->next()) {
@@ -64,7 +63,7 @@ class RecordUtils
   }
 
 
-   function getMarcBinaryRecord($rawmarc) 
+   function getMarcBinaryRecord($rawmarc)
   {
     $rawmarc = preg_replace('/#31;/', "\x1F", $rawmarc);
     $rawmarc = preg_replace('/#30;/', "\x1E", $rawmarc);
@@ -80,26 +79,26 @@ class RecordUtils
 
    function getURLs($marcRecord) {
     global $configArray;
-    global $session; 
-    global $user; 
+    global $session;
+    global $user;
     $inst = $session->get('inst');
     $proxy = $configArray['EZproxy']['host'];	// default
     if (isset($user) and isset($user->patron)
-        and ($user->patron->campus == 'UMFL') or ($inst == 'flint')) 
+        and ($user->patron->campus == 'UMFL') or ($inst == 'flint'))
       $proxy = $configArray['EZproxy']['flint'];
     $urls = array();
     foreach ($marcRecord->getfields('856') as $field) {
       $url = array("link" => '', "description" => '', "note" => '', "status" => 'Available Online');
-      if ($field->getSubfield('u')) $url_link = $field->getSubfield('u')->getData(); 
-      else continue; 
+      if ($field->getSubfield('u')) $url_link = $field->getSubfield('u')->getData();
+      else continue;
       // check for proxy in url
       if (preg_match('/proxy/', $url_link) == 0 ) $url_link = $proxy . "/login?url=" . $url_link;
       $url['link'] = $url_link;
-      if ($field->getSubfield('3')) { 
-        $url['description'] = $field->getSubfield('3')->getData(); 
+      if ($field->getSubfield('3')) {
+        $url['description'] = $field->getSubfield('3')->getData();
       }
       if ($field->getSubfield('z')) {
-        $url['note'] = $field->getSubfield('z')->getData(); 
+        $url['note'] = $field->getSubfield('z')->getData();
       }
       $urls[] = $url;
     }
@@ -116,20 +115,20 @@ class RecordUtils
         }
       }
       if (strlen($title) > 1) {
-        $titles[] = $title;        
+        $titles[] = $title;
       }
     }
     return $titles;
   }
-  
-  
+
+
   /**
     * Get the "long" title (subfields abdefgknp, as in edit_doc_777 in Aleph)
     *
   **/
-  
 
-  
+
+
   function getLongTitles($marcRecord) {
     $titles = array();
     foreach ($marcRecord->getfields('245') as $field) {
@@ -146,8 +145,8 @@ class RecordUtils
     }
     return $titles;
   }
-  
-  
+
+
   function getFirstTitle($marcRecord) {
     $titles = $this->getFullTitle($marcRecord);
     return $titles[0];
@@ -159,7 +158,7 @@ class RecordUtils
     if ($google_prefix == 'UCAL') return $this->getGooglePrefixUCAL($id);
     return $google_prefix;
   }
- 
+
   function getGooglePrefixUCAL($id) {
     $id_len = strlen($id);
     if ($id_len == 11 and substr($id, 0, 1) == 'L') return 'UCLA';
@@ -212,7 +211,7 @@ class RecordUtils
         }
       }
     }
-    // ISBN 
+    // ISBN
     if ($isbnField = $marc->getField('020')) {
       if ($isbnField = $isbnField->getSubfield('a')) {
         $isbn = trim($isbnField->getData());
@@ -225,81 +224,10 @@ class RecordUtils
 #    echo "links: " . implode("<br>", $links);
     return $links;
   }
-  
-  
-  function getStatuses($result) {
-    global $configArray;
-    $session = VFSession::singleton();
-    
-    $ids = array();
-    $url_list = array();
-    if (!isset($this->catalog)) {
-      $this->catalog = new CatalogConnection($configArray['Catalog']['driver']);    
-    }
-    foreach ($result['record'] as $num => $record) {
-      $ids[] = $record['id'];
-      $marcRecord = $this->getMarcRecord($record);
-      $url_list[$record['id']] = $this->getURLs($marcRecord);
-    }  
-  
-    $holdingList = $this->catalog->getStatuses($ids);
-  
-    if (PEAR::isError($holdingList)) {
-        PEAR::raiseError($holdingList);
-    }
-  
-    foreach ($url_list as $id => $urls) {
-      // If there are urls for this id, make sure we have an ELEC copy 
-      // for it (the ELEC copy will be first if it exists).
-      // Insert it as the first entry if it doesn't exist
-      if (count($urls)) {
-        if (!isset($holdingList[$id][0],  $holdingList[$id][0]['sub_library']) or $holdingList[$id][0]['sub_library'] != 'ELEC') {
-          array_unshift($holdingList[$id], array('location' => 'Electronic Resources', 'sub_library' => 'ELEC'));
-        }
-        foreach ($urls as $url) {
-          $holdingList[$id][0]['item_info'][] = $url;
-        } 
-        if (count($urls) == 1) {
-          $holdingList[$id][0]['link'] = $urls[0]['link'];
-          $holdingList[$id][0]['description'] = $urls[0]['description'];
-          $holdingList[$id][0]['note'] = $urls[0]['note'];
-          $holdingList[$id][0]['status'] = $urls[0]['status'];
-        } else {
-          $holdingList[$id][0]['status'] = 'See holdings';
-        }
-      }
-    }
-    return $holdingList;
-  }
 
-  function getOptouts($result) {
-    global $configArray;
-    if (!isset($this->catalog)) {
-      $this->catalog = new CatalogConnection($configArray['Catalog']['driver']);    
-    }
-  
-    $holdings = $this->catalog->getStatus($result);
-    if (PEAR::isError($holdings)) {
-        PEAR::raiseError($holdings);
-    }
-    
-    $id = $result['record'][0]['id'];
-    $optoutList = array();
-    foreach ($holdings[$id] as $hold) { 
-      if ($hold['sub_library'] == 'HATHI') continue;
-      if (!isset($hold['item_info'])) continue;
-      foreach ($hold['item_info'] as $item) {
-        //echo "barcode: " . print_r( $item );
-        if ($item['opt_out']) {
-          $opt_item['barcode'] = $item['barcode'];
-          $opt_item['description'] = $item['description'];
-          $optoutList[] = $opt_item;
-        }
-      }
-    }
-    return $optoutList;
-  }
-  
+
+
+
 }
 
 ?>

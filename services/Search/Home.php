@@ -24,7 +24,6 @@ require_once 'services/MyResearch/lib/Search.php';
 
 require_once 'sys/LoggingPager.php';
 require_once 'Pager/Pager.php';
-require_once 'CatalogConnection.php';
 require_once 'services/Record/FilterFormat.php';
 
 require_once 'services/Search/SearchStructure.php';
@@ -68,15 +67,12 @@ class Home extends Action {
              $this->db->debug = true;
          }
 
-         // Setup Catalog Connection.
-        $this->catalog = new CatalogConnection($configArray['Catalog']['driver']);
     }
 
     function launch()
     {
         global $interface;
         global $configArray;
-        global $catalog;
 
         $this->setup();
 

@@ -4,7 +4,6 @@
   * @version 1.0
 **/
 
-require_once 'CatalogConnection.php';
 require_once 'services/Search/SearchStructure.php';
 
 

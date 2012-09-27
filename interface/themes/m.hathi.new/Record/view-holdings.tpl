@@ -46,7 +46,7 @@
 				{*{if $displayedCount <= 5}*}
 					{*{$item|@print_r}<br />*}
 
-					{include file="Record/view-list-holdings.tpl"}
+					{include file="Record/view-hathi-holdings.tpl"}
 				
 				{*{elseif $displayedCount == 6}
 					{assign var=displayedCount value=$displayedCount+1}

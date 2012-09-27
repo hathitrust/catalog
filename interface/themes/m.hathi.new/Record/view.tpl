@@ -9,7 +9,7 @@
 {if $current}
 	<div class="recnav aligncenter">
           {if $previous}
-            <a ref="prevrec" href="{$url}{$previous}" class="prevrec">
+            <a ref="prevrec" style="text-decoration:none" href="{$url}{$previous}" class="prevrec">
             <img alt="Previous Record" src="/images/hathimobile/record_leftarrow.png">
             </a>
           {/if}
@@ -21,7 +21,7 @@
             <img alt="Next Record" src="/images/hathimobile/record_rightarrow.png">
            	</a>
           {/if}
-	</div>	 
+	</div>
 {/if}
 
 
@@ -33,12 +33,12 @@
 	{/if}
         	    {*
 	<div id="record_detail_left" class="googleCoverColumn">
-		<div id="GoogleCover_{$record.id}" >  
-			<img src="/images/noCover2.gif"> 
+		<div id="GoogleCover_{$record.id}" >
+			<img src="/images/noCover2.gif">
 	</div>
 </div>
 *}
-	 	
+
 {*<div id="record_detail_right">*}
 	<h1>
 		{assign var=marcField value=$marc->getFields('245')}
@@ -55,12 +55,12 @@
 					{*</abbr>*}
 				{/foreach}
 	</h1>
-	
+
 	{* Display the author *}
-			
+
 	{if $record.author}
 	        	<label>{translate text='Author'}:</label>
-				<span class="value">	            	
+				<span class="value">
 				{foreach from=$record.author item=author name=authorLoop}
 	           		{if !$smarty.foreach.authorLoop.last}
 	           			<a ref="recmainauthor" href="{$url}/Search/Home?lookfor=%22{$author}%22&amp;type=author">{$author}</a>,
@@ -70,14 +70,14 @@
 	           			{*{$author}*}
 	           			<a ref="recmainauthor" href="{$url}/Search/Home?lookfor=%22{$author}%22&amp;type=author">{$author}</a>
 	           			{assign var=smsmessage value="$smsmessage$author "}
-	           		{/if} 
+	           		{/if}
 	           	{/foreach}
 	           	</span>
 	           	<br />
 	{/if}
-													
 
-							
+
+
 	{* Display publication information *}
 	{assign var=marcField value=$marc->getFields('260')}
 	{if $marcField}
@@ -94,7 +94,7 @@
 	      		<br />
 	{/if}
 	<button id="moredetails" href=""  onclick="return moreDetails();"><span>More Details</span></button>
-			
+
 	<div id="addlinfo" style="display:none" >
 			{* Display the language *}
 			{if is_array($recordLanguage)}
@@ -117,8 +117,8 @@
 					</span>
 					<br />
 	           	{/if}
-	        {/if}					
-					
+	        {/if}
+
   			{assign var=marcField value=$marc->getFields('600|610|630|650|651|655',1)}
   			{if $marcField}
   				<label>{translate text='Subjects'}: </label>
@@ -137,8 +137,8 @@
           			</span>
           			<br>
         		{/foreach}
- 			{/if}		
- 			
+ 			{/if}
+
  		  	{assign var=marcField value=$marc->getFields('500|501|521|525|526|530|547|550|552|561|565|584|585',true)}
   			{if $marcField}
     			<label>{translate text='Note'}: </label>
@@ -148,7 +148,7 @@
         			{$field|getvalue:'a'}<br>
       			{/foreach}
       			</span>
-			{/if}			
+			{/if}
 
   			{assign var=marcField value=$marc->getFields('300')}
   			{if $marcField}
@@ -164,13 +164,13 @@
         			<br>
       			{/foreach}
       			</span>
-			{/if}	
-			 
+			{/if}
+
   			{assign var=marcField value=$marc->getFields('970')}
   			{if $marcField}
     			<label>{translate text='Original Format'}: </label>
 				{if $marcField|@count > 1}<br />{/if}
-				<span class="value">				
+				<span class="value">
 				{foreach from=$marcField item=field name=loop}
        				{if $smarty.foreach.loop.iteration eq 1}
        					{if $field|getvalue:'b' neq 'Electronic Resource'}{$field|getvalue:'b'}{/if}
@@ -180,8 +180,8 @@
       			{/foreach}
     			</span>
     			<br />
-  			{/if}			 
-			 
+  			{/if}
+
   			{assign var=852Field value=$marc->getFields('852')}
   			{if isset($852Field)}
     			{foreach from=$852Field item=field name=loop}
@@ -206,8 +206,8 @@
       					{/if}
       				{/if}
     			{/foreach}
-  			{/if}			 
-			
+  			{/if}
+
   			{assign var=marcField value=$marc->getFields('020')}
    			{if $marcField}
      			<label>{translate text='ISBN'}: </label>
@@ -218,8 +218,8 @@
     	   		{/foreach}
 	       		</span>
 	       		<br />
-   			{/if}			
-			 
+   			{/if}
+
     		<label>{translate text='Locate a Print Version'}: </label>
     		<span class="value">
           	{if is_array($record.oclc)}
@@ -233,26 +233,26 @@
 				<!-- title non-array -->
             	{if $record.oclc}
              		<a href="http://www.worldcat.org/oclc/{$record.oclc}" onClick="pageTracker._trackEvent('outLinks', 'click', 'Find in a Library');">Find in a library</a>
-            	{else} 
+            	{else}
             		Find in a library service is not available from this catalog. <a href="http://www.worldcat.org/" onClick="pageTracker._trackEvent('outLinks', 'click', 'Search Worldcat');" target="_blank">Search Worldcat</a>
             	{/if}
           	{/if}
           	</span>
-			 				
+
 			<button href="" id="lessdetails" onclick="return lessDetails();"><span>Less Details</span></button>
-		</div> 	
+		</div>
 	</div>
 {*</div>*}
-        
+
     {* <div class="headergrad"><!----></div> *}
-        
+
 	{* Display holdings *}
-	
+
 	{include file="Record/$subTemplate"}
-    
+
 	<ul id="recordTools" >
-		
-	
+
+
 				{* email record link *}
 				<li id="recordToolEmail">
 					<a  class="linkeditem " onclick="ShowHideEmail('emailSingle','#recordToolEmail a'); return false;" href="#" class="mail dolightbox"  >Email this Record</a>
@@ -275,23 +275,23 @@
 									{*<input type="button" value="Send email" onclick="emailSelectedRecordsNoFancybox({literal}{{/literal}'handpicked': '{$id}'{literal}}{/literal}); return false;">*}
 									<input type="button" value="Send email" onclick="emailSelectedRecordsMobile({literal}{{/literal}'handpicked': '{$id}'{literal}}{/literal}); return false;">
 	    						</li>
-	    					</ul>	
+	    					</ul>
 						</form>
     					<div class="erErrorEmail"></div>
 					</div>
-				</li>		
+				</li>
 				<li class="recordToolLink">
 					<a href="{$regular_url}{$smarty.server.REQUEST_URI}?mdetect=no" target="Mirlyn">{translate text='View Record in Regular Catalog'}</a>
-				</li>						
+				</li>
 	</ul>
 {*
 	<script>{strip}
 			{if $googleLinks}
 		    	getGoogleBookInfoMobile('{$googleLinks}', '{$id}');
 			{/if}
-	{/strip}</script>  
+	{/strip}</script>
 *}
-	{*<div class="footergrad"><!----></div>*}	
+	{*<div class="footergrad"><!----></div>*}
 
 {* <a href="sms:number?body=This%20is%20the%20text">Text us</a> *}
 {* format: author, title, first call number *}

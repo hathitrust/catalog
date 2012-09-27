@@ -723,55 +723,55 @@ class SearchExport
 //            $desc[] = $loc;
 //        }
 //    }
-$entry->description = implode("\n<br/>", $desc);
-$feed->addItem($entry);
-}
+            $entry->description = implode("\n<br/>", $desc);
+            $feed->addItem($entry);
+        }
 
-$feed->outputFeed("ATOM1.0");
-}
-
-
-function sendSMS()
-{
-    global $configArray;
-    if (!isset($_REQUEST['id'], $_REQUEST['phonenumber'], $_REQUEST['provider'])) {
-        echo json_encode(array('error' => "Must provide a 10-digit phone number and a supported provider"));
-        return;
+        $feed->outputFeed("ATOM1.0");
     }
 
-    $id = sprintf("%09d", $_REQUEST['id']);
-    $provider = trim($_REQUEST['provider']);
-    $pn = preg_replace('/\D/', '', $_REQUEST['phonenumber']);
-    if (!preg_match('/^\d{10}$/', $pn)) {
-        echo json_encode(array('error' => "'$pn' is not a valid ten-digit number"));
-        return;
-    }
 
-    $carriers = array('virgin' => 'vmobl.com',
-        'att' => 'txt.att.net',
-        'verizon' => 'vtext.com',
-        'nextel' => 'messaging.nextel.com',
-        'sprint' => 'messaging.sprintpcs.com',
-        'tmobile' => 'tmomail.net',
-        'alltel' => 'message.alltel.com',
-        'Cricket' => 'mms.mycricket.com');
+    function sendSMS()
+    {
+        global $configArray;
+        if (!isset($_REQUEST['id'], $_REQUEST['phonenumber'], $_REQUEST['provider'])) {
+            echo json_encode(array('error' => "Must provide a 10-digit phone number and a supported provider"));
+            return;
+        }
 
-    if (!isset($carriers[$provider])) {
-        echo json_encode(array('error' => "'$provider' is not a supported provider."));
-        return;
-    }
+        $id = sprintf("%09d", $_REQUEST['id']);
+        $provider = trim($_REQUEST['provider']);
+        $pn = preg_replace('/\D/', '', $_REQUEST['phonenumber']);
+        if (!preg_match('/^\d{10}$/', $pn)) {
+            echo json_encode(array('error' => "'$pn' is not a valid ten-digit number"));
+            return;
+        }
+
+        $carriers = array('virgin' => 'vmobl.com',
+            'att' => 'txt.att.net',
+            'verizon' => 'vtext.com',
+            'nextel' => 'messaging.nextel.com',
+            'sprint' => 'messaging.sprintpcs.com',
+            'tmobile' => 'tmomail.net',
+            'alltel' => 'message.alltel.com',
+            'Cricket' => 'mms.mycricket.com');
+
+        if (!isset($carriers[$provider])) {
+            echo json_encode(array('error' => "'$provider' is not a supported provider."));
+            return;
+        }
 
 //      $holdings = $this->rutils->getStatuses($this->results);
-    $title = $this->rutils->getFirstTitle($this->rutils->getMarcRecord($this->results['record'][0]));
-    $to = $pn . '@' . $carriers[$provider];
+        $title = $this->rutils->getFirstTitle($this->rutils->getMarcRecord($this->results['record'][0]));
+        $to = $pn . '@' . $carriers[$provider];
 
-    $author = '';
-    if (isset($this->results['record'][0]['author'])) {
-        $authors = !is_array($this->results['record'][0]['author']) ? array($this->results['record'][0]['author']) : $this->results['record'][0]['author'];
-        $author = $authors[0] . '. ';
-    }
+        $author = '';
+        if (isset($this->results['record'][0]['author'])) {
+            $authors = !is_array($this->results['record'][0]['author']) ? array($this->results['record'][0]['author']) : $this->results['record'][0]['author'];
+            $author = $authors[0] . '. ';
+        }
 
-    $callno = '';
+        $callno = '';
 //      foreach ($holdings[$id] as $lib => $values) {
 //        if (isset($values['callnumber']) && preg_match('/\S/', $values['callnumber'])) {
 //          $callno = $values['callnumber'];
@@ -779,118 +779,118 @@ function sendSMS()
 //        }
 //      }
 
-    $authTitleLength = 140 - strlen($callno) - 2; // leave room for a pipe.
-    $authTitle = substr($author . $title, 0, $authTitleLength);
+        $authTitleLength = 140 - strlen($callno) - 2; // leave room for a pipe.
+        $authTitle = substr($author . $title, 0, $authTitleLength);
 
-    $message = $authTitle . '|' . $callno;
+        $message = $authTitle . '|' . $callno;
 
-    $headers['From'] = $configArray['Site']['email'];
-    $headers['To'] = $to;
-    $headers['Subject'] = '';
+        $headers['From'] = $configArray['Site']['email'];
+        $headers['To'] = $to;
+        $headers['Subject'] = '';
 
-    PEAR::setErrorhandling(PEAR_ERROR_RETURN);
+        PEAR::setErrorhandling(PEAR_ERROR_RETURN);
 
-    $mail =& Mail::factory('smtp', array('host' => $configArray['Mail']['host'],
-        'port' => $configArray['Mail']['port']));
-    // 'port' => 99));
-    if (PEAR::isError($mail)) {
-        echo json_encode(array('error' => $mail->getMessage()));
-        return;
-    }
+        $mail =& Mail::factory('smtp', array('host' => $configArray['Mail']['host'],
+            'port' => $configArray['Mail']['port']));
+        // 'port' => 99));
+        if (PEAR::isError($mail)) {
+            echo json_encode(array('error' => $mail->getMessage()));
+            return;
+        }
 
-    preg_match('/^(\d{3})(\d{3})(\d{4})$/', $pn, $match);
-    $pndisplay = implode('-', array($match[1], $match[2], $match[3]));
+        preg_match('/^(\d{3})(\d{3})(\d{4})$/', $pn, $match);
+        $pndisplay = implode('-', array($match[1], $match[2], $match[3]));
 
-    $rv = $mail->send($to, $headers, $message);
-    // $rv = 'sent';
-    if (!PEAR::isError($rv)) {
-        $user = VFUser::singleton();
-        $this->alog->log('rectext', $pndisplay, $provider, $user->username);
-        echo json_encode(array('success' => "SMS sent to $pndisplay at $provider"));
-        return;
-    } else {
-        echo json_encode(array('error' => "Server unable to send message $message: " . $rv->getMessage()));
-        // echo json_encode(array('error' => "Server unable to send message $message" . print_r($this->results, true)));
-    }
-}
-
-function marcjson()
-{
-    $marc = $this->rutils->getMarcRecord($this->results['record'][0]);
-    $l = $marc->getLeader();
-    $h = array('type' => 'marc-hash', 'version' => array(1, 0), 'leader' => "$l");
-    $fields = array();
-    foreach ($marc->getFields() as $tag => $f) {
-        if ($f->isControlField()) {
-            $data = $f->getData();
-            $fields[] = array($tag, "$data");
+        $rv = $mail->send($to, $headers, $message);
+        // $rv = 'sent';
+        if (!PEAR::isError($rv)) {
+            $user = VFUser::singleton();
+            $this->alog->log('rectext', $pndisplay, $provider, $user->username);
+            echo json_encode(array('success' => "SMS sent to $pndisplay at $provider"));
+            return;
         } else {
-            $ind1 = $f->getIndicator(1);
-            $ind2 = $f->getIndicator(2);
-            $newfield = array($tag, "$ind1", "$ind2");
-            $sf = array();
-            foreach ($f->getSubfields() as $code => $subdata) {
-                $data = $subdata->getData();
-                $sf[] = array($code, "$data");
-            }
-            $newfield[] = $sf;
-            $fields[] = $newfield;
-        }
-    }
-    $h['fields'] = $fields;
-    header("Content-Type: application/json; charset=utf-8");
-    echo $this->json_indent(json_encode($h));
-}
-
-/**
- * Indents a flat JSON string to make it more human-readable
- *
- * @param string $json The original JSON string to process
- * @return string Indented version of the original JSON string
- */
-public
-function json_indent($json)
-{
-
-    $result = '';
-    $pos = 0;
-    $strLen = strlen($json);
-    $indentStr = '  ';
-    $newLine = "\n";
-
-    for ($i = 0; $i <= $strLen; $i++) {
-
-        // Grab the next character in the string
-        $char = substr($json, $i, 1);
-
-        // If this character is the end of an element,
-        // output a new line and indent the next line
-        if ($char == '}' || $char == ']') {
-            $result .= $newLine;
-            $pos--;
-            for ($j = 0; $j < $pos; $j++) {
-                $result .= $indentStr;
-            }
-        }
-
-        // Add the character to the result string
-        $result .= $char;
-
-        // If the last character was the beginning of an element,
-        // output a new line and indent the next line
-        if ($char == ',' || $char == '{' || $char == '[') {
-            $result .= $newLine;
-            if ($char == '{' || $char == '[') {
-                $pos++;
-            }
-            for ($j = 0; $j < $pos; $j++) {
-                $result .= $indentStr;
-            }
+            echo json_encode(array('error' => "Server unable to send message $message: " . $rv->getMessage()));
+            // echo json_encode(array('error' => "Server unable to send message $message" . print_r($this->results, true)));
         }
     }
 
-    return $result;
-}
+    function marcjson()
+    {
+        $marc = $this->rutils->getMarcRecord($this->results['record'][0]);
+        $l = $marc->getLeader();
+        $h = array('type' => 'marc-hash', 'version' => array(1, 0), 'leader' => "$l");
+        $fields = array();
+        foreach ($marc->getFields() as $tag => $f) {
+            if ($f->isControlField()) {
+                $data = $f->getData();
+                $fields[] = array($tag, "$data");
+            } else {
+                $ind1 = $f->getIndicator(1);
+                $ind2 = $f->getIndicator(2);
+                $newfield = array($tag, "$ind1", "$ind2");
+                $sf = array();
+                foreach ($f->getSubfields() as $code => $subdata) {
+                    $data = $subdata->getData();
+                    $sf[] = array($code, "$data");
+                }
+                $newfield[] = $sf;
+                $fields[] = $newfield;
+            }
+        }
+        $h['fields'] = $fields;
+        header("Content-Type: application/json; charset=utf-8");
+        echo $this->json_indent(json_encode($h));
+    }
+
+    /**
+     * Indents a flat JSON string to make it more human-readable
+     *
+     * @param string $json The original JSON string to process
+     * @return string Indented version of the original JSON string
+     */
+    public
+    function json_indent($json)
+    {
+
+        $result = '';
+        $pos = 0;
+        $strLen = strlen($json);
+        $indentStr = '  ';
+        $newLine = "\n";
+
+        for ($i = 0; $i <= $strLen; $i++) {
+
+            // Grab the next character in the string
+            $char = substr($json, $i, 1);
+
+            // If this character is the end of an element,
+            // output a new line and indent the next line
+            if ($char == '}' || $char == ']') {
+                $result .= $newLine;
+                $pos--;
+                for ($j = 0; $j < $pos; $j++) {
+                    $result .= $indentStr;
+                }
+            }
+
+            // Add the character to the result string
+            $result .= $char;
+
+            // If the last character was the beginning of an element,
+            // output a new line and indent the next line
+            if ($char == ',' || $char == '{' || $char == '[') {
+                $result .= $newLine;
+                if ($char == '{' || $char == '[') {
+                    $pos++;
+                }
+                for ($j = 0; $j < $pos; $j++) {
+                    $result .= $indentStr;
+                }
+            }
+        }
+
+        return $result;
+    }
 }
 
 

@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
- 
+
 require_once 'Record.php';
 
 class Cite extends Record
@@ -25,7 +25,7 @@ class Cite extends Record
     function launch()
     {
         global $interface;
-        
+
         // Create Title
         $titleField = $this->marcRecord->getField('245');
         $titleA = $titleField->getSubfield('a');
@@ -34,7 +34,7 @@ class Cite extends Record
             $title .= ': ' . cleanTitle($titleB->getData());
         }
         $title = trim($title);
-        
+
         // Add period to titles not ending in punctuation
         if (!((substr($title, -1) == '?') || (substr($title, -1) == '!'))) {
             $title .= '.';
@@ -43,16 +43,23 @@ class Cite extends Record
         $interface->assign('mlatitle', title_case($title));
 
         // Build author list
-        $authorList = array();
-        if ($authorField = $this->marcRecord->getField('100')) {
-            $authorA = $authorField->getSubfield('a');
-            $authorList[] = $authorA->getData();
-        }
-        if ($authorField = $this->marcRecord->getField('700')) {
-            $authorA = $authorField->getSubfield('a');
-            $authorList[] = $authorA->getData();
-        }
-        $authorList = array_unique($authorList);
+
+
+        // CHange author list to just use mainauthors
+//        $authorList = array();
+//        if ($authorField = $this->marcRecord->getField('100')) {
+//            $authorA = $authorField->getSubfield('a');
+//            $authorList[] = $authorA->getData();
+//        }
+//        if ($authorField = $this->marcRecord->getField('700')) {
+//            $authorA = $authorField->getSubfield('a');
+//            $authorList[] = $authorA->getData();
+//        }
+//        $authorList = array_unique($authorList);
+
+        $authorList = isset($this->record['mainauthor']) ?
+                         $this->record['mainauthor'] :
+                         $this->record['author'];
 
         // Create Author List for APA style
         $i = 0;
@@ -108,7 +115,7 @@ class Cite extends Record
             }
         }
         $interface->assign('publisher', cleanTitle($publisher));
-        
+
 
         if (isset($_GET['lightbox'])) {
             // Use for lightbox

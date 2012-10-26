@@ -44,7 +44,7 @@
         -->
         <!-- <a class="feed" href="/Search/SearchExport?{$searchcomps|escape:'html'}&amp;method=atom" id="Feed">{translate text='Get Feed'}</a> -->
 
-        <a href="#" id="emailSearch" class="mail" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search top');">{translate text='Email this Search'}</a>
+{*        <a href="#" id="emailSearch" class="mail" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search top');">{translate text='Email this Search'}</a> *}
       </div>
 
       <!-- Listing Options -->
@@ -95,7 +95,7 @@
           jq('#RSSFeed').attr('href', loc)
         </script>
       -->
-        <a href="#" class="mail" id="emailSearch_lower" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search bottom');">{translate text='Email this Search'}</a>
+{*        <a href="#" class="mail" id="emailSearch_lower" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search bottom');">{translate text='Email this Search'}</a> *}
       </div>
     </div>
     <!-- End Main Listing -->

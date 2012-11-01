@@ -25,6 +25,7 @@ class QObj
     'pd' => 'Full view',
     'ic' => "Limited (search-only)",
     'opb' => "Limited (search-only)",
+    'op' => "Limited (search-only)",
     'orph' => "Limited (search-only)",
     'umall' => "Limited (search-only)",
     'world' => 'Full view',

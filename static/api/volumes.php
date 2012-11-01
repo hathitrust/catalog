@@ -52,6 +52,7 @@ $rightsmap = array(
   'pd' => 'Full view',
   'ic' => "Limited (search-only)",
   'opb' => "Limited (search-only)",
+  'op' => "Limited (search-only)",
   'orph' => "Limited (search-only)",
   'orphcand' => "Limited (search-only)",
   'umall' => "Limited (search-only)",

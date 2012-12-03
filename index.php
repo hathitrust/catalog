@@ -32,7 +32,7 @@ require_once 'sys/VFSession.php';
 require_once 'sys/VFUser.php';
 require_once 'services/Tags/TaggedItem.php';
 require_once 'sys/ActivityLog.php';
-
+require_once 'services/Record/RecordUtils.php';
 require_once 'sys/mobile_device_detect.php';
 
 // Set up for autoload
@@ -161,7 +161,9 @@ if (isset($configArray['Index']['urlFile'])) {
 // Load up ht HT namespace map
 //#####################################
 
-$interface->assign('ht_namespace_map', eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_namespaces.php')));
+$HT_NAMESPACES = $eval = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_namespaces.php'));
+
+$interface->assign('ht_namespace_map', $HT_NAMESPACES);
 
 
 //######################################
@@ -282,6 +284,7 @@ $interface->assign('module', $module);
 $interface->assign('action', $action);
 $interface->assign('user', $user);
 $interface->assign('uuid', $session->uuid);
+$interface->assign('ru', new RecordUtils());
 
 
 

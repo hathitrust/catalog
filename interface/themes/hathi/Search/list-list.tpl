@@ -65,6 +65,7 @@
           </div>
 
           <!-- Viewability Link -->
+          
 
           <div class="AccessLink">
             <ul>
@@ -73,154 +74,34 @@
               </li>
 
               <li>
-               {assign var=marcField value=$record.marc->getFields('974')}
-                {if $marcField}
-
-                    {foreach from=$marcField item=field name=myLoop start=0 loop=2}
-                    {/foreach}
-                    {assign var=count value=0}
-                    {foreach from=$marcField item=field name=loop}
-                        {assign var=url value=$field->getSubfield('u')}
-                        {assign var=url value=$url->getData()}
-                        {assign var=nmspace value=$url|regex_replace:"/\.\d+/":""}
-
-                    {if $smarty.foreach.myLoop.index gt 0}
-                        <!-- <a href="/Record/{$record.id}" class="multivolLink">Multiple volumes</a> -->
-                        <span class="multivolLink">(view record to see multiple volumes)</span>
-
-                    {php}break;{/php}
-                    {else}
-<a href="http://hdl.handle.net/2027/{$url}" class="rights-{$field|getvalue:'r'}
-  {if $session->get('inUSA')}
-    {if $field|getvalue:'r' eq 'pd'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'pdus'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-nd'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-nc-nd'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-nc'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-nc-sa'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-sa'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'world'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'ic-world'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'und-world'}fulltext">Full view
-      {else}searchonly">Limited (search-only)
-    {/if}
-  {else}
-    {if $field|getvalue:'r' eq 'pd'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'pdus'}searchonly">Limited (search-only)
-      {elseif $field|getvalue:'r' eq 'cc-by'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-nd'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-nc-nd'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-nc'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-nc-sa'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-sa'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'world'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'ic-world'}fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'und-world'}fulltext">Full view
-
-      {else}searchonly">Limited (search-only)
-    {/if}
-  {/if}
-
-</a>
-
-                    {/if}
-                    {/foreach}
-                {/if}
-              </li>
+               {assign var="dfields" value=$ru->displayable_ht_fields($record.marc)}
+               
+                 
+                {* If we have more than one good 974, just put in the link
+                   to the catalog record *}
+                {if $dfields|@count gt 1}
+                  <span class="multivolLink">(view record to see multiple volumes)</span>
+                {else}
+                  {assign var=ld value=$ru->ht_link_data($dfields[0])}
+                  {if $ld.is_fullview}
+                    <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view</a>
+                  {else}
+                    <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)</a>
+                  {/if}
+                {/if}  
+               </li>
             </ul>
 
-
-
           </div>
 
-{*        <div class="resultItemLine4 results_format">
-
-          {if $record.format}
-          {assign var=id value=$record.id}
-          {assign var=formatList value=$format.$id}
-          {if is_array($formatList)}
-            {foreach from=$formatList item=fmt}
-              {capture name="fmtTrans"}{translate text=$fmt}{/capture}
-          <span class="{$fmt|lower|replace:" ":""|regex_replace:"/[()]/":"-"} iconlabel">{$smarty.capture.fmtTrans|strip|replace:' ':'&nbsp;'}</span>
-            {/foreach}
-          {else}
-          <span class="iconlabel {$formatList|lower|replace:" ":""}">{translate text=$formatList}</span>
-          {/if}
-          {/if}
-          </div>
-*}
-
-{*           {assign var=holdings value=$resultHoldings.$id}
-           <table class="holdings" width="100%" id="holdings{$record.id}">
-            <tr>
-              <th width="55%">{translate text='Location'}</th>
-              <th width="20%">{translate text='Status'}</th>
-              <th width="30%">{translate text='Call Number / Description'}</th>
-            </tr>
-            {foreach from=$holdings item=holding key=location}
-            <tr>
-              <td class="holdingLocation">{$holding.location}</td>
-            {if $holding.status eq 'See holdings'}
-              <td><a href="{$url}/Record/{$record.id}/Holdings#holdings">{$holding.status}</a></td>
-            {elseif $location eq 'ELEC'}
-              <td><a target=link href="{$holding.link}">{$holding.status}</a></td>
-            {elseif $location eq 'HATHI'}
-              <td><a target=link href=http://hdl.handle.net/2027/{$holding.id}>{$holding.status}</a></td>
-            {else}
-              <td>{$holding.status}</td>
-            {/if}
-              <td>
-              {if $location eq 'ELEC' or $location eq 'HATHI'}
-                  {$holding.description} {$holding.note}
-              {else}
-                  {$holding.callnumber}
-              {/if}
-              </td>
-            </tr>
-            {/foreach}
-          </table>
-*}
        </div>
       </div>
 
-
-      <!--<div class="yui-u">
-        <div id="saveLink{$record.id}"> -->
-<!--          <a href="{$url}/Record/{$record.id}/Save" onClick="getLightbox('Record', 'Save', '{$record.id}', null, '{translate text="Add to Favorites"}'); return false;" class="fav tool">{translate text='Add to favorites'}</a> -->
-       <!--  <a href="#" onClick="fillLightbox('favorite_help'); return false;;return false;" class="fav tool">{translate text='Add to favorites'}</a>
-
-        </div>
-        {if $user}
-        <script language="JavaScript" type="text/javascript">
-          getSaveStatuses('{$record.id}');
-        </script>
-        {/if}
-      </div>
-    -->
-
     </div>
 
-<!--
-          {if $record.format=="Book"}
-    <span class="Z3988"
-          title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rfr_id=info%3Asid%2F{$coinsID}%3Agenerator&amp;rft.genre=book&amp;rft.btitle={$record.title|escape:"url"}&amp;rft.title={$record.title|escape:"url"}&amp;rft.series={$record.series}&amp;rft.au={$record.author|escape:"url"}&amp;rft.date={$record.publishDate}&amp;rft.pub={$record.publisher|escape:"url"}&amp;rft.edition={$record.edition|escape:"url"}&amp;rft.isbn={$record.isbn}">
-          {elseif $record.format=="Journal"}
-    <span class="Z3988"
-          title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rfr_id=info%3Asid%2F{$coinsID}%3Agenerator&amp;rft.genre=article&amp;rft.title={$record.title|escape:"url"}&amp;rft.date={$record.publishDate}&amp;rft.issn={$record.issn}">
-          {else}
-    <span class="Z3988"
-          title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rfr_id=info%3Asid%2F{$coinsID}%3Agenerator&amp;rft.title={$record.title|escape:"url"}&amp;rft.creator={$record.author|escape:"url"}&amp;rft.date={$record.publishDate}&amp;rft.pub={$record.publisher|escape:"url"}&amp;rft.format={$record.format}">
-          {/if}
--->
 
   </div>
 
-<!--   {if !$record.url}
-  <script type="text/javascript">
-     getStatuses('{$record.id}');
-  </script>
-  {/if} -->
   <script type="text/javascript">
    {if $record.googleLinks}
 {literal}      jq(document).ready(function() { {/literal}
@@ -233,9 +114,3 @@
 {/foreach}
 </form>
 
-{*
-<script type="text/javascript">
-  //doGetStatuses();
-  doGetSaveStatuses();
-</script>
-*}

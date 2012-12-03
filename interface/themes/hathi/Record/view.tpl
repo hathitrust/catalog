@@ -494,37 +494,25 @@
         <em>(original from {$item.orig})</em>
     {/foreach}
   {else}
-    {assign var=marcField value=$marc->getFields('974')}
-    {if $marcField}
+    {if 'tombstone'|@in_array:$record.ht_rightscode}
+      {assign var="fields" value=$ru->ht_fields($marc)}
+    {else}
+      {assign var="fields" value=$ru->displayable_ht_fields($marc)}
+    {/if}
 
-        {foreach from=$marcField item=field name=loop}
-            {assign var=url value=$field->getSubfield('u')}
-            {assign var=url value=$url->getData()}
-           <!-- {assign var=nmspace value=$url|regex_replace:"/\.\d+/":""} -->
-            {assign var=nmspace value=$url|regex_replace:"/\..*/":""}
-            <li><a href="http://hdl.handle.net/2027/{$url}"
-              {if $field|getvalue:'r' eq 'pd'}
-                class="fulltext">Full view
-              {elseif $field|getvalue:'r' eq 'pdus' && $session->get('inUSA')}
-                class="fulltext">Full view
-              {elseif $field|getvalue:'r' eq 'world'}class="fulltext">Full view
-              {elseif $field|getvalue:'r' eq 'ic-world'}class="fulltext">Full view
-              {elseif $field|getvalue:'r' eq 'und-world'}class="fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by'}class="fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-nd'}class="fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-nc-nd'}class="fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-nc'}class="fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-nc-sa'}class="fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-by-sa'}class="fulltext">Full view
-      {elseif $field|getvalue:'r' eq 'cc-zero'}class="fulltext">Full view
-              {else}class="searchonly">Limited (search-only)
-          {/if}
-
-         <span class="IndItem">{if $field|getvalue:'z'}{$field|getvalue:'z'}{else}{/if}</span></a>
-         <em>(original from {$ht_namespace_map[$nmspace]})</em>
-         </li>
-        {/foreach}
-    {/if} {* $marcField *}
+    {foreach from=$fields item=field}
+      {assign var=ld value=$ru->ht_link_data($field)}
+      <li>
+        {if $ld.is_fullview}
+          <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view
+        {else}
+          <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)
+        {/if}
+        <span class="IndItem">{$ld.enumchron}</span></a>
+        <em>(original from {$ld.original_from})</em>
+      </li>
+    {/foreach}
+  
   {/if} {* $mergedItems  *}
   </ul>
 </div>

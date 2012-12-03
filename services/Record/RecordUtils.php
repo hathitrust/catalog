@@ -1,5 +1,6 @@
 <?php
 
+require_once 'sys/VFSession.php';
 
 class RecordUtils
 {
@@ -36,7 +37,75 @@ class RecordUtils
     'uva' => 'UVA',
     'wu' => 'WISC'
   );
+  
+  
+  // Get all 974s
+  function ht_fields($marc) {
+    return $marc->getFields('974');
+  }
+  
+  // Find fields that we're allowed to display
+  function displayable_ht_fields($marc) {
+      $ditems = array();
+      foreach ($marc->getFields('974') as $f) {
+          if ($f->getSubfield('r')->getData() != 'nobody') {
+              $ditems[] = $f;
+          }
+      }
+      return $ditems;
+  }
+  
+  
 
+  // Return an array of the form:
+  // {
+  //   rights_code => "whatever",
+  //   enumchron => "whatever",
+  //   fullview => true|false
+  //   original_from => "whatever",
+  // }
+  
+  function ht_link_data($field) {
+      global $HT_NAMESPACES;
+      $rv = array();
+      $rc = $field->getSubfield('r')->getData();
+      $rv['rights_code'] = $rc;
+      
+      $handle = $field->getSubfield('u')->getData();
+      $rv['handle'] = $handle;
+      
+      $namespace = preg_filter('/\..*$/', '', $handle);
+      $rv['original_from'] = $HT_NAMESPACES[$namespace];
+      
+      $rv['enumchron'] = $field->getSubfield('z') ?  $field->getSubfield('z')->getData() : '';
+      $rv['is_fullview'] = $this->is_fullview($rv['rights_code']);
+      return $rv;
+  }
+  
+  // Take a rightscode (and, soon, other data) and return viewability
+  function is_fullview($r) {
+    
+    $session = VFSession::singleton();
+    
+    // Assume false
+    $fv = false;
+    
+    // Public domain? return true
+    if (preg_match('/^(cc|pd)/', $r) || preg_match('/world/', $r)) {
+      $fv = true;
+    }
+    
+    //...unless it's US only and we're outside the US
+    if ($r == 'pdus' && $session->get('inUSA') == false) {
+      $fv = false;
+    }
+    
+    // other stuff about logins and such goes here
+    return $fv;
+  }
+  
+  
+  
   function __construct() {
     global $configArray;
   }

@@ -503,7 +503,9 @@
     {foreach from=$fields item=field}
       {assign var=ld value=$ru->ht_link_data($field)}
       <li>
-        {if $ld.is_fullview}
+        {if 'tombstone'|@in_array:$record.ht_rightscode}
+        This item is no longer available (<a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
+        {elseif $ld.is_fullview}
           <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view
         {else}
           <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)

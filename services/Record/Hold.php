@@ -72,7 +72,7 @@ class Hold extends MyResearch
       $ru = new RecordUtils();
       $marc = $ru->getMarcRecord($record);
       // get some supplemental fields from the marc record
-      if ($f260 = $marc->getField('260')) {
+      if ($f260 = $marc->getField('26[04]', true)) {
         if ($subf = $f260->getSubfield('a')) $record['pubPlace'] = $this->cleanStringEnd($subf->getData());
         if ($subf = $f260->getSubfield('b')) $record['publisher'] = $this->cleanStringEnd($subf->getData());
         if ($subf = $f260->getSubfield('c')) $record['pubDate'] = $this->cleanStringEnd($subf->getData());

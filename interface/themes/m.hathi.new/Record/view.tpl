@@ -79,7 +79,7 @@
 
 
 	{* Display publication information *}
-	{assign var=marcField value=$marc->getFields('260')}
+	{assign var=marcField value=$marc->getFields('26[04]', true)}
 	{if $marcField}
 	    		<label>{translate text='Published'}:</label>
 				<span class="value">

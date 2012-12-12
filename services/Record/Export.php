@@ -55,9 +55,6 @@ class Export extends Record
         switch ($_GET['style']) {
             case 'endnote':
                 header('Content-type: application/x-inst-for-Scientific-info');
-                //header('Content-Disposition: attachment; filename="' . $_GET['id'] . '.txt"');
-                
-                //$interface->display('Record/endnote.tpl');
                 $this->endnoteRIS();
                 break;
             case 'refworks':

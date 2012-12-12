@@ -236,7 +236,7 @@
   </tr>
   {/if}
 
-  {assign var=marcField value=$marc->getFields('260')}
+  {assign var=marcField value=$marc->getFields('26[04]', true)}
   {if $marcField}
   <tr valign="top">
     <th>{translate text='Published'}: </th>

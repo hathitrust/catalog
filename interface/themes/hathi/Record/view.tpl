@@ -232,7 +232,7 @@
   </tr>
   {/if}
 
-  {assign var=marcField value=$marc->getFields('260')}
+  {assign var=marcField value=$marc->getFields('26[04]', true)}
   {if $marcField}
   <tr valign="top">
     <th>{translate text='Published'}: </th>
@@ -483,6 +483,13 @@
 </table>
 
 <!-- Availability set apart from table-->
+
+
+<!--
+
+{$record.ht_rightscode|@print_r:true}
+
+-->
 
 <div id="accessLinks">
   <h3>{translate text='Viewability'}: </h3>

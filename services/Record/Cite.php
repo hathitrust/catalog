@@ -98,7 +98,7 @@ class Cite extends Record
 
         // Setup Publisher information
         $publisher = "";
-        if ($publisherField = $this->marcRecord->getField('260')) {
+        if ($publisherField = $this->marcRecord->getField('26[04]', true)) {
             if ($publisherB = $publisherField->getSubfield('b')) {
                 $publisherA = $publisherField->getSubfield('a');
                 if ($publisherA && $publisherB) {

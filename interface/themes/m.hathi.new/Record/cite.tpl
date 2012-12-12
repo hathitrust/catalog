@@ -6,7 +6,7 @@
 <p style="padding-left: 25px; text-indent: -25px;">
 {if $apaAuthorList}{$apaAuthorList}{/if}
 
-{assign var=marcField value=$marc->getField('260')}
+{assign var=marcField value=$marc->getField('26[04]', true)}
 {if $marcField && $marcField|getvalue:'c'}
 ({$marcField|getvalue:'c'|regex_replace:"/[^0-9]/":""}).
 {/if}
@@ -47,7 +47,7 @@
 {/if}
 
 {$publisher},
-{assign var=marcField value=$marc->getField('260')}
+{assign var=marcField value=$marc->getField('26[04]', true)}
 {if $marcField && $marcField|getvalue:'c'}
 {$marcField|getvalue:'c'|regex_replace:"/[^0-9]/":""}.
 {/if}

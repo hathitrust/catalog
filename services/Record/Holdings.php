@@ -20,10 +20,10 @@
 
 
 require_once 'Record.php';
-require_once 'services/Record/RecordUtils.php';
 
 class Holdings extends Record
 {
+  private $ru;
     function launch()
     {
         global $interface;
@@ -35,12 +35,6 @@ class Holdings extends Record
         $titleTitle = preg_replace('/\p{P}+$/', '', $this->record['title'][0]);
 
         $interface->setPageTitle('Catalog Record: ' . $titleTitle);
-        $ru = new RecordUtils();
-
-        // Get Holdings Data
-        $result['record'][] = $this->record;
-#        $holdings = $ru->getStatuses($result);
-#        $interface->assign('holdings', $holdings[$this->id]);
 
         $interface->assign('subTemplate', 'view-holdings.tpl');
         $interface->setTemplate('view.tpl');

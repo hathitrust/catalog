@@ -124,7 +124,18 @@ class SearchExport {
   }
 
   function marc() {
-    return $this->marcfirst();
+    return $this->marc_pretty();
+  }
+  
+  
+  function marc_pretty() {
+    header("Content-type: text/plain; charset=UTF-8");
+    foreach ($this->results['record'] as $rawr) {
+      $marc = $this->ru->getMarcRecord($rawr);
+      echo "$marc";
+      break; # only return one
+    }
+    
   }
 
   function marcfirst() {
@@ -158,25 +169,25 @@ class SearchExport {
     $this->rdf('text/xml');
   }
 
-  function rdf($contenttype = "application/rdf+xml") {
-    global $configArray;
-    global $interface;
-    header('Content-type: $contenttype; charset=UTF-8');
-    $r = $this->results['record'][0];
-
-    // Standardize the numbers
-    foreach (array('isbn') as $num) {
-      if (isset($r[$num])) {
-        foreach ($r[$num] as $i => $v) {
-          $r[$num][$i] = Normalize::stdnum($v, true); # true to leave leading zeros
-        }
-      }
-    }
-    $interface->assign('record', $r);
-    $interface->assign('marc', $this->ru->getMarcRecord($r));
-    $interface->assign('url', $configArray['Site']['url']);
-    echo $interface->fetch('Record/rdf.tpl');
-  }
+  // function rdf($contenttype = "application/rdf+xml") {
+  //   global $configArray;
+  //   global $interface;
+  //   header('Content-type: $contenttype; charset=UTF-8');
+  //   $r = $this->results['record'][0];
+  // 
+  //   // Standardize the numbers
+  //   foreach (array('isbn') as $num) {
+  //     if (isset($r[$num])) {
+  //       foreach ($r[$num] as $i => $v) {
+  //         $r[$num][$i] = Normalize::stdnum($v, true); # true to leave leading zeros
+  //       }
+  //     }
+  //   }
+  //   $interface->assign('record', $r);
+  //   $interface->assign('marc', $this->ru->getMarcRecord($r));
+  //   $interface->assign('url', $configArray['Site']['url']);
+  //   echo $interface->fetch('Record/rdf.tpl');
+  // }
 
   function xml() {
     $this->marcxmlfirst();

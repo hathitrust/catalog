@@ -90,7 +90,7 @@ class Feedback extends Action
 			}    	
         }
         
-        $interface->assign('return', $_SERVER['HTTP_REFERER']);
+        $interface->assign('return', rawurlencode($_SERVER['HTTP_REFERER']));
         $interface->setPageTitle('Mobile Mirlyn Feedback');
         $interface->setTemplate('feedback.tpl');        
         $interface->display('layout.tpl');

@@ -18,7 +18,7 @@
       <input name="email" class="feedbackfield" id="email" maxlength="96" value=""><br>
       
       <p><label for="comment">Comments / Questions *</label></p>
-      <textarea name="comments" id="comment" class="feedbackfield overlay" rows="4" maxlength="256"></textarea>
+      <textarea name="comments" id="comment" class="feedbackfield overlay" rows="6" maxlength="4096"></textarea>
        <input type="submit" value="Submit">
     </form>
   </div>

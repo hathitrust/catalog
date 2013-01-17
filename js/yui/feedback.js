@@ -46,7 +46,7 @@ YAHOO.namespace("hathitrust");
 var emailDefault = "Email address (optional)";
 var commentsDefault = "Add your feedback here";
 var emailLen = 96;
-var commentsLen = 256;
+var commentsLen = 4096;
 var width = 375;
 var feedbackUrl;
 var recaptchaArgs;
@@ -118,7 +118,7 @@ function getHTFBFormHTML() {
                 "<input name='email' id='email' maxlength='"+ emailLen + "' value='" + emailDefault +
                 "' class='overlay' onclick=\"clickclear(this, '" + emailDefault + "')\" onfocus=\"clickclear(this, '" +
                 emailDefault + "') this.focus();return false;\" onblur=\"clickrecall(this,'" + emailDefault + "')\" style='width:" +  width +"px'/><br />" +
-                "<textarea name='comments' id='comment' class='overlay' rows='4' maxlength='" + commentsLen + "' onclick=\"clickclear(this, '" + commentsDefault + "')\" onfocus=\"clickclear(this, '" +
+                "<textarea name='comments' id='comment' class='overlay' rows='7' maxlength='" + commentsLen + "' onclick=\"clickclear(this, '" + commentsDefault + "')\" onfocus=\"clickclear(this, '" +
                 commentsDefault + "')\" onblur=\"clickrecall(this,'" + commentsDefault + "')\" style='width:" +  width +"px'/>" + commentsDefault + "</textarea>" +
                 "<div id='reCAPTCHA'></div>" +
                 "<div id='HTFBError' style='color:red'><div class='bd'></div></div>" +

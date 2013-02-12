@@ -1,5 +1,6 @@
   <!-- NAVBAR -->
-  <div class="navbar navbar-static-top navbar-inverse">
+  <h2 class="offscreen">Navigation</h2>
+  <div class="navbar navbar-static-top navbar-inverse" role="navigation">
     <div class="navbar-inner">
       <ul id="nav" class="nav">
         <li><a href="http://www.hathitrust.org">Home</a></li>
@@ -29,9 +30,9 @@
     <div class="logo">
       <a href="http://www.hathitrust.org"><span class="offscreen">HathiTrust Digital Library</span></a>
     </div>
-    <div class="search-form">
+    <div class="search-form" role="search">
 
-      <form action="/cgi/ls/one" method="GET">
+      <form action="http://roger-babel.hathitrust.org/cgi/ls/one" method="GET">
         <div class="search-tabs">
           <input name="target" type="radio" id="option-full-text-search" value="ls" />
           <label for="option-full-text-search" class="search-label-full-text">Full-text</label>
@@ -56,9 +57,9 @@
         </fieldset>
         <div class="search-extra-options">
           <ul class="search-links">
-            <li class="search-advanced-link"><a href="#">Advanced full-text search</a></li>
-            <li class="search-catalog-link"><a href="#">Advanced catalog search</a></li>
-            <li><a href="#">Search tips</a></li>
+            <li class="search-advanced-link"><a href="http://babel.hathitrust.org/cgi/ls?a=page;page=advanced">Advanced full-text search</a></li>
+            <li class="search-catalog-link"><a href="/Search/Advanced">Advanced catalog search</a></li>
+            <li><a href="http://www.hathitrust.org/help_digital_library#SearchTips">Search tips</a></li>
           </ul>
           <label>
             <input type="checkbox" value="ft" />

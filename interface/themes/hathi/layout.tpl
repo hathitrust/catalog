@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{$userLang}">
+<html lang="{$userLang}" xml:lang="{$userLang}">
 <!-- Machine is {$machine} -->
   <head>
     <title>{$pageTitle|truncate:64:"..."} | Hathi Trust Digital Library</title>
@@ -54,8 +54,7 @@
   </head>
 
   <body>
-    <!-- class="maxed" to limit display to 1200px -->
-
+    <h1 class="offscreen">{$pageTitle} | Hathi Trust Digital Library</h1>
     {include file="htdl_header.tpl"}
 
     <div id="doc3" class="yui-t8">
@@ -71,7 +70,7 @@
     </div>
 
   <!-- FOOTER -->
-  <div class="navbar navbar-static-bottom navbar-inverse footer">
+  <div class="navbar navbar-static-bottom navbar-inverse footer" role="contentinfo">
     <div class="navbar-inner">
       <!-- IF LOGGED IN 
       <ul id="nav" class="nav">

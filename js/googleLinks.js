@@ -32,7 +32,7 @@ function getGoogleBookInfo(link_nums, record_num, record_counter)
         //   jQuery("#GoogleCover_" + record_num).show();
         // }
         if (googleLink.thumbnail_url) {
-          img = jQuery('<img>');
+          img = jQuery('<img class="bookCover" aria-hidden="true" alt="">');
           img.load(function() {
             img = jQuery(this);
             owidth = img.attr('width');

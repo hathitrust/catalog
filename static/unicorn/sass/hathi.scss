@@ -588,11 +588,12 @@ ul.menu li{
   border-bottom: 1px solid #ddd;
 }
 
-#listleftcol h3 {
+#listleftcol .narrowList h3 {
   margin-top:.75em;
   font-weight:bold;
   font-size: 100%;
   margin-bottom: 0.5em;
+  border-bottom: none;
 }
 
 h3.title {

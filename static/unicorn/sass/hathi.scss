@@ -23,10 +23,7 @@
 #listleftcol, #start_of_left_column_container {
   @include rem(width, $sidebar-width, !important);
   display: table-cell;
-  // border-right: 1px solid #e1dfdf;
-  // margin-right: -1px !important;
 
- 	// float: left;
   float: none !important;
  	padding-top: 0;
 
@@ -38,33 +35,9 @@
   }
 }
 
-// .container.page {
-//   background: #fff url(css3faux-i/div.png);
-//   // background-image: -o-linear-gradient(left, #fff 639px, #bed751 640px, #fff 641px);
-//   // background-image: -moz-linear-gradient(left, #fff 639px, #bed751 640px, #fff 641px);
-//   background-image: -webkit-linear-gradient(left, #fff 223px, #e1dfdf 225px, #fff 228px);
-//   // background-image: -ms-linear-gradient(left, #fff 639px, #bed751 640px, #fff 641px);
-//   // background-image: linear-gradient(left, #fff 639px, #bed751 640px, #fff 641px);
-// }
-
 #contentContainer {
   padding: 0;
 }
-
-// #bd {
-// 	position: relative;
-// 	color: #39383a;
-//   overflow: auto;
-//   display: table;
-//   padding: 20px;
-//   width: 100%;
-// }
-
-// #bd {
-//   @extend .container;
-//   @extend .container.centered;
-//   @extend .page;
-// }
 
 #bd {
   padding: 20px;
@@ -77,8 +50,6 @@
 
 #bd > .content, #content {
   @include rem(min-height, 400);
-  // @include rem(margin-left, $sidebar-width - 20);
-  // @include rem(margin-left, -20);
   margin-left: 0;
   @include rem(padding-left, 20);
  	width: auto;
@@ -105,19 +76,15 @@
 #listleftcol a {
 
 	color: $link-color;
- //  	text-decoration: none;
-	// border-bottom: 1px dotted #c1682d;
 
 	&:hover {
 		color: #d56d11;
     text-decoration: none;
-		// border-bottom: 1px dotted transparent;
 	}
 
 	&:active {
 		color: #d56d11;
     text-decoration: none;
-		// border-bottom: 1px dotted transparent;
 	}
 
 }
@@ -156,9 +123,6 @@
 .yui-t8 {
 	margin: auto;
 	text-align: left;
-	// width: 57.69em;
-	// *width: 56.3em;
-	// min-width: 750px;
 }
 
 #doc2 {
@@ -168,7 +132,6 @@
 }
 
 #doc3 {
-	// margin: auto 10px;
 	width: auto;
   min-width: 89%;
   margin-left: auto;
@@ -431,27 +394,11 @@ div {
   background-color:#fff;
   padding-top:10px;
 }
-// /*.content {
-//   padding:10px 0 10px 0;
-//   background-image:url("/images/bg_grey.jpg");
-//       background-repeat:repeat-x;
-//       background-color:#fff;
-//       border-top: 1px solid #cccccc;
-// }*/
+
 .contentbox {
-  /*background-color:#FFF;*/
-  /*border: 1px solid #cccccc;*/
   padding:5px;
   margin-left:15px;
 }
-
-/*.box {
-  background-color:#fff;
-  border: 1px solid #cccccc;
-  margin-left: 15px;
-  padding:5px;
-  font-size: 85%;
-}*/
 
 .box {
   padding-right: 15px;
@@ -1442,13 +1389,11 @@ padding-bottom: 2em;
 
 
 .cataloglinkhref {
-// padding-left: 20px;
   @include icon-font("?");
 // background: transparent url(//catalog.hathitrust.org/images/hathi/icon_information.png) no-repeat center left;
 }
 
 .searchonly {
-// padding-left: 20px;
 // background: transparent url(//catalog.hathitrust.org/images/hathi/Icon_SearchOnly.gif) no-repeat center left;
   @include icon-font("@");
 
@@ -1479,7 +1424,6 @@ padding-bottom: 2em;
 // }
 // */
 
-/* NOT UNIQUE */
 .backtosearch {
   @include icon-font("E");
   img {

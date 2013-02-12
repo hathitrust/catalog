@@ -7,7 +7,7 @@
   float: none !important;
   padding-top: 0;
 }
-/* line 33, ../sass/hathi.scss */
+/* line 30, ../sass/hathi.scss */
 #listleftcol h3:first-child, #start_of_left_column_container h3:first-child {
   border-bottom: 1px solid #dddddd;
   font-size: 130%;
@@ -16,23 +16,23 @@
   margin-bottom: 1.8rem ;
 }
 
-/* line 50, ../sass/hathi.scss */
+/* line 38, ../sass/hathi.scss */
 #contentContainer {
   padding: 0;
 }
 
-/* line 69, ../sass/hathi.scss */
+/* line 42, ../sass/hathi.scss */
 #bd {
   padding: 20px;
   display: table;
 }
 
-/* line 74, ../sass/hathi.scss */
+/* line 47, ../sass/hathi.scss */
 #content {
   margin: 0 !important;
 }
 
-/* line 78, ../sass/hathi.scss */
+/* line 51, ../sass/hathi.scss */
 #bd > .content, #content {
   min-height: 400px ;
   min-height: 40rem ;
@@ -45,60 +45,60 @@
   font-size: 1.4rem ;
   overflow: hidden;
 }
-/* line 87, ../sass/hathi.scss */
+/* line 58, ../sass/hathi.scss */
 #bd > .content .yui-b, #content .yui-b {
   margin-left: 0px ;
   margin-left: 0rem ;
 }
 
-/* line 97, ../sass/hathi.scss */
+/* line 68, ../sass/hathi.scss */
 #content, #listleftcol + .content {
   border-left: 1px solid #e1dfdf;
 }
 
-/* line 101, ../sass/hathi.scss */
+/* line 72, ../sass/hathi.scss */
 .narrow {
   padding-top: 0;
 }
 
-/* line 105, ../sass/hathi.scss */
+/* line 76, ../sass/hathi.scss */
 #listleftcol a {
   color: #b15a0d;
 }
-/* line 111, ../sass/hathi.scss */
+/* line 80, ../sass/hathi.scss */
 #listleftcol a:hover {
   color: #d56d11;
   text-decoration: none;
 }
-/* line 117, ../sass/hathi.scss */
+/* line 85, ../sass/hathi.scss */
 #listleftcol a:active {
   color: #d56d11;
   text-decoration: none;
 }
 
-/* line 125, ../sass/hathi.scss */
+/* line 92, ../sass/hathi.scss */
 .resulthead > .yui-u.first {
   font-weight: bold;
   font-size: 14px ;
   font-size: 1.4rem ;
 }
 
-/* line 130, ../sass/hathi.scss */
+/* line 97, ../sass/hathi.scss */
 .options {
   text-align: left;
 }
 
-/* line 138, ../sass/hathi.scss */
+/* line 105, ../sass/hathi.scss */
 .tabs a {
   text-decoration: none;
 }
 
-/* line 142, ../sass/hathi.scss */
+/* line 109, ../sass/hathi.scss */
 .narrowList span {
   color: #666;
 }
 
-/* line 156, ../sass/hathi.scss */
+/* line 123, ../sass/hathi.scss */
 #doc,
 #doc2,
 #doc3,
@@ -114,7 +114,7 @@
   text-align: left;
 }
 
-/* line 170, ../sass/hathi.scss */
+/* line 134, ../sass/hathi.scss */
 #doc3 {
   width: auto;
   min-width: 89%;
@@ -122,32 +122,32 @@
   margin-right: auto;
 }
 
-/* line 179, ../sass/hathi.scss */
+/* line 142, ../sass/hathi.scss */
 .yui-b {
   position: relative;
 }
 
-/* line 183, ../sass/hathi.scss */
+/* line 146, ../sass/hathi.scss */
 .yui-b {
   _position: static;
 }
 
-/* line 187, ../sass/hathi.scss */
+/* line 150, ../sass/hathi.scss */
 .yui-main .yui-b {
   position: static;
 }
 
-/* line 191, ../sass/hathi.scss */
+/* line 154, ../sass/hathi.scss */
 .yui-main {
   width: 100%;
 }
 
-/* line 195, ../sass/hathi.scss */
+/* line 158, ../sass/hathi.scss */
 .yui-main.content {
   float: none !important;
 }
 
-/* line 202, ../sass/hathi.scss */
+/* line 165, ../sass/hathi.scss */
 .yui-t1 .yui-main,
 .yui-t2 .yui-main,
 .yui-t3 .yui-main,
@@ -156,7 +156,7 @@
   margin-left: -25em;
 }
 
-/* line 209, ../sass/hathi.scss */
+/* line 172, ../sass/hathi.scss */
 .yui-t4 .yui-main,
 .yui-t5 .yui-main,
 .yui-t6 .yui-main {
@@ -164,110 +164,110 @@
   margin-right: -25em;
 }
 
-/* line 214, ../sass/hathi.scss */
+/* line 177, ../sass/hathi.scss */
 .yui-t1 .yui-b {
   float: left;
   width: 12.3207em;
   *width: 12.0106em;
 }
 
-/* line 220, ../sass/hathi.scss */
+/* line 183, ../sass/hathi.scss */
 .yui-t1 .yui-main .yui-b {
   margin-left: 13.3207em;
   *margin-left: 13.0106em;
 }
 
-/* line 225, ../sass/hathi.scss */
+/* line 188, ../sass/hathi.scss */
 .yui-t2 .yui-b {
   float: left;
   width: 13.8456em;
   *width: 13.512em;
 }
 
-/* line 231, ../sass/hathi.scss */
+/* line 194, ../sass/hathi.scss */
 .yui-t2 .yui-main .yui-b {
   margin-left: 14.8456em;
   *margin-left: 14.512em;
 }
 
-/* line 236, ../sass/hathi.scss */
+/* line 199, ../sass/hathi.scss */
 .yui-t3 .yui-b {
   float: left;
   width: 23.0759em;
   *width: 22.52em;
 }
 
-/* line 242, ../sass/hathi.scss */
+/* line 205, ../sass/hathi.scss */
 .yui-t3 .yui-main .yui-b {
   margin-left: 24.0759em;
   *margin-left: 23.52em;
 }
 
-/* line 247, ../sass/hathi.scss */
+/* line 210, ../sass/hathi.scss */
 .yui-t8 .yui-b {
   float: left;
   width: 18.4608em;
   *width: 18.016em;
 }
 
-/* line 253, ../sass/hathi.scss */
+/* line 216, ../sass/hathi.scss */
 .yui-t8 .yui-main .yui-b {
   margin-left: 19.4608em;
   *margin-left: 19.016em;
 }
 
-/* line 258, ../sass/hathi.scss */
+/* line 221, ../sass/hathi.scss */
 .yui-t4 .yui-b {
   float: right;
   width: 13.8456em;
   *width: 13.512em;
 }
 
-/* line 264, ../sass/hathi.scss */
+/* line 227, ../sass/hathi.scss */
 .yui-t4 .yui-main .yui-b {
   margin-right: 14.8456em;
   *margin-right: 14.512em;
 }
 
-/* line 269, ../sass/hathi.scss */
+/* line 232, ../sass/hathi.scss */
 .yui-t5 .yui-b {
   float: right;
   width: 18.4608em;
   *width: 18.016em;
 }
 
-/* line 275, ../sass/hathi.scss */
+/* line 238, ../sass/hathi.scss */
 .yui-t5 .yui-main .yui-b {
   margin-right: 19.4608em;
   *margin-right: 19.016em;
 }
 
-/* line 280, ../sass/hathi.scss */
+/* line 243, ../sass/hathi.scss */
 .yui-t6 .yui-b {
   float: right;
   width: 23.0759em;
   *width: 22.52em;
 }
 
-/* line 286, ../sass/hathi.scss */
+/* line 249, ../sass/hathi.scss */
 .yui-t6 .yui-main .yui-b {
   margin-right: 24.0759em;
   *margin-right: 23.52em;
 }
 
-/* line 291, ../sass/hathi.scss */
+/* line 254, ../sass/hathi.scss */
 .yui-t7 .yui-main .yui-b {
   display: block;
   margin: 0 0 1em 0;
 }
 
-/* line 296, ../sass/hathi.scss */
+/* line 259, ../sass/hathi.scss */
 .yui-main .yui-b {
   float: none;
   width: auto;
 }
 
-/* line 306, ../sass/hathi.scss */
+/* line 269, ../sass/hathi.scss */
 .yui-g .yui-u,
 .yui-g .yui-g,
 .yui-gc .yui-u,
@@ -278,7 +278,7 @@
   display: inline;
 }
 
-/* line 316, ../sass/hathi.scss */
+/* line 279, ../sass/hathi.scss */
 .yui-g div.first,
 .yui-gc div.first,
 .yui-gc div.first div.first,
@@ -288,19 +288,19 @@
   float: left;
 }
 
-/* line 321, ../sass/hathi.scss */
+/* line 284, ../sass/hathi.scss */
 .yui-g .yui-u,
 .yui-g .yui-g {
   width: 49.1%;
 }
 
-/* line 326, ../sass/hathi.scss */
+/* line 289, ../sass/hathi.scss */
 .yui-g .yui-g .yui-u,
 .yui-gc .yui-g .yui-u {
   width: 48.1%;
 }
 
-/* line 332, ../sass/hathi.scss */
+/* line 295, ../sass/hathi.scss */
 .yui-gb .yui-u,
 .yui-gc .yui-u,
 .yui-gd .yui-u {
@@ -310,41 +310,41 @@
   width: 32%;
 }
 
-/* line 341, ../sass/hathi.scss */
+/* line 304, ../sass/hathi.scss */
 .yui-gb div.first,
 .yui-gc div.first,
 .yui-gd div.first {
   margin-left: 0;
 }
 
-/* line 346, ../sass/hathi.scss */
+/* line 309, ../sass/hathi.scss */
 .yui-gc div.first,
 .yui-gd .yui-u {
   width: 66%;
 }
 
-/* line 350, ../sass/hathi.scss */
+/* line 313, ../sass/hathi.scss */
 .yui-gd div.first {
   width: 32%;
 }
 
-/* line 354, ../sass/hathi.scss */
+/* line 317, ../sass/hathi.scss */
 .yui-ge .yui-u {
   width: 24%;
 }
 
-/* line 359, ../sass/hathi.scss */
+/* line 322, ../sass/hathi.scss */
 .yui-ge div.first,
 .yui-gf .yui-u {
   width: 74.2%;
 }
 
-/* line 363, ../sass/hathi.scss */
+/* line 326, ../sass/hathi.scss */
 .yui-gf div.first {
   width: 24%;
 }
 
-/* line 367, ../sass/hathi.scss */
+/* line 330, ../sass/hathi.scss */
 .yui-ge div.first {
   width: 95%;
 }
@@ -362,18 +362,18 @@
 	clear: both;
 	visibility: hidden;
 }*/
-/* line 385, ../sass/hathi.scss */
+/* line 348, ../sass/hathi.scss */
 div {
   margin: 0;
   padding: 0;
 }
 
-/* line 390, ../sass/hathi.scss */
+/* line 353, ../sass/hathi.scss */
 .results {
   float: left;
 }
 
-/* line 400, ../sass/hathi.scss */
+/* line 363, ../sass/hathi.scss */
 .bd:after,
 .yui-g:after,
 .yui-gb:after,
@@ -386,7 +386,7 @@ div {
   clear: both;
 }
 
-/* line 412, ../sass/hathi.scss */
+/* line 375, ../sass/hathi.scss */
 .bd:before,
 .yui-g:before,
 .yui-gb:before,
@@ -398,7 +398,7 @@ div {
   display: table;
 }
 
-/* line 423, ../sass/hathi.scss */
+/* line 386, ../sass/hathi.scss */
 .bd,
 .yui-g,
 .yui-gb,
@@ -410,77 +410,68 @@ div {
 }
 
 /* My styles */
-/* line 430, ../sass/hathi.scss */
+/* line 393, ../sass/hathi.scss */
 #hd {
   background-color: #fff;
   padding-top: 10px;
 }
 
-/* line 441, ../sass/hathi.scss */
+/* line 398, ../sass/hathi.scss */
 .contentbox {
-  /*background-color:#FFF;*/
-  /*border: 1px solid #cccccc;*/
   padding: 5px;
   margin-left: 15px;
 }
 
-/*.box {
-  background-color:#fff;
-  border: 1px solid #cccccc;
-  margin-left: 15px;
-  padding:5px;
-  font-size: 85%;
-}*/
-/* line 456, ../sass/hathi.scss */
+/* line 403, ../sass/hathi.scss */
 .box {
   padding-right: 15px;
   font-size: 13px ;
   font-size: 1.3rem ;
 }
-/* line 460, ../sass/hathi.scss */
+/* line 407, ../sass/hathi.scss */
 .box h2:first {
   margin-top: 0;
 }
 
-/* line 466, ../sass/hathi.scss */
+/* line 413, ../sass/hathi.scss */
 .details {
   border: 1px solid #cccccc;
   padding: 20px 1em 1em 1em;
 }
 
-/* line 470, ../sass/hathi.scss */
+/* line 417, ../sass/hathi.scss */
 .submenu {
   /*margin-top:11px;*/
 }
 
-/* line 473, ../sass/hathi.scss */
+/* line 420, ../sass/hathi.scss */
 .submenu h4 {
   border-bottom: 1px solid #eeeeee;
   padding-bottom: 3px;
 }
 
-/* line 477, ../sass/hathi.scss */
+/* line 424, ../sass/hathi.scss */
 .narrow {
   /*padding-top: 15px;*/
 }
 
-/* line 480, ../sass/hathi.scss */
+/* line 427, ../sass/hathi.scss */
 .narrow_begin {
   display: block;
 }
 
-/* line 483, ../sass/hathi.scss */
+/* line 430, ../sass/hathi.scss */
 .narrow_end {
   display: none;
 }
 
-/* line 486, ../sass/hathi.scss */
+/* line 433, ../sass/hathi.scss */
 .myblock {
   border: 1px solid #cccccc;
   padding: 15px;
 }
 
-/* line 493, ../sass/hathi.scss */
+/* line 440, ../sass/hathi.scss */
 ul.tools {
   font-size: 80%;
   text-align: left;
@@ -488,17 +479,17 @@ ul.tools {
   margin-top: 1em;
 }
 
-/* line 500, ../sass/hathi.scss */
+/* line 447, ../sass/hathi.scss */
 ul.tools li {
   float: left;
 }
 
-/* line 503, ../sass/hathi.scss */
+/* line 450, ../sass/hathi.scss */
 .tool {
   font-size: 80%;
 }
 
-/* line 506, ../sass/hathi.scss */
+/* line 453, ../sass/hathi.scss */
 ul.menu {
   display: none;
   margin-top: 10px;
@@ -507,7 +498,7 @@ ul.menu {
   position: absolute;
 }
 
-/* line 513, ../sass/hathi.scss */
+/* line 460, ../sass/hathi.scss */
 ul.menu li {
   border-bottom: 1px solid #cccccc;
   padding: 5px;
@@ -517,7 +508,7 @@ ul.menu li {
   text-align: left;
 }
 
-/* line 521, ../sass/hathi.scss */
+/* line 468, ../sass/hathi.scss */
 #ft {
   background-color: #f5f5f5;
   border-top: 1px dotted #cccccc;
@@ -526,7 +517,7 @@ ul.menu li {
   font-size: 90%;
 }
 
-/* line 528, ../sass/hathi.scss */
+/* line 475, ../sass/hathi.scss */
 #ft div {
   float: left;
   border-right: 1px dotted #cccccc;
@@ -535,7 +526,7 @@ ul.menu li {
   width: 12em;
 }
 
-/* line 535, ../sass/hathi.scss */
+/* line 482, ../sass/hathi.scss */
 .result {
   background-color: #fffefb;
   /*#f5f5f5;*/
@@ -543,96 +534,96 @@ ul.menu li {
   margin-bottom: 5px;
 }
 
-/* line 541, ../sass/hathi.scss */
+/* line 488, ../sass/hathi.scss */
 .results_format {
   margin-top: 0.25em;
 }
 
-/* line 545, ../sass/hathi.scss */
+/* line 492, ../sass/hathi.scss */
 .results_title {
   font-size: 100%;
 }
 
-/* line 549, ../sass/hathi.scss */
+/* line 496, ../sass/hathi.scss */
 .results_title2 {
   font-size: 100%;
 }
 
-/* line 553, ../sass/hathi.scss */
+/* line 500, ../sass/hathi.scss */
 .results_author, .results_format, .results_published {
   padding-left: 1em;
 }
 
-/* line 557, ../sass/hathi.scss */
+/* line 504, ../sass/hathi.scss */
 .resultItemLine1 {
   margin-bottom: 4px;
 }
 
-/* line 561, ../sass/hathi.scss */
+/* line 508, ../sass/hathi.scss */
 .resultItemLine2, .resultItemLine3 {
   font-size: 95%;
   color: #666;
 }
 
-/* line 568, ../sass/hathi.scss */
+/* line 515, ../sass/hathi.scss */
 .record {
   /* border-right: 1px dashed #cccccc; */
   padding: 10px 15px 10px 10px;
 }
 
-/* line 572, ../sass/hathi.scss */
+/* line 519, ../sass/hathi.scss */
 .result.unavailable {
   background-color: #fff5ee;
 }
 
-/* line 575, ../sass/hathi.scss */
+/* line 522, ../sass/hathi.scss */
 .result.alt {
   background-color: #f6f4f1;
   /*#eee;*/
 }
 
-/* line 578, ../sass/hathi.scss */
+/* line 525, ../sass/hathi.scss */
 .toggle {
   text-align: right;
 }
 
-/* line 581, ../sass/hathi.scss */
+/* line 528, ../sass/hathi.scss */
 .toggle img {
   vertical-align: text-bottom;
 }
 
-/* line 584, ../sass/hathi.scss */
+/* line 531, ../sass/hathi.scss */
 .resultitem {
   margin-left: 100px;
 }
 
-/* line 588, ../sass/hathi.scss */
+/* line 535, ../sass/hathi.scss */
 .resulthead {
   padding: 10px 10px 5px 10px;
   margin-bottom: 1.5em;
   /*border-bottom: 1px solid #eee;*/
 }
 
-/* line 594, ../sass/hathi.scss */
+/* line 541, ../sass/hathi.scss */
 .searchbox {
   padding: 10px 15px 20px 0px;
   height: 3em;
   line-height: 1em;
 }
 
-/* line 600, ../sass/hathi.scss */
+/* line 547, ../sass/hathi.scss */
 #searchboxCont {
   position: relative;
   top: 10px;
 }
 
-/* line 605, ../sass/hathi.scss */
+/* line 552, ../sass/hathi.scss */
 #searchboxCont #searchLinks {
   margin-left: 20px;
   font-size: .9em;
 }
 
-/* line 610, ../sass/hathi.scss */
+/* line 557, ../sass/hathi.scss */
 .searchtools {
   /*background-color: #f5f5f5;*/
   background-color: #F6F4F1;
@@ -640,26 +631,26 @@ ul.menu li {
   font-size: 90%;
 }
 
-/* line 616, ../sass/hathi.scss */
+/* line 563, ../sass/hathi.scss */
 .navmenu {
   margin: 0px;
   margin-right: 8px;
 }
 
-/* line 621, ../sass/hathi.scss */
+/* line 568, ../sass/hathi.scss */
 .navmenu ul {
   margin: 0;
   padding: 0;
 }
 
-/* line 626, ../sass/hathi.scss */
+/* line 573, ../sass/hathi.scss */
 .navmenu li {
   padding: 0.1em 0 0.1em 0.5em;
   list-style-type: none;
   /*border-bottom: 1px solid #e3e3e3;*/
 }
 
-/* line 631, ../sass/hathi.scss */
+/* line 578, ../sass/hathi.scss */
 .navmenu li {
   padding: 0.1em 0 0.1em 0.5em;
   margin: 0 0 0.5em 0.75em;
@@ -667,14 +658,14 @@ ul.menu li {
   /*border-bottom: 1px solid #e3e3e3;*/
 }
 
-/* line 638, ../sass/hathi.scss */
+/* line 585, ../sass/hathi.scss */
 #listleftcol h2 {
   font-size: 130%;
   font-weight: bold;
   border-bottom: 1px solid #dddddd;
 }
 
-/* line 644, ../sass/hathi.scss */
+/* line 591, ../sass/hathi.scss */
 #listleftcol h3 {
   margin-top: .75em;
   font-weight: bold;
@@ -682,39 +673,39 @@ ul.menu li {
   margin-bottom: 0.5em;
 }
 
-/* line 651, ../sass/hathi.scss */
+/* line 598, ../sass/hathi.scss */
 h3.title {
   font-size: 100%;
 }
 
-/* line 655, ../sass/hathi.scss */
+/* line 602, ../sass/hathi.scss */
 .title {
   font-size: 1.15em;
   display: inline;
 }
 
-/* line 659, ../sass/hathi.scss */
+/* line 606, ../sass/hathi.scss */
 .narrow dd {
   color: #999;
 }
 
-/* line 663, ../sass/hathi.scss */
+/* line 610, ../sass/hathi.scss */
 p.correction a {
   font-weight: bold;
   font-style: italic;
 }
 
-/* line 668, ../sass/hathi.scss */
+/* line 615, ../sass/hathi.scss */
 .error {
   color: #C00;
 }
 
-/* line 672, ../sass/hathi.scss */
+/* line 619, ../sass/hathi.scss */
 #tagForm {
   display: none;
 }
 
-/* line 675, ../sass/hathi.scss */
+/* line 622, ../sass/hathi.scss */
 #narrowLoading {
   padding: 50px 0px 100px 0px;
   font-weight: bold;
@@ -722,19 +713,19 @@ p.correction a {
   text-align: center;
 }
 
-/* line 681, ../sass/hathi.scss */
+/* line 628, ../sass/hathi.scss */
 div.warning {
   font-weight: bold;
   font-family: courier new, courier, fixed;
   color: #990000;
 }
 
-/* line 686, ../sass/hathi.scss */
+/* line 633, ../sass/hathi.scss */
 #listForm {
   display: none;
 }
 
-/* line 689, ../sass/hathi.scss */
+/* line 636, ../sass/hathi.scss */
 #lightbox {
   background-color: #ccc;
   display: none;
@@ -749,12 +740,12 @@ div.warning {
   -moz-opacity: .8;
 }
 
-/* line 703, ../sass/hathi.scss */
+/* line 650, ../sass/hathi.scss */
 div.popupbox {
   overflow: auto;
 }
 
-/* line 707, ../sass/hathi.scss */
+/* line 654, ../sass/hathi.scss */
 div.popupBox {
   background-color: #f5f5f5;
   display: none;
@@ -769,25 +760,25 @@ div.popupBox {
   text-align: left;
 }
 
-/* line 721, ../sass/hathi.scss */
+/* line 668, ../sass/hathi.scss */
 div.popupBox .header {
   background-color: #CCCCCC;
   padding: 3px 0px 3px 10px;
 }
 
-/* line 726, ../sass/hathi.scss */
+/* line 673, ../sass/hathi.scss */
 div.popupBox .header a {
   float: right;
   text-decoration: none;
   font-weight: bold;
 }
 
-/* line 732, ../sass/hathi.scss */
+/* line 679, ../sass/hathi.scss */
 div.popupBox .content {
   padding: 5px 20px 20px 20px;
 }
 
-/* line 737, ../sass/hathi.scss */
+/* line 684, ../sass/hathi.scss */
 div.popupBox a.close {
   font-size: 8pt;
   font-weight: bold;
@@ -797,44 +788,44 @@ div.popupBox a.close {
   border: outset 1px;
 }
 
-/* line 746, ../sass/hathi.scss */
+/* line 693, ../sass/hathi.scss */
 div.popupBox ul {
   list-style: none;
   padding: 0px;
   margin: 0px;
 }
 
-/* line 752, ../sass/hathi.scss */
+/* line 699, ../sass/hathi.scss */
 div.popupBox ul li {
   border-bottom: solid 1px #cccccc;
   padding: 4px;
 }
 
-/* line 757, ../sass/hathi.scss */
+/* line 704, ../sass/hathi.scss */
 div.popupBox ul li.selected {
   background-color: #FFFFEE;
 }
 
-/* line 761, ../sass/hathi.scss */
+/* line 708, ../sass/hathi.scss */
 div.popupBox ul li a {
   color: #000000;
   text-decoration: none;
 }
 
-/* line 766, ../sass/hathi.scss */
+/* line 713, ../sass/hathi.scss */
 ul.similar {
   list-style: none;
   padding: 0px;
   margin: 0px;
 }
 
-/* line 772, ../sass/hathi.scss */
+/* line 719, ../sass/hathi.scss */
 ul.similar li {
   padding-bottom: 8px;
   line-height: 1.1em;
 }
 
-/* line 778, ../sass/hathi.scss */
+/* line 725, ../sass/hathi.scss */
 ul.browse {
   border: solid 1px;
   height: 300px;
@@ -842,14 +833,14 @@ ul.browse {
 }
 
 /* Tabs */
-/* line 786, ../sass/hathi.scss */
+/* line 733, ../sass/hathi.scss */
 #tabnav {
   font-size: 90%;
   margin-top: 4em;
   width: 100%;
 }
 
-/* line 791, ../sass/hathi.scss */
+/* line 738, ../sass/hathi.scss */
 #tabnav ul {
   display: block;
   margin: 0;
@@ -857,7 +848,7 @@ ul.browse {
   list-style: none;
 }
 
-/* line 797, ../sass/hathi.scss */
+/* line 744, ../sass/hathi.scss */
 #tabnav li {
   position: relative;
   display: block;
@@ -866,7 +857,7 @@ ul.browse {
   padding: 0 0 0px 0px;
 }
 
-/* line 804, ../sass/hathi.scss */
+/* line 751, ../sass/hathi.scss */
 #tabnav a {
   display: block;
   background: url("/images/tabs_bg.jpg") repeat-x right top;
@@ -878,28 +869,28 @@ ul.browse {
   color: #333;
 }
 
-/* line 816, ../sass/hathi.scss */
+/* line 763, ../sass/hathi.scss */
 #tabnav a:hover {
   background: url("/images/tabs_hover_bg.jpg") repeat-x right top;
 }
 
-/* line 819, ../sass/hathi.scss */
+/* line 766, ../sass/hathi.scss */
 #tabnav .active a:hover {
   background: url("/images/tab_active_bg.jpg") repeat-x right top;
 }
 
-/* line 824, ../sass/hathi.scss */
+/* line 771, ../sass/hathi.scss */
 #tabnav a.first {
   border-left: 1px solid #cccccc;
 }
 
-/* line 834, ../sass/hathi.scss */
+/* line 781, ../sass/hathi.scss */
 #tabnav .active a {
   background-image: url("/images/tab_active_bg.jpg");
   color: #000;
 }
 
-/* line 839, ../sass/hathi.scss */
+/* line 786, ../sass/hathi.scss */
 #tabnav .active a span {
   position: absolute;
   bottom: -15px;
@@ -910,13 +901,13 @@ ul.browse {
   background: url("/images/tab_active_arrow.jpg") left top no-repeat;
 }
 
-/* line 848, ../sass/hathi.scss */
+/* line 795, ../sass/hathi.scss */
 * html .tabs .active span {
   margin-left: -20px;
   bottom: -15px;
 }
 
-/* line 852, ../sass/hathi.scss */
+/* line 799, ../sass/hathi.scss */
 * html .tabs li a {
   position: relative;
 }
@@ -929,39 +920,39 @@ ul.browse {
 /*a:hover {
   color:#0066cc;
 }*/
-/* line 865, ../sass/hathi.scss */
+/* line 812, ../sass/hathi.scss */
 h1 {
   font-size: 160%;
   font-weight: normal;
 }
 
-/* line 869, ../sass/hathi.scss */
+/* line 816, ../sass/hathi.scss */
 h2 {
   font-size: 150%;
   font-weight: normal;
 }
 
-/* line 873, ../sass/hathi.scss */
+/* line 820, ../sass/hathi.scss */
 h3 {
   font-size: 130%;
   font-weight: normal;
   margin-bottom: .5em;
 }
 
-/* line 878, ../sass/hathi.scss */
+/* line 825, ../sass/hathi.scss */
 h4 {
   font-size: 120%;
   font-weight: normal;
   margin-bottom: .5em;
 }
 
-/* line 884, ../sass/hathi.scss */
+/* line 831, ../sass/hathi.scss */
 p {
   margin-bottom: 1em;
   /* line-height:1.3em; */
 }
 
-/* line 888, ../sass/hathi.scss */
+/* line 835, ../sass/hathi.scss */
 hr {
   border: 0;
   height: 1px;
@@ -970,19 +961,19 @@ hr {
   margin-bottom: 1em;
 }
 
-/* line 895, ../sass/hathi.scss */
+/* line 842, ../sass/hathi.scss */
 strong {
   font-weight: bold;
 }
 
 /* Citation Table */
-/* line 899, ../sass/hathi.scss */
+/* line 846, ../sass/hathi.scss */
 .citation {
   font-size: 90%;
   clear: both;
 }
 
-/* line 903, ../sass/hathi.scss */
+/* line 850, ../sass/hathi.scss */
 .citation th {
   text-align: left;
   color: #666;
@@ -990,85 +981,85 @@ strong {
   width: 14em;
 }
 
-/* line 909, ../sass/hathi.scss */
+/* line 856, ../sass/hathi.scss */
 .citation tr {
   border-bottom: 1px solid #f3f3f3;
 }
 
-/* line 912, ../sass/hathi.scss */
+/* line 859, ../sass/hathi.scss */
 .citation td {
   padding: 0.3em 0 0.3em 1em;
 }
 
-/* line 915, ../sass/hathi.scss */
+/* line 862, ../sass/hathi.scss */
 .citation tr, .citation td {
   vertical-align: top;
 }
 
 /* Holdings Table */
-/* line 920, ../sass/hathi.scss */
+/* line 867, ../sass/hathi.scss */
 .holdings {
   font-size: 90%;
 }
 
-/* line 923, ../sass/hathi.scss */
+/* line 870, ../sass/hathi.scss */
 .holdings th {
   text-align: left;
   color: #666;
   padding: 0.3em 0 0.3em 0;
 }
 
-/* line 928, ../sass/hathi.scss */
+/* line 875, ../sass/hathi.scss */
 .holdings tr {
   border-bottom: 1px solid #f3f3f3;
 }
 
-/* line 931, ../sass/hathi.scss */
+/* line 878, ../sass/hathi.scss */
 .holdings td {
   padding: 0.25em 1em 0em 0em;
   margin: 0px;
 }
 
-/* line 936, ../sass/hathi.scss */
+/* line 883, ../sass/hathi.scss */
 .holdings td.holdingLocation {
   padding-left: 0.5em;
 }
 
-/* line 940, ../sass/hathi.scss */
+/* line 887, ../sass/hathi.scss */
 .holdings tr, .holdings td {
   vertical-align: top;
   text-align: left;
 }
 
-/* line 945, ../sass/hathi.scss */
+/* line 892, ../sass/hathi.scss */
 #all_holdings h3.holdings_header {
   margin-top: 2em;
 }
 
-/* line 949, ../sass/hathi.scss */
+/* line 896, ../sass/hathi.scss */
 #all_holdings h4, #all_holdings table {
   margin-left: 2em;
 }
 
-/* line 953, ../sass/hathi.scss */
+/* line 900, ../sass/hathi.scss */
 #all_holdings .toggle {
   text-align: left;
   margin-left: 2em;
 }
 
 /* Pagination */
-/* line 960, ../sass/hathi.scss */
+/* line 907, ../sass/hathi.scss */
 .options {
   padding-left: 10px;
 }
 
-/* line 964, ../sass/hathi.scss */
+/* line 911, ../sass/hathi.scss */
 .sort {
   display: inline-block;
   margin-right: 10px;
 }
 
-/* line 969, ../sass/hathi.scss */
+/* line 916, ../sass/hathi.scss */
 .pagination {
   /*font-size:90%;*/
   padding: 1.5em 0 1.5em 0;
@@ -1087,19 +1078,19 @@ strong {
   clear: both;
 }
 
-/* line 983, ../sass/hathi.scss */
+/* line 930, ../sass/hathi.scss */
 .pagination a {
   padding: 0.2em 0.3em;
   margin-right: .5em;
   border: 1px solid white;
 }
 
-/* line 988, ../sass/hathi.scss */
+/* line 935, ../sass/hathi.scss */
 .pagination a:hover {
   border: 1px solid #cccccc;
 }
 
-/* line 991, ../sass/hathi.scss */
+/* line 938, ../sass/hathi.scss */
 .pagination span {
   padding: 0.2em 0.3em;
   margin-right: .5em;
@@ -1107,13 +1098,13 @@ strong {
 }
 
 /* Data Grid (Holdings) */
-/* line 999, ../sass/hathi.scss */
+/* line 946, ../sass/hathi.scss */
 table.datagrid {
   width: auto;
   border-collapse: collapse;
 }
 
-/* line 1004, ../sass/hathi.scss */
+/* line 951, ../sass/hathi.scss */
 table.datagrid th {
   color: #003366;
   background-color: #DDEEFF;
@@ -1124,47 +1115,47 @@ table.datagrid th {
   padding: 5px 15px 5px 15px;
 }
 
-/* line 1014, ../sass/hathi.scss */
+/* line 961, ../sass/hathi.scss */
 table.datagrid th a {
   color: #336699;
 }
 
-/* line 1018, ../sass/hathi.scss */
+/* line 965, ../sass/hathi.scss */
 table.datagrid td {
   border-left: 1px solid white;
   border-right: 1px solid white;
   padding: 5px 10px 5px 10px;
 }
 
-/* line 1024, ../sass/hathi.scss */
+/* line 971, ../sass/hathi.scss */
 table.datagrid td a {
   color: #003366;
 }
 
-/* line 1028, ../sass/hathi.scss */
+/* line 975, ../sass/hathi.scss */
 table.datagrid tr.evenrow {
   background-color: #EEEEEE;
 }
 
-/* line 1032, ../sass/hathi.scss */
+/* line 979, ../sass/hathi.scss */
 table.datagrid tr.oddrow {
   background-color: #DDDDDD;
 }
 
 /* Comments */
-/* line 1038, ../sass/hathi.scss */
+/* line 985, ../sass/hathi.scss */
 .commentList {
   margin-bottom: 1em;
 }
 
-/* line 1041, ../sass/hathi.scss */
+/* line 988, ../sass/hathi.scss */
 .commentList li {
   border-bottom: 1px solid #eeeeee;
   padding-bottom: 1em;
   margin-bottom: 1em;
 }
 
-/* line 1046, ../sass/hathi.scss */
+/* line 993, ../sass/hathi.scss */
 .commentList li div.posted {
   color: #666;
   font-size: 80%;
@@ -1173,12 +1164,12 @@ table.datagrid tr.oddrow {
 }
 
 /* Icon Classes */
-/* line 1054, ../sass/hathi.scss */
+/* line 1001, ../sass/hathi.scss */
 .cite:hover, .sms:hover, .mail:hover, .export:hover, .fav:hover, .add:hover {
   background-color: #f5f5f5;
 }
 
-/* line 1058, ../sass/hathi.scss */
+/* line 1005, ../sass/hathi.scss */
 .endnotelink {
   margin-right: 1em;
   padding: .5em;
@@ -1198,7 +1189,7 @@ table.datagrid tr.oddrow {
   margin-right: 2px;
 }
 
-/* line 1067, ../sass/hathi.scss */
+/* line 1014, ../sass/hathi.scss */
 .cite {
   padding: .5em;
   margin-right: 1em;
@@ -1218,7 +1209,7 @@ table.datagrid tr.oddrow {
   margin-right: 2px;
 }
 
-/* line 1075, ../sass/hathi.scss */
+/* line 1022, ../sass/hathi.scss */
 .export {
   padding: .5em;
   margin-right: 1em;
@@ -1238,7 +1229,7 @@ table.datagrid tr.oddrow {
   margin-right: 2px;
 }
 
-/* line 1083, ../sass/hathi.scss */
+/* line 1030, ../sass/hathi.scss */
 .sms {
   background-image: url(http://catalog.hathitrust.org/images/silk/phone.png);
   background-repeat: no-repeat;
@@ -1247,7 +1238,7 @@ table.datagrid tr.oddrow {
   margin-right: 1em;
 }
 
-/* line 1090, ../sass/hathi.scss */
+/* line 1037, ../sass/hathi.scss */
 .tag {
   background-image: url(http://catalog.hathitrust.org/images/silk/tag_blue.png);
   background-repeat: no-repeat;
@@ -1256,7 +1247,7 @@ table.datagrid tr.oddrow {
   margin-right: 1em;
 }
 
-/* line 1097, ../sass/hathi.scss */
+/* line 1044, ../sass/hathi.scss */
 .mail {
   padding: 0.5em 0.5em 0.5em 0.5em;
   margin-right: 1em;
@@ -1276,7 +1267,7 @@ table.datagrid tr.oddrow {
   margin-right: 2px;
 }
 
-/* line 1106, ../sass/hathi.scss */
+/* line 1053, ../sass/hathi.scss */
 #RSSFeed {
   padding-left: 18px;
 }
@@ -1295,7 +1286,7 @@ table.datagrid tr.oddrow {
   margin-right: 2px;
 }
 
-/* line 1114, ../sass/hathi.scss */
+/* line 1061, ../sass/hathi.scss */
 .fav {
   /*  background-image:url(http://catalog.hathitrust.org/images/silk/heart.png);
     background-repeat:no-repeat;
@@ -1304,7 +1295,7 @@ table.datagrid tr.oddrow {
     margin-right:1em; */
 }
 
-/* line 1121, ../sass/hathi.scss */
+/* line 1068, ../sass/hathi.scss */
 .edit {
   background-image: url(http://catalog.hathitrust.org/images/silk/edit.png);
   background-repeat: no-repeat;
@@ -1313,7 +1304,7 @@ table.datagrid tr.oddrow {
   margin-right: .7em;
 }
 
-/* line 1128, ../sass/hathi.scss */
+/* line 1075, ../sass/hathi.scss */
 .delete {
   background-image: url(http://catalog.hathitrust.org/images/silk/delete.png);
   background-repeat: no-repeat;
@@ -1322,7 +1313,7 @@ table.datagrid tr.oddrow {
   margin-right: 0;
 }
 
-/* line 1135, ../sass/hathi.scss */
+/* line 1082, ../sass/hathi.scss */
 .feed {
   padding: 0.5em 0.5em 0.5em 20px;
   margin-left: 1em;
@@ -1342,12 +1333,12 @@ table.datagrid tr.oddrow {
   margin-right: 2px;
 }
 
-/* line 1143, ../sass/hathi.scss */
+/* line 1090, ../sass/hathi.scss */
 #menuAddList img {
   vertical-align: text-bottom;
 }
 
-/* line 1146, ../sass/hathi.scss */
+/* line 1093, ../sass/hathi.scss */
 .add {
   background-image: url(http://catalog.hathitrust.org/images/silk/add.png);
   background-repeat: no-repeat;
@@ -1356,7 +1347,7 @@ table.datagrid tr.oddrow {
   margin-right: 0;
 }
 
-/* line 1153, ../sass/hathi.scss */
+/* line 1100, ../sass/hathi.scss */
 .available {
   background-image: url(/images/bullet_green.png);
   background-repeat: no-repeat;
@@ -1364,12 +1355,12 @@ table.datagrid tr.oddrow {
   padding-left: 18px;
 }
 
-/* line 1159, ../sass/hathi.scss */
+/* line 1106, ../sass/hathi.scss */
 .available span {
   padding-left: 10px;
 }
 
-/* line 1162, ../sass/hathi.scss */
+/* line 1109, ../sass/hathi.scss */
 .checkedout {
   background-image: url(/images/bullet_red.png);
   background-repeat: no-repeat;
@@ -1377,12 +1368,12 @@ table.datagrid tr.oddrow {
   padding-left: 18px;
 }
 
-/* line 1168, ../sass/hathi.scss */
+/* line 1115, ../sass/hathi.scss */
 .checkedout span {
   padding-left: 10px;
 }
 
-/* line 1171, ../sass/hathi.scss */
+/* line 1118, ../sass/hathi.scss */
 .backtosearch {
   font-size: 90%;
 }
@@ -1580,80 +1571,80 @@ table.datagrid tr.oddrow {
 
 */
 /*Image Alignment*/
-/* line 1372, ../sass/hathi.scss */
+/* line 1319, ../sass/hathi.scss */
 img.centered {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-/* line 1378, ../sass/hathi.scss */
+/* line 1325, ../sass/hathi.scss */
 alignright {
   padding: 4px;
   margin: 0 0 2px 7px;
   display: inline;
 }
 
-/* line 1384, ../sass/hathi.scss */
+/* line 1331, ../sass/hathi.scss */
 alignleft {
   padding: 4px;
   margin: 0 7px 2px 0;
   display: inline;
 }
 
-/* line 1390, ../sass/hathi.scss */
+/* line 1337, ../sass/hathi.scss */
 .alignright {
   float: right;
   padding: 4px;
   margin: 0 7px 2px 0;
 }
 
-/* line 1396, ../sass/hathi.scss */
+/* line 1343, ../sass/hathi.scss */
 .alignleft {
   float: left;
   padding: 4px;
   margin: 0 15px 2px 0;
 }
 
-/* line 1402, ../sass/hathi.scss */
+/* line 1349, ../sass/hathi.scss */
 ul.filters {
   list-style-type: none;
   margin-left: 0;
   padding-left: 0;
 }
 
-/* line 1408, ../sass/hathi.scss */
+/* line 1355, ../sass/hathi.scss */
 ul.filters li {
   text-indent: -20px;
   padding-left: 20px;
 }
 
-/* line 1413, ../sass/hathi.scss */
+/* line 1360, ../sass/hathi.scss */
 ul.filters li em {
   font-style: italic;
 }
 
-/* line 1417, ../sass/hathi.scss */
+/* line 1364, ../sass/hathi.scss */
 .note {
   margin-top: 2em;
 }
 
-/* line 1421, ../sass/hathi.scss */
+/* line 1368, ../sass/hathi.scss */
 #feedback_form_wrapper td {
   vertical-align: top;
 }
 
-/* line 1425, ../sass/hathi.scss */
+/* line 1372, ../sass/hathi.scss */
 .AccessLink, #accessLinks {
   padding: 8px 0 8px 12px;
   padding-bottom: 2em;
 }
-/* line 1429, ../sass/hathi.scss */
+/* line 1376, ../sass/hathi.scss */
 .AccessLink ul, #accessLinks ul {
   margin: 0;
   padding: 0;
 }
-/* line 1433, ../sass/hathi.scss */
+/* line 1380, ../sass/hathi.scss */
 .AccessLink ul li, #accessLinks ul li {
   display: inline;
   float: left;
@@ -1705,7 +1696,6 @@ ul.filters li em {
   margin-right: 2px;
 }
 
-/* NOT UNIQUE */
 /* line 4, ../sass/hathi.scss */
 .backtosearch:before {
   content: "E ";
@@ -1720,7 +1710,7 @@ ul.filters li em {
   display: inline-block;
   margin-right: 2px;
 }
-/* line 1485, ../sass/hathi.scss */
+/* line 1429, ../sass/hathi.scss */
 .backtosearch img {
   display: none;
 }
@@ -1755,7 +1745,7 @@ ul.filters li em {
   margin-right: 2px;
 }
 
-/* line 1498, ../sass/hathi.scss */
+/* line 1442, ../sass/hathi.scss */
 ul.ToolLinks {
   position: relative;
   float: right;
@@ -1763,14 +1753,14 @@ ul.ToolLinks {
   padding: 0;
   list-style: none;
 }
-/* line 1505, ../sass/hathi.scss */
+/* line 1449, ../sass/hathi.scss */
 ul.ToolLinks li {
   display: inline;
   padding: 0;
   margin: 0;
 }
 
-/* line 1513, ../sass/hathi.scss */
+/* line 1457, ../sass/hathi.scss */
 .tabs {
   margin-bottom: 1.5em;
   margin-left: 10px;
@@ -1779,20 +1769,20 @@ ul.ToolLinks li {
   color: #333;
 }
 
-/* line 1521, ../sass/hathi.scss */
+/* line 1465, ../sass/hathi.scss */
 .tabs a {
   font-weight: bold;
   color: #5e5e5e;
 }
 
-/* line 1526, ../sass/hathi.scss */
+/* line 1470, ../sass/hathi.scss */
 .tabs a:hover {
   text-decoration: none;
   border-bottom: none;
   color: #b15a0d;
 }
 
-/* line 1532, ../sass/hathi.scss */
+/* line 1476, ../sass/hathi.scss */
 .tabs ul {
   text-align: left;
   list-style: none;
@@ -1801,19 +1791,19 @@ ul.ToolLinks li {
   line-height: 24px;
 }
 
-/* line 1540, ../sass/hathi.scss */
+/* line 1484, ../sass/hathi.scss */
 .tabs ul:after, .tabs ul:before {
   display: table;
   line-height: 0;
   content: "";
 }
 
-/* line 1546, ../sass/hathi.scss */
+/* line 1490, ../sass/hathi.scss */
 .tabs ul:after {
   clear: both;
 }
 
-/* line 1550, ../sass/hathi.scss */
+/* line 1494, ../sass/hathi.scss */
 .tabs ul li {
   float: left;
   margin: 0 0px;
@@ -1830,41 +1820,41 @@ ul.ToolLinks li {
   /*text-shadow: 0 1px 1px rgba(255, 255, 255, 1);*/
 }
 
-/* line 1567, ../sass/hathi.scss */
+/* line 1511, ../sass/hathi.scss */
 .tabs ul li:first-child {
   margin-left: 0;
 }
 
-/* line 1571, ../sass/hathi.scss */
+/* line 1515, ../sass/hathi.scss */
 .tabs li.active {
   border: 1px solid #aaaaaa;
   border-bottom: 1px solid transparent;
   background: #fff;
 }
 
-/* line 1577, ../sass/hathi.scss */
+/* line 1521, ../sass/hathi.scss */
 .tabs li.active a {
   color: #4f4f4f;
 }
 
-/* line 1581, ../sass/hathi.scss */
+/* line 1525, ../sass/hathi.scss */
 #gettingStarted, #searchtips_help, #emailThisRecord, #emailThisSearch {
   display: none;
 }
 
-/* line 1586, ../sass/hathi.scss */
+/* line 1530, ../sass/hathi.scss */
 table {
   margin: 1em;
   font-size: 14px ;
   font-size: 1.4rem ;
 }
 
-/* line 1591, ../sass/hathi.scss */
+/* line 1535, ../sass/hathi.scss */
 td, th {
   padding: 0.3em 0.5em;
 }
 
-/* line 1595, ../sass/hathi.scss */
+/* line 1539, ../sass/hathi.scss */
 input[value=Find] {
   border: none;
   display: inline-block;
@@ -1890,12 +1880,12 @@ input[value=Find] {
   /*png24*/
   z-index: 0;
 }
-/* line 1618, ../sass/hathi.scss */
+/* line 1562, ../sass/hathi.scss */
 input[value=Find]:hover {
   background-color: #848383;
 }
 
-/* line 1624, ../sass/hathi.scss */
+/* line 1568, ../sass/hathi.scss */
 #doc3 {
   margin: 0;
   margin-left: auto;
@@ -1904,12 +1894,12 @@ input[value=Find]:hover {
   font-size: 1.4rem ;
 }
 
-/* line 1632, ../sass/hathi.scss */
+/* line 1576, ../sass/hathi.scss */
 label {
   display: inline-block;
 }
 
-/* line 1636, ../sass/hathi.scss */
+/* line 1580, ../sass/hathi.scss */
 input[type=text] {
   width: auto;
 }

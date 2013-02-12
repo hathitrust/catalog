@@ -69,7 +69,7 @@
    <div id="content" style="margin: 0px; padding: 0px; margin-left: 19em;">
      <div class="record">
        {if $lastsearch}
-        <a href="{$url}/Search/Home?{$lastsearch|regex_replace:"/&/":"&amp;"}" class="backtosearch"><img style="vertical-align: middle;" alt="" src="/static/umichwebsite/images/return.png">{translate text="Back to Search Results"}</a><br>
+        <a href="{$url}/Search/Home?{$lastsearch|regex_replace:"/&/":"&amp;"}" class="backtosearch">{translate text="Back to Search Results"}</a><br>
        {/if}
 
        <h3 class="SkipLink">Tools</h3>
@@ -80,13 +80,13 @@
 
        <div class="recordnav">
          {if $previous}
-         <a href="{$url}{$previous|regex_replace:"/&/":"&amp;"}" class="backtosearch"><img style="vertical-align: middle;" alt="" src="/static/umichwebsite/images/arrow_left.png"> {translate text="Previous record"}</a>
+         <a href="{$url}{$previous|regex_replace:"/&/":"&amp;"}" class="goto-previous-record">{translate text="Previous record"}</a>
          {/if}
          {if $current}
          {translate text="$current"}
          {/if}
          {if $next}
-         <a href="{$url}{$next|regex_replace:"/&/":"&amp;"}" class="backtosearch">{translate text="Next record"} <img style="vertical-align: middle;" alt="" src="/static/umichwebsite/images/arrow_right.png"></a>
+         <a href="{$url}{$next|regex_replace:"/&/":"&amp;"}" class="goto-next-record">{translate text="Next record"}</a>
          {/if}
        </div>
 

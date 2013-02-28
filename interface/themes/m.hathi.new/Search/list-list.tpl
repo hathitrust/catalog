@@ -38,70 +38,22 @@
 				{/if}
 				</div>
 				
-				{assign var=marcField value=$record.marc->getFields('974')}
-                {if $marcField}
-					
-					
-                    {foreach from=$marcField item=field name=myLoop start=0 loop=2}
-                    {/foreach}
-                    
-                    {assign var=count value=0}
-                    
-                    
-                    {foreach from=$marcField item=field name=loop}
-                    	{*
-                        {assign var=url value=$field->getSubfield('u')}
-                        {assign var=url value=$url->getData()}
-                        {assign var=nmspace value=$url|regex_replace:"/\.\d+/":""}
-						*}
-						
-                    	{if $smarty.foreach.myLoop.index gt 0}
-                        	<span class="viewrights">(view record to see multiple volumes)</span>
-                    		{php}break;{/php} 
-                    	{else}
-							{*<a href="http://hdl.handle.net/2027/{$url}" class="rights-{$field|getvalue:'r'}"*}
-  							{if $session->get('inUSA')}
-    							{if $field|getvalue:'r' eq 'pd'}<div class="viewrights fullview">Full view</div>
-      							{elseif $field|getvalue:'r' eq 'pdus'}<div class="viewrights fullview">Full view</div>
-      							{elseif $field|getvalue:'r' eq 'world'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-by'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-by-nd'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-by-nc-nd'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-by-nc'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-by-nc-sa'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-by-sa'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-zero'}<div class="viewrights fullview">Full view</div>
+        {assign var="dfields" value=$ru->displayable_ht_fields($record.marc)}
+        
+        {* If we have more than one good 974, just put in the link
+           to the catalog record *}
+        {if $dfields|@count gt 1}
+           <span class="viewrights">(view record to see multiple volumes)</span>
+        {else}
+          {assign var=ld value=$ru->ht_link_data($dfields[0])}
+          {if $ld.is_fullview}
+            <div class="viewrights fullview rights-{$ld.rights_code}">Full view</div>
+          {else}
+            <div class="viewrights limitedview rights-{$ld.rights_code}">Limited (search-only)</div>
+          {/if}
+        {/if}
+          
 
-      							{else}<div class="viewrights limitedview">Limited (search-only)</div>
-    							{/if}
-  							{else}
-    							{if $field|getvalue:'r' eq 'pd'}<div class="viewrights fullview">Full view</div>
-      							{elseif $field|getvalue:'r' eq 'pdus'}<div class="viewrights limitedview">Limited (search-only)</div>
-      							{elseif $field|getvalue:'r' eq 'world'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-by'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-by-nd'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-by-nc-nd'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-by-nc'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-by-nc-sa'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-by-sa'}<div class="viewrights fullview">Full view</div>
-                    {elseif $field|getvalue:'r' eq 'cc-zero'}<div class="viewrights fullview">Full view</div>
-      							
-      							{else}<div class="viewrights limitedview">Limited (search-only)</div>
-    							{/if}
-  							{/if}
-  
-							{*</a>*}
-
-                    	{/if}
-                	{/foreach}
-                {/if}
-				
-
-				{*<div>*}
-					{*{$record|@print_r}*}
-					{*Availability: {$record.ht_availability|@print_r}*}
-				{*</div>*}
-			{*</div>*}
 		</a>
 	</li>
 {/foreach} 

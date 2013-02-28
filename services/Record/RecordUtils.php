@@ -83,21 +83,29 @@ class RecordUtils {
   }
 
   // Take a rightscode (and, soon, other data) and return viewability
-  function is_fullview($r) {
-
-    $session = VFSession::singleton();
+  function is_fullview($rcode, $inUSA = null) {
+    if (!isset($inUSA)) {
+      $session = VFSession::singleton();
+      $inUSA = $session->get('inUSA');
+    }    
 
     // Assume false
     $fv = false;
 
     // Public domain? return true
-    if (preg_match('/^(cc|pd)/', $r) || preg_match('/world/', $r)) {
+    if (preg_match('/^(cc|pd)/', $rcode) || preg_match('/world/', $rcode)) {
       $fv = true;
     }
 
     //...unless it's US only and we're outside the US
-    if ($r == 'pdus' && $session->get('inUSA') == false) {
+    if ($rcode == 'pdus' && $inUSA == false) {
       $fv = false;
+    }
+    
+    // ...or it's ICUS and we're *outside* the USA
+    
+    if ($rcode == 'icus' && $inUSA  == 'false') {
+      $fv = true;
     }
 
     // other stuff about logins and such goes here

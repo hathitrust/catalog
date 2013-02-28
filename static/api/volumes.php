@@ -13,6 +13,7 @@ if (!isset($_REQUEST['q']) || !preg_match('/\S/', $_REQUEST['q'])) {
 
 require_once 'PEAR.php';
 require_once 'Apache/Solr/Service.php';
+require_once 'services/Record/RecordUtils.php';
 
 // Set up for autoload
 function sample_autoloader($class) {
@@ -48,28 +49,28 @@ $fieldmap = array(
 );
 
 
-$rightsmap = array(
-  'pd' => 'Full view',
-  'ic' => "Limited (search-only)",
-  'opb' => "Limited (search-only)",
-  'op' => "Limited (search-only)",
-  'orph' => "Limited (search-only)",
-  'orphcand' => "Limited (search-only)",
-  'umall' => "Limited (search-only)",
-  'world' => 'Full view',
-  'ic-world' => 'Full view',
-  'und-world' => 'Full view',
-  'und' => "Limited (search-only)",
-  'nobody' => "Limited (search-only)",
-  'pdus' => 'Full view',
-  'cc-by' => 'Full view',
-  'cc-by-nd' => 'Full view',
-  'cc-by-nc-nd' => 'Full view',
-  'cc-by-nc' => 'Full view',
-  'cc-by-nc-sa' => 'Full view',
-  'cc-by-sa' => 'Full view',
-  'cc-zero' => 'Full view'
-);
+// $rightsmap = array(
+//   'pd' => 'Full view',
+//   'ic' => "Limited (search-only)",
+//   'opb' => "Limited (search-only)",
+//   'op' => "Limited (search-only)",
+//   'orph' => "Limited (search-only)",
+//   'orphcand' => "Limited (search-only)",
+//   'umall' => "Limited (search-only)",
+//   'world' => 'Full view',
+//   'ic-world' => 'Full view',
+//   'und-world' => 'Full view',
+//   'und' => "Limited (search-only)",
+//   'nobody' => "Limited (search-only)",
+//   'pdus' => 'Full view',
+//   'cc-by' => 'Full view',
+//   'cc-by-nd' => 'Full view',
+//   'cc-by-nc-nd' => 'Full view',
+//   'cc-by-nc' => 'Full view',
+//   'cc-by-nc-sa' => 'Full view',
+//   'cc-by-sa' => 'Full view',
+//   'cc-zero' => 'Full view'
+// );
 
 
 
@@ -250,7 +251,10 @@ class QObj
   
   function itemsStructure($docs) {
     global $namespacemap;
-    global $rightsmap;
+    // global $rightsmap;
+    
+    $ru = new RecordUtils();
+    
     $items = array();
     foreach ($this->matches as $docid) {
       $doc = $docs[$docid];
@@ -267,7 +271,7 @@ class QObj
         $iinfo['rightsCode'] = isset($ht['rights']) ? $ht['rights'] : 'ic';
         $iinfo['lastUpdate'] = $ht['ingest'];
         $iinfo['enumcron'] = (isset($ht['enumcron']) && preg_match('/\S/', $ht['enumcron']))? $ht['enumcron'] : false;
-        $iinfo['usRightsString'] = $rightsmap[$iinfo['rightsCode']];
+        $iinfo['usRightsString'] = $ru->is_fullview($iinfo['rightsCode'], true) ? "Full view" : "Limited (search-only)";
         $items[] = $iinfo;
       }
     }

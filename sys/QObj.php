@@ -21,18 +21,18 @@ class QObj
   );
 
 
-  public $rightsmap = array(
-    'pd' => 'Full view',
-    'ic' => "Limited (search-only)",
-    'opb' => "Limited (search-only)",
-    'op' => "Limited (search-only)",
-    'orph' => "Limited (search-only)",
-    'umall' => "Limited (search-only)",
-    'world' => 'Full view',
-    'und' => "Limited (search-only)",
-    'nobody' => "Limited (search-only)",
-    'pdus' => 'Full view'
-  );
+  // public $rightsmap = array(
+  //   'pd' => 'Full view',
+  //   'ic' => "Limited (search-only)",
+  //   'opb' => "Limited (search-only)",
+  //   'op' => "Limited (search-only)",
+  //   'orph' => "Limited (search-only)",
+  //   'umall' => "Limited (search-only)",
+  //   'world' => 'Full view',
+  //   'und' => "Limited (search-only)",
+  //   'nobody' => "Limited (search-only)",
+  //   'pdus' => 'Full view'
+  // );
 
 
 
@@ -172,15 +172,8 @@ class QObj
   }
   
   function usrights($r) {
-    if (isset($this->rightsmap[$r])) {
-      return $this->rightsmap[$r];
-    }
-    
-    if (preg_match('/^cc/', $r)) {
-      return $this->rightsmap['pd'];
-    }
-    
-    return $this->rightsmap['ic'];
+    $ru = new RecordUtils();
+    return $ru->is_fullview($r, true) ? "Full view" : "Limited (search-only)";
   }
   
 }

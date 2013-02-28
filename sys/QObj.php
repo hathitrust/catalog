@@ -1,8 +1,7 @@
 <?php
-$path = explode('/', __FILE__);
-array_pop($path);
-require_once(implode('/', $path) . '/Normalize.php');
 
+require_once "sys/Normalize.php";
+require_once "services/Record/RecordUtils.php";
 
 
 class QObj

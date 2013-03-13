@@ -57,6 +57,7 @@
       <p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action}?lookfor={$newPhrase}&amp;type={$type}">{$newPhrase}</a>?</p>
       {/if}
 
+{*
       <div class="searchtools">
         <!-- <a href="{$url}/Search/{$action}?lookfor={$lookfor|escape}&amp;type={$type}&amp;view=rss" class="feed">{translate text='Get RSS Feed'}</a> -->
 
@@ -72,8 +73,10 @@
         <!-- <a class="feed" href="/Search/SearchExport?{$searchcomps|escape:'html'}&amp;method=atom" id="Feed">{translate text='Get Feed'}</a> -->
 
         <a href="#" id="emailSearch" class="mail" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search top');">{translate text='Email this Search'}</a>
-      </div>
 
+
+      </div>
+*}
       <!-- Listing Options -->
       <h2 class="hidden">Search Results</h2>
       <div class="yui-ge resulthead">

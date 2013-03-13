@@ -32,7 +32,7 @@
     </div>
     <div class="search-form" role="search">
 
-      <form action="http://roger-babel.hathitrust.org/cgi/ls/one" method="GET">
+      <form action="http://roger.babel.hathitrust.org/cgi/ls/one" method="GET">
         <div class="search-tabs">
           <input name="target" type="radio" id="option-full-text-search" value="ls" />
           <label for="option-full-text-search" class="search-label-full-text">Full-text</label>

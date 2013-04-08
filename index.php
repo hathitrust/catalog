@@ -254,7 +254,6 @@ if (isset($_REQUEST['htftonly'])) {
   $session->set("htftonly", $htftonly);
   if ($htftonly) {
     $_REQUEST['ft'] = 'ft';
-    $interface->assign('check_ft_checkbox', true);
   } else {
     $_REQUEST['ft'] = '';
   }
@@ -264,6 +263,11 @@ if ($_REQUEST['ft'] == 'ft') {
   $interface->assign('is_fullview', true);
 } else {
   $interface->assign('is_fullview', false);
+}
+
+
+if ($session->get('htftonly')) {
+  $interface->assign('check_ft_checkbox', true);
 }
 
 

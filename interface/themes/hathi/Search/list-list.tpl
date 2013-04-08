@@ -24,11 +24,9 @@
           {if is_array($record.title)}
 <!-- title array -->
             {foreach from=$record.title item=title}
-            <!-- <a href="/Record/{$record.id}" class="title">{$title|truncate:180:"..."|highlight:$lookfor|default:'Title not available'}</a><br> -->
             <h3 class="title"><span class="title">{$title|truncate:180:"..."|highlight:$lookfor|default:'Title not available'}</span></h3><br>            {/foreach}
           {else}
 <!-- title non-array -->
-          <!-- <a href="{$url}/Record/{$record.id}" class="title">{$record.title|truncate:180:"..."|highlight:$lookfor|default:'Title not aavailable'}</a> -->
           <h3 class="title"><span class="title">{$record.title|truncate:180:"..."|highlight:$lookfor|default:'Title not aavailable'}</span></h3>
 
           {/if}
@@ -70,7 +68,9 @@
           <div class="AccessLink">
             <ul>
               <li>
-                <a href="/Record/{$record.id}" class="cataloglinkhref">Catalog Record</a>
+              <!--                <a href="/Record/{$record.id}" class="cataloglinkhref">Catalog Record</a> -->
+              <a href="{$ss->asRecordURL($record.id)}" class="cataloglinkhref">Catalog Record</a>
+
               </li>
 
               <li>

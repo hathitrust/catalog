@@ -264,6 +264,7 @@ class Home extends Action {
         $interface->setTemplate('list.tpl');
         $interface->assign('atom', 1);
         $interface->assign('tagobj', Tags::singleton());
+        $interface->assign('ss', $this->ss);
         
         //*****************************************************
         // Record Count / URLs for this tab and other tab (Project UNICORN)

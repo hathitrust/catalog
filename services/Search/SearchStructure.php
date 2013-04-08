@@ -649,7 +649,8 @@ class SearchStructure
     }
 
     function asRecordURL($sysid, $extra=array()) {
-      $url =  '/Record/' . $sysid . '?' . $this->asURL($extra);
+      $url =  '/Record/' . $sysid . '?' . $this->asURL($extra, false);
+      return $url;
     }
 
 
@@ -662,14 +663,14 @@ class SearchStructure
      *  @return string The URL for the current search
      */
 
-    function asURL($extra = array()) {
+    function asURL($extra = array(), $includePageComponents=true) {
         return implode('&', array_map(array($this, "asURLComponent"), 
                                       array_merge($this->searchURLComponents(),
                                                   $this->filterURLComponents(),
                                                   $this->sortURLComponents(),
                                                   // $this->instURLComponent(),
                                                   $this->tagURLComponents(),
-                                                  $this->pageURLComponents(),
+                                                  ($includePageComponents ? $this->pageURLComponents() : array()),
                                                   $this->actionURLComponents(),
                                                   $extra)));    
     }

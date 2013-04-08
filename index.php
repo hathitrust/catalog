@@ -255,16 +255,20 @@ if (isset($_REQUEST['htftonly'])) {
   if ($htftonly) {
     $_REQUEST['ft'] = 'ft';
     $interface->assign('check_ft_checkbox', true);
-    $interface->assign('is_fullview', true);
   } else {
     $_REQUEST['ft'] = '';
-    $interface->assign('is_fullview', false);
   }
+}
+
+if ($_REQUEST['ft'] == 'ft') {
+  $interface->assign('is_fullview', true);
+} else {
+  $interface->assign('is_fullview', false);
 }
 
 
 //============================
-// Project Unicorn: searchtype
+// Project Unicorn: searchtype and lookfor
 //
 // Map the unicorn searchtype to our 'type'
 // and note that it's a unicorn search
@@ -272,6 +276,16 @@ if (isset($_REQUEST['htftonly'])) {
 if (isset($_REQUEST['searchtype'])) {
   $_REQUEST['type'] = $_REQUEST['searchtype'];
   $interface->assign('searchtype', $_REQUEST['searchtype']);
+}
+
+if (isset($_REQUEST['type']) && is_array($_REQUEST['type']) && count($_REQUEST['type'] == 1)) {
+  $_REQUEST['searchtype'] = $_REQUEST['type'][0];
+  $interface->assign('searchtype', $_REQUEST['searchtype']);
+}
+
+if (isset($_REQUEST['lookfor']) && is_array($_REQUEST['lookfor']) && count($_REQUEST['lookfor'] == 1)) {
+  $_REQUEST['lookfor'] = $_REQUEST['lookfor'][0];
+  $interface->assign('lookfor', $_REQUEST['lookfor']);
 }
 
 

@@ -24,6 +24,7 @@ require_once 'sys/VFUser.php';
 class SearchStructure 
 {
     public $force_standard = array('callnumber' => true);
+    public $ftonly;
     public $use_dismax = false;
     public $sort;
     public $page;
@@ -88,6 +89,7 @@ class SearchStructure
       $bool = isset($hash['bool'])? $hash['bool']: null;
 
 
+      $this->ftonly = isset($hash['ft']) && $hash['ft'] == 'ft';
           
       
       $this->page = isset($hash['page'])? $hash['page']: "1";
@@ -283,6 +285,10 @@ class SearchStructure
                 $this->addOOBFilter($kv[0], $kv[1]);
             }
         }
+        
+        if ($this->ftonly) {
+          $this->addOOBFilter('ht_availability', 'Full text');
+        }
 
         // Add the inst if present
 
@@ -356,13 +362,29 @@ class SearchStructure
      }
     
     
+     function setFTOnly($ft) {
+       $this->ftonly = $ft;
+       if ($ft) {
+         $this->addOOBFilter('ht_availability', 'Full text');
+       } else {
+         $this->removeOOBFilter('ht_availability', 'Full text');
+       }
+     }
+    
     
     function actionURLComponents() {
-      if ($this->use_dismax) {
-        return array(array('use_dismax', true));
+      $aucs = array();
+      // if ($this->use_dismax) {
+      //   $aucs[] = array('use_dismax', true);
+      // }
+      
+      if ($this->ftonly) {
+        $aucs[] = array('ft', 'ft');
       } else {
-        return array();
+        $aucs[] = array('ft', '');
       }
+      
+      return $aucs;
     }
     
     /**
@@ -436,7 +458,7 @@ class SearchStructure
       unset($this->inbandFilters[$index][$key]);
     }
      
-    function removeOOBFiler($index, $value) {
+    function removeOOBFilter($index, $value) {
       $key = $this->filterkey($value);
       unset($this->outofbandFilters[$index][$key]);
      }
@@ -626,6 +648,9 @@ class SearchStructure
       return $url;
     }
 
+    function asRecordURL($sysid, $extra=array()) {
+      $url =  '/Record/' . $sysid . '?' . $this->asURL($extra);
+    }
 
 
     /**

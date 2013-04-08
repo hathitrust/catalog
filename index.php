@@ -179,42 +179,42 @@ $translator = new I18N_Translator('lang', $language);
 setlocale(LC_MONETARY, $configArray['Site']['locale']);
 
 
-
-//######################################
-// Set up default institution and stick in session
-//######################################
-
-$instConfig = parse_ini_file('conf/instList.ini', true);
-$instList = $instConfig['inst'];
-$instForIP = $instConfig['instForIP'];
-$interface->assign('instList', $instList);
-$ip = $_SERVER['REMOTE_ADDR'];
-
-// if inst is set in _REQUEST, add to session
-if (isset($_REQUEST['inst'])) {
-  $inst = $_REQUEST['inst'];
-  if ($inst != '' and !isset($instList[$inst])) {
-    error_log("invalid inst in _REQUEST: $inst");
-    $inst = '';
-  }
-  $session->set("inst", $inst);
-}
-// if inst hasn't already been set, set it based on ip address.  Default is 'all'
-if (!$session->is_set('inst')) {
-  $inst = 'all';	// default value
-  foreach ($instForIP as $ip_pattern => $ip_inst) {
-    if  (preg_match("/^$ip_pattern/", $ip)) {
-      $inst = $ip_inst;
-      //      error_log("ip match for inst, $ip -> $$ip_pattern -> $ip_inst");
-      break;
-    }
-  }
-  $session->set("inst", $inst); 
-} 
-
-
-
-
+// 
+// //######################################
+// // Set up default institution and stick in session
+// //######################################
+// 
+// $instConfig = parse_ini_file('conf/instList.ini', true);
+// $instList = $instConfig['inst'];
+// $instForIP = $instConfig['instForIP'];
+// $interface->assign('instList', $instList);
+// $ip = $_SERVER['REMOTE_ADDR'];
+// 
+// // if inst is set in _REQUEST, add to session
+// if (isset($_REQUEST['inst'])) {
+//   $inst = $_REQUEST['inst'];
+//   if ($inst != '' and !isset($instList[$inst])) {
+//     error_log("invalid inst in _REQUEST: $inst");
+//     $inst = '';
+//   }
+//   $session->set("inst", $inst);
+// }
+// // if inst hasn't already been set, set it based on ip address.  Default is 'all'
+// if (!$session->is_set('inst')) {
+//   $inst = 'all';  // default value
+//   foreach ($instForIP as $ip_pattern => $ip_inst) {
+//     if  (preg_match("/^$ip_pattern/", $ip)) {
+//       $inst = $ip_inst;
+//       //      error_log("ip match for inst, $ip -> $$ip_pattern -> $ip_inst");
+//       break;
+//     }
+//   }
+//   $session->set("inst", $inst); 
+// } 
+// 
+// 
+// 
+// 
 
 //###################################################
 // Avoid XSS attacks by disallowing the '>' character
@@ -237,27 +237,64 @@ foreach ($_REQUEST as $key => $val) {
 
 
 //######################
-// HT Full text only
+// Project UNICORN / HT Full text only
 //#########################
-if (isset($_REQUEST['sethtftonly'])) {
-  if (isset($_REQUEST['htftonly'])) {  
-    $filter = isset($_REQUEST['filter'])? $_REQUEST['filter'] : array();
-    $filter[] = 'ht_availability:Full text';
-    $_REQUEST['filter'] = $filter;
-    $session->set("htftonly", $_REQUEST['htftonly']);
+/*
+  Change in plans: two variables
+  
+  htftonly sets the session variable and controls the checkbox
+  ft       affects the current search
+
+  htftonly implies ft, but the reverse is not true
+
+*/
+
+if (isset($_REQUEST['htftonly'])) {
+  $htftonly = $_REQUEST['htftonly'] == 'true' ? true : false;
+  $session->set("htftonly", $htftonly);
+  if ($htftonly) {
+    $_REQUEST['ft'] = 'ft';
+    $interface->assign('check_ft_checkbox', true);
+    $interface->assign('is_fullview', true);
   } else {
-    $session->set('htftonly', false);
+    $_REQUEST['ft'] = '';
+    $interface->assign('is_fullview', false);
   }
 }
 
-if ($session->is_set('htftonly') && $session->get('htftonly')) {
-  $interface->assign("ht_fulltextonly", "checked");
-  $filter = isset($_REQUEST['filter'])? $_REQUEST['filter'] : array();
-  $filter[] = 'ht_availability:Full text';
-  $_REQUEST['filter'] = $filter;
-} else {
-  $interface->assign("ht_fulltextonly", "");
+
+//============================
+// Project Unicorn: searchtype
+//
+// Map the unicorn searchtype to our 'type'
+// and note that it's a unicorn search
+
+if (isset($_REQUEST['searchtype'])) {
+  $_REQUEST['type'] = $_REQUEST['searchtype'];
+  $interface->assign('searchtype', $_REQUEST['searchtype']);
 }
+
+
+
+// if (isset($_REQUEST['sethtftonly'])) {
+//   if (isset($_REQUEST['htftonly'])) {  
+//     $filter = isset($_REQUEST['filter'])? $_REQUEST['filter'] : array();
+//     $filter[] = 'ht_availability:Full text';
+//     $_REQUEST['filter'] = $filter;
+//     $session->set("htftonly", $_REQUEST['htftonly']);
+//   } else {
+//     $session->set('htftonly', false);
+//   }
+// }
+// 
+// if ($session->is_set('htftonly') && $session->get('htftonly')) {
+//   $interface->assign("ht_fulltextonly", "checked");
+//   $filter = isset($_REQUEST['filter'])? $_REQUEST['filter'] : array();
+//   $filter[] = 'ht_availability:Full text';
+//   $_REQUEST['filter'] = $filter;
+// } else {
+//   $interface->assign("ht_fulltextonly", "");
+// }
 
 
 //######################################

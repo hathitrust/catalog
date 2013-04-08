@@ -32,7 +32,7 @@
     </div>
     <div class="search-form" role="search">
 
-      <form action="http://roger.babel.hathitrust.org/cgi/ls/one" method="GET">
+      <form action="http://beta-3.babel.hathitrust.org/cgi/ls/one" method="GET">
         <div class="search-tabs">
           <input name="target" type="radio" id="option-full-text-search" value="ls" />
           <label for="option-full-text-search" class="search-label-full-text">Full-text</label>
@@ -43,14 +43,14 @@
           <input name="q1" type="text" class="search-input-text" placeholder="Search words about or within the items" value="{$lookfor}" />
           <div class="search-input-options">
             <select size="1" class="search-input-select" name="searchtype">
-              <option value="all">Everything</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="subject">Subject</option>
-              <option value="isbn">ISBN/ISSN</option>
-              <option value="publisher">Publisher</option>
-              <option value="seriestitle">Series Title</option>
-              <option value="pubyear">Publication Year</option>
+            <option value="all" {if $searchtype == 'all'}selected="selected"{/if}>Everything</option>
+            <option value="title" {if $searchtype == 'title'}selected="selected"{/if}>Title</option>
+            <option value="author" {if $searchtype == 'author'}selected="selected"{/if}>Author</option>
+            <option value="subject" {if $searchtype == 'subject'}selected="selected"{/if}>Subject</option>
+            <option value="isbn" {if $searchtype == 'isbn'}selected="selected"{/if}>ISBN/ISSN</option>
+            <option value="publisher" {if $searchtype == 'publisher'}selected="selected"{/if}>Publisher</option>
+            <option value="seriestitle" {if $searchtype == 'seriestitle'}selected="selected"{/if}>Series Title</option>
+            <option value="pubyear" {if $searchtype == 'pubyear'}selected="selected"{/if}>Publication Year</option>
             </select>
           </div>
           <button class="button"><span class="offscreen">Search</span></button>
@@ -62,7 +62,7 @@
             <li><a href="http://www.hathitrust.org/help_digital_library#SearchTips">Search tips</a></li>
           </ul>
           <label>
-            <input type="checkbox" value="ft" />
+            <input type="checkbox" name="ft" value="ft" {if $check_ft_checkbox}checked="checked"{/if}/>
             Full view only
           </label>
         </div>

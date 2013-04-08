@@ -14,24 +14,29 @@ function upgrade_viewability() {
 	// sequence is full view, limited view, all items
 	var tabs = { all : null, full : null, limited : null };
 
-	if ( $div.length ) {
+  if ( $div.length ) {
 		// have viewability facets
 		$div.find("li").each(function() {
 			var $this = $(this);
-			if ( $this.text().indexOf("Full view") > -1 ) {
+      if ( $this.text().indexOf("Full view") > -1 ) {
 				$this.addClass("view-full");
 				tabs.full = $this.clone();
 			}
 		})
 	}
 
-	if ( ! tabs.full  ) {
+  if ( ! tabs.full  ) {
+    
 		// we're filtering on full; do a query to find the full count
 		// http://roger.catalog.hathitrust.org/Search/Home?filter%5B%5D=ht_availability%3AFull%20text&use_dismax=1
 		var $active = $filters.filter(":contains('Full view')")
-		if ( $active.length ) {
-			// filtering on full, find "all" count
-			var href = $active.find("a").attr("href");
+    alert("SHould be showing fulltext and computing all");
+      // if ( $active.length  ) {
+  			// filtering on full, find "all" count
+        // var href = $active.find("a").attr("href");
+    if (window.location.href.indexOf('ft=ft') > -1) {
+      href = window.location.href.replace('ft=ft', 'ft=').replace('&htftonly=true', '').replace('&htftonly=false', '');
+      alert(href);
 			// var href = window.location.href;
 			// href = href.replace('%5B%5D=ht_availability%3AFull%20text', '').replace('filter&', '');
 			$.ajax({
@@ -58,6 +63,7 @@ function upgrade_viewability() {
 
 		} else {
 			// we're looking at "all"
+      
 			tabs.all = $(
 				"<li class='view-all active'><a href='{link}'>All items</a> ({total})</li>".
 					replace('{total}', total).
@@ -65,7 +71,10 @@ function upgrade_viewability() {
 				active_tab = '.view-all';
 		}
 	} else {
-		tabs.all = $("<li class='view-all active'><a href='{link}'>All items</a> ({total})</li>".replace('{link}', window.location.href).replace('{total}', total));
+    alert("SHould be showing all and computing fulltext");
+    href=window.location.href;
+    
+		tabs.all = $("<li class='view-all active'><a href='{link}'>All items</a> ({total})</li>".replace('{link}', window.location.href.replace('ft=', 'ft=ft') ).replace('{total}', total));
 	}
 
 	if ( tabs.full ) {

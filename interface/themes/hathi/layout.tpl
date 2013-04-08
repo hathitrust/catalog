@@ -14,17 +14,21 @@
 {/literal}
 
 
-  <link rel="stylesheet" type="text/css" href="//roger-full.babel.hathitrust.org/common/unicorn/css/common.css">
-
   <script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.1.0.min.js"></script>
 
-  <script type="text/javascript" src="//roger-full.babel.hathitrust.org/common/unicorn/vendors/headjs/dist/head.min.js"></script>
-  <script type="text/javascript" src="//roger-full.babel.hathitrust.org/common/unicorn/js/common.js"></script>
+  <!-- Project Unicorn -->
+  <link rel="stylesheet" type="text/css" href="//beta-3.babel.hathitrust.org/common/unicorn/css/common.css">
+  <script type="text/javascript" src="//beta-3.babel.hathitrust.org/common/unicorn/js/head.min.js"></script>
+  <script type="text/javascript" src="//beta-3.babel.hathitrust.org/common/unicorn/js/common.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="/static/unicorn/css/hathi.css" />
   
-
-    <link rel="stylesheet" type="text/css" media="screen" href="/static/unicorn/css/hathi.css" />
-
+  {literal}
+  <!--[if lt IE 8]>
+  <link rel="stylesheet" type="text/css" href="//test.babel.hathitrust.org/common/unicorn/css/ie7.css" />
+  <![endif]-->
+  {/literal}
+  
     
 {if $id}
   <link rel="canonical" href="/Record/{$id}">
@@ -35,11 +39,7 @@
   <link rel="alternate" href="/Record/{$id}.rdf" type="application/rdf+xml" >
 {/if}
 
-{literal}
-<!--[if lt IE 8]>
-<link rel="stylesheet" type="text/css" href="//test.babel.hathitrust.org/common/unicorn/css/ie7.css" />
-<![endif]-->
-{/literal}
+
 
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 

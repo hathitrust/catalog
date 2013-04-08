@@ -264,7 +264,37 @@ class Home extends Action {
         $interface->setTemplate('list.tpl');
         $interface->assign('atom', 1);
         $interface->assign('tagobj', Tags::singleton());
+        
+        //*****************************************************
+        // Record Count / URLs for this tab and other tab (Project UNICORN)
+        //*****************************************************
+        
+        if ($this->ss->ftonly) {
+          $interface->assign('fullview_count', $result['RecordCount']);
+          $interface->assign('fullview_url', $this->ss->asFullURL());
 
+          // temporarily munch this->ss to get the url and count for the allitems tab
+          $this->ss->setFTOnly(false);
+          $allitems_results = $this->newprocessSearch(1, 0);
+          $interface->assign('allitems_count', $allitems_results['RecordCount']);
+          $interface->assign('allitems_url', $this->ss->asFullURL());
+          $this->ss->setFTOnly(true);
+
+        } else {
+          $interface->assign('allitems_count', $result['RecordCount']);
+          $interface->assign('allitems_url', $this->ss->asFullURL());
+          
+          $this->ss->setFTOnly(true);
+          $fullview_results = $this->newprocessSearch(1, 0);
+          $interface->assign('fullview_count', $fullview_results['RecordCount']);
+          $interface->assign('fullview_url', $this->ss->asFullURL());
+          $this->ss->setFTOnly(false);
+
+        }
+        
+        
+        
+        
 
         //******************************************************
         //    DEAL WITH PAGINATION

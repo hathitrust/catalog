@@ -11,9 +11,6 @@
         <ul class="filters">
           {foreach from=$currentFacets item=facet}
             {assign var=rurl value=$facet.removalURL|regex_replace:"/&/":"&amp;"}
-            {if $facet.value == 'Full text' && $facet.index == 'ht_availability'}
-        {assign var=rurl value="$rurl&amp;sethtftonly=true"}
-            {/if}
             <li>
               <a href="{$url}/Search/{$action}?{$rurl}"><img  class="facetbutton" src="{$path}/images/silk/cancel.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>
           {/foreach}
@@ -92,9 +89,21 @@
 
       </div>
 
+
       <!-- Viewability Tabs -->
       <div class="viewability tabs" id="viewability-tabs">
+        <ul>
+          <li class="view-full {if $is_fullview}active{/if}">
+            <a href="{$fullview_url}">Full view</a> 
+            <span dir="ltr">(<span id="fullview_count">{$fullview_count}</span>)</span>
+            </li>
+          <li class="view-all {if !$is_fullview}active{/if}">
+            <a href="{$allitems_url}">All items</a> 
+            <span dir="ltr">(<span id="allitems_count">{$allitems_count}</span>)</span>
+          </li>
+        </ul>
       </div>
+
 
       <!-- End Listing Options -->
       {assign var=pageLinks value=$pager->getLinks()}
@@ -144,4 +153,3 @@
 
 
 </div> <!-- ??? -->
-<script src="/static/unicorn/js/catalog.js" type="text/javascript"></script>

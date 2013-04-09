@@ -40,7 +40,8 @@
           <label for="option-catalog-search" class="search-label-catalog">Catalog</label>
         </div>
         <fieldset>
-          <input name="q1" type="text" class="search-input-text" placeholder="Search words about or within the items" value="{$lookfor}" />
+          <label for="q1-input" class="offscreen">Search</label>
+          <input id="q1-input" name="q1" type="text" class="search-input-text" placeholder="Search words about or within the items" value="{$lookfor}" />
           <div class="search-input-options">
             <select size="1" class="search-input-select" name="searchtype">
             <option value="all" {if $searchtype == 'all'}selected="selected"{/if}>Everything</option>

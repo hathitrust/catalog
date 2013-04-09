@@ -249,21 +249,18 @@ foreach ($_REQUEST as $key => $val) {
 
 */
 
-if (isset($_REQUEST['htftonly'])) {
-  $htftonly = $_REQUEST['htftonly'] == 'true' ? true : false;
-  $session->set("htftonly", $htftonly);
-  if ($htftonly) {
-    $_REQUEST['ft'] = 'ft';
-  } else {
-    $_REQUEST['ft'] = '';
-  }
-}
-
 if (isset($_REQUEST['ft']) && $_REQUEST['ft'] == 'ft') {
   $interface->assign('is_fullview', true);
+  $htftonly = true;
 } else {
   $_REQUEST['ft'] = '';
   $interface->assign('is_fullview', false);
+  $htftonly = false;
+}
+
+
+if (isset($_REQUEST['setft'])) {
+  $session->set("htftonly", $htftonly);
 }
 
 

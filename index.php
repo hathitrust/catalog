@@ -259,9 +259,10 @@ if (isset($_REQUEST['htftonly'])) {
   }
 }
 
-if ($_REQUEST['ft'] == 'ft') {
+if (isset($_REQUEST['ft']) && $_REQUEST['ft'] == 'ft') {
   $interface->assign('is_fullview', true);
 } else {
+  $_REQUEST['ft'] = '';
   $interface->assign('is_fullview', false);
 }
 

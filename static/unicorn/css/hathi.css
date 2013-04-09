@@ -1904,3 +1904,8 @@ label {
 input[type=text] {
   width: auto;
 }
+
+
+#facet_begin_Viewability {
+  display: none;
+}

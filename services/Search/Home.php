@@ -161,37 +161,6 @@ class Home extends Action {
         // Get similar search terms
         $type = isset($_REQUEST['type'])? $_REQUEST['type'] : false;
 
-        ###### DISABLE FOR NOW ########
-        #switch ($type) {
-        switch (false) {
-            case 'author':
-              $lf = $this->ss->search[0][1];
-              $suggestIndex = 'authorStr';
-              $suggestSearchType = 'authorSuggest';
-              $suggestTargetType = 'realauth';
-              break;
-        }
-
-        if (isset($suggestIndex) && count($this->ss->activeInbandFilters()) == 0) {
-            $ss = new SearchStructure(true);
-            $ss->search[] = array($suggestSearchType, $lf);
-
-            #                            $ss, facetfield,     sort,  skip, limit
-            $list = $this->db->facetlist($ss, array($suggestIndex), 'count', 0,    10);
-            $interface->assign('narrowcount', $list['total']);
-            $suggestlist = array();
-            $values =& $list['values'][$suggestIndex];
-            while (count($values)) {
-                $raw = array_shift($values);
-                $ss = new SearchStructure(true); # true value => return as empty structure
-                $ss->search[] = array($suggestTargetType , $raw[0], null);
-                $logargs = array();
-                $logargs[] = array('lc', 'authtop');
-                $suggestlist[] = array('name' => $raw[0], 'num' => $raw[1], 'authurl' => $ss->asURL($logargs));
-            }
-            $interface->assign('narrow', $suggestlist);
-        }
-
 
 
         //******************************************************

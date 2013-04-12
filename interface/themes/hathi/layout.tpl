@@ -9,7 +9,7 @@
 <!--[if lt IE 9]>
 <script src="//ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<script src="//test.babel.hathitrust.org/common/unicorn/vendors/js/selectivizr.js" type="text/javascript"></script>
+<script src="/common/unicorn/vendors/js/selectivizr.js" type="text/javascript"></script>
 <![endif]-->
 {/literal}
 
@@ -18,14 +18,14 @@
   <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.1.0.min.js"></script>
 
   <!-- Project Unicorn -->
-  <link rel="stylesheet" type="text/css" href="//beta-3.babel.hathitrust.org/common/unicorn/css/common.css">
-  <script type="text/javascript" src="//beta-3.babel.hathitrust.org/common/unicorn/js/head.min.js"></script>
-  <script type="text/javascript" src="//beta-3.babel.hathitrust.org/common/unicorn/js/common.js"></script>
+  <link rel="stylesheet" type="text/css" href="/common/unicorn/css/common.css">
+  <script type="text/javascript" src="/common/unicorn/js/head.min.js"></script>
+  <script type="text/javascript" src="/common/unicorn/js/common.js"></script>
   <link rel="stylesheet" type="text/css" media="screen" href="/static/unicorn/css/hathi.css" />
   
   {literal}
   <!--[if lt IE 8]>
-  <link rel="stylesheet" type="text/css" href="//test.babel.hathitrust.org/common/unicorn/css/ie7.css" />
+  <link rel="stylesheet" type="text/css" href="/common/unicorn/css/ie7.css" />
   <![endif]-->
   {/literal}
   

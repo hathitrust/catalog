@@ -34,6 +34,7 @@ require_once 'services/Tags/TaggedItem.php';
 require_once 'sys/ActivityLog.php';
 require_once 'services/Record/RecordUtils.php';
 require_once 'sys/mobile_device_detect.php';
+require_once 'services/Search/SearchStructure.php';
 
 // Set up for autoload
 function sample_autoloader($class) {
@@ -242,10 +243,9 @@ foreach ($_REQUEST as $key => $val) {
 /*
   Change in plans: two variables
   
-  htftonly sets the session variable and controls the checkbox
+  setft    sets the session variable and controls the checkbox
   ft       affects the current search
 
-  htftonly implies ft, but the reverse is not true
 
 */
 
@@ -283,6 +283,13 @@ if (isset($_REQUEST['searchtype'])) {
 if (isset($_REQUEST['type']) && is_array($_REQUEST['type']) && count($_REQUEST['type'] == 1)) {
   $_REQUEST['searchtype'] = $_REQUEST['type'][0];
   $interface->assign('searchtype', $_REQUEST['searchtype']);
+}
+
+
+$ss = new SearchStructure();
+if (count($ss->search) == 1) {
+    $interface->assign('lookfor', $ss->search[0][1]);
+    $interface->assign('type', $ss->search[0][0]);
 }
 
 

@@ -206,9 +206,8 @@
           <br>
           <h3>{translate text='Limit To'}:</h3>
 
-              <input type="hidden" name="sethtftonly" value="true">
-<!--               <input type="checkbox" name="htftonly" value="true" id="fullonly" >&nbsp;<label for="fullonly">Full view only</label> -->
-              <label class="checkbox inline" for="fullonly"><input type="checkbox" name="htftonly" value="true" id="fullonly" > Full view only</label>
+              <input type="hidden" name="setft" value="true">
+              <label class="checkbox inline" for="fullonly"><input type="checkbox" name="ft" value="ft" id="fullonly" > Full view only</label>
 
               <label for="yop" class="hidden">Publication year restrictions</label>
               <span style="margin-left: 4em">

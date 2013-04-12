@@ -33,7 +33,6 @@ class SearchStructure
     public $search= array();
     public $facetConfig;
     public $manuallyAddedIDs = array();
-    public $inst;
     public $onlyTemp = false;
     public $onlyTags = null;
     public $filterByTags = array();
@@ -145,6 +144,7 @@ class SearchStructure
                          );
           }
       }
+      
 
       // The last bool need to be nil. Pop it off, change it, and
       // push it back on again.
@@ -290,18 +290,7 @@ class SearchStructure
           $this->addOOBFilter('ht_availability', 'Full text');
         }
 
-        // Add the inst if present
-
-        //if (isset($_REQUEST['inst']) && 
-        //    $_REQUEST['inst'] != '' &&
-        //    $_REQUEST['inst'] != 'all') {
-        //      $instcode = $_REQUEST['inst'];
-        //      $instList = parse_ini_file('conf/instList.ini');
-        //      $this->addOOBFilter('institution', $instList[$instcode]);
-        //      $this->inst = $instcode;
-        // }
-        
-    }
+     }
     
     function fillInstFilter($hash) {
       global $configArray;
@@ -310,13 +299,7 @@ class SearchStructure
       }
 
       $session = VFSession::singleton();
-      if ($session->is_set('inst') and $session->get('inst') != '' and $session->get('inst') != 'all') {
-        $instcode = $session->get('inst');
-        $instList = parse_ini_file('conf/instList.ini', true);
-        $this->addOOBFilter('institution', $instList['inst'][$instcode]);
-        $this->inst = $instcode;
-      }
-    
+
       // Add location limit from sublib and collection if present
       $location = '';
       if (isset($hash['sublib']) && 
@@ -629,13 +612,6 @@ class SearchStructure
       return $rv;
     }
     
-    function instURLComponent() {
-      if (isset($this->inst)) {
-        return array(array('inst', $this->inst));
-      } else {
-        return array();
-      }
-    }
 
     static function asURLComponent($kvpair) {
         return rawurlencode($kvpair[0]) . '=' . rawurlencode($kvpair[1]);
@@ -668,7 +644,6 @@ class SearchStructure
                                       array_merge($this->searchURLComponents(),
                                                   $this->filterURLComponents(),
                                                   $this->sortURLComponents(),
-                                                  // $this->instURLComponent(),
                                                   $this->tagURLComponents(),
                                                   ($includePageComponents ? $this->pageURLComponents() : array()),
                                                   $this->actionURLComponents(),
@@ -749,8 +724,10 @@ class SearchStructure
       foreach ($this->search as $fkb) { # field, keywords, bool
         $index = $fkb[0] == 'all'? 'all fields' : $fkb[0];
         if (isset($this->indexDisplayName[$index])) $index =  $this->indexDisplayName[$index];
+        
         $l = $index . ':' . $fkb[1];
-        if (isset($fkb[2])) {
+        
+        if (isset($fkb[2])) { # the boolean operator
           $l .= ' ' . $fkb[2];
         }
         $s[] = $l;

@@ -285,32 +285,7 @@ if (isset($_REQUEST['type']) && is_array($_REQUEST['type']) && count($_REQUEST['
   $interface->assign('searchtype', $_REQUEST['searchtype']);
 }
 
-if (isset($_REQUEST['lookfor']) && is_array($_REQUEST['lookfor']) && count($_REQUEST['lookfor'] == 1)) {
-  $_REQUEST['lookfor'] = $_REQUEST['lookfor'][0];
-  $interface->assign('lookfor', $_REQUEST['lookfor']);
-}
 
-
-
-// if (isset($_REQUEST['sethtftonly'])) {
-//   if (isset($_REQUEST['htftonly'])) {  
-//     $filter = isset($_REQUEST['filter'])? $_REQUEST['filter'] : array();
-//     $filter[] = 'ht_availability:Full text';
-//     $_REQUEST['filter'] = $filter;
-//     $session->set("htftonly", $_REQUEST['htftonly']);
-//   } else {
-//     $session->set('htftonly', false);
-//   }
-// }
-// 
-// if ($session->is_set('htftonly') && $session->get('htftonly')) {
-//   $interface->assign("ht_fulltextonly", "checked");
-//   $filter = isset($_REQUEST['filter'])? $_REQUEST['filter'] : array();
-//   $filter[] = 'ht_availability:Full text';
-//   $_REQUEST['filter'] = $filter;
-// } else {
-//   $interface->assign("ht_fulltextonly", "");
-// }
 
 
 //######################################

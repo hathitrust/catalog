@@ -151,7 +151,7 @@ class Home extends Action {
         #print_r($this->ss);
 
         // The search terms, for display
-        $interface->assign('searchterms', implode('; ', $this->ss->searchtermsForDisplay()));
+        $interface->assign('searchterms', implode(' ', $this->ss->searchtermsForDisplay()));
 
         //******************************************************
         //      SIMILAR SEARCH TERMS (FOR TOP OF AUTHOR SEARCH)

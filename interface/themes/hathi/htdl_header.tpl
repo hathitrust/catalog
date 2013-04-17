@@ -43,15 +43,16 @@
           <label for="q1-input" class="offscreen">Search</label>
           <input id="q1-input" name="q1" type="text" class="search-input-text" placeholder="Search words about or within the items" value="{$lookfor}" />
           <div class="search-input-options">
-            <select size="1" class="search-input-select" name="searchtype">
-            <option value="all" {if $searchtype == 'all'}selected="selected"{/if}>Everything</option>
-            <option value="title" {if $searchtype == 'title'}selected="selected"{/if}>Title</option>
-            <option value="author" {if $searchtype == 'author'}selected="selected"{/if}>Author</option>
-            <option value="subject" {if $searchtype == 'subject'}selected="selected"{/if}>Subject</option>
-            <option value="isbn" {if $searchtype == 'isbn'}selected="selected"{/if}>ISBN/ISSN</option>
-            <option value="publisher" {if $searchtype == 'publisher'}selected="selected"{/if}>Publisher</option>
-            <option value="seriestitle" {if $searchtype == 'seriestitle'}selected="selected"{/if}>Series Title</option>
-            <option value="pubyear" {if $searchtype == 'pubyear'}selected="selected"{/if}>Publication Year</option>
+            <label for="search-input-select" class="offscreen">Search Field List</label>
+            <select size="1" id="search-input-select" class="search-input-select" name="searchtype">
+              <option value="all" {if $searchtype == 'all'}selected="selected"{/if}>Everything</option>
+              <option value="ocronly" data-target="ls" disabled="disabled">Just Full Text</option>
+              <option value="title" {if $searchtype == 'title'}selected="selected"{/if}>Title</option>
+              <option value="author" {if $searchtype == 'author'}selected="selected"{/if}>Author</option>
+              <option value="subject" {if $searchtype == 'subject'}selected="selected"{/if}>Subject</option>
+              <option value="isbn" {if $searchtype == 'isbn'}selected="selected"{/if}>ISBN/ISSN</option>
+              <option value="publisher" {if $searchtype == 'publisher'}selected="selected"{/if}>Publisher</option>
+              <option value="seriestitle" {if $searchtype == 'seriestitle'}selected="selected"{/if}>Series Title</option>
             </select>
           </div>
           <button class="button"><span class="offscreen">Search</span></button>

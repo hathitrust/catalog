@@ -255,8 +255,8 @@
               </td>
             </tr>
           </table>
-<input  type="submit" name="submit" value="{translate text="Find"}">
-          <!-- div style="margin-left: 1em"><input style="width: 7em; font-size: 1.5em; padding: 0.5em 2em;" type="submit" name="submit" value="{translate text="Find"}"></div><br> -->
+<input  type="submit" name="submit" value="{translate text="Search"}">
+          <!-- div style="margin-left: 1em"><input style="width: 7em; font-size: 1.5em; padding: 0.5em 2em;" type="submit" name="submit" value="{translate text="Search"}"></div><br> -->
         </form>
       </div>
     </div>

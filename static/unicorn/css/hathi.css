@@ -1909,3 +1909,18 @@ input[type=text] {
 #facet_begin_Viewability {
   display: none;
 }
+
+#accessLinks ul li {
+  display: block;
+  float: none;
+  margin-bottom: 0.25em;
+}
+
+#accessLinks .IndItem {
+  margin-left: 1em;
+}
+
+#accessLinks .original_from {
+  margin-left: 3em;
+}
+

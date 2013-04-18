@@ -280,9 +280,15 @@ if (isset($_REQUEST['searchtype'])) {
   $interface->assign('searchtype', $_REQUEST['searchtype']);
 }
 
-if (isset($_REQUEST['type']) && is_array($_REQUEST['type']) && count($_REQUEST['type'] == 1)) {
-  $_REQUEST['searchtype'] = $_REQUEST['type'][0];
-  $interface->assign('searchtype', $_REQUEST['searchtype']);
+if (isset($_REQUEST['type'])) {
+  $t = $_REQUEST['type'];
+  $t = is_array($t) ? $t : array($t);
+  if (count($t) == 1) {
+    $_REQUEST['searchtype'] = $t[0];
+    $interface->assign('searchtype', $_REQUEST['searchtype']);
+  } else {
+  }
+} else {
 }
 
 

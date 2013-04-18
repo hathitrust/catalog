@@ -19,7 +19,7 @@
   {/if}
 
       <div class="narrowList navmenu" id="narrowList">
-      <h2>{translate text='Refine Search'}</h2>
+      <h2>{translate text='Refine Results'}</h2>
         {include file="Search/facet_snippet.tpl"}
       </div>
 

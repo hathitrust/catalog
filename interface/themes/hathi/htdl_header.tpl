@@ -33,6 +33,7 @@
     </div>
     <div class="search-form" role="search">
 
+{if !$suppress_searchbox}
       <form action="{$unicorn_root}/cgi/ls/one" method="GET">
         <div class="search-tabs">
           <input name="target" type="radio" id="option-full-text-search" value="ls" />
@@ -70,7 +71,7 @@
           </label>
         </div>
       </form>
-
+{/if}
     </div>
     <div class="login">
       <!-- NEEDS TO REFLECT LOGIN STATUS -->

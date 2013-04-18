@@ -69,7 +69,7 @@
    <div id="content" style="margin: 0px; padding: 0px; margin-left: 19em;">
      <div class="record">
        {if $lastsearch}
-        <a href="{$url}/Search/Home?{$lastsearch|regex_replace:"/&/":"&amp;"}" class="backtosearch">{translate text="Back to Search Results"}</a><br>
+       <a href="{$lastsearch|regex_replace:"/&/":"&amp;"}" class="backtosearch">{translate text="Back to Search Results"}</a><br>
        {/if}
 
        <h3 class="SkipLink">Tools</h3>
@@ -517,7 +517,7 @@
         {else}
           <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)<span class="IndItem">{$ld.enumchron}</span></a>
         {/if}
-        <em>(original from {$ld.original_from})</em>
+        <em class="original_from">(original from {$ld.original_from})</em>
       </li>
     {/foreach}
   

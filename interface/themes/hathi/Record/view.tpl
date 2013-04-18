@@ -26,7 +26,7 @@
                <span class="{$similar.format|lower|replace:" ":""}">
                <a href="{$url}/Record/{$similar.id}">{$similarTitle}</a>
                </span>
-               <span style="font-size: .8em">
+               <span style="font-size: .9em">
 
                {if $similar.author}<br>By: {$similar.author.0}{/if}
                {if $similar.publishDate}<br>Published: ({$similar.publishDate.0}){/if}

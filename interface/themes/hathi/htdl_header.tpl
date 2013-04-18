@@ -14,6 +14,7 @@
         <li><a href="http://babel.hathitrust.org/cgi/mb">Collections</a></li>
         <li class="divider-vertical"></li>
         <li class="help"><a href="http://www.hathitrust.org/help">Help</a></li>
+        <li><a href="{$unicorn_root}/cgi/feedback?page=form" data-m="ht" data-id="HathiTrust Project Unicorn Guide" data-toggle="feedback">Feedback</a></li>      
       </ul>
       <!-- IF LOGGED IN
       <ul id="person-nav" class="nav pull-right">
@@ -32,7 +33,7 @@
     </div>
     <div class="search-form" role="search">
 
-      <form action="http://beta-3.babel.hathitrust.org/cgi/ls/one" method="GET">
+      <form action="{$unicorn_root}/cgi/ls/one" method="GET">
         <div class="search-tabs">
           <input name="target" type="radio" id="option-full-text-search" value="ls" />
           <label for="option-full-text-search" class="search-label-full-text">Full-text</label>

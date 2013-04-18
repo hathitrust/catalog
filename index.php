@@ -321,7 +321,7 @@ $interface->assign('user', $user);
 $interface->assign('uuid', $session->uuid);
 $interface->assign('ru', new RecordUtils());
 
-
+$interface->assign('unicorn_root', $configArray['Site']['unicorn_root']);
 
 //######################################
 // Authentication

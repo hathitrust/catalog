@@ -1924,3 +1924,21 @@ input[type=text] {
   margin-left: 3em;
 }
 
+
+/* Advanced search */
+
+#advanced_titles .title {
+  float: left;
+  width: 50%;
+}
+
+#advanced_titles h2 {
+  margin-top: 0;
+}
+
+#advanced_titles .link_to_ft {
+  float: right;
+  width: 20%;
+}
+
+

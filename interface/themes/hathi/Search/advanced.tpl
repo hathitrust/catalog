@@ -81,7 +81,18 @@
 
         <form method="GET" action="{$url}/Search/Home" name="searchForm" class="search" onSubmit="clickpostlog(document, ['advsearch'])">
           <input type='hidden' name='adv' value='1'>
-          <h2>{translate text='Advanced Catalog Search'}:</h2>
+          <div id="advanced_titles">
+            <div class="title">
+              <h2>{translate text='Advanced Catalog Search'}:</h2>
+              <p>Search information <em>about</em> the item.</p>
+            </div>
+            
+            <div class="link_to_ft">
+              Prefer to search <em>within</em> the item in an <a href="http://babel.hathitrust.org/cgi/ls?a=page&page=advanced">Advanced Full-text search</a>?
+            </div>
+            
+          </div>
+
 
           <h3 class="hidden">Search by field</h3>
           <table style="width: auto">

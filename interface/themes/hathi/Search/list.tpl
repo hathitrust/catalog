@@ -93,19 +93,19 @@
       <!-- Viewability Tabs -->
       <div class="viewability tabs" id="viewability-tabs">
         <ul>
+          <li class="view-all {if !$is_fullview}active{/if}">
+            <a href="{$allitems_url}">All items</a> 
+            <span dir="ltr">(<span id="allitems_count">{$allitems_count|number_format:null:".":","}</span>)</span>
+          </li>
           <li class="view-full {if $is_fullview}active{/if}">
             {if $fullview_count > 0}
               <a href="{$fullview_url}">Full view</a> 
             {else}
               Full view
             {/if}
-              
             <span dir="ltr">(<span id="fullview_count">{$fullview_count|number_format:null:".":","}</span>)</span>
-            </li>
-          <li class="view-all {if !$is_fullview}active{/if}">
-            <a href="{$allitems_url}">All items</a> 
-            <span dir="ltr">(<span id="allitems_count">{$allitems_count|number_format:null:".":","}</span>)</span>
           </li>
+          
         </ul>
       </div>
 

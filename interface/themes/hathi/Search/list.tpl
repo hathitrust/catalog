@@ -100,11 +100,11 @@
               Full view
             {/if}
               
-            <span dir="ltr">(<span id="fullview_count">{$fullview_count}</span>)</span>
+            <span dir="ltr">(<span id="fullview_count">{$fullview_count|number_format:null:".":","}</span>)</span>
             </li>
           <li class="view-all {if !$is_fullview}active{/if}">
             <a href="{$allitems_url}">All items</a> 
-            <span dir="ltr">(<span id="allitems_count">{$allitems_count}</span>)</span>
+            <span dir="ltr">(<span id="allitems_count">{$allitems_count|number_format:null:".":","}</span>)</span>
           </li>
         </ul>
       </div>

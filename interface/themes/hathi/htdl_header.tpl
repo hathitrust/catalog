@@ -48,7 +48,6 @@
             <label for="search-input-select" class="offscreen">Search Field List</label>
             <select size="1" id="search-input-select" class="search-input-select" name="searchtype">
               <option value="all" {if $searchtype == 'all'}selected="selected"{/if}>All Fields</option>
-              <option value="ocronly" data-target="ls" disabled="disabled">Just Full Text</option>
               <option value="title" {if $searchtype == 'title'}selected="selected"{/if}>Title</option>
               <option value="author" {if $searchtype == 'author'}selected="selected"{/if}>Author</option>
               <option value="subject" {if $searchtype == 'subject'}selected="selected"{/if}>Subject</option>

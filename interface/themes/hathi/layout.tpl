@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{$userLang}" xml:lang="{$userLang}">
+<html class="search-target-catalog" lang="{$userLang}" xml:lang="{$userLang}">
 <!-- Machine is {$machine} -->
   <head>
     <title>{$pageTitle|truncate:64:"..."} | Hathi Trust Digital Library</title>

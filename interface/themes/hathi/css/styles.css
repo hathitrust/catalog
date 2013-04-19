@@ -955,3 +955,7 @@ ul.filters li em {
 #feedback_form_wrapper td {
   vertical-align: top;
 }
+
+.fromGoogle {
+ border: 2px solid #ccc;
+}

@@ -1942,3 +1942,6 @@ input[type=text] {
 }
 
 
+img.fromGoogle {
+ border: 2px solid #ccc;
+}

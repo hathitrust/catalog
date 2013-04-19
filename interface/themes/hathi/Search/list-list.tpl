@@ -13,7 +13,8 @@
 -->
     <div class="yui-ge">
       <div class="yui-u first">
-      <div id=GoogleCover_{$record.id} style="display:none;position: relative; float: left; border: 2px solid #ccc">
+      <div id=GoogleCover_{$record.id} style="position: relative; float: left">
+       <img src="/images/nocover-thumbnail.png"/>
       </div>
 
         <div class="resultitem">

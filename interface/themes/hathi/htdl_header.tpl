@@ -43,7 +43,7 @@
         </div>
         <fieldset>
           <label for="q1-input" class="offscreen">Search</label>
-          <input id="q1-input" name="q1" type="text" class="search-input-text" placeholder="Search words about or within the items" value="{$lookfor}" />
+          <input id="q1-input" name="q1" type="text" class="search-input-text" placeholder="Search words about or within the items" value="{$lookfor|escape:'html'}" />
           <div class="search-input-options">
             <label for="search-input-select" class="offscreen">Search Field List</label>
             <select size="1" id="search-input-select" class="search-input-select" name="searchtype">

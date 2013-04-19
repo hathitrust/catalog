@@ -1945,3 +1945,5 @@ input[type=text] {
 img.fromGoogle {
  border: 2px solid #ccc;
 }
+
+#listleftcol, #start_of_left_column_container { vertical-align: top; }

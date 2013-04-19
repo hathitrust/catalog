@@ -81,6 +81,7 @@
 
         <form method="GET" action="{$url}/Search/Home" name="searchForm" class="search" onSubmit="clickpostlog(document, ['advsearch'])">
           <input type='hidden' name='adv' value='1'>
+
           <div id="advanced_titles">
             <div class="title">
               <h2>{translate text='Advanced Catalog Search'}:</h2>
@@ -93,7 +94,7 @@
             
           </div>
 
-
+          <div style="clear:both"></div>
           <h3 class="hidden">Search by field</h3>
           <table style="width: auto">
 

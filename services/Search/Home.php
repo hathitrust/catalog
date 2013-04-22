@@ -151,7 +151,7 @@ class Home extends Action {
         #print_r($this->ss);
 
         // The search terms, for display
-        $interface->assign('searchterms', implode('; ', $this->ss->searchtermsForDisplay()));
+        $interface->assign('searchterms', implode(' ', $this->ss->searchtermsForDisplay()));
 
         //******************************************************
         //      SIMILAR SEARCH TERMS (FOR TOP OF AUTHOR SEARCH)
@@ -160,37 +160,6 @@ class Home extends Action {
 
         // Get similar search terms
         $type = isset($_REQUEST['type'])? $_REQUEST['type'] : false;
-
-        ###### DISABLE FOR NOW ########
-        #switch ($type) {
-        switch (false) {
-            case 'author':
-              $lf = $this->ss->search[0][1];
-              $suggestIndex = 'authorStr';
-              $suggestSearchType = 'authorSuggest';
-              $suggestTargetType = 'realauth';
-              break;
-        }
-
-        if (isset($suggestIndex) && count($this->ss->activeInbandFilters()) == 0) {
-            $ss = new SearchStructure(true);
-            $ss->search[] = array($suggestSearchType, $lf);
-
-            #                            $ss, facetfield,     sort,  skip, limit
-            $list = $this->db->facetlist($ss, array($suggestIndex), 'count', 0,    10);
-            $interface->assign('narrowcount', $list['total']);
-            $suggestlist = array();
-            $values =& $list['values'][$suggestIndex];
-            while (count($values)) {
-                $raw = array_shift($values);
-                $ss = new SearchStructure(true); # true value => return as empty structure
-                $ss->search[] = array($suggestTargetType , $raw[0], null);
-                $logargs = array();
-                $logargs[] = array('lc', 'authtop');
-                $suggestlist[] = array('name' => $raw[0], 'num' => $raw[1], 'authurl' => $ss->asURL($logargs));
-            }
-            $interface->assign('narrow', $suggestlist);
-        }
 
 
 
@@ -264,7 +233,38 @@ class Home extends Action {
         $interface->setTemplate('list.tpl');
         $interface->assign('atom', 1);
         $interface->assign('tagobj', Tags::singleton());
+        $interface->assign('ss', $this->ss);
+        
+        //*****************************************************
+        // Record Count / URLs for this tab and other tab (Project UNICORN)
+        //*****************************************************
+        
+        if ($this->ss->ftonly) {
+          $interface->assign('fullview_count', $result['RecordCount']);
+          $interface->assign('fullview_url', $this->ss->asFullURL());
 
+          // temporarily munch this->ss to get the url and count for the allitems tab
+          $this->ss->setFTOnly(false);
+          $allitems_results = $this->newprocessSearch(1, 0);
+          $interface->assign('allitems_count', $allitems_results['RecordCount']);
+          $interface->assign('allitems_url', $this->ss->asFullURL());
+          $this->ss->setFTOnly(true);
+
+        } else {
+          $interface->assign('allitems_count', $result['RecordCount']);
+          $interface->assign('allitems_url', $this->ss->asFullURL());
+          
+          $this->ss->setFTOnly(true);
+          $fullview_results = $this->newprocessSearch(1, 0);
+          $interface->assign('fullview_count', $fullview_results['RecordCount']);
+          $interface->assign('fullview_url', $this->ss->asFullURL());
+          $this->ss->setFTOnly(false);
+
+        }
+        
+        
+        
+        
 
         //******************************************************
         //    DEAL WITH PAGINATION

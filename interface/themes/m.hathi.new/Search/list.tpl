@@ -49,7 +49,6 @@
 	<div id="resultsearchbox" >
 	<form method="get" action="{$path}/Search/Home" name="searchForm" onsubmit="fixform(this)">	
 		<input type="hidden" name="checkspelling" value="true" />
-		<input type="hidden" value="true" name="sethtftonly">
 		
 		<!--<div id="resultsearchrow1">-->
 			<input id="resultsfind" type="text" {*class="forminput"*} name="lookfor" {*id="lookfor"*} value="{$lookfor|escape:"html"}" placeholder="Search Catalog">
@@ -71,8 +70,9 @@
 		<!-- </div> -->
 			
 		<div id="resultsearchrow3">			
-			<input  class="autowidth" type="checkbox" id="fullonly" value="true" name="htftonly" {$ht_fulltextonly}>
-			<span >  Full view only</span>
+			<input  class="autowidth" type="checkbox" id="fullonly" value="ft" name="ft" {if $check_ft_checkbox}checked="checked"{/if}>
+      <input type="hidden" name="setft" value="true">
+			<label for="fullonly">  Full view only</label>
 			<input id="findbutton" class="autowidth"  type="submit" name="submit" value={translate text="Find"}>
 		</div>
 	</form>

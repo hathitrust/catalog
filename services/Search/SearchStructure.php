@@ -24,6 +24,7 @@ require_once 'sys/VFUser.php';
 class SearchStructure 
 {
     public $force_standard = array('callnumber' => true);
+    public $ftonly;
     public $use_dismax = false;
     public $sort;
     public $page;
@@ -32,7 +33,6 @@ class SearchStructure
     public $search= array();
     public $facetConfig;
     public $manuallyAddedIDs = array();
-    public $inst;
     public $onlyTemp = false;
     public $onlyTags = null;
     public $filterByTags = array();
@@ -88,6 +88,7 @@ class SearchStructure
       $bool = isset($hash['bool'])? $hash['bool']: null;
 
 
+      $this->ftonly = isset($hash['ft']) && $hash['ft'] == 'ft';
           
       
       $this->page = isset($hash['page'])? $hash['page']: "1";
@@ -143,6 +144,7 @@ class SearchStructure
                          );
           }
       }
+      
 
       // The last bool need to be nil. Pop it off, change it, and
       // push it back on again.
@@ -283,19 +285,12 @@ class SearchStructure
                 $this->addOOBFilter($kv[0], $kv[1]);
             }
         }
-
-        // Add the inst if present
-
-        //if (isset($_REQUEST['inst']) && 
-        //    $_REQUEST['inst'] != '' &&
-        //    $_REQUEST['inst'] != 'all') {
-        //      $instcode = $_REQUEST['inst'];
-        //      $instList = parse_ini_file('conf/instList.ini');
-        //      $this->addOOBFilter('institution', $instList[$instcode]);
-        //      $this->inst = $instcode;
-        // }
         
-    }
+        if ($this->ftonly) {
+          $this->addOOBFilter('ht_availability', 'Full text');
+        }
+
+     }
     
     function fillInstFilter($hash) {
       global $configArray;
@@ -304,13 +299,7 @@ class SearchStructure
       }
 
       $session = VFSession::singleton();
-      if ($session->is_set('inst') and $session->get('inst') != '' and $session->get('inst') != 'all') {
-        $instcode = $session->get('inst');
-        $instList = parse_ini_file('conf/instList.ini', true);
-        $this->addOOBFilter('institution', $instList['inst'][$instcode]);
-        $this->inst = $instcode;
-      }
-    
+
       // Add location limit from sublib and collection if present
       $location = '';
       if (isset($hash['sublib']) && 
@@ -356,13 +345,29 @@ class SearchStructure
      }
     
     
+     function setFTOnly($ft) {
+       $this->ftonly = $ft;
+       if ($ft) {
+         $this->addOOBFilter('ht_availability', 'Full text');
+       } else {
+         $this->removeOOBFilter('ht_availability', 'Full text');
+       }
+     }
+    
     
     function actionURLComponents() {
-      if ($this->use_dismax) {
-        return array(array('use_dismax', true));
+      $aucs = array();
+      // if ($this->use_dismax) {
+      //   $aucs[] = array('use_dismax', true);
+      // }
+      
+      if ($this->ftonly) {
+        $aucs[] = array('ft', 'ft');
       } else {
-        return array();
+        $aucs[] = array('ft', '');
       }
+      
+      return $aucs;
     }
     
     /**
@@ -436,7 +441,7 @@ class SearchStructure
       unset($this->inbandFilters[$index][$key]);
     }
      
-    function removeOOBFiler($index, $value) {
+    function removeOOBFilter($index, $value) {
       $key = $this->filterkey($value);
       unset($this->outofbandFilters[$index][$key]);
      }
@@ -607,13 +612,6 @@ class SearchStructure
       return $rv;
     }
     
-    function instURLComponent() {
-      if (isset($this->inst)) {
-        return array(array('inst', $this->inst));
-      } else {
-        return array();
-      }
-    }
 
     static function asURLComponent($kvpair) {
         return rawurlencode($kvpair[0]) . '=' . rawurlencode($kvpair[1]);
@@ -626,6 +624,16 @@ class SearchStructure
       return $url;
     }
 
+    function asRecordURL($sysid, $extra=array()) {
+      
+      $url =  '/Record/' . $sysid;
+      if (count($ss->search) <= 1) {
+        $url .= '?' . $this->asURL($extra, false);
+      } else {
+        $url .= '?' .  implode('&', array_map(array($this, "asURLComponent"), $this->actionURLComponents()));
+      }
+      return $url;
+    }
 
 
     /**
@@ -637,14 +645,13 @@ class SearchStructure
      *  @return string The URL for the current search
      */
 
-    function asURL($extra = array()) {
+    function asURL($extra = array(), $includePageComponents=true) {
         return implode('&', array_map(array($this, "asURLComponent"), 
                                       array_merge($this->searchURLComponents(),
                                                   $this->filterURLComponents(),
                                                   $this->sortURLComponents(),
-                                                  // $this->instURLComponent(),
                                                   $this->tagURLComponents(),
-                                                  $this->pageURLComponents(),
+                                                  ($includePageComponents ? $this->pageURLComponents() : array()),
                                                   $this->actionURLComponents(),
                                                   $extra)));    
     }
@@ -723,8 +730,10 @@ class SearchStructure
       foreach ($this->search as $fkb) { # field, keywords, bool
         $index = $fkb[0] == 'all'? 'all fields' : $fkb[0];
         if (isset($this->indexDisplayName[$index])) $index =  $this->indexDisplayName[$index];
+        
         $l = $index . ':' . $fkb[1];
-        if (isset($fkb[2])) {
+        
+        if (isset($fkb[2])) { # the boolean operator
           $l .= ' ' . $fkb[2];
         }
         $s[] = $l;

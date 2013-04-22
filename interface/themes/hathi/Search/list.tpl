@@ -2,8 +2,32 @@
 <script language="JavaScript" type="text/javascript" src="{$path}/js/googleLinks.js"></script>
 
 <!-- Main Listing -->
-<div id="bd">
+<div id="bd" data-recordCount="{$recordCount}">
+  <!-- Narrow Search Options -->
+  <div id="listleftcol" class="yui-b"><div class="box submenu narrow">
+  {if $currentFacets}
+    <div id="applied_filters">
+      <h2>{translate text='Results refined by:'}</h2>
+        <ul class="filters">
+          {foreach from=$currentFacets item=facet}
+            {assign var=rurl value=$facet.removalURL|regex_replace:"/&/":"&amp;"}
+            <li>
+              <a href="{$url}/Search/{$action}?{$rurl}"><img  class="facetbutton" src="{$path}/images/silk/cancel.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>
+          {/foreach}
+        </ul>
+    </div>
+  {/if}
+
+      <div class="narrowList navmenu" id="narrowList">
+      <h2>{translate text='Refine Results'}</h2>
+        {include file="Search/facet_snippet.tpl"}
+      </div>
+
+    </div>
+  </div>
+  <!-- End Narrow Search Options -->
   <div class="yui-main content">
+    
     <div class="yui-b first contentbox">
 
       <!-- Narrow Options -->
@@ -18,7 +42,7 @@
           <a href="{$url}/Search/Home?{$narrowItem.authurl}">{translate text=$narrowItem.name}</a> ({$narrowItem.num})<br>
         {/foreach}
         </div>
-	      {if $narrowcount > $smarty.foreach.narrowLoop.iteration}
+        {if $narrowcount > $smarty.foreach.narrowLoop.iteration}
         <div style="clear:both; text-align: right;"> <a href="{$url}/Author/Search?{$searchcomps}">see all ({$narrowcount})</a></div>
       {/if}
       </div>
@@ -30,6 +54,7 @@
       <p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action}?lookfor={$newPhrase}&amp;type={$type}">{$newPhrase}</a>?</p>
       {/if}
 
+{*
       <div class="searchtools">
         <!-- <a href="{$url}/Search/{$action}?lookfor={$lookfor|escape}&amp;type={$type}&amp;view=rss" class="feed">{translate text='Get RSS Feed'}</a> -->
 
@@ -44,9 +69,11 @@
         -->
         <!-- <a class="feed" href="/Search/SearchExport?{$searchcomps|escape:'html'}&amp;method=atom" id="Feed">{translate text='Get Feed'}</a> -->
 
-{*        <a href="#" id="emailSearch" class="mail" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search top');">{translate text='Email this Search'}</a> *}
-      </div>
+        <a href="#" id="emailSearch" class="mail" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search top');">{translate text='Email this Search'}</a>
 
+
+      </div>
+*}
       <!-- Listing Options -->
       <h2 class="hidden">Search Results</h2>
       <div class="yui-ge resulthead">
@@ -59,7 +86,37 @@
         {/if}
         </div>
 
-        <div class="yui-u toggle" style="width: auto">
+
+      </div>
+
+
+      <!-- Viewability Tabs -->
+      <div class="viewability tabs" id="viewability-tabs">
+        <ul>
+          <li class="view-all {if !$is_fullview}active{/if}">
+            <a href="{$allitems_url}">All items
+            <span dir="ltr">(<span id="allitems_count">{$allitems_count|number_format:null:".":","}</span>)</span></a> 
+          </li>
+          <li class="view-full {if $is_fullview}active{/if}">
+            {if $fullview_count > 0}
+              <a href="{$fullview_url}">
+            {/if}
+            Only full view
+            <span dir="ltr">(<span id="fullview_count">{$fullview_count|number_format:null:".":","}</span>)</span>
+            {if $fullview_count > 0}
+              </a>
+            {/if}
+          </li>
+          
+        </ul>
+      </div>
+
+
+      <!-- End Listing Options -->
+      {assign var=pageLinks value=$pager->getLinks()}
+      <div class="options">
+
+        <div class="sort">
           <label for="sortOption">{translate text='Sort'}</label>
           <select id="sortOption" name="sort" onChange="document.location.href='{$fullPath_esc}&amp;sort=' + this.options[this.selectedIndex].value;">
             <option value="">Relevance</option>
@@ -70,11 +127,9 @@
           </select>
         </div>
 
+        <div class="pagination">{$pageLinks.all}</div>
 
       </div>
-      <!-- End Listing Options -->
-      {assign var=pageLinks value=$pager->getLinks()}
-      <div class="pagination">{$pageLinks.all}</div>
 
       {if $subpage}
         {include file=$subpage}
@@ -83,7 +138,9 @@
       {/if}
 
       <!-- {assign var=pageLinks value=$pager->getLinks()} -->
-      <div class="pagination">{$pageLinks.all}</div>
+      <div class="options clearfix">
+        <div class="pagination clearfix">{$pageLinks.all}</div>
+      </div>
       <div class="searchtools">
         <!-- <a href="{$url}/Search/{$action}?lookfor={$lookfor|escape}&amp;type={$type}&amp;view=rss" class="feed">{translate text='Get RSS Feed'}</a> -->
 
@@ -95,36 +152,11 @@
           jq('#RSSFeed').attr('href', loc)
         </script>
       -->
-{*        <a href="#" class="mail" id="emailSearch_lower" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search bottom');">{translate text='Email this Search'}</a> *}
+        <a href="#" class="mail" id="emailSearch_lower" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search bottom');">{translate text='Email this Search'}</a>
       </div>
     </div>
     <!-- End Main Listing -->
   </div>
 
-  <!-- Narrow Search Options -->
-  <div id="listleftcol" class="yui-b"><div class="box submenu narrow">
-  {if $currentFacets}
-    <div id="applied_filters">
-      <h2>{translate text='Results refined by:'}</h2>
-        <ul class="filters">
-          {foreach from=$currentFacets item=facet}
-            {assign var=rurl value=$facet.removalURL|regex_replace:"/&/":"&amp;"}
-            {if $facet.value == 'Full text' && $facet.index == 'ht_availability'}
-			  {assign var=rurl value="$rurl&amp;sethtftonly=true"}
-            {/if}
-            <li>
-              <a href="{$url}/Search/{$action}?{$rurl}"><img  class="facetbutton" src="{$path}/images/silk/cancel.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>
-          {/foreach}
-        </ul>
-    </div>
-  {/if}
 
-      <div class="narrowList navmenu" id="narrowList">
-      <h2>{translate text='Refine Search'}</h2>
-        {include file="Search/facet_snippet.tpl"}
-      </div>
-
-    </div>
-  </div>
-  <!-- End Narrow Search Options -->
 </div> <!-- ??? -->

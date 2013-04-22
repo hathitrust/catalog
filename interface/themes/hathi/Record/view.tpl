@@ -26,7 +26,7 @@
                <span class="{$similar.format|lower|replace:" ":""}">
                <a href="{$url}/Record/{$similar.id}">{$similarTitle}</a>
                </span>
-               <span style="font-size: .8em">
+               <span style="font-size: .9em">
 
                {if $similar.author}<br>By: {$similar.author.0}{/if}
                {if $similar.publishDate}<br>Published: ({$similar.publishDate.0}){/if}
@@ -69,7 +69,7 @@
    <div id="content" style="margin: 0px; padding: 0px; margin-left: 19em;">
      <div class="record">
        {if $lastsearch}
-        <a href="{$url}/Search/Home?{$lastsearch|regex_replace:"/&/":"&amp;"}" class="backtosearch"><img style="vertical-align: middle;" alt="" src="/static/umichwebsite/images/return.png">{translate text="Back to Search Results"}</a><br>
+       <a href="{$lastsearch|regex_replace:"/&/":"&amp;"}" class="backtosearch">{translate text="Back to Search Results"}</a><br>
        {/if}
 
        <h3 class="SkipLink">Tools</h3>
@@ -80,13 +80,13 @@
 
        <div class="recordnav">
          {if $previous}
-         <a href="{$url}{$previous|regex_replace:"/&/":"&amp;"}" class="backtosearch"><img style="vertical-align: middle;" alt="" src="/static/umichwebsite/images/arrow_left.png"> {translate text="Previous record"}</a>
+         <a href="{$url}{$previous|regex_replace:"/&/":"&amp;"}" class="goto-previous-record">{translate text="Previous record"}</a>
          {/if}
          {if $current}
          {translate text="$current"}
          {/if}
          {if $next}
-         <a href="{$url}{$next|regex_replace:"/&/":"&amp;"}" class="backtosearch">{translate text="Next record"} <img style="vertical-align: middle;" alt="" src="/static/umichwebsite/images/arrow_right.png"></a>
+         <a href="{$url}{$next|regex_replace:"/&/":"&amp;"}" class="goto-next-record">{translate text="Next record"}</a>
          {/if}
        </div>
 
@@ -513,12 +513,11 @@
         {if 'tombstone'|@in_array:$record.ht_rightscode}
         This item is no longer available (<a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
         {elseif $ld.is_fullview}
-          <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view
+          <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view<span class="IndItem">{$ld.enumchron}</span></a>
         {else}
-          <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)
+          <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)<span class="IndItem">{$ld.enumchron}</span></a>
         {/if}
-        <span class="IndItem">{$ld.enumchron}</span></a>
-        <em>(original from {$ld.original_from})</em>
+        <em class="original_from">(original from {$ld.original_from})</em>
       </li>
     {/foreach}
   

@@ -81,8 +81,20 @@
 
         <form method="GET" action="{$url}/Search/Home" name="searchForm" class="search" onSubmit="clickpostlog(document, ['advsearch'])">
           <input type='hidden' name='adv' value='1'>
-          <h2>{translate text='Advanced Catalog Search'}:</h2>
 
+          <div id="advanced_titles">
+            <div class="title">
+              <h2>{translate text='Advanced Catalog Search'}:</h2>
+              <p>Search information <em>about</em> the item.</p>
+            </div>
+            
+            <div class="link_to_ft">
+              Prefer to search <em>within</em> the item in an <a href="http://babel.hathitrust.org/cgi/ls?a=page&page=advanced">Advanced Full-text search</a>?
+            </div>
+            
+          </div>
+
+          <div style="clear:both"></div>
           <h3 class="hidden">Search by field</h3>
           <table style="width: auto">
 
@@ -206,8 +218,8 @@
           <br>
           <h3>{translate text='Limit To'}:</h3>
 
-              <input type="hidden" name="sethtftonly" value="true">
-              <input type="checkbox" name="htftonly" value="true" id="fullonly" >&nbsp;<label for="fullonly">Full view only</label>
+              <input type="hidden" name="setft" value="true">
+              <label class="checkbox inline" for="fullonly"><input type="checkbox" name="ft" value="ft" id="fullonly" > Full view only</label>
 
               <label for="yop" class="hidden">Publication year restrictions</label>
               <span style="margin-left: 4em">
@@ -255,8 +267,8 @@
               </td>
             </tr>
           </table>
-<input  type="submit" name="submit" value="{translate text="Find"}">
-          <!-- div style="margin-left: 1em"><input style="width: 7em; font-size: 1.5em; padding: 0.5em 2em;" type="submit" name="submit" value="{translate text="Find"}"></div><br> -->
+<input  type="submit" name="submit" value="{translate text="Search"}">
+          <!-- div style="margin-left: 1em"><input style="width: 7em; font-size: 1.5em; padding: 0.5em 2em;" type="submit" name="submit" value="{translate text="Search"}"></div><br> -->
         </form>
       </div>
     </div>

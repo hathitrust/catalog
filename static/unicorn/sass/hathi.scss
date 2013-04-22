@@ -1,43 +1,413 @@
-<?php header("Content-type: text/css"); ?>
-<?php
-$configArray = parse_ini_file('../../../../conf/config.ini', true);
-?>
+@import "../../../../common/web/unicorn/sass/base";
 
-@import "layout.css";
-@import "style.css";
+@mixin icon-font($content, $placement:"before") {
+  &:#{$placement} {
+    content: "#{$content} ";
+    font-family: 'icomoon';
+    font-style: normal;
+    speak: none;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    font-size: 110%;
+    color: #666;
+    display: inline-block;
+    @if $placement == "before" {
+      margin-right: 2px;
+    } @else {
+      margin-left: 2px;
+    }
+  }  
+}
+
+#listleftcol, #start_of_left_column_container {
+  @include rem(width, $sidebar-width, !important);
+  display: table-cell;
+
+  float: none !important;
+ 	padding-top: 0;
+
+  h3:first-child {
+    border-bottom: 1px solid #ddd;
+    font-size: 130%;
+    font-weight: bold;
+    @include rem(margin-bottom, 18);
+  }
+}
+
+#contentContainer {
+  padding: 0;
+}
+
+#bd {
+  padding: 20px;
+  display: table;
+}
+
+#content {
+  margin: 0 !important;
+}
+
+#bd > .content, #content {
+  @include rem(min-height, 400);
+  margin-left: 0;
+  @include rem(padding-left, 20);
+ 	width: auto;
+  display: table-cell;
+
+  .yui-b {
+    @include rem(margin-left, 0);
+  }
+
+  @include rem(font-size, 14);
+
+  overflow: hidden;
+
+}
+
+#content, #listleftcol + .content {
+  border-left: 1px solid #e1dfdf;
+}
+
+.narrow {
+	padding-top: 0;
+}
+
+#listleftcol a {
+
+	color: $link-color;
+
+	&:hover {
+		color: #d56d11;
+    text-decoration: none;
+	}
+
+	&:active {
+		color: #d56d11;
+    text-decoration: none;
+	}
+
+}
+
+.resulthead > .yui-u.first {
+	font-weight: bold;
+  @include rem(font-size, 14);
+}
+
+.options {
+	text-align: left;
+}
+
+.tabs ul {
+
+}
+
+.tabs a {
+  text-decoration: none;
+}
+
+.narrowList span {
+	color: #666;
+}
+
+#doc,
+#doc2,
+#doc3,
+.yui-t1,
+.yui-t2,
+.yui-t3,
+.yui-t4,
+.yui-t5,
+.yui-t6,
+.yui-t7,
+.yui-t8 {
+	margin: auto;
+	text-align: left;
+}
+
+#doc2 {
+	// width: 73.074em;
+	// *width: 71.313em;
+	// min-width: 950px;
+}
+
+#doc3 {
+	width: auto;
+  min-width: 89%;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.yui-b {
+	position: relative;
+}
+
+.yui-b {
+	_position: static;
+}
+
+.yui-main .yui-b {
+	position: static;
+}
+
+.yui-main {
+	width: 100%;
+}
+
+.yui-main.content {
+  float: none !important;
+}
+
+.yui-t1 .yui-main,
+.yui-t2 .yui-main,
+.yui-t3 .yui-main,
+.yui-t8 .yui-main {
+	float: right;
+	margin-left: -25em;
+}
+
+.yui-t4 .yui-main,
+.yui-t5 .yui-main,
+.yui-t6 .yui-main {
+	float: left;
+	margin-right: -25em;
+}
+
+.yui-t1 .yui-b {
+	float: left;
+	width: 12.3207em;
+	*width: 12.0106em;
+}
+
+.yui-t1 .yui-main .yui-b {
+	margin-left: 13.3207em;
+	*margin-left: 13.0106em;
+}
+
+.yui-t2 .yui-b {
+	float: left;
+	width: 13.8456em;
+	*width: 13.512em;
+}
+
+.yui-t2 .yui-main .yui-b {
+	margin-left: 14.8456em;
+	*margin-left: 14.512em;
+}
+
+.yui-t3 .yui-b {
+	float: left;
+	width: 23.0759em;
+	*width: 22.52em;
+}
+
+.yui-t3 .yui-main .yui-b {
+	margin-left: 24.0759em;
+	*margin-left: 23.52em;
+}
+
+.yui-t8 .yui-b {
+	float: left;
+	width: 18.4608em;
+	*width: 18.016em;
+}
+
+.yui-t8 .yui-main .yui-b {
+	margin-left: 19.4608em;
+	*margin-left: 19.016em;
+}
+
+.yui-t4 .yui-b {
+	float: right;
+	width: 13.8456em;
+	*width: 13.512em;
+}
+
+.yui-t4 .yui-main .yui-b {
+	margin-right: 14.8456em;
+	*margin-right: 14.512em;
+}
+
+.yui-t5 .yui-b {
+	float: right;
+	width: 18.4608em;
+	*width: 18.016em;
+}
+
+.yui-t5 .yui-main .yui-b {
+	margin-right: 19.4608em;
+	*margin-right: 19.016em;
+}
+
+.yui-t6 .yui-b {
+	float: right;
+	width: 23.0759em;
+	*width: 22.52em;
+}
+
+.yui-t6 .yui-main .yui-b {
+	margin-right: 24.0759em;
+	*margin-right: 23.52em;
+}
+
+.yui-t7 .yui-main .yui-b {
+	display: block;
+	margin: 0 0 1em 0;
+}
+
+.yui-main .yui-b {
+	float: none;
+	width: auto;
+}
+
+.yui-g .yui-u,
+.yui-g .yui-g,
+.yui-gc .yui-u,
+.yui-gc .yui-g .yui-u,
+.yui-ge .yui-u,
+.yui-gf .yui-u {
+	float: right;
+	display: inline;
+}
+
+.yui-g div.first,
+.yui-gc div.first,
+.yui-gc div.first div.first,
+.yui-gd div.first,
+.yui-ge div.first,
+.yui-gf div.first {
+	float: left;
+}
+
+.yui-g .yui-u,
+.yui-g .yui-g {
+	width: 49.1%;
+}
+
+.yui-g .yui-g .yui-u,
+.yui-gc .yui-g .yui-u {
+	width: 48.1%;
+}
+
+.yui-gb .yui-u,
+.yui-gc .yui-u,
+.yui-gd .yui-u {
+	float: left;
+	margin-left: 2%;
+	*margin-left: 1.895%;
+	width: 32%;
+}
+
+.yui-gb div.first,
+.yui-gc div.first,
+.yui-gd div.first {
+	margin-left: 0;
+}
+
+.yui-gc div.first,
+.yui-gd .yui-u {
+	width: 66%;
+}
+
+.yui-gd div.first {
+	width: 32%;
+}
+
+.yui-ge .yui-u {
+	width: 24%;
+}
+
+.yui-ge div.first,
+.yui-gf .yui-u {
+	width: 74.2%;
+}
+
+.yui-gf div.first {
+	width: 24%;
+}
+
+.yui-ge div.first {
+	width: 95%;
+}
+
+/*.bd:after,
+.yui-g:after,
+.yui-gb:after,
+.yui-gc:after,
+.yui-gd:after,
+.yui-ge:after,
+.yui-gf:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}*/
+
+div {
+  margin: 0;
+  padding: 0;
+}
+
+.results {
+  float: left;
+}
+
+.bd:after,
+.yui-g:after,
+.yui-gb:after,
+.yui-gc:after,
+.yui-gd:after,
+.yui-ge:after,
+.yui-gf:after {
+  content: "";
+  display: table;
+  clear:both;
+}
+
+.bd:before,
+.yui-g:before,
+.yui-gb:before,
+.yui-gc:before,
+.yui-gd:before,
+.yui-ge:before,
+.yui-gf:before {
+  content: "";
+  display: table;
+}
+
+.bd,
+.yui-g,
+.yui-gb,
+.yui-gc,
+.yui-gd,
+.yui-ge,
+.yui-gf {
+	zoom: 1;
+}
+
 
 /* My styles */
-
 
 #hd {
   background-color:#fff;
   padding-top:10px;
 }
-html, body {
-  height: 100%;
-  background-color:#fff;
-}
-.content {
-  padding:10px 0 10px 0;
-  background-image:url("<?php echo $configArray['Site']['path'];?>/images/bg_grey.jpg");
-      background-repeat:repeat-x;
-      background-color:#fff;
-      border-top: 1px solid #cccccc;
-}
+
 .contentbox {
-  background-color:#FFF;
-  border: 1px solid #cccccc;
   padding:5px;
   margin-left:15px;
 }
 
 .box {
-  /*background:url("<?php echo $configArray['Site']['path'];?>/images/tabs_bg.jpg") repeat-x right top;*/
-  background-color:#fff;
-  border: 1px solid #cccccc;
-  margin-left: 15px;
-  padding:5px;
-  font-size: 85%;
+  padding-right: 15px;
+  @include rem(font-size, 13);
+
+  h2:first {
+    margin-top: 0;
+  }
+
 }
 
 .details {
@@ -45,14 +415,14 @@ html, body {
   padding: 20px 1em 1em 1em;
 }
 .submenu {
-  margin-top:11px;
+  /*margin-top:11px;*/
 }
 .submenu h4 {
   border-bottom: 1px solid #eee;
   padding-bottom: 3px;
 }
 .narrow {
-    padding-top: 15px;
+    /*padding-top: 15px;*/
 }
 .narrow_begin {
     display: block;
@@ -110,7 +480,7 @@ ul.menu li{
   width:12em;
 }
 .result {
-  background-color:#f5f5f5;
+  background-color:#fffefb; /*#f5f5f5;*/
   padding:10px 5px;
   margin-bottom:5px;
 }
@@ -131,8 +501,13 @@ ul.menu li{
   padding-left: 1em;
 }
 
+.resultItemLine1 {
+  margin-bottom: 4px;
+}
+
 .resultItemLine2, .resultItemLine3 {
-  font-size: .9em;
+  // font-size: 1em;
+  font-size: 95%;
   color: #666;
 }
 
@@ -145,7 +520,7 @@ ul.menu li{
   background-color:#fff5ee;
 }
 .result.alt {
-  background-color:#eee;
+  background-color:#f6f4f1; /*#eee;*/
 }
 .toggle {
   text-align:right;
@@ -160,7 +535,7 @@ ul.menu li{
 .resulthead {
   padding:10px 10px 5px 10px;
   margin-bottom:1.5em;
-  border-bottom: 1px solid #eee;
+  /*border-bottom: 1px solid #eee;*/
 }
 
 .searchbox {
@@ -180,34 +555,45 @@ ul.menu li{
 }
 
 .searchtools {
-	background-color: #f5f5f5;
+	/*background-color: #f5f5f5;*/
+  background-color: #F6F4F1;
 	padding: 1em;
 	font-size: 90%;
 }
 .navmenu {
   margin:0px;
-}
-.navmenu li {
-  padding:.1em 0 .1em .5em;
-  list-style-type: none;
-  border-bottom: 1px solid #e3e3e3;
-}
-.navmenu li {
-  padding:.1em 0 .1em .5em;
-  margin: 0 0 .5em 1.5em;
-  list-style-type: none;
-  border-bottom: 1px solid #e3e3e3;
+  margin-right: 8px;
 }
 
-.navmenu h2 {
+.navmenu ul {
+	margin: 0;
+	padding: 0;
+}
+
+.navmenu li {
+  padding:.1em 0 .1em .5em;
+  list-style-type: none;
+  /*border-bottom: 1px solid #e3e3e3;*/
+}
+.navmenu li {
+  padding:.1em 0 .1em .5em;
+  margin: 0 0 .5em 0.75em;
+  list-style-type: none;
+  /*border-bottom: 1px solid #e3e3e3;*/
+}
+
+#listleftcol h2 {
   font-size: 130%;
   font-weight: bold;
+  border-bottom: 1px solid #ddd;
 }
 
-.navmenu h3 {
+#listleftcol .narrowList h3 {
   margin-top:.75em;
   font-weight:bold;
-  font-size: 95%;
+  font-size: 100%;
+  margin-bottom: 0.5em;
+  border-bottom: none;
 }
 
 h3.title {
@@ -365,7 +751,7 @@ ul.browse {
   }
 #tabnav a {
   display:block;
-  background:url("<?php echo $configArray['Site']['path'];?>/images/tabs_bg.jpg") repeat-x right top;
+  background:url("/images/tabs_bg.jpg") repeat-x right top;
   padding:.7em 1em .7em 1em;
   text-decoration:none;
   border-top: 1px solid #ccc;
@@ -376,10 +762,10 @@ ul.browse {
 
 
 #tabnav a:hover {
-  background:url("<?php echo $configArray['Site']['path'];?>/images/tabs_hover_bg.jpg") repeat-x right top;
+  background:url("/images/tabs_hover_bg.jpg") repeat-x right top;
   }
 #tabnav .active a:hover {
-  background:url("<?php echo $configArray['Site']['path'];?>/images/tab_active_bg.jpg") repeat-x right top;
+  background:url("/images/tab_active_bg.jpg") repeat-x right top;
   }
 
 
@@ -394,7 +780,7 @@ ul.browse {
 
   }
 #tabnav .active a {
-  background-image:url("<?php echo $configArray['Site']['path'];?>/images/tab_active_bg.jpg");
+  background-image:url("/images/tab_active_bg.jpg");
   color:#000;
   }
 
@@ -405,7 +791,7 @@ ul.browse {
     margin-left:-8px;
     width:17px;
     height:15px;
-    background:url("<?php echo $configArray['Site']['path'];?>/images/tab_active_arrow.jpg") left top no-repeat;
+    background:url("/images/tab_active_arrow.jpg") left top no-repeat;
 }
 * html .tabs .active span{
     margin-left:-20px;
@@ -416,10 +802,10 @@ ul.browse {
 }
 
 /* HTML Tags */
-a {
+/*a {
   text-decoration:none;
   color:#0066cc;
-}
+}*/
 /*a:hover {
   color:#0066cc;
 }*/
@@ -460,6 +846,7 @@ strong {
 /* Citation Table */
 .citation {
   font-size:90%;
+  clear: both;
 }
 .citation th {
   text-align:left;
@@ -518,13 +905,29 @@ strong {
 
 /* Pagination */
 
-.pagination {
-  font-size:90%;
-  padding:1.5em 0 1.5em 0;
-  margin:1.5em 0;
-  text-align:center;
-  border-top: 1px solid #eee;
+.options {
+  padding-left: 10px;
 }
+
+.sort {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.pagination {
+  /*font-size:90%;*/
+  padding:1.5em 0 1.5em 0;
+  /*margin:1.5em 0;*/
+  text-align:center;
+  padding-top: 0;
+  /*border-top: 1px solid #eee;*/
+  display: inline-block;
+  float: right;
+
+  @include pie-clearfix;
+
+}
+
 .pagination a {
   padding: .2em .3em;
   margin-right:.5em;
@@ -601,81 +1004,87 @@ table.datagrid tr.oddrow {
 }
 
 .endnotelink{
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/endnote.png);
-  background-position: left center;
-  background-repeat: no-repeat;
+  // background-image:url(/images/endnote.png);
+  // background-position: left center;
+  // background-repeat: no-repeat;
+  @include icon-font(";");
   margin-right: 1em;
-  padding: 0.5em 0.5em 0.5em 20px;
+  padding:.5em;
 }
 
 .cite {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/report.png);
-  background-repeat:no-repeat;
-  background-position: left;
-  padding:.5em .5em .5em 20px;
+  // background-image:url(http://catalog.hathitrust.org/images/silk/report.png);
+  // background-repeat:no-repeat;
+  // background-position: left;
+  @include icon-font(":");
+  padding:.5em;
   margin-right:1em;
 }
 .export {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/application_add.png);
-  background-repeat:no-repeat;
-  background-position: left;
-  padding:.5em .5em .5em 20px;
+  // background-image:url(http://catalog.hathitrust.org/images/silk/application_add.png);
+  // background-repeat:no-repeat;
+  // background-position: left;
+  @include icon-font("<");
+  padding:.5em;
   margin-right:1em;
 }
 .sms {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/phone.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/phone.png);
   background-repeat:no-repeat;
   background-position: left;
-  padding:.5em .5em .5em 20px;
+  padding:.5em;
   margin-right:1em;
 }
 .tag {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/tag_blue.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/tag_blue.png);
   background-repeat:no-repeat;
   background-position: left;
-  padding:.5em .5em .5em 20px;
+  padding:.5em;
   margin-right:1em;
 }
 .mail {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/email.png);
-  background-repeat:no-repeat;
-  background-position: left;
-  padding:.5em .5em .5em 20px;
+  // background-image:url(http://catalog.hathitrust.org/images/silk/email.png);
+  // background-repeat:no-repeat;
+  // background-position: left;
+  padding:.5em .5em .5em .5em;
   margin-right:1em;
+  @include icon-font("=");
 }
 
 #RSSFeed {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/feed-icon.png);
-  background-repeat:no-repeat;
-  background-position: left;
+  // background-image:url(/images/feed-icon.png);
+  // background-repeat:no-repeat;
+  // background-position: left;
+  @include icon-font(">");
   padding-left: 18px;
 
 }
 .fav {
-/*  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/heart.png);
+/*  background-image:url(http://catalog.hathitrust.org/images/silk/heart.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em; */
 }
 .edit {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/edit.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/edit.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em 0 .5em 18px;
   margin-right:.7em;
 }
 .delete {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/delete.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/delete.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 18px;
   margin-right:0;
 }
 .feed {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/feed.png);
-  background-repeat:no-repeat;
-  background-position: left;
+  // background-image:url(http://catalog.hathitrust.org/images/silk/feed.png);
+  // background-repeat:no-repeat;
+  // background-position: left;
+  @include icon-font(">");
   padding:.5em .5em .5em 20px;
   margin-left:1em;
 }
@@ -683,14 +1092,14 @@ table.datagrid tr.oddrow {
 	vertical-align: text-bottom;
 }
 .add {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/add.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/add.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 18px;
   margin-right:0;
 }
 .available {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/bullet_green.png);
+  background-image:url(/images/bullet_green.png);
   background-repeat:no-repeat;
   color:#009900;
   padding-left:18px
@@ -699,7 +1108,7 @@ table.datagrid tr.oddrow {
   padding-left:10px;
 }
 .checkedout {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/bullet_red.png);
+  background-image:url(/images/bullet_red.png);
   background-repeat:no-repeat;
   color:#cc0000;
   padding-left:18px
@@ -719,7 +1128,7 @@ table.datagrid tr.oddrow {
   line-height: 16px;
   font-size: 8pt;
   font-weight: bold;
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/bullet_black.png);
+  background-image:url(/images/bullet_black.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -727,7 +1136,7 @@ table.datagrid tr.oddrow {
 }
 
 .availableonline {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/fulltext.gif);
+  background-image:url(/images/fulltext.gif);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -735,28 +1144,28 @@ table.datagrid tr.oddrow {
 }
 
 .electronic, .electronicresource {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/computer.png);
+  background-image:url(/images/computer.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em;
 }
 .map {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/map.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/map.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em;
 }
 .globe {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/world.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/world.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em;
 }
 .slide {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/photo.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/photo.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -764,7 +1173,7 @@ table.datagrid tr.oddrow {
 }
 
 .microfilm, .microform {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/microform.gif);
+  background-image:url(/images/microform.gif);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -772,7 +1181,7 @@ table.datagrid tr.oddrow {
 }
 
 .photo {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/picture.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/picture.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -780,7 +1189,7 @@ table.datagrid tr.oddrow {
 }
 
 .video {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/tango/video.png);
+  background-image:url(/images/tango/video.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -788,7 +1197,7 @@ table.datagrid tr.oddrow {
 }
 
 .motionpicture {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/motionpicture.gif);
+  background-image:url(/images/motionpicture.gif);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -796,7 +1205,7 @@ table.datagrid tr.oddrow {
 }
 
 .video-dvd-, .audiocd {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/video-dvd-.gif);
+  background-image:url(/images/video-dvd-.gif);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -804,7 +1213,7 @@ table.datagrid tr.oddrow {
 }
 
 .audio-music- {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/audio-music-.gif);
+  background-image:url(/images/audio-music-.gif);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -812,7 +1221,7 @@ table.datagrid tr.oddrow {
 }
 
 .audiolp {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/audiolp.gif);
+  background-image:url(/images/audiolp.gif);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -820,7 +1229,7 @@ table.datagrid tr.oddrow {
 }
 
 .visualmaterial {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/visualmaterial.gif);
+  background-image:url(/images/visualmaterial.gif);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -829,7 +1238,7 @@ table.datagrid tr.oddrow {
 
 
 .newspaper {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/newspaper.gif);
+  background-image:url(/images/newspaper.gif);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -837,7 +1246,7 @@ table.datagrid tr.oddrow {
 }
 
 .kit {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/package.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/package.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -845,7 +1254,7 @@ table.datagrid tr.oddrow {
 }
 
 .musicalscore {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/music.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/music.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -855,7 +1264,7 @@ table.datagrid tr.oddrow {
 }
 
 .audio, .audio-spokenword- {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/tango/audio-volume-high.png);
+  background-image:url(/images/tango/audio-volume-high.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -863,7 +1272,7 @@ table.datagrid tr.oddrow {
 }
 
 .archive {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/archive.gif);
+  background-image:url(/images/archive.gif);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -873,14 +1282,14 @@ table.datagrid tr.oddrow {
 .physicalobject {
 }
 .manuscript {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/report_edit.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/report_edit.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em;
 }
 .ebook {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/ebook.png);
+  background-image:url(/images/ebook.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -888,7 +1297,7 @@ table.datagrid tr.oddrow {
 }
 
 .journal, .serial {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/journal.gif);
+  background-image:url(/images/journal.gif);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -897,7 +1306,7 @@ table.datagrid tr.oddrow {
 
 
 .book {
-  background-image:url(<?php echo $configArray['Site']['path'];?>/images/silk/book.png);
+  background-image:url(http://catalog.hathitrust.org/images/silk/book.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -938,6 +1347,11 @@ alignleft {
 	margin: 0 15px 2px 0;
 	}
 
+ul.filters {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+}
 
 ul.filters li {
   text-indent: -20px;
@@ -956,6 +1370,215 @@ ul.filters li em {
   vertical-align: top;
 }
 
-.fromGoogle {
- border: 2px solid #ccc;
+.AccessLink, #accessLinks {
+padding: 8px 0 8px 12px;
+padding-bottom: 2em;
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline;
+      float: left;
+      margin-right: 20px;      
+    }
+
+  }
+
 }
+
+
+.cataloglinkhref {
+  @include icon-font("?");
+// background: transparent url(//catalog.hathitrust.org/images/hathi/icon_information.png) no-repeat center left;
+}
+
+.searchonly {
+// background: transparent url(//catalog.hathitrust.org/images/hathi/Icon_SearchOnly.gif) no-repeat center left;
+  @include icon-font("@");
+
+}
+
+.fulltext {
+  @include icon-font("A");
+// padding-left: 20px;
+// background: transparent url(//catalog.hathitrust.org/images/hathi/Icon_FullText.gif) no-repeat center left;
+}
+
+// .resulthead.yui-ge:after {
+// 	clear: none;
+// 	display: block;
+// 	height: 40px;
+// }*/
+
+// .yui-u {
+// 	float: none !important;
+// }
+
+// .yui-ge:after {
+// 	clear:none;
+// }
+
+// .result .yui-ge {
+// 	margin-left: 40px;
+// }
+// */
+
+.backtosearch {
+  @include icon-font("E");
+  img {
+    display: none;
+  }
+}
+
+.goto-next-record {
+  @include icon-font("B", "after");
+}
+
+.goto-previous-record {
+  @include icon-font("D");
+}
+
+ul.ToolLinks {
+  position: relative;
+  float: right;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: inline;
+    padding: 0;
+    margin: 0;
+  }
+
+}
+
+.tabs {
+  margin-bottom:1.5em;
+  margin-left: 10px;
+  border-bottom: 1px solid #AAA;
+  width: 96%;
+  color: #333;
+}
+
+.tabs a {
+  font-weight: bold;
+  color: #5e5e5e;
+}
+
+.tabs a:hover {
+  text-decoration: none;
+  border-bottom: none;
+  color: #b15a0d;
+}
+
+.tabs ul {
+  text-align: left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  line-height: 24px;
+}
+
+.tabs ul:after, .tabs ul:before {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.tabs ul:after {
+  clear: both;
+}
+
+.tabs ul li {
+  float: left;
+  margin: 0 0px;
+  padding: 0 10px;
+  border: 1px solid #d3d3d3;
+  border-bottom: 1px solid #aaa;
+  background: #e3e3e3;
+  background: -webkit-gradient(linear,0% 0,0% 100%,from(white),to(#e3e3e3));
+  display: inline-block;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  margin-bottom: -1px;
+  font-size: 14px;
+  /*text-shadow: 0 1px 1px rgba(255, 255, 255, 1);*/
+}
+
+
+.tabs ul li:first-child {
+  margin-left: 0;
+}
+
+.tabs li.active {
+  border: 1px solid #aaa;
+  border-bottom: 1px solid transparent;
+  background: #fff;
+}
+
+.tabs li.active a {
+  color: #4f4f4f;
+}
+
+#gettingStarted, #searchtips_help, #emailThisRecord, #emailThisSearch {
+  display: none;
+}
+
+
+table {
+  margin: 1em;
+  @include rem(font-size, 14);
+}
+
+td, th {
+  padding: .3em .5em;
+}
+
+input[value=Find] {
+  border: none;
+  display: inline-block;
+  margin: 20px 30px; /* just to move away from each other in demo */
+  font-weight: bold;
+  text-decoration: none;
+  letter-spacing: .1em;
+  border-radius: 8px; 
+  display: inline-block;
+  color: #F5F4F4;
+  @include rem(font-size, 18);
+  @include rem(height, 40);
+  @include rem(width, 125);
+  margin: 0;
+  padding: 0;
+
+  text-align: left;
+
+  padding-left: 16px;
+
+  background: #696969 url('../img/search.png') no-repeat 95% center; /*png24*/
+  z-index: 0;
+
+  &:hover {
+    background-color: #848383;
+  }
+
+}
+
+#doc3 {
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include rem(font-size, 14);
+}
+
+label {
+  display: inline-block;
+}
+
+input[type=text] {
+  width: auto;
+}
+

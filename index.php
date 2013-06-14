@@ -122,6 +122,7 @@ if (isset($_REQUEST['donotlog'])) {
 #####################################
 # Are we USA or non-USA?
 #######################################
+
 if (!$session->is_set('country')) {
   $ip  = $_SERVER['REMOTE_ADDR'];
   $country = geoip_country_code3_by_name($ip);
@@ -133,6 +134,16 @@ if (!$session->is_set('country')) {
     $session->set('inUSA', false);
   }
 }
+
+if (isset($_REQUEST['intl'])) {
+  if ($_REQUEST['intl'] == 'true') {
+    $session->set('inUSA', false);
+  } else {
+    $session->set('inUSA', true);
+  }
+}
+
+
 
 
 

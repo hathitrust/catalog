@@ -104,7 +104,7 @@ class RecordUtils {
     
     // ...or it's ICUS and we're *outside* the USA
     
-    if ($rcode == 'icus' && $inUSA  == 'false') {
+    if ($rcode == 'icus' && $inUSA  == false) {
       $fv = true;
     }
 

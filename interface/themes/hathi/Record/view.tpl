@@ -443,43 +443,7 @@
   </tr>
 
 
-{*
-  {assign var=marcField value=$marc->getFields('856')}
-  {if $marcField}
-  <tr valign="top">
-    <th>{translate text='Online Access'}: </th>
-    <td>
-      {foreach from=$marcField item=field name=loop}
-        {if $proxy}
-        <a href="{$proxy}/login?url={$field|getvalue:'u'}">{if $field|getvalue:'z'}{$field|getvalue:'z'}{else}{$field|getvalue:'u'}{/if}</a><br>
-        {else}
-        <a href="{$field|getvalue:'u'}">{if $field|getvalue:'z'}{$field|getvalue:'z'}{else}{$field|getvalue:'u'}{/if}</a><br>
-        {/if}
-      {/foreach}
-    </td>
-  </tr>
-  {/if}
-*}
-  <!-- url to record in legacy system -->
-<!-- commented by jjyork 3/31/09  {if $recordURL}
-  <tr valign="top">
-    <th>{translate text='URL'}: </th>
-    <td>
-      <a href="{$recordURL}{$id}" target="Mirlyn">Display record in Mirlyn</a>
-    </td>
-  </tr>
-  {/if}
--->
-  <!-- url to xserver holdings -->
-<!-- commented by jjyork 3/31/09  {if $holdingsURL}
-  <tr valign="top">
-    <th>{translate text='xserver holdings'}: </th>
-    <td>
-      <a href="{$holdingsURL}{$id}" target="Mirlyn">Display holdings from Mirlyn xserver</a>
-    </td>
-  </tr>
-  {/if}
--->
+
 </table>
 
 <!-- Availability set apart from table-->
@@ -508,7 +472,7 @@
     {/if}
 
     {foreach from=$fields item=field}
-      {assign var=ld value=$ru->ht_link_data($field)}
+      {assign var=ld value=$ru->ht_link_data($field)}      
       <li>
         {if 'tombstone'|@in_array:$record.ht_rightscode}
         This item is no longer available (<a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)

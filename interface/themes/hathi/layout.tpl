@@ -85,7 +85,7 @@
         <li><a href="http://www.hathitrust.org/about">About</a></li>
         <li><a href="http://babel.hathitrust.org/cgi/mb">Collections</a></li>
         <li><a href="http://www.hathitrust.org/help">Help</a></li>
-        <li><a href="#" data-m="ht" data-id="HathiTrust Project Unicorn Guide" data-toggle="feedback">Feedback</a></li>
+        <li><a href="#" data-m="ht" data-id="HathiTrust Catalog Feedback" data-toggle="feedback">Feedback</a></li>
         <li><a href="http://m.hathitrust.org">Mobile</a></li>
         <li><a href="http://www.hathitrust.org/take_down_policy">Take-Down Policy</a></li>
         <li><a href="http://www.hathitrust.org/privacy">Privacy</a></li>

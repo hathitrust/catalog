@@ -290,6 +290,14 @@ class SearchStructure
           $this->addOOBFilter('ht_availability', 'Full text');
         }
 
+#### HACK  FOR ANGELINA ####
+
+      if (isset($_REQUEST['onlyso'])) {
+         $this->addOOBFilter('ht_availability', 'Search only');
+      }
+
+
+
      }
     
     function fillInstFilter($hash) {

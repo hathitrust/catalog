@@ -236,6 +236,18 @@ series:
     - [and, 50]
 #    - [or, ~]
 
+seriestitle:
+  - series:
+    - [onephrase, 500]
+    - [and, 200]
+#    - [or, 100]
+  - series2:
+    - [onephrase, 50]
+    - [and, 50]
+#    - [or, ~]
+
+
+
 language:
   - language:
     - [and, 5]

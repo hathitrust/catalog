@@ -50,7 +50,7 @@ class RecordUtils {
   function displayable_ht_fields($marc) {
     $ditems = array();
     foreach ($marc->getFields('974') as $f) {
-      if ($f->getSubfield('r')->getData() != 'nobody') {
+      if ($f->getSubfield('r') && $f->getSubfield('r')->getData() != 'nobody') {
         $ditems[] = $f;
       }
     }

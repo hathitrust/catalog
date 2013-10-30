@@ -156,6 +156,10 @@
            {/foreach}
            </h2>
          {/foreach}
+         {if $record.vtitle}
+          <h2>{$record.vtitle}</h2>
+         {/if}
+
          </div>
        </div>
      <!-- End Title -->

@@ -36,6 +36,11 @@
           <span class="results_title2">{$record.title2|truncate:180:"..."|highlight:$lookfor}</span>
           {/if}
 
+          {if $record.vtitle}
+          <br>
+          <span class="results_title2">{$record.vtitle}</span>
+          {/if}
+
           </div>
 
           <div class="resultItemLine2 results_author">

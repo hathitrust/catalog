@@ -5,10 +5,9 @@ SERVERS="moxie-1 rootbeer-1"
 
 DATE=`date '+%Y%m%d%H%M_%S'`
 DEPLOYDIR="/htapps/catalog/releases/$DATE"
-SYMLINKDIR="/htapps/catalog/webtest"
+SYMLINKDIR="/htapps/catalog/web"
 
 ### DEBUG ###
-SERVERS="moxie-1"
 #SERVERS="waffle"
 #DEPLOYDIR="/tmp/releases/$DATE"
 #SYMLINKDIR="/tmp/web"

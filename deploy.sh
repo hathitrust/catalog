@@ -15,20 +15,23 @@ SERVERS="moxie-1"
 
 ##############
 
+echo
+echo Latest tag:
+git tags | tail -1
+TAG=`git describe --abbrev=0`
+echo
+echo 
+read -n 1 -r -p "Use tag $TAG? (Y/N) "
 
-TAG=$1
+echo
 
-# The script to run
-COMMANDS="
-   cd $DEPLOYDIR;  
-   tar xzf -;
-   $DEPLOYDIR/derived_data/getall.sh  $DEPLOYDIR/derived_data/
-   rm $SYMLINKDIR;
-   ln -s $DEPLOYDIR $SYMLINKDIR;
-   mkdir -p $DEPLOYDIR; 
-";
-
-
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  TAG=$TAG; # no op
+else
+  echo "Aborting..."
+  exit
+fi
 
 
 
@@ -36,6 +39,8 @@ function deploy() {
   git archive --format=tar $TAG | ssh $1 "mkdir -p $DEPLOYDIR && cd $DEPLOYDIR &&  tar xf -"
   ssh $1 <<EOF
   $DEPLOYDIR/derived_data/getall.sh  $DEPLOYDIR/derived_data/
+  mkdir $DEPLOYDIR/interface/compile
+  chmod 777 $DEPLOYDIR/interface/compile
   rm -f $SYMLINKDIR
   ln -s $DEPLOYDIR $SYMLINKDIR;
 EOF

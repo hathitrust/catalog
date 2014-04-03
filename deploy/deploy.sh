@@ -12,12 +12,20 @@ SYMLINKDIR="/htapps/catalog/web"
 
 
 ### DEBUG ###
-#SERVERS="waffle"
-#DEPLOYDIR="/tmp/releases/$DATE"
-#SYMLINKDIR="/tmp/web"
+SERVERS="waffle"
+DEPLOYDIR="/tmp/releases/$DATE"
+SYMLINKDIR="/tmp/web"
 #SYMLINKDIR="/htapps/catalog/webtest"
 ##############
 
+
+function verify_tag() {
+  if [[ "$1" = `git describe --exact-match "$1" 2>/dev/null` ]]; then
+    return 0; # true
+  else
+    return 1; # false
+  fi
+}
 
 function rollback() {
   for i in $SERVERS; do
@@ -60,7 +68,7 @@ git tags | tail -4
 TAG=`git describe --abbrev=0`
 echo
 echo 
-read -n 1 -r -p "Use tag $TAG? (Y/N) "
+read -n 1 -r -p "Using tag $TAG. OK? (Y/N) "
 
 echo
 
@@ -68,23 +76,37 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
   TAG=$TAG; # no op
 else
-  echo "Aborting..."
-  exit
+  read -r -p "What tag to use? > "
+  if verify_tag $REPLY; then
+    TAG=$REPLY;
+    echo "Using tag $TAG"
+  else
+    echo "Tag $REPLY does not exist. Aborting."
+    exit;
+  fi
 fi
 
-
-function deploy() {
-  git archive --format=tar $TAG | ssh $1 "mkdir -p $DEPLOYDIR && cd $DEPLOYDIR &&  tar xf -"
-  ssh $1 <<EOF
+COMMANDS=<<EOF
+echo Running commands
   $DEPLOYDIR/derived_data/getall.sh  $DEPLOYDIR/derived_data/
   mkdir $DEPLOYDIR/interface/compile
   chmod 777 $DEPLOYDIR/interface/compile
   rm -f $SYMLINKDIR
   ln -s $DEPLOYDIR $SYMLINKDIR;
 EOF
+
+COMMANDS=`cat post_deploy.sh`
+
+
+# deploy tag host script
+
+function deploy() {
+  git archive --format=tar $1 | ssh $2 "mkdir -p $DEPLOYDIR && cd $DEPLOYDIR &&  tar xf -"
+  echo Running $3
+  ssh $2 "$3"
 }
 
 for server in $SERVERS; do 
-  deploy $server;
+  deploy $TAG $server $COMMANDS;
 done
 

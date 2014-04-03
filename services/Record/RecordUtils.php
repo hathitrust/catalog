@@ -66,16 +66,17 @@ class RecordUtils {
   // }
 
   function ht_link_data($field) {
-    global $HT_NAMESPACES;
+    global $HT_COLLECTIONS;
     $rv = array();
     $rc = $field->getSubfield('r')->getData();
     $rv['rights_code'] = $rc;
 
     $handle = $field->getSubfield('u')->getData();
     $rv['handle'] = $handle;
-
-    $namespace = preg_filter('/\..*$/', '', $handle);
-    $rv['original_from'] = $HT_NAMESPACES[$namespace];
+    
+    $collection = $field->getSubfield('c')->getData();
+    $collection = strtolower($collection);
+    $rv['original_from'] = $HT_COLLECTIONS[$collection]['original_from'];
 
     $rv['enumchron'] = $field->getSubfield('z') ? $field->getSubfield('z')->getData() : '';
     $rv['is_fullview'] = $this->is_fullview($rv['rights_code']);

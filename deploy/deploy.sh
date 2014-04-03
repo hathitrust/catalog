@@ -1,21 +1,14 @@
 #!/bin/bash
 
 SERVERS="moxie-1 rootbeer-1"
-
-
-DATE=`date '+%Y%m%d%H%M_%S'`
 DEPLOYROOT="/htapps/catalog/releases"
-DEPLOYDIR="$DEPLOYROOT/$DATE"
-
-
 SYMLINKDIR="/htapps/catalog/web"
 
 
 ### DEBUG ###
-SERVERS="waffle"
-DEPLOYDIR="/tmp/releases/$DATE"
-SYMLINKDIR="/tmp/web"
-#SYMLINKDIR="/htapps/catalog/webtest"
+#SERVERS="waffle"
+#DEPLOYROOT="/tmp/releases"
+#SYMLINKDIR="/tmp/web"
 ##############
 
 
@@ -86,27 +79,27 @@ else
   fi
 fi
 
-COMMANDS=<<EOF
-echo Running commands
-  $DEPLOYDIR/derived_data/getall.sh  $DEPLOYDIR/derived_data/
-  mkdir $DEPLOYDIR/interface/compile
-  chmod 777 $DEPLOYDIR/interface/compile
-  rm -f $SYMLINKDIR
-  ln -s $DEPLOYDIR $SYMLINKDIR;
-EOF
 
-COMMANDS=`cat post_deploy.sh`
+# Set the deploy directory
+DATE=`date '+%Y%m%d%H%M'`
+DEPLOYDIR="${DEPLOYROOT}/${DATE}_${TAG}"
 
 
 # deploy tag host script
 
 function deploy() {
   git archive --format=tar $1 | ssh $2 "mkdir -p $DEPLOYDIR && cd $DEPLOYDIR &&  tar xf -"
-  echo Running $3
-  ssh $2 "$3"
+  ssh $2 <<EOF
+  touch $DEPLOYDIR/derived_data/TESTTEST
+  $DEPLOYDIR/derived_data/getall.sh  $DEPLOYDIR/derived_data/
+  mkdir $DEPLOYDIR/interface/compile
+  chmod 777 $DEPLOYDIR/interface/compile
+  rm -f $SYMLINKDIR
+  ln -s $DEPLOYDIR $SYMLINKDIR;
+EOF
 }
 
 for server in $SERVERS; do 
-  deploy $TAG $server $COMMANDS;
+  deploy $TAG $server ;
 done
 

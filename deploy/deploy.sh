@@ -100,6 +100,9 @@ EOF
 }
 
 for server in $SERVERS; do 
+  echo "Deploying to $server"
   deploy $TAG $server ;
+  echo "Running getall.sh for $server"
+  ssh $server "/htapps/catalog/web/derived_data/getall.sh" # get all the derived data
 done
 

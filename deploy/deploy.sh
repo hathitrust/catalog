@@ -6,9 +6,9 @@ SYMLINKDIR="/htapps/catalog/web"
 
 
 ### DEBUG ###
-SERVERS="waffle"
-DEPLOYROOT="/tmp/releases"
-SYMLINKDIR="/tmp/web"
+#SERVERS="waffle"
+#DEPLOYROOT="/tmp/releases"
+#SYMLINKDIR="/tmp/web"
 ##############
 
 

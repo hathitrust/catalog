@@ -141,9 +141,15 @@ function abbreviateName($name) {
   if (isset($parts[1])) {
     $fnameParts = explode(' ', $parts[1]);
   }
-  $name = $parts[0] . ', ' . substr($fnameParts[0], 0, 1);
-  array_shift($fnameParts);
-  $name .= '. ' . implode(' ', $fnameParts);
+  if (is_null($parts) || count($parts) == 0) {
+    return '';
+  }
+
+  if (isset($fnameParts, $fnameParts[0])) {
+    $name = $parts[0] . ', ' . substr($fnameParts[0], 0, 1);
+    array_shift($fnameParts);
+    $name .= '. ' . implode(' ', $fnameParts);
+  }
   return trim($name);
 }
 

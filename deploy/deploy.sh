@@ -50,6 +50,18 @@ EOF
 }
 
 
+function re_derive_data() {
+  for server in $SERVERS; do
+    echo "Deriving data for $server"
+    ssh $server "$SYMLINKDIR/derived_data/getall.sh"
+  done
+}
+
+if [[ $1 = 'derive_data' ]]; then
+  re_derive_data
+  exit
+fi
+
 if [[ $1 = 'rollback' ]]; then
   rollback
   exit
@@ -85,19 +97,19 @@ DATE=`date '+%Y%m%d%H%M'`
 DEPLOYDIR="${DEPLOYROOT}/${DATE}_${TAG}"
 
 
-# deploy tag host script
-
 function deploy() {
   git archive --format=tar $1 | ssh $2 "mkdir -p $DEPLOYDIR && cd $DEPLOYDIR &&  tar xf -"
   ssh $2 <<EOF
   touch $DEPLOYDIR/derived_data/TESTTEST
-  $DEPLOYDIR/derived_data/getall.sh  $DEPLOYDIR/derived_data/
+  $DEPLOYDIR/derived_data/getall.sh
   mkdir $DEPLOYDIR/interface/compile
   chmod 777 $DEPLOYDIR/interface/compile
   rm -f $SYMLINKDIR
   ln -s $DEPLOYDIR $SYMLINKDIR;
 EOF
 }
+
+
 
 for server in $SERVERS; do 
   echo "Deploying to $server"

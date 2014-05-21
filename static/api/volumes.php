@@ -74,6 +74,7 @@ $fieldmap = array(
 
 
 
+$ofrommap = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_collections.php'));
 $namespacemap = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_namespaces.php'));
 
 $commonargs = array(
@@ -250,8 +251,8 @@ class QObj
   }
   
   function itemsStructure($docs) {
+    global $ofrommap;
     global $namespacemap;
-    // global $rightsmap;
     
     $ru = new RecordUtils();
     
@@ -262,8 +263,12 @@ class QObj
         $iinfo = array();
 
         $htid = $ht['htid'];
-        preg_match('/(.*?)\./', $htid, $match);
-        $iinfo['orig'] = $namespacemap[$match[1]];
+
+	$ccode = $ht['collection_code'];
+        $iinfo['orig'] = $ofrommap[$ccode]['original_from'];
+
+//        preg_match('/(.*?)\./', $htid, $match);
+//        $iinfo['orig'] = $namespacemap[$match[1]];
 
         $iinfo['fromRecord'] = $docid;
         $iinfo['htid'] = $htid;

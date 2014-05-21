@@ -6,9 +6,9 @@ SYMLINKDIR="/htapps/catalog/web"
 
 
 ### DEBUG ###
-#SERVERS="waffle"
-#DEPLOYROOT="/tmp/releases"
-#SYMLINKDIR="/tmp/web"
+SERVERS="waffle"
+DEPLOYROOT="/tmp/releases"
+SYMLINKDIR="/tmp/web"
 ##############
 
 
@@ -95,12 +95,11 @@ fi
 # Set the deploy directory
 DATE=`date '+%Y%m%d%H%M'`
 DEPLOYDIR="${DEPLOYROOT}/${DATE}_${TAG}"
-
+echo "DEPLOYDIR is $DEPLOYDIR"
 
 function deploy() {
   git archive --format=tar $1 | ssh $2 "mkdir -p $DEPLOYDIR && cd $DEPLOYDIR &&  tar xf -"
   ssh $2 <<EOF
-  touch $DEPLOYDIR/derived_data/TESTTEST
   $DEPLOYDIR/derived_data/getall.sh
   mkdir $DEPLOYDIR/interface/compile
   chmod 777 $DEPLOYDIR/interface/compile
@@ -114,7 +113,5 @@ EOF
 for server in $SERVERS; do 
   echo "Deploying to $server"
   deploy $TAG $server ;
-  echo "Running getall.sh for $server"
-  ssh $server "/htapps/catalog/web/derived_data/getall.sh" # get all the derived data
 done
 

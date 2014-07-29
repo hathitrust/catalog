@@ -476,19 +476,19 @@
     {/if}
 
     {foreach from=$fields item=field}
-      {assign var=ld value=$ru->ht_link_data($field)}      
+      {assign var=ld value=$ru->ht_link_data($field)}
       <li>
         {if 'tombstone'|@in_array:$record.ht_rightscode}
         This item is no longer available (<a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
         {elseif $ld.is_fullview}
-          <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view<span class="IndItem">{$ld.enumchron}</span></a>
+          <a data-hdl="{$ld.handle}" href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view<span class="IndItem">{$ld.enumchron}</span></a>
         {else}
-          <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)<span class="IndItem">{$ld.enumchron}</span></a>
+          <a data-hdl="{$ld.handle}" href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)<span class="IndItem">{$ld.enumchron}</span></a>
         {/if}
         <em class="original_from">(original from {$ld.original_from})</em>
       </li>
     {/foreach}
-  
+
   {/if} {* $mergedItems  *}
   </ul>
 </div>

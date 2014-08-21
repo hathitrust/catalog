@@ -38,7 +38,7 @@ function getGoogleBookInfo(link_nums, record_num, record_counter)
         if ( ! thumbnail_url ) {
           var $link = $cover.parents("div.record,div.result").find("a[data-hdl],span[data-hdl]");
           if ( $link.data('hdl') ) {
-            thumbnail_url = "http://roger-full.babel.hathitrust.org/cgi/imgsrv/cover?id=" + $link.data('hdl');
+            thumbnail_url = '//' + HT.service_domain + "/cgi/imgsrv/cover?id=" + $link.data('hdl');
             if ( window.location.hash == '#debug=covers' ) {
               cls = 'localCover';
             }

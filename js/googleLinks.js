@@ -32,17 +32,16 @@ function getGoogleBookInfo(link_nums, record_num, record_counter)
         //   jQuery("#GoogleCover_" + record_num).show();
         // }
 
-        var thumbnail_url = googleLink.thumbnail_url;
+        var thumbnail_url = null; // googleLink.thumbnail_url;
         var $cover = jQuery("#GoogleCover_" + record_num);
         var cls;
         if ( ! thumbnail_url ) {
-          var $link = $cover.next("div").find("a[data-hdl],span[data-hdl]");
-          if ( ! $link.length ) {
-            $link = jQuery("#accessLinks").find("a[data-hdl]");
-          }
+          var $link = $cover.parents("div.record,div.result").find("a[data-hdl],span[data-hdl]");
           if ( $link.data('hdl') ) {
             thumbnail_url = "http://roger-full.babel.hathitrust.org/cgi/imgsrv/cover?id=" + $link.data('hdl');
-            cls = 'localCover';
+            if ( window.location.hash == '#debug=covers' ) {
+              cls = 'localCover';
+            }
           } else {
             console.log("NO HDL", record_num, $link, $cover);
           }

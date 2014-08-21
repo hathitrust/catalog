@@ -32,7 +32,7 @@ function getGoogleBookInfo(link_nums, record_num, record_counter)
         //   jQuery("#GoogleCover_" + record_num).show();
         // }
 
-        var thumbnail_url = null; // googleLink.thumbnail_url;
+        var thumbnail_url = googleLink.thumbnail_url;
         var $cover = jQuery("#GoogleCover_" + record_num);
         var cls;
         if ( ! thumbnail_url ) {

@@ -137,10 +137,6 @@ class QObj
       $val = trimlower($fv[1]);
       $val = preg_replace('/([\+\-\&|!\()\{}\[\]^\"~\*\?\:\\\\])/', '\\\\$1', $val);
 
-      // 
-      // echo "Q is " . $_REQUEST['q'];
-      // echo "Looking for $field = $val\n";
-
       if (!isset($validField[$field])) {
         #echo "Skipping $field\n";
         continue;
@@ -148,8 +144,6 @@ class QObj
       $fixedval = $validField[$field]($val); // weird call-variable-value-as-name-of-function
       
       // Escape the colons
-      
-      $val = preg_replace('/:/', '\:', $val);
       
       $qfield = isset($fieldmap[$field])? $fieldmap[$field] : $field;
 

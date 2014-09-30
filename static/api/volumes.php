@@ -136,6 +136,7 @@ class QObj
       // error_log("Working on $field for val " . $fv[1]);
       $val = trimlower($fv[1]);
       $val = preg_replace('/([\+\-\&|!\()\{}\[\]^\"~\*\?\:\\\\])/', '\\\\$1', $val);
+//      echo "Val is now '$val'\n\n";
 
       if (!isset($validField[$field])) {
         #echo "Skipping $field\n";
@@ -143,12 +144,11 @@ class QObj
       }
       $fixedval = $validField[$field]($val); // weird call-variable-value-as-name-of-function
       
-      // Escape the colons
-      
       $qfield = isset($fieldmap[$field])? $fieldmap[$field] : $field;
 
       $this->qspecs[] = "$qfield:$val";
       $this->tspecs[] = array($field, $qfield, $fixedval);
+//      print_r($this);
     }
   }
   
@@ -198,7 +198,7 @@ class QObj
           // For an array of vals, it matches if at least one matches
           $gotone = false;
           foreach ($dvals as $d) {
-            if ($d == $qval) {
+            if (($d == $qval) ||($d == preg_replace('/\\\\/', '', $qval))) {
               $gotone = true;
               $match = true;
               //echo "Matched '$d' and '$qval' for '$qfield' against $this->string\n";
@@ -311,6 +311,8 @@ if (!preg_match('/\S/', $q)) {
 // ***** Put this in a try/catch
 $results = $solr->search($q, 0, 200, $commonargs);
 
+echo "\n\n";
+//print_r($results);
 
 # Index the documents;
 $docs = array();

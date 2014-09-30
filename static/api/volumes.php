@@ -135,6 +135,8 @@ class QObj
 
       // error_log("Working on $field for val " . $fv[1]);
       $val = trimlower($fv[1]);
+      $val = preg_replace('/([\+\-\&|!\()\{}\[\]^\"~\*\?\:\\\\])/', '\\\\$1', $val);
+
       // 
       // echo "Q is " . $_REQUEST['q'];
       // echo "Looking for $field = $val\n";

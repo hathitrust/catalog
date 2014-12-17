@@ -32,7 +32,7 @@
   {if $record.lccn}
     {foreach from=$record.lccn item=lccn}
 
-  <owl:sameAs rdf:resource="http://purl.org/NET/lccn/{$lccn}#i">
+  <owl:sameAs rdf:resource="http://purl.org/NET/lccn/{$lccn}#i"/>
   <bibo:lccn>{$lccn}</bibo:lccn>
 
     {/foreach}
@@ -41,7 +41,7 @@
   {if $record.isbn}
     {foreach from=$record.isbn item=isbn}
 
-  <owl:sameAs rdf:resource="http://purl.org/NET/book/isbn/{$isbn}#book">
+  <owl:sameAs rdf:resource="http://purl.org/NET/book/isbn/{$isbn}#book"/>
   <bibo:isbn>{$isbn}</bibo:isbn>
     {/foreach}
   {/if}

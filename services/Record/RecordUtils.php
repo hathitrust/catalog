@@ -102,6 +102,11 @@ class RecordUtils {
     if ($rcode == 'pdus' && $inUSA == false) {
       $fv = false;
     }
+
+    // ...unless UNLESS it's pd-private or pd-pvt
+    if (preg_match('/pd-p/', $rcode)) {
+      $fv = false;
+    }
     
     // ...or it's ICUS and we're *outside* the USA
     

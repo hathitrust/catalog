@@ -361,6 +361,7 @@ if ($_REQUEST['type'] == 'json') {
       header('Content-type: application/javascript; charset=UTF-8');  
       echo $_REQUEST['callback'] . "( $json)";
     } else {
+      header('Access-Control-Allow-Origin: *');
       header('Content-type: application/json; charset=UTF-8');
       echo $json;
     }

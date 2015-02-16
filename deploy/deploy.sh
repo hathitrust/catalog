@@ -22,7 +22,7 @@ function verify_tag() {
 
 function rollback() {
   for i in $SERVERS; do
-    RECENT=`ssh $i ls -1rt $DEPLOYROOT | tail -2 | head -1`
+    RECENT=`ssh -T $i ls -1rt $DEPLOYROOT | tail -2 | head -1`
     echo "Most recent deploys"
     echo
     ssh $i ls -1rt $DEPLOYROOT 
@@ -42,7 +42,7 @@ function rollback() {
   done
   for server in $SERVERS; do
     echo "Working on $server"
-    ssh $server <<EOF
+    ssh -T $server <<EOF
       rm -f $SYMLINKDIR
       ln -s $ROLLBACKDIR $SYMLINKDIR;
 EOF
@@ -53,7 +53,7 @@ EOF
 function re_derive_data() {
   for server in $SERVERS; do
     echo "Deriving data for $server"
-    ssh $server "$SYMLINKDIR/derived_data/getall.sh"
+    ssh $server -T "$SYMLINKDIR/derived_data/getall.sh"
   done
 }
 
@@ -99,7 +99,7 @@ echo "DEPLOYDIR is $DEPLOYDIR"
 
 function deploy() {
   git archive --format=tar $1 | ssh $2 "mkdir -p $DEPLOYDIR && cd $DEPLOYDIR &&  tar xf -"
-  ssh $2 <<EOF
+  ssh -T $2 <<EOF
   $DEPLOYDIR/derived_data/getall.sh
   mkdir $DEPLOYDIR/interface/compile
   chmod 777 $DEPLOYDIR/interface/compile

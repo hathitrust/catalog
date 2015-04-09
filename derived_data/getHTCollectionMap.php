@@ -26,7 +26,7 @@ spl_autoload_register('sample_autoloader');
 
 $host  =  'mysql-sdr';
 $uname =  "vufind";
-$pass  =  "villanova";
+$pass  =  "notvillanova";
 $db    =  "ht";
 
      try {
@@ -35,7 +35,7 @@ $db    =  "ht";
        )); 
        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
      } catch (PDOException $e) {
-       print "Error!: " . $e->getMessage() . "\n$host / $db / $uname/ $pass\n\n";
+       print "Error!: " . $e->getMessage() . "\n$host / $db / $uname\n\n";
        die();
      }
 
@@ -65,30 +65,13 @@ foreach ($output_dirs as $d) {
 # Actual work
 ##################
 
-
-foreach ($dbh->query($sql_text) as $row) {
-  echo "$row[0] => $row[1]";
-}
-
-exit;
-
-
-
-# Bail if we didn't get it -- we'll just keep the last version
-if (!$yamlmap) {
-    exit;
-}
-
-# OK. So now we need to de-yaml it...
-
-$rawmap = Horde_Yaml::load($yamlmap);
-
 # Need them of the form code=>{original_from=>"Dispay Text"}
 
 $map = array();
-foreach ($rawmap as $code => $display) {
-  $map[$code] = array('original_from' => $display);
+foreach ($dbh->query($sql_text) as $row) {
+  $map[$row[0]] = array('original_from' => $row[1]);
 }
+
 $arr_text = 'return ' . var_export($map, true) . ';';
 
 # ... and write a copy to each of the output files

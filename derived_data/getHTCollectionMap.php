@@ -59,7 +59,14 @@ if (!$yamlmap) {
 # OK. So now we need to de-yaml it...
 
 $rawmap = Horde_Yaml::load($yamlmap);
-$arr_text = 'return ' . var_export($rawmap, true) . ';';
+
+# Need them of the form code=>{original_from=>"Dispay Text"}
+
+$map = array();
+foreach ($rawmap as $code => $display) {
+  $map[$code] = array('original_from' => $display);
+}
+$arr_text = 'return ' . var_export($map, true) . ';';
 
 # ... and write a copy to each of the output files
 foreach ($output_files as $filename) {

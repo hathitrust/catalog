@@ -24,10 +24,28 @@ spl_autoload_register('sample_autoloader');
 # Configuration
 ####################
 
-# Where's the file?
-$yaml_machine = 'shotz-2';
-$yaml_path = "/htsolr/catalog/bin/ht_traject/lib/translation_maps/ht/collection_code_to_original_from.yaml";
+$host  =  'mysql-sdr';
+$uname =  "vufind";
+$pass  =  "villanova";
+$db    =  "ht";
 
+     try {
+       $dbh = new PDO("mysql:host=$host;dbname=$db", $uname, $pass, array(
+           // PDO::ATTR_PERSISTENT => true
+       )); 
+       $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+     } catch (PDOException $e) {
+       print "Error!: " . $e->getMessage() . "\n$host / $db / $uname/ $pass\n\n";
+       die();
+     }
+
+
+$sql_text = "
+select lower(collection) as collection_code, 
+       name as display_name 
+from ht_institutions i 
+join ht_collections c on c.original_from_inst_id = i.inst_id 
+order by collection";
 
 # We need to stick a copy in each of the current directory
 # and the orphans directory
@@ -47,9 +65,14 @@ foreach ($output_dirs as $d) {
 # Actual work
 ##################
 
-# Get the file
 
-$yamlmap = `/usr/bin/ssh $yaml_machine cat $yaml_path`;
+foreach ($dbh->query($sql_text) as $row) {
+  echo "$row[0] => $row[1]";
+}
+
+exit;
+
+
 
 # Bail if we didn't get it -- we'll just keep the last version
 if (!$yamlmap) {

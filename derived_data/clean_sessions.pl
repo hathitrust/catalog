@@ -5,7 +5,7 @@ binmode(STDOUT, ':utf8');
 my $db = 'vufind';
 my $user = 'vufind';
 $user = 'dueberb';
-my $pass = 'villanova';
+my $pass = 'notvillanova';
 $pass = 'LlrxdaPa';
 my $host = 'mysql-sdr';
 my $dsn = "DBI:mysql:database=$db;host=$host";

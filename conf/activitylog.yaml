@@ -3,7 +3,7 @@ DBLogging:
     host:  mysql-sdr
     db:   vufind
     username: vufind
-    password: villanova
+    password: notvillanova
     table: activities
       
 LCMap:             

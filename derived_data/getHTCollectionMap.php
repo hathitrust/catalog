@@ -1,8 +1,7 @@
 <?php
 
-# Get the collection map from the aleph machine (irene) and turn
-# it into a php array.
-#
+# Get the mapping from collection codes to display strings
+# and save it as PHP
 
 
 ##########
@@ -25,8 +24,9 @@ spl_autoload_register('sample_autoloader');
 # Configuration
 ####################
 
-# Where is it?
-$yaml_url = 'http://mirlyn-aleph.lib.umich.edu/hathitrust_collection_map.yaml';
+# Where's the file?
+$yaml_machine = 'shotz-2';
+$yaml_path = "/htsolr/catalog/bin/ht_traject/lib/translation_maps/ht/collection_code_to_original_from.yaml";
 
 
 # We need to stick a copy in each of the current directory
@@ -48,7 +48,8 @@ foreach ($output_dirs as $d) {
 ##################
 
 # Get the file
-$yamlmap = file_get_contents($yaml_url);
+
+$yamlmap = `/usr/bin/ssh $yaml_machine cat $yaml_path`;
 
 # Bail if we didn't get it -- we'll just keep the last version
 if (!$yamlmap) {

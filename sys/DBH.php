@@ -23,7 +23,7 @@ class DBH {
        )); 
        self::$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
      } catch (PDOException $e) {
-       print "Error!: " . $e->getMessage() . "<br/> $host / $db / $uname/ $pass";
+       print "Error!: " . $e->getMessage() . "<br/> Can't connect to $db on host $host as $uname";
        die();
      }
    }

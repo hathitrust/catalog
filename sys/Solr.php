@@ -542,6 +542,41 @@ if ($type == 'allTest') {
 //========= BEGIN LOWER-LEVEL STUFF ===================//
 
 
+
+      function asGetIDsURL($args) {
+         $url_base = $this->client->getURL();
+         $params = array();
+         $newargs = array();
+         foreach ($args as $kv) {
+           $key = $kv[0];
+           $val = $kv[1];
+           if ($key == 'fl') {
+              $val = 'ht_id';
+           }
+           if ($key == 'rows') {
+             $val = '200000';
+           }
+           if (preg_match('/spell/', $key)) {
+              continue;
+           }
+           $newargs[] = array($key, $val);
+          }
+    
+          foreach ($newargs as $kv) {
+             $k = $kv[0]; $v = $kv[1];
+             if (is_array($v)) {
+               foreach ($v as $multival) {
+                 $params[] = implode('=', array($k, rawurlencode($multival)));
+               }
+              } else {
+               $params[] = implode('=', array($k, rawurlencode($v)));
+              }
+          }
+
+          return $url_base . '?' . implode('&', $params);
+      }
+
+
      /**
        * __buildQueryString -- internal method to build query string from search parameters
        *
@@ -923,6 +958,24 @@ if ($type == 'allTest') {
 	  }
         }
 
+
+        // Do we just want the IDs? Redirect!
+        if (isset($_REQUEST['htid_list'])) {
+          $solr_search_url = $this->asGetIDsURL($args);
+          header("Content-type: text/plain");
+          $client = new HTTP_Request($solr_search_url, array('useBrackets' => false));
+          $client->addHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+          $result = $client->sendRequest();
+          $json_obj = json_decode($client->getResponseBody(), true);
+          foreach ($json_obj['response']['docs'] as $doc) {
+            foreach ($doc['ht_id'] as $htid) {
+              echo $htid, "\n";
+            }
+          }
+          die();
+          //echo $this->asGetIDsURL($args), "\n\n";
+          //return;
+        }
         
         $result = $this->client->sendRequest();
         if (isset($_REQUEST['debug'])) {

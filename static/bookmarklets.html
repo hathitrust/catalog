@@ -14,7 +14,7 @@
 
 <ul>
   <li>
-    <strong><a href="javascript:(function(){id=$('a[data-hdl]').first().attr('href').toString().match('2027/([^/?]+)')[1];window.location='http://mirlyn.lib.umich.edu/Record/HTID/' + id + '%22'})()">HT2M</a></strong>: 
+    <strong><a href="javascript:(function(){id=$('a[data-hdl]').first().attr('href').toString().match('2027/([^/?]+)')[1];window.location='http://mirlyn.lib.umich.edu/Record/HTID/' + id})()">HT2M</a></strong>: 
     Find the current record in Mirlyn. Only works from the <em>Single Record</em> page.</li>
 <li><strong><a 
 href="javascript:(function(){id=$('a[data-hdl]').first().attr('href').toString().match('2027/([^/?]+)')[1];window.location='http://mirlyn-classic.lib.umich.edu/F/?func=find-b&find_code=WRD&request=%22' + id + '%22'})()">HT2MC</a></strong>, a <em>new</em> HT2MC that uses the
@@ -28,7 +28,7 @@ may not be the same as the MARC used by the HathiTrust!</em>.</li>
 <li><strong><a href="javascript:(function()%7Bid=window.location.toString().match('%5C%5Cd+')%5B0%5D;window.location='http://catalog.hathitrust.org/Record/'+id+'.json'%7D)()">HT_JSON</a></strong>, for a marc-in-json view of the MARC. Most useful if you're running something like <a href="https://chrome.google.com/webstore/detail/chklaanhfefbnpoihckbnefhakgolnmc">JSONView</a>.</li>
 <li><strong><a href="javascript:(function()%7Bid=window.location.toString().match('%5C%5Cd+')%5B0%5D;window.location='http://catalog.hathitrust.org/Record/'+id+'.xml'%7D)()">HT_XML</a></strong>, for a MARC-XML view of the MARC. Most useful if you're running something like <a href="https://chrome.google.com/webstore/detail/gbammbheopgpmaagmckhpjbfgdfkpadb">XMLTree</a>.</li>
 </ul>
-<li><strong><a href="javascript:(function()%7Bwindow.location=window.location+'&htid_list'">HTID_List</a></strong>: Redirect to a list of HT volume IDs (one per line) for all the volumes attached to records in the current search. Only works from the <em>Search Results</em> page.</li>
+<li><strong><a href="javascript:(function()%7Bwindow.location=window.location+'&amp;htid_list'%7D)()">HTID_List</a></strong>: Redirect to a list of HT volume IDs (one per line) for all the volumes attached to records in the current search. Only works from the <em>Search Results</em> page.</li>
 </ul>
 </body>
 </html>

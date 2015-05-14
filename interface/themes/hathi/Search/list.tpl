@@ -142,7 +142,9 @@
         <div class="pagination clearfix">{$pageLinks.all}</div>
       </div>
       <div class="searchtools">
+{*
         <!-- <a href="{$url}/Search/{$action}?lookfor={$lookfor|escape}&amp;type={$type}&amp;view=rss" class="feed">{translate text='Get RSS Feed'}</a> -->
+
 
         <!-- fixme:suz RSS doesn't work so well <a href="" id="RSSFeed">{translate text='Get RSS Feed'}</a>
         <script language="JavaScript" type="text/javascript">
@@ -152,7 +154,7 @@
           jq('#RSSFeed').attr('href', loc)
         </script>
       -->
-        <a href="#" class="mail" id="emailSearch_lower" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search bottom');">{translate text='Email this Search'}</a>
+        <a href="#" class="mail" id="emailSearch_lower" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search bottom');">{translate text='Email this Search'}</a> *}
       </div>
     </div>
     <!-- End Main Listing -->

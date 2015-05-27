@@ -126,16 +126,22 @@ class SearchExport {
   function marc() {
     return $this->marc_pretty();
   }
-  
-  
+
+
   function marc_pretty() {
-    header("Content-type: text/plain; charset=UTF-8");
+    global $interface;
+
+    header("Content-type: text/html; charset=UTF-8");
     foreach ($this->results['record'] as $rawr) {
       $marc = $this->ru->getMarcRecord($rawr);
-      echo "$marc";
+      $interface->assign('title', $rawr['title'][0]);
       break; # only return one
     }
-    
+    $interface->assign('marc', $marc);
+    $interface->assign('fields', $marc->getFields());
+    echo $interface->fetch("Record/marc_pretty.tpl");
+
+
   }
 
   function marcfirst() {
@@ -174,7 +180,7 @@ class SearchExport {
      global $interface;
      header('Content-type: $contenttype; charset=UTF-8');
      $r = $this->results['record'][0];
-   
+
      // Standardize the numbers
       foreach (array('isbn') as $num) {
        if (isset($r[$num])) {

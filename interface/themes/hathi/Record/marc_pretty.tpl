@@ -10,7 +10,6 @@
         background-color: #eee
       }
       .code {
-        padding-left: 1em;
       }
       .tag {
         font-weight: bold;
@@ -18,20 +17,19 @@
       .vdata {
         padding-left: 1em;
       }
-      .firstsub td {
-        padding-top: 0.25em;
+      td {
+        padding-top: 0.0em;
         border-top: 1pt solid #444;
       }
       table {
         margin-bottom: 5em;
         border-bottom: 1pt solid #444;
-      }
+        line-height: 125%;
 
-      .inner td {
-        padding-top: 0em;
       }
 
       .code {
+        padding-left: 0.25em;
         font-weight: bold;
         color: #a00;
         padding-right: 0.15em;

@@ -36,6 +36,7 @@ class QObj
 
 
   public $namespacemap; 
+  public $ht_collections;
 
 
   public $validField = array(
@@ -56,6 +57,7 @@ class QObj
     
     $this->string = $str;
     $this->namespacemap =  eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_namespaces.php'));
+    $this->ht_collections =  eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_collections.php'));
     
     $specs = explode(';', $str);
     foreach ($specs as $spec) {
@@ -154,7 +156,7 @@ class QObj
 
         $htid = $ht['htid'];
         preg_match('/(.*?)\./', $htid, $match);
-        $iinfo['orig'] = $this->namespacemap[$match[1]];
+        $iinfo['orig'] = $this->ht_collections[$ht['collection_code']]['original_from'];
 
         $iinfo['fromRecord'] = $docid;
         $iinfo['htid'] = $htid;

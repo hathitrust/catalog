@@ -70,6 +70,7 @@ class RecordUtils {
     global $HT_COLLECTIONS;
     $rv = array();
     $rc = $e['rights'];
+    $rv['rights_code'] = $rc;
     $rv['handle'] = $e['htid'];
     $collection = $e['collection_code'];
     $rv['original_from'] = $HT_COLLECTIONS[$collection]['original_from'];

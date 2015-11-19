@@ -473,10 +473,13 @@
       {assign var="fields" value=$ru->ht_fields($marc)}
     {else}
       {assign var="fields" value=$ru->displayable_ht_fields($marc)}
+
+{assign var="htjson" value=$record.ht_json|json_decode:true}
+
     {/if}
 
-    {foreach from=$fields item=field}
-      {assign var=ld value=$ru->ht_link_data($field)}
+   {foreach from=$htjson item=e}
+     {assign var=ld value=$ru->ht_link_data_from_json($e)}
       <li>
         {if 'tombstone'|@in_array:$record.ht_rightscode}
         This item is no longer available (<a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)

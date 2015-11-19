@@ -65,6 +65,19 @@ class RecordUtils {
   //   original_from => "whatever",
   // }
 
+
+  function ht_link_data_from_json($e) {
+    global $HT_COLLECTIONS;
+    $rv = array();
+    $rc = $e['rights'];
+    $rv['handle'] = $e['htid'];
+    $collection = $e['collection_code'];
+    $rv['original_from'] = $HT_COLLECTIONS[$collection]['original_from'];
+    $rv['enumchron'] = $e['enumcron'];
+    $rv['is_fullview'] = $this->is_fullview($rv['rights_code']);
+    return $rv;
+  }
+
   function ht_link_data($field) {
     global $HT_COLLECTIONS;
     $rv = array();

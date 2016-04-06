@@ -478,13 +478,8 @@
 
     {/if}
 
-<<<<<<< HEAD
    {foreach from=$htjson item=e}
      {assign var=ld value=$ru->ht_link_data_from_json($e)}
-=======
-    {foreach from=$fields item=field}
-      {assign var=ld value=$ru->ht_link_data($field)}      
->>>>>>> 0b3423f... Delete cruft; remove trailing spaces
       <li>
         {if 'tombstone'|@in_array:$record.ht_rightscode}
         This item is no longer available (<a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
@@ -496,7 +491,7 @@
         <em class="original_from">(original from {$ld.original_from})</em>
       </li>
     {/foreach}
-  
+
   {/if} {* $mergedItems  *}
   </ul>
 </div>

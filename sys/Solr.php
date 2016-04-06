@@ -923,12 +923,16 @@ if ($type == 'allTest') {
 	  }
         }
 
+        
         $result = $this->client->sendRequest();
         if (isset($_REQUEST['debug'])) {
           echo '<div style="text-align: left">';
+          echo "<h1>Solr URL</h1>";
+          echo $this->asGetURL($args);
+          echo "</pre>";
+          echo "<hr>";
+          echo "<h1>Request object</h1>";
           echo "<pre>";
-          print_r($args);
-          echo "</pre><hr><pre>";
           print_r($this->client);
           echo "</pre>";
           echo "</div>";
@@ -947,6 +951,30 @@ if ($type == 'allTest') {
         }
 
     }
+
+    /**
+      * Print out a "get" url for a solr query
+      *
+      *
+     */
+
+    function asGetURL($args) {
+       $url_base = $this->client->getURL();
+       $params = array();
+       foreach ($args as $kv) {
+          $k = $kv[0]; $v = $kv[1];
+          if (is_array($v)) {
+            foreach ($v as $multival) {
+              $params[] = implode('=', array($k, rawurlencode($multival)));
+            }
+           } else {
+            $params[] = implode('=', array($k, rawurlencode($v)));
+           }
+       }
+       
+       return $url_base . '?' . implode('&', $params);
+     }
+
 
     /**
      * Retrieves a document specified by the ID.

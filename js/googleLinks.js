@@ -31,17 +31,32 @@ function getGoogleBookInfo(link_nums, record_num, record_counter)
         //   jQuery("#GoogleCover_" + record_num).html(googleLink.thumbnailImg);
         //   jQuery("#GoogleCover_" + record_num).show();
         // }
-        if (googleLink.thumbnail_url) {
+
+        var thumbnail_url = googleLink.thumbnail_url;
+        var $cover = jQuery("#GoogleCover_" + record_num);
+        var cls;
+        if ( ! thumbnail_url ) {
+          var $link = $cover.parents("div.record,div.result").find("a[data-hdl],span[data-hdl]");
+          if ( $link.data('hdl') ) {
+            thumbnail_url = '//' + HT.service_domain + "/cgi/imgsrv/cover?id=" + $link.data('hdl');
+            if ( window.location.hash == '#debug=covers' ) {
+              cls = 'localCover';
+            }
+          } else {
+            console.log("NO HDL", record_num, $link, $cover);
+          }
+        }
+        if (thumbnail_url) {
           img = jQuery('<img class="bookCover fromGoogle" aria-hidden="true" alt="">');
           img.load(function() {
             img = jQuery(this);
-            owidth = img.attr('width');
+            owidth = img.get(0).width;
             if (owidth > 75) {
               img.attr('width', 75);
-              img.attr('height', img.attr('height') * (75/owidth));
+              img.attr('height', img.get(0).height * (75/owidth));
             }
-            jQuery("#GoogleCover_" + record_num).empty().append(img).show();
-          }).attr('src', googleLink.thumbnail_url);
+            $cover.empty().append(img).show();
+          }).attr('src', thumbnail_url).addClass(cls);
         }
       }
     );          // end of callback

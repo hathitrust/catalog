@@ -28,7 +28,7 @@
             <span class="title">{$title|truncate:180:"..."|highlight:$lookfor|default:'Title not available'}</span><br>            {/foreach}
           {else}
 <!-- title non-array -->
-          <!-- <a href="{$url}/Record/{$record.id}" class="title">{$record.title|truncate:180:"..."|highlight:$lookfor|default:'Title not aavailable'}</a> -->
+          <!-- <a href="/Record/{$record.id}" class="title">{$record.title|truncate:180:"..."|highlight:$lookfor|default:'Title not aavailable'}</a> -->
           <span class="title">{$record.title|truncate:180:"..."|highlight:$lookfor|default:'Title not aavailable'}</span>
           
           {/if}
@@ -90,7 +90,7 @@
                     
                     {php}break;{/php} 
                     {else}
-<a target="ht_pageturner_{$url}" href="http://hdl.handle.net/2027/{$url}" class="rights-{$field|getvalue:'r'} 
+<a target="ht_pageturner_{$url}" href="https://hdl.handle.net/2027/{$url}" class="rights-{$field|getvalue:'r'} 
   {if $session->get('inUSA')}
     {if $field|getvalue:'r' eq 'pd'}fulltext">Full view
       {elseif $field|getvalue:'r' eq 'pdus'}fulltext">Full view
@@ -159,11 +159,11 @@
             <tr>
               <td class="holdingLocation">{$holding.location}</td>
             {if $holding.status eq 'See holdings'}
-              <td><a href="{$url}/Record/{$record.id}/Holdings#holdings">{$holding.status}</a></td>
+              <td><a href="/Record/{$record.id}/Holdings#holdings">{$holding.status}</a></td>
             {elseif $location eq 'ELEC'}
               <td><a target=link href="{$holding.link}">{$holding.status}</a></td>
             {elseif $location eq 'HATHI'}
-              <td><a target=link href=http://hdl.handle.net/2027/{$holding.id}>{$holding.status}</a></td>
+              <td><a target=link href=https://hdl.handle.net/2027/{$holding.id}>{$holding.status}</a></td>
             {else}
               <td>{$holding.status}</td>
             {/if}
@@ -184,7 +184,7 @@
   
       <!--<div class="yui-u">
         <div id="saveLink{$record.id}"> -->
-<!--          <a href="{$url}/Record/{$record.id}/Save" onClick="getLightbox('Record', 'Save', '{$record.id}', null, '{translate text="Add to Favorites"}'); return false;" class="fav tool">{translate text='Add to favorites'}</a> -->
+<!--          <a href="/Record/{$record.id}/Save" onClick="getLightbox('Record', 'Save', '{$record.id}', null, '{translate text="Add to Favorites"}'); return false;" class="fav tool">{translate text='Add to favorites'}</a> -->
        <!--  <a href="#" onClick="fillLightbox('favorite_help'); return false;;return false;" class="fav tool">{translate text='Add to favorites'}</a>
 
         </div>

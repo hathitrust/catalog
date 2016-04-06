@@ -290,7 +290,7 @@ class Home extends Action {
         $rlink = '/' . $link; 	// rlink used to build record-level paging urls
         $options = array('totalItems' => $result['RecordCount'],
                          'mode' => 'loggingPager',
-                         'path' => $configArray['Site']['url'],
+                         'path' => '/',
                          'fileName' => $link,
                          'delta' => 5,
                          'perPage' => $limit,

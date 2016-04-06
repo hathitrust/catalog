@@ -85,7 +85,7 @@ if ( (strlen($_SERVER['REQUEST_URI']) <=1) &&
      ($sname != $configArray['Site']['mobile_machine']) &&
      mobile_device_detect()
    ) {
-     header("Location: http://" . $configArray['Site']['mobile_machine'] . "/");
+     header("Location: //" . $configArray['Site']['mobile_machine'] . "/");
      exit();
 }
 
@@ -95,7 +95,7 @@ if ( (strlen($_SERVER['REQUEST_URI']) <=1) &&
 
 
 if (($sname == $configArray['Site']['mobile_machine']) || (isset($_REQUEST['force_mobile']))) {
-  $configArray['Site']['url'] = 'http://' . $configArray['Site']['mobile_machine'];
+  $configArray['Site']['url'] = 'https://' . $configArray['Site']['mobile_machine'];
   $configArray['Site']['theme'] = $configArray['Site']['mobile_theme'];
 }
 
@@ -331,7 +331,7 @@ $interface->assign('userLang', $language);
 if ($session->is_set('inst')) {
   $interface->assign('inst', $session->get('inst'));
 }
-$interface->assign('path', $configArray['Site']['url']);
+// $interface->assign('path', $configArray['Site']['url']);
 $interface->assign('module', $module);
 $interface->assign('action', $action);
 $interface->assign('user', $user);

@@ -1232,7 +1232,7 @@ table.datagrid tr.oddrow {
 
 /* line 1031, ../sass/hathi.scss */
 .sms {
-  background-image: url(http://catalog.hathitrust.org/images/silk/phone.png);
+  background-image: url(https://catalog.hathitrust.org/images/silk/phone.png);
   background-repeat: no-repeat;
   background-position: left;
   padding: .5em;
@@ -1241,7 +1241,7 @@ table.datagrid tr.oddrow {
 
 /* line 1038, ../sass/hathi.scss */
 .tag {
-  background-image: url(http://catalog.hathitrust.org/images/silk/tag_blue.png);
+  background-image: url(https://catalog.hathitrust.org/images/silk/tag_blue.png);
   background-repeat: no-repeat;
   background-position: left;
   padding: .5em;
@@ -1289,7 +1289,7 @@ table.datagrid tr.oddrow {
 
 /* line 1062, ../sass/hathi.scss */
 .fav {
-  /*  background-image:url(http://catalog.hathitrust.org/images/silk/heart.png);
+  /*  background-image:url(https://catalog.hathitrust.org/images/silk/heart.png);
     background-repeat:no-repeat;
     background-position: left;
     padding:.5em .5em .5em 20px;
@@ -1298,7 +1298,7 @@ table.datagrid tr.oddrow {
 
 /* line 1069, ../sass/hathi.scss */
 .edit {
-  background-image: url(http://catalog.hathitrust.org/images/silk/edit.png);
+  background-image: url(https://catalog.hathitrust.org/images/silk/edit.png);
   background-repeat: no-repeat;
   background-position: left;
   padding: 0.5em 0 0.5em 18px;
@@ -1307,7 +1307,7 @@ table.datagrid tr.oddrow {
 
 /* line 1076, ../sass/hathi.scss */
 .delete {
-  background-image: url(http://catalog.hathitrust.org/images/silk/delete.png);
+  background-image: url(https://catalog.hathitrust.org/images/silk/delete.png);
   background-repeat: no-repeat;
   background-position: left;
   padding: 0.5em 0.5em 0.5em 18px;
@@ -1341,7 +1341,7 @@ table.datagrid tr.oddrow {
 
 /* line 1094, ../sass/hathi.scss */
 .add {
-  background-image: url(http://catalog.hathitrust.org/images/silk/add.png);
+  background-image: url(https://catalog.hathitrust.org/images/silk/add.png);
   background-repeat: no-repeat;
   background-position: left;
   padding: 0.5em 0.5em 0.5em 18px;
@@ -1408,21 +1408,21 @@ table.datagrid tr.oddrow {
   margin-right:1em;
 }
 .map {
-  background-image:url(http://catalog.hathitrust.org/images/silk/map.png);
+  background-image:url(https://catalog.hathitrust.org/images/silk/map.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em;
 }
 .globe {
-  background-image:url(http://catalog.hathitrust.org/images/silk/world.png);
+  background-image:url(https://catalog.hathitrust.org/images/silk/world.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
   margin-right:1em;
 }
 .slide {
-  background-image:url(http://catalog.hathitrust.org/images/silk/photo.png);
+  background-image:url(https://catalog.hathitrust.org/images/silk/photo.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -1438,7 +1438,7 @@ table.datagrid tr.oddrow {
 }
 
 .photo {
-  background-image:url(http://catalog.hathitrust.org/images/silk/picture.png);
+  background-image:url(https://catalog.hathitrust.org/images/silk/picture.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -1503,7 +1503,7 @@ table.datagrid tr.oddrow {
 }
 
 .kit {
-  background-image:url(http://catalog.hathitrust.org/images/silk/package.png);
+  background-image:url(https://catalog.hathitrust.org/images/silk/package.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -1511,7 +1511,7 @@ table.datagrid tr.oddrow {
 }
 
 .musicalscore {
-  background-image:url(http://catalog.hathitrust.org/images/silk/music.png);
+  background-image:url(https://catalog.hathitrust.org/images/silk/music.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -1539,7 +1539,7 @@ table.datagrid tr.oddrow {
 .physicalobject {
 }
 .manuscript {
-  background-image:url(http://catalog.hathitrust.org/images/silk/report_edit.png);
+  background-image:url(https://catalog.hathitrust.org/images/silk/report_edit.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;
@@ -1563,7 +1563,7 @@ table.datagrid tr.oddrow {
 
 
 .book {
-  background-image:url(http://catalog.hathitrust.org/images/silk/book.png);
+  background-image:url(https://catalog.hathitrust.org/images/silk/book.png);
   background-repeat:no-repeat;
   background-position: left;
   padding:.5em .5em .5em 20px;

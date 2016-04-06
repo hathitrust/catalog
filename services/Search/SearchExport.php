@@ -326,7 +326,7 @@ class SearchExport {
             if ($ecron) {
               $htid .= " (" . $ecron->getData() . ")";
             }
-            array_push($lines, $line . "http://hdl.handle.net/2027/$htid");
+            array_push($lines, $line . "https://hdl.handle.net/2027/$htid");
           }
           continue;
         }

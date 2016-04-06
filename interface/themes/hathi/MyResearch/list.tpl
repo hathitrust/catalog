@@ -16,17 +16,17 @@
             {/if}
               <div class="yui-ge">
                 <div class="yui-u first">
-                  <img src="{$path}/bookcover.php?isn={$resource.isbn|truncate:10:""}&size=small" class="alignleft">
+                  <img src="/bookcover.php?isn={$resource.isbn|truncate:10:""}&size=small" class="alignleft">
 
                   <div class="resultitem">
-                    <a href="{$url}/Record/{$resource.id}" class="title">{$resource.title}</a><br>
+                    <a href="/Record/{$resource.id}" class="title">{$resource.title}</a><br>
                     {if $resource.author}
-                    {translate text='by'}: <a href="{$url}/Author/Home?author={$resource.author}">{$resource.author}</a><br>
+                    {translate text='by'}: <a href="/Author/Home?author={$resource.author}">{$resource.author}</a><br>
                     {/if}
                     {if $resource.tags}
                     {translate text='Your Tags'}:
                     {foreach from=$resource.tags item=tag name=tagLoop}
-                      <a href="{$url}/Search/Home?tag={$tag->tag}">{$tag->tag}</a>{if !$smarty.foreach.tagLoop.last},{/if}
+                      <a href="/Search/Home?tag={$tag->tag}">{$tag->tag}</a>{if !$smarty.foreach.tagLoop.last},{/if}
                     {/foreach}
                     <br>
                     {/if}
@@ -40,8 +40,8 @@
                 </div>
 
                 <div class="yui-u">
-                  <a href="{$url}/MyResearch/Edit?id={$resource.id}" class="edit tool">{translate text='Edit'}</a>
-                  <a href="{$url}/MyResearch/Home?delete={$resource.id}" class="delete tool" onClick="confirm('Are you sure you want to delete this?');">{translate text='Delete'}</a>
+                  <a href="/MyResearch/Edit?id={$resource.id}" class="edit tool">{translate text='Edit'}</a>
+                  <a href="/MyResearch/Home?delete={$resource.id}" class="delete tool" onClick="confirm('Are you sure you want to delete this?');">{translate text='Delete'}</a>
                 </div>
               </div>
             </li>
@@ -59,7 +59,7 @@
           <ul>
           {foreach from=$tags item=tag}
             <li>{translate text='Tag'}: {$tag}</li>
-            <a href="{$url}/MyResearch/Home?{foreach from=$tags item=mytag}{if $tag != $mytag}tag[]={$mytag}&{/if}{/foreach}">X</a>
+            <a href="/MyResearch/Home?{foreach from=$tags item=mytag}{if $tag != $mytag}tag[]={$mytag}&{/if}{/foreach}">X</a>
           {/foreach}
           </ul>
           {/if}
@@ -67,7 +67,7 @@
           <ul>
           {foreach from=$tagList item=tag}
             <li>
-              <a href="{$url}/MyResearch/Home?tag[]={$tag->tag}{foreach from=$tags item=mytag}&tag[]={$mytag}{/foreach}">{$tag->tag}</a> ({$tag->cnt})
+              <a href="/MyResearch/Home?tag[]={$tag->tag}{foreach from=$tags item=mytag}&tag[]={$mytag}{/foreach}">{$tag->tag}</a> ({$tag->cnt})
             </li>
           {/foreach}
           </ul>

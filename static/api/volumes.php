@@ -228,7 +228,7 @@ class QObj
     foreach ($this->matches as $docid) {
       $doc = $docs[$docid];
       $rinfo = array();
-      $rinfo['recordURL'] = 'http://catalog.hathitrust.org/Record/' . $docid;
+      $rinfo['recordURL'] = '/Record/' . $docid;
       foreach (array('title', 'isbn', 'issn', 'oclc', 'lccn', 'publishDate') as $index) {
         if (isset($doc->$index)) {
           $vals = is_array($doc->$index)? $doc->$index : array($doc->$index);
@@ -267,7 +267,7 @@ class QObj
 
         $iinfo['fromRecord'] = $docid;
         $iinfo['htid'] = $htid;
-        $iinfo['itemURL'] = "http://hdl.handle.net/2027/" . $htid;
+        $iinfo['itemURL'] = "https://hdl.handle.net/2027/" . $htid;
         $iinfo['rightsCode'] = isset($ht['rights']) ? $ht['rights'] : 'ic';
         $iinfo['lastUpdate'] = $ht['ingest'];
         $iinfo['enumcron'] = (isset($ht['enumcron']) && preg_match('/\S/', $ht['enumcron']))? $ht['enumcron'] : false;
@@ -422,7 +422,7 @@ function enumsort($a, $b) {
 //       {
 //         "000366004":
 //           {
-//             "recordURL" : "http://catalog.hathitrust.org/Record/000366004",
+//             "recordURL" : "https://catalog.hathitrust.org/Record/000366004",
 //             "titles": ["The Sneetches, and other stories. Written and illustrated by Dr. Seuss."],
 //             "isbns": [],
 //             "issns": [],
@@ -434,7 +434,7 @@ function enumsort($a, $b) {
 //       {
 //         "fromRecord": "000366004",
 //         "htid": "mdp.39015079651611",
-//         "itemURL": "http://hdl.handle.net/2027/mdp.39015079651611",
+//         "itemURL": "https://hdl.handle.net/2027/mdp.39015079651611",
 //         "rightscode": "ic",
 //         "lastUpdate": "20091004",
 //         "orig": "University of Michigan",

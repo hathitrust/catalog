@@ -1,5 +1,5 @@
-<script language="JavaScript" type="text/javascript" src="{$path}/services/Record/ajax.js"></script>
-<script language="JavaScript" type="text/javascript" src="{$path}/js/googleLinks.js"></script>
+<script language="JavaScript" type="text/javascript" src="/services/Record/ajax.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/googleLinks.js"></script>
 
 
 <div id="bd" style="width: 100%">
@@ -14,7 +14,7 @@
              {else}{assign var=similarTitle value=$similar.title}{/if}
              <li>
                <span class="{$similar.format|lower|replace:" ":""}">
-               <a href="{$url}/Record/{$similar.id}">{$similarTitle}</a>
+               <a href="/Record/{$similar.id}">{$similarTitle}</a>
                </span>
                <span style="font-size: .9em">
 
@@ -36,7 +36,7 @@
                {foreach from=$editions item=edition}
                <li>
                  <span class="{$similar.format|lower|replace:" ":""}">
-                 <a href="{$url}/Record/{$edition.id}">{$edition.title}</a>
+                 <a href="/Record/{$edition.id}">{$edition.title}</a>
                  </span>
                  {$edition.edition}
                  {if $edition.publishDate}({$edition.publishDate}){/if}
@@ -64,19 +64,19 @@
 
        <h3 class="SkipLink">Tools</h3>
        <ul class="ToolLinks">
-         <li><a href="{$url}/Record/{$id}/Cite" class="cite" onClick="getLightbox('Record', 'Cite', '{$id}', null, '{translate text="Cite this"}'); return false;">{translate text="Cite this"}</a></li>
+         <li><a href="/Record/{$id}/Cite" class="cite" onClick="getLightbox('Record', 'Cite', '{$id}', null, '{translate text="Cite this"}'); return false;">{translate text="Cite this"}</a></li>
          <li><a class="endnotelink" href="/Search/SearchExport?handpicked={$id}&amp;method=ris" onClick="pageTracker._trackEvent('recordActions', 'click', 'Endnote');">Export to Endnote</a></li>
        </ul>
 
        <div class="recordnav">
          {if $previous}
-         <a href="{$url}{$previous|regex_replace:"/&/":"&amp;"}" class="goto-previous-record">{translate text="Previous record"}</a>
+         <a href="{$previous|regex_replace:"/&/":"&amp;"}" class="goto-previous-record">{translate text="Previous record"}</a>
          {/if}
          {if $current}
          {translate text="$current"}
          {/if}
          {if $next}
-         <a href="{$url}{$next|regex_replace:"/&/":"&amp;"}" class="goto-next-record">{translate text="Next record"}</a>
+         <a href="{$next|regex_replace:"/&/":"&amp;"}" class="goto-next-record">{translate text="Next record"}</a>
          {/if}
        </div>
      <br>
@@ -116,7 +116,7 @@
     <th>{translate text='New Title'}: </th>
     <td>
       {foreach from=$marcField item=field name=loop}
-        <a href="{$url}/Search/Home?lookfor=%22{$field|getvalue:'s'}{$field|getvalue:'t'}%22&type=title&amp;inst={$inst}">{$field|getvalue:'s'}{$field|getvalue:'t'}</a><br>
+        <a href="/Search/Home?lookfor=%22{$field|getvalue:'s'}{$field|getvalue:'t'}%22&type=title&amp;inst={$inst}">{$field|getvalue:'s'}{$field|getvalue:'t'}</a><br>
       {/foreach}
     </td>
   </tr>
@@ -128,7 +128,7 @@
     <th>{translate text='Previous Title'}: </th>
     <td>
       {foreach from=$marcField item=field name=loop}
-        <a href="{$url}/Search/Home?lookfor=%22{$field|getvalue:'s'}{$field|getvalue:'t'}%22&type=title&amp;inst={$inst}">{$field|getvalue:'s'}{$field|getvalue:'t'}</a><br>
+        <a href="/Search/Home?lookfor=%22{$field|getvalue:'s'}{$field|getvalue:'t'}%22&type=title&amp;inst={$inst}">{$field|getvalue:'s'}{$field|getvalue:'t'}</a><br>
       {/foreach}
     </td>
   </tr>
@@ -141,7 +141,7 @@
   {if $marcField}
   <tr valign="top">
     <th>{translate text='Main Author'}: </th>
-    <td><a href="{$url}/Search/Home?lookfor=%22{$marcField|getvalue:'a'}{if $marcField|getvalue:'b'} {$marcField|getvalue:'b'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}{if $marcField|getvalue:'b'} {$marcField|getvalue:'b'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}</a></td>
+    <td><a href="/Search/Home?lookfor=%22{$marcField|getvalue:'a'}{if $marcField|getvalue:'b'} {$marcField|getvalue:'b'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}{if $marcField|getvalue:'b'} {$marcField|getvalue:'b'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}</a></td>
   </tr>
   {/if}
 
@@ -149,7 +149,7 @@
   {if $marcField}
   <tr valign="top">
     <th>{translate text='Corporate Author'}: </th>
-    <td><a href="{$url}/Search/Home?lookfor=%22{$marcField|getvalue:'a'|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}</a></td>
+    <td><a href="/Search/Home?lookfor=%22{$marcField|getvalue:'a'|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}</a></td>
   </tr>
   {/if}
 
@@ -159,7 +159,7 @@
     <th>{translate text='Other Authors'}: </th>
     <td>
       {foreach from=$marcField item=field name=loop}
-        <a href="{$url}/Search/Home?lookfor=%22{$field|getvalue:'a'}{if $field|getvalue:'b'} {$field|getvalue:'b'}{/if}{if $field|getvalue:'c'} {$field|getvalue:'c'}{/if}{if $field|getvalue:'d'} {$field|getvalue:'d'}{/if}%22&amp;type=author&amp;inst={$inst}">{$field|getvalue:'a'} {$field|getvalue:'b'} {$field|getvalue:'c'} {$field|getvalue:'d'}</a>{if !$smarty.foreach.loop.last}, {/if}
+        <a href="/Search/Home?lookfor=%22{$field|getvalue:'a'}{if $field|getvalue:'b'} {$field|getvalue:'b'}{/if}{if $field|getvalue:'c'} {$field|getvalue:'c'}{/if}{if $field|getvalue:'d'} {$field|getvalue:'d'}{/if}%22&amp;type=author&amp;inst={$inst}">{$field|getvalue:'a'} {$field|getvalue:'b'} {$field|getvalue:'c'} {$field|getvalue:'d'}</a>{if !$smarty.foreach.loop.last}, {/if}
       {/foreach}
     </td>
   </tr>
@@ -211,7 +211,7 @@
     <th>{translate text='Series'}: </th>
     <td>
       {foreach from=$marcField item=field name=loop}
-        <a href="{$url}/Search/Home?lookfor=%22{$field|getvalue:'a'|escape}%22&amp;type=series&amp;inst={$inst}">{$field|getvalue:'a'}</a><br>
+        <a href="/Search/Home?lookfor=%22{$field|getvalue:'a'|escape}%22&amp;type=series&amp;inst={$inst}">{$field|getvalue:'a'}</a><br>
       {/foreach}
     </td>
   </tr>
@@ -229,9 +229,9 @@
           {assign var=hlbb value=$field->getSubfield('b')}
           {assign var=hlba value=$hlba->getData()}
           {assign var=hlbb value=$hlbb->getData()}
-          <a href="{$url}/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb_both:%22{$hlba|escape:"url"}%22&amp;inst={$inst}">{$hlba|escape}</a>
+          <a href="/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb_both:%22{$hlba|escape:"url"}%22&amp;inst={$inst}">{$hlba|escape}</a>
           &gt;
-          <a href="{$url}/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb_both:%22{$hlbb|escape:"url"}%22&amp;inst={$inst}">{$hlbb|escape}</a>
+          <a href="/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb_both:%22{$hlbb|escape:"url"}%22&amp;inst={$inst}">{$hlbb|escape}</a>
           <br>
         {/foreach}
 
@@ -252,7 +252,7 @@
             {if $subject} &gt; {/if}
             {assign var=subfield value=$subfield->getData()}
             {assign var=subject value="$subject $subfield"}
-            <a href="{$url}/Search/Home?lookfor=%22{$subject|escape}%22&amp;type=subject&amp;inst={$inst}">{$subfield}</a>
+            <a href="/Search/Home?lookfor=%22{$subject|escape}%22&amp;type=subject&amp;inst={$inst}">{$subfield}</a>
            {/if}
           {/foreach}
           <br>

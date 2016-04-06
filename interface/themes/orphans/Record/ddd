@@ -1,4 +1,4 @@
                     {assign var=hlba value=$marcField->getSubfield('a')->getData()}
                     {assign var=hlbb value=$marcField->getSubfield('b')->getData()}
                     {assign var=hlbc value=$marcField->getSubfield('c')->getData()}
-                    <a href="{$url}/Search/Home?lookfor=%22{$hlba|escape:"url"}*%22&amp;type=hlb">{$hlba}</a>
+                    <a href="/Search/Home?lookfor=%22{$hlba|escape:"url"}*%22&amp;type=hlb">{$hlba}</a>

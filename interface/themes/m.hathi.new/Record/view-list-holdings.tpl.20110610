@@ -15,20 +15,20 @@
 				{* todo - not sure about this, cutting for now...
 	   			<a class="clickpostlog" 
 					ref="rechathi|{$item.id}|hathi|{$item.status}" 
-				    target="link" href="http://hdl.handle.net/2027/{$item.id}">Limited Access</a> <br/> *}
+				    target="link" href="https://hdl.handle.net/2027/{$item.id}">Limited Access</a> <br/> *}
 				    {* [Full view available to authenticated UM users and in some UM Libraries ...  
 				    <i><a class="dolightbox" href="#section108">more</a></i> ] *}
-				{*<a *}{*ref="rechathi|{$item.id}|hathi|{$item.status}"*}{* target="link" href="http://hdl.handle.net/2027/{$item.id}">Limited Access</a>*}
+				{*<a *}{*ref="rechathi|{$item.id}|hathi|{$item.status}"*}{* target="link" href="https://hdl.handle.net/2027/{$item.id}">Limited Access</a>*}
 				{* [Full view available to authenticated UM users and in some UM Libraries ...<i><a class="dolightbox" href="#section108">more</a></i> ] *}                                   
 				
-				<a target="link" href="http://hdl.handle.net/2027/{$item.id}">Limited Access</a>
+				<a target="link" href="https://hdl.handle.net/2027/{$item.id}">Limited Access</a>
 				{*<a  target="link" href="https://babel.hathitrust.org/cgi/imgsrv/pdf?id={$item.id}">Limited Access</a>*}
 				{*<span>PDF not available</span>*}
 			{else}
 				{if $item.status=='Search only (no full text)'}
 					<span>{translate text='Search only limited'}</span>
 				{else}
-					<a target="link" href="http://hdl.handle.net/2027/{$item.id}">{$item.status}</a>
+					<a target="link" href="https://hdl.handle.net/2027/{$item.id}">{$item.status}</a>
 					{*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*}
 					{*<a id="fullPdfLink" bookId='{$item.id}' title="Download full PDF" data-tracking-action="PT Download PDF - whole book" data-tracking-category="PT" rel="allow" target="link" href="https://beta-2.babel.hathitrust.org/cgi/imgsrv/pdf?id={$item.id}" >Full&nbsp;PDF</a>*}
 					{*{if isset($smarty.get.loggedin)}*}
@@ -39,7 +39,7 @@
 						<a id="fullPdfLink" bookId='{$item.id}' title="Download PDF"  href="https://bkammin.babel.hathitrust.org/cgi/imgsrv/download?id={$item.id}" >Get&nbsp;PDF</a>
 						<div id="fullPdfFrame"></div>
 					{*{else}
-						<a id="wayfLoginLink" href="http://babel.hathitrust.org/cgi/wayf?target={$url}{$smarty.server.REQUEST_URI}&loggedin=true" >Partner&nbsp;Login&nbsp;for&nbsp;Full&nbsp;PDF</a>
+						<a id="wayfLoginLink" href="https://babel.hathitrust.org/cgi/wayf?target={$url}{$smarty.server.REQUEST_URI}&loggedin=true" >Partner&nbsp;Login&nbsp;for&nbsp;Full&nbsp;PDF</a>
 					{/if}*}
 					<div id="fullEpubDownload{$bookId|replace:'.':''}"></div>
 				{/if}

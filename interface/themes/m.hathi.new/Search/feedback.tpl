@@ -9,7 +9,7 @@
 
 <div class="bd">
   <div class="feedback_form">
-    <form method="post" id="HTfeedback" name="HTfeedback" action="http://babel.hathitrust.org/cgi/feedback">
+    <form method="post" id="HTfeedback" name="HTfeedback" action="https://babel.hathitrust.org/cgi/feedback">
       <label>HathiTrust Mobile Feedback Form</label>
       <input type="hidden" value="ht" name="m">
       <input type="hidden" value="{$return}" name="return">

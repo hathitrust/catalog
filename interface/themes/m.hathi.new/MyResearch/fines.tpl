@@ -30,7 +30,7 @@
             {else}
             <tr class="result">
             {/if}
-            {if $resource.title}<td><a href="{$url}/Record/{$resource.id}" class="title">{$resource.title[0]}</a></td>
+            {if $resource.title}<td><a href="/Record/{$resource.id}" class="title">{$resource.title[0]}</a></td>
             {else}<td></td>{/if}
             {if $resource.fine_description}<td>{$resource.fine_description}</a></td>
             {else}<td></td>{/if}

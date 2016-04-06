@@ -4,7 +4,7 @@
       <div class="record">
         <!-- Suggestions? -->
         {if $newPhrase}
-        <p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p>
+        <p class="correction">{translate text='Did you mean'} <a href="/Search/{$action}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p>
         {/if}
 
         <p class="error">Your

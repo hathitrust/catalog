@@ -90,9 +90,9 @@
                 {else}
                   {assign var=ld value=$ru->ht_link_data($dfields[0])}
                   {if $ld.is_fullview}
-                    <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view</a>
+                    <a href="https://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view</a>
                   {else}
-                    <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)</a>
+                    <a href="https://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)</a>
                   {/if}
                 {/if}  
                </li>

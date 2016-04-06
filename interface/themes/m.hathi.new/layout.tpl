@@ -66,7 +66,7 @@
 			{/literal}
 		</script>
 
-		<link rel="stylesheet" type="text/css" charset="utf-8" href="{$path}/interface/themes/{$configArray.Site.theme}/css/htm-concat-min.css" />
+		<link rel="stylesheet" type="text/css" charset="utf-8" href="/interface/themes/{$configArray.Site.theme}/css/htm-concat-min.css" />
 
 	</head>
 
@@ -84,9 +84,9 @@
     			}
     		</script>{/literal}
     		</div>
-			<span style="color:black">Mobile</span> | <a href="http://www.hathitrust.org/?mdetect=no">Regular Site</a>
+			<span style="color:black">Mobile</span> | <a href="https://www.hathitrust.org/?mdetect=no">Regular Site</a>
 			<br />
-			<a href="/Search/Feedback?currenturl={$smarty.server.REQUEST_URI|escape:'url'}">Feedback</a> | <a href="http://www.hathitrust.org/help_mobile">Help</a> | <a href="http://www.hathitrust.org/take_down_policy">Takedown</a>
+			<a href="/Search/Feedback?currenturl={$smarty.server.REQUEST_URI|escape:'url'}">Feedback</a> | <a href="https://www.hathitrust.org/help_mobile">Help</a> | <a href="https://www.hathitrust.org/take_down_policy">Takedown</a>
 			<br />
 
 			{if $smarty.server.REMOTE_ADDR eq "141.211.43.161" || $smarty.server.REMOTE_ADDR eq "141.211.43.160"}

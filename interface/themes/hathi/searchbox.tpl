@@ -11,10 +11,10 @@
           <div>
             <span style="position: absolute; right: 2em;">
                 {if $username}
-                    <a href="{$path}/MyResearch/Home" title="Account information for {$username}">My Account</a> |
-                    <a href="{$path}/MyResearch/Logout">{translate text="Log Out"}</a></span>
+                    <a href="/MyResearch/Home" title="Account information for {$username}">My Account</a> |
+                    <a href="/MyResearch/Logout">{translate text="Log Out"}</a></span>
                 {else}
-                  <a href="{$path}/MyResearch/Home" title="Log in and view your  account information">My Account</a> |
+                  <a href="/MyResearch/Home" title="Log in and view your  account information">My Account</a> |
                   <a href="{$loginURL}">{translate text="Login"}</a>
                 {/if}
             </span>
@@ -25,7 +25,7 @@
 
 
       <form method="GET" id="searchForm"
-            action="{$path}/Search/Home" name="searchForm" class="search"
+            action="/Search/Home" name="searchForm" class="search"
             onsubmit="trimForm(this.lookfor); return true;">
         <div id="searchGraphic">
           <img src="/images/hathi/SearchArrow_Cat.png" alt="Catalog Search">
@@ -66,20 +66,20 @@
 
 
           <!-- fixme:suz hidden until advanced search can work better -->
-            <!-- <a style="padding-right: 2.5em; position: relative; " href="{$path}/Search/Advanced/{$inst}" class="small">{translate text="Advanced"}</a>           -->
+            <!-- <a style="padding-right: 2.5em; position: relative; " href="/Search/Advanced/{$inst}" class="small">{translate text="Advanced"}</a>           -->
 
             <span id="searchLinks">
-              <a href="{$path}/Search/Advanced">{translate text="Advanced Catalog Search"}</a>
+              <a href="/Search/Advanced">{translate text="Advanced Catalog Search"}</a>
               <a href="#" id="searchTips">Search Tips</a>
             </span>
 
         <!--
             <span style="position: absolute; right: 2em;">
             {if $username}
-                <a href="{$path}/MyResearch/Home&amp;inst={$inst}" title="Account information for {$username}">Your Account</a> |
-                <a href="{$path}/MyResearch/Logout">{translate text="Log Out"}</a></span>
+                <a href="/MyResearch/Home&amp;inst={$inst}" title="Account information for {$username}">Your Account</a> |
+                <a href="/MyResearch/Logout">{translate text="Log Out"}</a></span>
              {else}
-                <a href="{$path}/MyResearch/Home" title="Log in and view your  account information">My Account</a> |
+                <a href="/MyResearch/Home" title="Log in and view your  account information">My Account</a> |
                  <a href="{$loginURL}&amp;inst={$inst}">{translate text="Login"}</a>
              {/if}
           </span>
@@ -91,8 +91,8 @@
            <div style="margin-left: 5em; margin-right: 2em;">
 
            {if $username}
-              <a href="{$path}/MyResearch/Home&amp;inst={$inst}" title="Account information for {$username}">Your Account</a> |
-              <a href="{$path}/MyResearch/Logout">{translate text="Log Out"}</a></span>
+              <a href="/MyResearch/Home&amp;inst={$inst}" title="Account information for {$username}">Your Account</a> |
+              <a href="/MyResearch/Logout">{translate text="Log Out"}</a></span>
            {else}
                <a href="{$loginURL}&amp;inst={$inst}">{translate text="Login"}</a>
            {/if}

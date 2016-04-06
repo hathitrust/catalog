@@ -41,7 +41,7 @@
            </div>
           </form>
 
-          <div class="advSearch"><a href="{$path}/Search/Advanced">{translate text="Advanced Catalog Search"}</a></div>
+          <div class="advSearch"><a href="/Search/Advanced">{translate text="Advanced Catalog Search"}</a></div>
 
         </div>
         <h4>Search Tips:</h4>

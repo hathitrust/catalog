@@ -54,7 +54,7 @@ class UInterface extends Smarty
 
         $this->assign('site', $configArray['Site']);
         $this->assign('path', $configArray['Site']['path']);
-        $this->assign('url', $configArray['Site']['url']);
+        // $this->assign('url', $configArray['Site']['url']);
 
         $this->assign('fullPath', $_SERVER['REQUEST_URI']);
         $this->assign('fullPath_esc', preg_replace('/&/', '&amp;', $_SERVER['REQUEST_URI']));

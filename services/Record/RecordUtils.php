@@ -103,7 +103,7 @@ class RecordUtils {
     }
    
     // ...unless-UNLESS it's pd-pvt
-    if (preg_match('/pd-p/', $rcode) {
+    if (preg_match('/pd-p/', $rcode)) {
       $fv = false;
     }
     

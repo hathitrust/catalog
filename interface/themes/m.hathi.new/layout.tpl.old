@@ -63,11 +63,11 @@
 			{/literal}
 		</script>
 		{*
-		<link rel="stylesheet" type="text/css" charset="utf-8" href="{$path}/interface/themes/{$configArray.Site.theme}/css/mobilemirlyn.css" />
-		<link rel="stylesheet" type="text/css" charset="utf-8" href="{$path}/interface/themes/{$configArray.Site.theme}/css/download_helper.css" />
+		<link rel="stylesheet" type="text/css" charset="utf-8" href="/interface/themes/{$configArray.Site.theme}/css/mobilemirlyn.css" />
+		<link rel="stylesheet" type="text/css" charset="utf-8" href="/interface/themes/{$configArray.Site.theme}/css/download_helper.css" />
 		<link rel="stylesheet" type="text/css" charset="utf-8" href="/js/boxy/boxy.css" /> 
 		*}
-		<link rel="stylesheet" type="text/css" charset="utf-8" href="{$path}/interface/themes/{$configArray.Site.theme}/css/htm-concat-min.css" />
+		<link rel="stylesheet" type="text/css" charset="utf-8" href="/interface/themes/{$configArray.Site.theme}/css/htm-concat-min.css" />
 		
 	</head>
 

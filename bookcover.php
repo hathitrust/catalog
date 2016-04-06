@@ -129,7 +129,7 @@ function google()
     global $configArray;
 
     if (is_callable('json_decode')) {
-        $url = 'http://books.google.com/books?jscmd=viewapi&' .
+        $url = 'https://books.google.com/books?jscmd=viewapi&' .
                'bibkeys=ISBN:' . $_GET['isn'] . '&callback=addTheCover';
         $client = new HTTP_Request();
         $client->setMethod(HTTP_REQUEST_METHOD_GET);

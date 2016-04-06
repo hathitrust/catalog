@@ -7,7 +7,7 @@ function getGoogleBookInfo(link_nums, record_num, record_counter)
   if (link_nums.length > 0 ) {
     // call the google api with the collected link numbers
     //alert(link_nums);
-    var api_url ="http://books.google.com/books?jscmd=viewapi&bibkeys=" + link_nums + "&callback=?";
+    var api_url ="https://books.google.com/books?jscmd=viewapi&bibkeys=" + link_nums + "&callback=?";
     //alert("calling script: " + api_url);
     jQuery.getJSON(api_url,
       function(gdata) {

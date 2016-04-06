@@ -18,7 +18,7 @@
 
           <h2>Utilities</h2>
           <dl>
-            <dt><a href="{$url}/Admin/Records?util=deleteSuppressed">Delete Suppressed Records</a></dt>
+            <dt><a href="/Admin/Records?util=deleteSuppressed">Delete Suppressed Records</a></dt>
             <dd>This process will delete any suppressed records from the VuFind Index.</dd>
 
             <dt>Process Authority Records</dt>

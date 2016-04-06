@@ -27,7 +27,7 @@
       <script type="text/javascript">document.loginForm.username.focus();</script>
 
       {if $authMethod != 'LDAP'}
-      <a href="{$url}/MyResearch/Account">Create New Account</a>
+      <a href="/MyResearch/Account">Create New Account</a>
       {/if}
       </div>
 

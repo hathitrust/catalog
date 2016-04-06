@@ -15,9 +15,9 @@
 include("./static/phase2/php/newheader_top2.php");
 {/php}
 
-    <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">
-    <link rel="stylesheet" type="text/css" media="screen" href="{$path}/interface/themes/umichwebsite_feedback/css/styles.css">
-    <link rel="stylesheet" type="text/css" media="print" href="{$path}/interface/themes/umichwebsite_feedback/css/print.css">
+    <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="/Search/OpenSearch?method=describe">
+    <link rel="stylesheet" type="text/css" media="screen" href="/interface/themes/umichwebsite_feedback/css/styles.css">
+    <link rel="stylesheet" type="text/css" media="print" href="/interface/themes/umichwebsite_feedback/css/print.css">
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <script language="JavaScript" type="text/javascript">
       path = '{$url}';
@@ -66,14 +66,14 @@ function hideMenu(elemId)
     </script>
 
 
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/yui/yahoo-dom-event.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/yui/yahoo-min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/yui/event-min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/yui/connection-min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/yui/dragdrop-min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/scripts.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/rc4.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/ajax.yui.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/yui/yahoo-dom-event.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/yui/yahoo-min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/yui/event-min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/yui/connection-min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/yui/dragdrop-min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/scripts.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/rc4.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/ajax.yui.js"></script>
   </head>
 
 
@@ -234,7 +234,7 @@ include("./static/phase2/php/newheader_bottom2.php");
 
       <!--<div id="hd">-->
         <!-- Your header. Could be an include. -->
-        <!--<a href="{$url}"><img src="{$path}/images/vufind.jpg" alt="vufinder"></a>-->
+        <!--<a href="/"><img src="/images/vufind.jpg" alt="vufinder"></a>-->
       <!--</div>-->
 
 
@@ -244,7 +244,7 @@ include("./static/phase2/php/newheader_bottom2.php");
         <div class="yui-main">
           <div class="searchbox">
             <div class="yui-b">
-              <form method="GET" action="{$path}/Search/Home" name="searchForm" class="search" onsubmit="trimForm(this.lookfor); return true;">
+              <form method="GET" action="/Search/Home" name="searchForm" class="search" onsubmit="trimForm(this.lookfor); return true;">
                 <input type="hidden" name="checkspelling" value="true" />
                 <input type="text" name="lookfor" size="30" value="{$lookfor|escape:"html"}">
                 <select name="type">
@@ -259,9 +259,9 @@ include("./static/phase2/php/newheader_bottom2.php");
                   <!-- <option value="tag"{if $type == 'tag'} selected{/if}>Tag</option> -->
                 </select>
                 <input type="submit" name="submit" value="{translate text="Find"}">
-                <a href="{$path}/Search/Advanced" class="small">{translate text="Advanced"}</a>
+                <a href="/Search/Advanced" class="small">{translate text="Advanced"}</a>
 
-                <a style="color: darkgreen; padding-left: 3em;" href="mailto:mirlyn2-beta-feedback@umich.edu?subject=Mirlyn2 Beta Feedback">Provide Feedback<img style="vertical-align: text-bottom" src="{$path}/static/umichwebsite/images/feedback_icon.jpg"></a>
+                <a style="color: darkgreen; padding-left: 3em;" href="mailto:mirlyn2-beta-feedback@umich.edu?subject=Mirlyn2 Beta Feedback">Provide Feedback<img style="vertical-align: text-bottom" src="/static/umichwebsite/images/feedback_icon.jpg"></a>
                 {if $lookfor }
                 <br>
                 <input type="radio" name="search" value="new" checked="on"> New Search
@@ -274,10 +274,10 @@ include("./static/phase2/php/newheader_bottom2.php");
         </div>
           <div class="yui-b" style="padding-top: 20px">
             {if $user}
-              <a href="{$path}/MyResearch/Home">{translate text="Your Account"}</a> |
-              <a href="{$path}/MyResearch/Logout">{translate text="Log Out"}</a>
+              <a href="/MyResearch/Home">{translate text="Your Account"}</a> |
+              <a href="/MyResearch/Logout">{translate text="Log Out"}</a>
             {else}
-              <!-- <a href="{$path}/MyResearch/Home">{translate text="Login"}</a> -->
+              <!-- <a href="/MyResearch/Home">{translate text="Login"}</a> -->
               <a href="#" onclick="fillLightbox('login_help');return false;">{translate text="Login"}</a>
             {/if}
             <!-- <br>
@@ -304,16 +304,16 @@ include("./static/phase2/php/newheader_bottom2.php");
 <a name="footer"></a>
           <div><p><strong>Search Options</strong></p>
             <ul>
-<!--              <li><a href="{$path}/Search/History">Search History</a></li> -->
+<!--              <li><a href="/Search/History">Search History</a></li> -->
               <li><a href="#" onclick="fillLightbox('searchhistory_help');return false;">Search History</a></li>
-              <li><a href="{$path}/Search/Advanced">Advanced Search</a></li>
+              <li><a href="/Search/Advanced">Advanced Search</a></li>
             </ul>
           </div>
         <div><p><strong>Find More</strong></p>
           <ul>
-              <!-- <li><a href="{$path}/Browse/Home">Browse the Catalog</a></li> -->
+              <!-- <li><a href="/Browse/Home">Browse the Catalog</a></li> -->
               <li><a href="#" onclick="fillLightbox('browse_help');return false;">Browse the Catalog</a></li>
-              <!-- <li><a href="{$path}/Search/Reserves">Course Reserves</a></li> -->
+              <!-- <li><a href="/Search/Reserves">Course Reserves</a></li> -->
               <li><a href="http://mirlyn.lib.umich.edu/F/?local_base=miu30_pub">Course Reserves</a></li>
               <li><a href="http://www.lib.umich.edu/newbooks/">New Items</a></li>
 
@@ -325,7 +325,7 @@ include("./static/phase2/php/newheader_bottom2.php");
         <div><p><strong>Need Help?</strong></p>
           <ul>
               <li><a href="#" onclick="fillLightbox('searchtips_help');return false;">Search Tips</a></li>
-              <!-- <li><a href="{$path}/Help/Home?topic=search">Search Tips</a></li> -->
+              <!-- <li><a href="/Help/Home?topic=search">Search Tips</a></li> -->
               <li> <a href="http://www.lib.umich.edu/ask/">Ask a Librarian</a></li>
             </ul>
         </div>

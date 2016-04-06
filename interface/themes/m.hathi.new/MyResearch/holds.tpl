@@ -28,7 +28,7 @@
             <div class="yui-u first">
               <div class="resultitem">
                 <input type="checkbox" name="hold_rec_key[]" value="{$record.hold_rec_key}">
-                <a href="{$url}/Record/{$record.id}" class="title">{$record.title[0]}</a><br>
+                <a href="/Record/{$record.id}" class="title">{$record.title[0]}</a><br>
                 {if $record.author}
                   {translate text='by'}: {$record.author[0]}<br>
                 {/if}

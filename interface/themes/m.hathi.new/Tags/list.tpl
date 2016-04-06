@@ -1,5 +1,5 @@
-<script language="JavaScript" type="text/javascript" src="{$path}/services/Search/ajax.js"></script>
-<script language="JavaScript" type="text/javascript" src="{$path}/js/googleLinks.js"></script>
+<script language="JavaScript" type="text/javascript" src="/services/Search/ajax.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/googleLinks.js"></script>
 
 {literal}
 <script type="text/javascript" charset="utf-8">

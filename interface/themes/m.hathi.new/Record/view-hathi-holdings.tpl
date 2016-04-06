@@ -11,7 +11,7 @@
 
   <li class="holding_container linkeditemrightarrow">
 
-  <a href="http://babel.hathitrust.org/cgi/pt?id={$ld.handle};skin=mobile" class="rights-{$ld.rights_code}">
+  <a href="https://babel.hathitrust.org/cgi/pt?id={$ld.handle};skin=mobile" class="rights-{$ld.rights_code}">
   <div class="gotopt">
 
     {if 'tombstone'|@in_array:$record.ht_rightscode}

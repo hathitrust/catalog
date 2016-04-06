@@ -18,7 +18,7 @@
         <ul style="padding-left:20px;">
           <li><a href="">Add Records</a></li>
           <li><a href="">Update/Delete Record</a></li>
-          <li><a href="{$url}/Admin/Records?util=deleteSuppressed">Delete Suppressed</a></li>
+          <li><a href="/Admin/Records?util=deleteSuppressed">Delete Suppressed</a></li>
           <li><a href="">Update Authority</a></li>
         </ul>
         {/if}

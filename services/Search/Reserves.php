@@ -81,7 +81,7 @@ class Reserves extends Action {
             $link = strstr($link, '/Search');
             $options = array('totalItems' => $result['RecordCount'],
                              'mode' => 'sliding',
-                             'path' => $configArray['Site']['url'],
+                             'path' => '/',
                              'fileName' => $link,
                              'delta' => 5,
                              'perPage' => 20,

@@ -13,7 +13,7 @@
 		<a href="{$base_url}/MyResearch/CheckedOut" >{translate text='Checked Out Items'}</a>
 	</li>	
 	<li class="linkeditemrightarrow">
-	    <a href="{$path}/MyResearch/Logout">{translate text="Log Out"}</a>
+	    <a href="/MyResearch/Logout">{translate text="Log Out"}</a>
 	</li>
 </ul>
 

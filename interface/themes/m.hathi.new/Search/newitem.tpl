@@ -30,7 +30,7 @@
           <input type="submit" name="submit" value="Find">
         </form>
 
-        <p align="center"><a href="{$url}/Search/NewItem/RSS">New Item Feed</a></p>
+        <p align="center"><a href="/Search/NewItem/RSS">New Item Feed</a></p>
 
       </div>
     </div>

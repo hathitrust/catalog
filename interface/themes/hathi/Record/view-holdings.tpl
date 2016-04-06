@@ -132,7 +132,7 @@ function holdings_toggle(prefix)
   <td>{$item.status}</td>
    {if $item.can_request}
    <td>-->
-     <!-- <a href="{$url}/Record/{$id}/Hold/{$item.barcode}">Get this</a> -->
+     <!-- <a href="/Record/{$id}/Hold/{$item.barcode}">Get this</a> -->
      <!--<a href="#" onclick="fillLightbox('{$id}-getthis');return false;">Get this</a>
      <div id="{$id}-getthis" style="display: none">
        <div style="text-align: left; padding: 1em;">

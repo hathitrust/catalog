@@ -69,7 +69,7 @@
             </div>
 
         <div class="SearchForm">
-          <form name="searchcoll" action="http://babel.hathitrust.org/cgi/ls" id="itemlist_searchform">
+          <form name="searchcoll" action="https://babel.hathitrust.org/cgi/ls" id="itemlist_searchform">
           <div>
             <label for="srch" class="skipLink">Content Search </label>
             <input class="searchterms" type="text" value="" name="q1">
@@ -90,7 +90,7 @@
         <p><strong>Boolean Searching:</strong> Use AND and OR between words to combine them with Boolean logic: e.g., heart OR cardiac  will find items containing the word heart or the word cardiac;  heart AND cardiac will find items containing both words. Use a minus (-) to remove words from the result e.g., heart &nbsp;-cardiac will find items containing the word  heart that do not include the word cardiac. </p>
 
         <h5>Note</h5>
-        <p>Full-text search does not currently include functionality in use elsewhere in HathiTrust (e.g., there is no sorting or collection-related functionality). Read more about our <a href="http://www.hathitrust.org/large_scale_search">"large-scale search"</a>.
+        <p>Full-text search does not currently include functionality in use elsewhere in HathiTrust (e.g., there is no sorting or collection-related functionality). Read more about our <a href="https://www.hathitrust.org/large_scale_search">"large-scale search"</a>.
       </div>
     </div>
 
@@ -106,60 +106,33 @@
 
         <p class="FindDesc">Browse, search, or make HathiTrust collections.</p>
 
-        <form method="link" action="http://babel.hathitrust.org/cgi/mb?a=listcs;colltype=pub">
+        <form method="link" action="https://babel.hathitrust.org/cgi/mb?a=listcs;colltype=pub">
           <input type="submit" value="View Public Collections">
         </form>
 
-        <p>Collections are a way to group items for private or public use. Once grouped, you can search the full-text of all items within a collection. More information about <a href="http://www.hathitrust.org/faq#Build">creating collections</a>.</p>
+        <p>Collections are a way to group items for private or public use. Once grouped, you can search the full-text of all items within a collection. More information about <a href="https://www.hathitrust.org/faq#Build">creating collections</a>.</p>
 
 
         <h4>Featured Collection:</h4>
 
         <div id="featured">
-          <!-- <div class="itemList">
-            <a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=622231186"><img src="http://babel.hathitrust.org/u/umpress/graphics/hathiTrust_ump.jpg" alt="" class="imgLeft"></a>
-            <h5><a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=622231186">UM Press</a></h5>
-            <p><a href="http://www.lib.umich.edu/spec-coll/"><a href="http://press.umich.edu/">Univ. of Michigan Press</a>'s full-text titles available in HathiTrust </p>
-          </div> -->
-
-
-          <!-- Removed 4/28/10 -->
-          <!-- <div class="itemList">
-            <a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=503653486"><img src="/images/hathi/featuredCols/Patent.jpg" alt="" class="imgLeft"></a>
-            <h5><a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=503653486">Patent Indexes</a></h5>
-            <p>Collection of currently available volumes of the Annual report of the Commissioner of Patents</p>
-          </div>
-
           <div class="itemList">
-            <a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=1874608773"><img src="http://babel.hathitrust.org/m/moaa-cb1/graphics/MOAA.jpg" alt="" class="imgLeft"></a>
-            <h5><a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=1874608773">Ann Arbor History</a></h5>
-            <p>History and development of the Ann Arbor Community.</p>
-          </div>
-
-          <div class="itemList">
-            <a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=464226859"><img src="/images/hathi/featuredCols/Henty1.jpg" alt="" class="imgLeft"></a>
-            <h5><a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=464226859">Adventure Novels: G.A. Henty</a></h5>
-            <p>Novels from the <a href="http://www.lib.umich.edu/spec-coll/">U-M Special Collections'</a> Henty Collection and books about George A. Henty</p>
-          </div>
-          -->
-
-          <div class="itemList">
-            <a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=332123463"><img src="/images/hathi/featuredCols/familytree.jpg" alt="" class="imgLeft"></a>
-            <h5><a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=332123463">Ancestry and Genealogy</a></h5>
+            <a href="https://babel.hathitrust.org/cgi/mb?a=listis;c=332123463"><img src="/images/hathi/featuredCols/familytree.jpg" alt="" class="imgLeft"></a>
+            <h5><a href="https://babel.hathitrust.org/cgi/mb?a=listis;c=332123463">Ancestry and Genealogy</a></h5>
             <p>Online content related to genealogy, family history, ancestry, etc.</p>
           </div>
 
           <!-- Added 4/28/10 -->
           <div class="itemList">
-            <a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=1169728529"><img src="/images/hathi/featuredCols/Eyjafjallajokull.png" alt="" class="imgLeft"></a>
-            <h5><a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=1169728529">Eyjafjallaj&#246;kull</a></h5>
+            <a href="https://babel.hathitrust.org/cgi/mb?a=listis;c=1169728529"><img src="/images/hathi/featuredCols/Eyjafjallajokull.png" alt="" class="imgLeft"></a>
+            <h5><a href="https://babel.hathitrust.org/cgi/mb?a=listis;c=1169728529">Eyjafjallaj&#246;kull</a></h5>
             <p>Selected full view: The Icelandic volcano, a.k.a. Eyjafjalla Jokull, Eyjafjalla Skul, "Island Mountain Glacier", "Mountain of Islands"</p>
           </div>
 
           <!-- Added 4/28/10 -->
           <div class="itemList">
-            <a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=1961411403"><img src="/images/hathi/featuredCols/IslamicMSS.jpg" alt="" class="imgLeft"></a>
-            <h5><a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=1961411403">Islamic Manuscripts (Michigan)</a></h5>
+            <a href="https://babel.hathitrust.org/cgi/mb?a=listis;c=1961411403"><img src="/images/hathi/featuredCols/IslamicMSS.jpg" alt="" class="imgLeft"></a>
+            <h5><a href="https://babel.hathitrust.org/cgi/mb?a=listis;c=1961411403">Islamic Manuscripts (Michigan)</a></h5>
             <p>Newly digitized manuscripts from the Islamic Manuscripts Collection at the University of Michigan, mainly in Arabic, Persian and Ottoman Turkish and dating from the 8th to 20th century CE.</p>
           </div>
 
@@ -172,22 +145,3 @@
   </div>
 </div>
 
-<!--<div id="home_footer"></div>-->
-
-
-
-<!--
-
-  <h3>Welcome to the Hathi Trust Digital Library Catalog Search</h3>
-
-	<p>This interface allows you to search bibliographic data such as title, author, ISBN, etc, for all items in the Library. Full-text search of all items in the Library is not yet available, but full-text searching options are available via the <a href="http://babel.hathitrust.org/cgi/ls">Experimental Search</a> page or from within a <a href="http://babel.hathitrust.org/cgi/mb?a=listcs;colltype=pub">public</a> or <a href="http://babel.hathitrust.org/cgi/mb?a=listcs;colltype=priv">private</a> collection.</p>
-	<p>The current discovery catalog is temporary, pending the release of a permanent catalog that is being developed by OCLC in conjunction with the HathiTrust partners. Information about this and other HathiTrust development efforts is available on the <a href="http://www.hathitrust.org/objectives">HathiTrust Functional Objectives</a> page of the <a href="http://www.hathitrust.org/about">About</a> section of this site. Instructions on how to <a href="http://www.hathitrust.org/bibliographic_data_distribution">load bibliographic records</a> for volumes in this catalog into local library catalogs is also available in the <a href="http://www.hathitrust.org/about">About</a> section, as well as information on HathiTrust <a href="http://www.hathitrust.rg/partnership">Partnership</a>, <a href="http://www.hathitrust.org/rights_management">Rights Management</a> policies, <a href="http://www.hathitrust.org/preservation">Preservation</a> practices and more.</p>
-	<p>Feedback on all aspects of the catalog are welcome and requested. Please use the feedback link in the upper right corner of the page to send your thoughts and suggestions.</p>
-	<p> Enjoy!</p>
-
-</div>
-<div class="colSide">
-   {include file="searchtips.tpl"}
-</div>
-
--->

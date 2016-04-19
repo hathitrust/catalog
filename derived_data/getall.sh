@@ -9,4 +9,4 @@ fi
 
 perl $DIR/gfv.pl language > $DIR/language.txt
 perl $DIR/gfv.pl format > $DIR/format.txt
-php -f  $DIR/getHTNamespaceMap.php
+php -f $DIR/getHTCollectionMap.php

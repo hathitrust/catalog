@@ -54,16 +54,12 @@
   # Export, using extension as type
   RewriteRule   ^(Record)/([0-9]+)\.([^/]+)$ index.php?module=Search&action=SearchExport&handpicked=$2&method=$3 [QSA,L]
   
+  
+  
   RewriteRule   ^(Record)/([0-9]+)/(.+)$   index.php?module=$1&id=$2&action=$3   [QSA,L]
   RewriteRule   ^(Record)/(AJAX)$         index.php?module=$1&action=$2         [QSA,L]
   RewriteRule   ^(Record)/([0-9]+)$           index.php?module=$1&id=$2&action=Home [QSA,L]
   RewriteRule   ^(Search)/(Advanced)/(.+)$ index.php?module=$1&action=$2&inst=$3 [QSA,L]
-
-  # Nicer search URLs
-
-  RewriteRule   ^Search/(author|title|subject)/(.+)$ index.php?module=Search&action=Home&searchtype=$1&lookfor[]=$2 [QSA,L]  
-  RewriteRule   ^Search/ft/(author|title|subject)/(.+)$ index.php?module=Search&action=Home&searchtype=$1&lookfor[]=$2&setft=true&ft=ft [QSA,L]
-
   
   
   RewriteRule   ^([^/]+)/(.+)$            index.php?module=$1&action=$2         [QSA,L]

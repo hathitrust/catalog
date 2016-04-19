@@ -11,7 +11,7 @@
       <div class="HomeBox Box1">
         <span class="bl"></span>
         <div class="SearchForm">
-          <form method="get" action="http://catalog.hathitrust.org/Search/Home" name="searchForm" onsubmit="trimForm(this.lookfor); return true;" class="search" id="searchForm">
+          <form method="get" action="/Search/Home" name="searchForm" onsubmit="trimForm(this.lookfor); return true;" class="search" id="searchForm">
           <input type="hidden" name="checkspelling" value="true">
           <input type="hidden" name="type" value="all">
           <label for="lookfor" class="skipLink">Search Catalog</label>
@@ -50,7 +50,7 @@
         <h3>Full-text Search</h3>
 
         <div class="SearchForm">
-          <form name="searchcoll" action="http://babel.hathitrust.org/cgi/ls" id="itemlist_searchform" onsubmit="trimForm(this.lookfor); return true;">
+          <form name="searchcoll" action="https://babel.hathitrust.org/cgi/ls" id="itemlist_searchform" onsubmit="trimForm(this.lookfor); return true;">
           <label for="srch" class="skipLink">Content Search </label>
           <input type="text" value="" name="q1">
           <input type="hidden" value="srchls" name="a">
@@ -71,7 +71,7 @@
 
         <h5>Note</h5>
         <p>Full-text search does not currently include functionality in use elsewhere in HathiTrust (e.g., no sorting or collection-related functionality), and does not have features like clustering of results which are likely to be in a fuller implementation.</p>
-        <p>Read more about our <a href="http://www.hathitrust.org/large_scale_search">large-scale search</a>.
+        <p>Read more about our <a href="https://www.hathitrust.org/large_scale_search">large-scale search</a>.
       </div>
     </div>
 
@@ -80,7 +80,7 @@
         <h3>Browse Collections</h3>
         <p class="FindDesc">Collections are a way to group items for private or public use. Once grouped, you can search the full-text of all items within a collection.</p>
 
-        <form method="link" action="http://babel.hathitrust.org/cgi/mb?a=listcs;colltype=pub">
+        <form method="link" action="https://babel.hathitrust.org/cgi/mb?a=listcs;colltype=pub">
           <input type="submit" value="View Public Collections">
         </form>
 
@@ -88,20 +88,20 @@
 
         <div id="featured">
           <div class="itemList">
-            <a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=622231186"><img src="http://babel.hathitrust.org/u/umpress/graphics/hathiTrust_ump.jpg" alt="" class="imgLeft"></a>
-            <h5><a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=622231186">UM Press</a></h5>
+            <a href="https://babel.hathitrust.org/cgi/mb?a=listis;c=622231186"><img src="https://babel.hathitrust.org/u/umpress/graphics/hathiTrust_ump.jpg" alt="" class="imgLeft"></a>
+            <h5><a href="https://babel.hathitrust.org/cgi/mb?a=listis;c=622231186">UM Press</a></h5>
             <p><a href="http://www.lib.umich.edu/spec-coll/"><a href="http://press.umich.edu/">Univ. of Michigan Press</a>'s full-text titles available in HathiTrust </p>
           </div>
 
           <div class="itemList">
-            <a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=464226859"><img src="/images/hathi/featuredCols/Henty1.jpg" alt="" class="imgLeft"></a>
-            <h5><a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=464226859">Adventure Novels: G.A. Henty</a></h5>
+            <a href="https://babel.hathitrust.org/cgi/mb?a=listis;c=464226859"><img src="/images/hathi/featuredCols/Henty1.jpg" alt="" class="imgLeft"></a>
+            <h5><a href="https://babel.hathitrust.org/cgi/mb?a=listis;c=464226859">Adventure Novels: G.A. Henty</a></h5>
             <p>Novels from the <a href="http://www.lib.umich.edu/spec-coll/">U-M Special Collections'</a> Henty Collection and books about George A. Henty</p>
           </div>
 
           <div class="itemList">
-            <a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=503653486"><img src="/images/hathi/featuredCols/Patent.jpg" alt="" class="imgLeft"></a>
-            <h5><a href="http://babel.hathitrust.org/cgi/mb?a=listis;c=503653486">Patent Indexes</a></h5>
+            <a href="https://babel.hathitrust.org/cgi/mb?a=listis;c=503653486"><img src="/images/hathi/featuredCols/Patent.jpg" alt="" class="imgLeft"></a>
+            <h5><a href="https://babel.hathitrust.org/cgi/mb?a=listis;c=503653486">Patent Indexes</a></h5>
             <p>Collection of currently available volumes of the Annual report of the Commissioner of Patents</p>
           </div>
 
@@ -121,8 +121,8 @@
 
   <h3>Welcome to the Hathi Trust Digital Library Catalog Search</h3>
 
-	<p>This interface allows you to search bibliographic data such as title, author, ISBN, etc, for all items in the Library. Full-text search of all items in the Library is not yet available, but full-text searching options are available via the <a href="http://babel.hathitrust.org/cgi/ls">Experimental Search</a> page or from within a <a href="http://babel.hathitrust.org/cgi/mb?a=listcs;colltype=pub">public</a> or <a href="http://babel.hathitrust.org/cgi/mb?a=listcs;colltype=priv">private</a> collection.</p>
-	<p>The current discovery catalog is temporary, pending the release of a permanent catalog that is being developed by OCLC in conjunction with the HathiTrust partners. Information about this and other HathiTrust development efforts is available on the <a href="http://www.hathitrust.org/objectives">HathiTrust Functional Objectives</a> page of the <a href="http://www.hathitrust.org/about">About</a> section of this site. Instructions on how to <a href="http://www.hathitrust.org/bibliographic_data_distribution">load bibliographic records</a> for volumes in this catalog into local library catalogs is also available in the <a href="http://www.hathitrust.org/about">About</a> section, as well as information on HathiTrust <a href="http://www.hathitrust.rg/partnership">Partnership</a>, <a href="http://www.hathitrust.org/rights_management">Rights Management</a> policies, <a href="http://www.hathitrust.org/preservation">Preservation</a> practices and more.</p>
+	<p>This interface allows you to search bibliographic data such as title, author, ISBN, etc, for all items in the Library. Full-text search of all items in the Library is not yet available, but full-text searching options are available via the <a href="https://babel.hathitrust.org/cgi/ls">Experimental Search</a> page or from within a <a href="https://babel.hathitrust.org/cgi/mb?a=listcs;colltype=pub">public</a> or <a href="https://babel.hathitrust.org/cgi/mb?a=listcs;colltype=priv">private</a> collection.</p>
+	<p>The current discovery catalog is temporary, pending the release of a permanent catalog that is being developed by OCLC in conjunction with the HathiTrust partners. Information about this and other HathiTrust development efforts is available on the <a href="https://www.hathitrust.org/objectives">HathiTrust Functional Objectives</a> page of the <a href="https://www.hathitrust.org/about">About</a> section of this site. Instructions on how to <a href="https://www.hathitrust.org/bibliographic_data_distribution">load bibliographic records</a> for volumes in this catalog into local library catalogs is also available in the <a href="https://www.hathitrust.org/about">About</a> section, as well as information on HathiTrust <a href="https://www.hathitrust.rg/partnership">Partnership</a>, <a href="https://www.hathitrust.org/rights_management">Rights Management</a> policies, <a href="https://www.hathitrust.org/preservation">Preservation</a> practices and more.</p>
 	<p>Feedback on all aspects of the catalog are welcome and requested. Please use the feedback link in the upper right corner of the page to send your thoughts and suggestions.</p>
 	<p> Enjoy!</p>
 

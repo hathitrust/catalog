@@ -1,4 +1,4 @@
-<script language="JavaScript" type="text/javascript" src="{$path}/services/Search/ajax.js"></script>
+<script language="JavaScript" type="text/javascript" src="/services/Search/ajax.js"></script>
 
 <!-- Main Listing -->
 <div id="bd">
@@ -40,8 +40,8 @@
       <div class="pagination">{$pageLinks.all}</div>
       <div class="searchtools">
         <strong>{translate text='Search Tools'}:</strong>
-        <a href="{$url}/Search/{$action}?lookfor={$lookfor|escape}&type={$type}&view=rss" class="feed">{translate text='Get RSS Feed'}</a>
-        <a href="{$url}/Search/Email" class="mail" onClick="getLightbox('Search', 'Email', null, null, '{translate text="Email this"}'); return false;">{translate text='Email this Search'}</a>
+        <a href="/Search/{$action}?lookfor={$lookfor|escape}&type={$type}&view=rss" class="feed">{translate text='Get RSS Feed'}</a>
+        <a href="/Search/Email" class="mail" onClick="getLightbox('Search', 'Email', null, null, '{translate text="Email this"}'); return false;">{translate text='Email this Search'}</a>
       </div>
     </div>
     <!-- End Main Listing -->

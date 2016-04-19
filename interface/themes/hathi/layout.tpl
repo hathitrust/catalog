@@ -3,7 +3,6 @@
 <!-- Machine is {$machine} -->
   <head>
     <title>{$pageTitle|truncate:64:"..."} | Hathi Trust Digital Library</title>
-    <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">
     
 {literal}
 <!--[if lt IE 9]>
@@ -81,15 +80,15 @@
       </ul>
       -->
       <ul class="nav pull-right">
-        <li><a href="http://www.hathitrust.org/">Home</a></li>
-        <li><a href="http://www.hathitrust.org/about">About</a></li>
-        <li><a href="http://babel.hathitrust.org/cgi/mb">Collections</a></li>
-        <li><a href="http://www.hathitrust.org/help">Help</a></li>
+        <li><a href="https://www.hathitrust.org/">Home</a></li>
+        <li><a href="https://www.hathitrust.org/about">About</a></li>
+        <li><a href="https://babel.hathitrust.org/cgi/mb">Collections</a></li>
+        <li><a href="https://www.hathitrust.org/help">Help</a></li>
         <li><a href="#" data-m="ht" data-id="HathiTrust Catalog Feedback" data-toggle="feedback">Feedback</a></li>
-        <li><a href="http://m.hathitrust.org">Mobile</a></li>
-        <li><a href="http://www.hathitrust.org/take_down_policy">Take-Down Policy</a></li>
-        <li><a href="http://www.hathitrust.org/privacy">Privacy</a></li>
-        <li><a href="http://www.hathitrust.org/contact">Contact</a></li>
+        <li><a href="https://m.hathitrust.org">Mobile</a></li>
+        <li><a href="https://www.hathitrust.org/take_down_policy">Take-Down Policy</a></li>
+        <li><a href="https://www.hathitrust.org/privacy">Privacy</a></li>
+        <li><a href="https://www.hathitrust.org/contact">Contact</a></li>
       </ul>
     </div>
   </div>

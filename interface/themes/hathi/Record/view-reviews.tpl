@@ -2,7 +2,7 @@
   {foreach from=$providerList item=review}
     {if $review.Summary}
     <p>
-      <img src="{$path}/images/{$review.Rating}.gif" alt="{$review.Rating}/5 Stars">
+      <img src="/images/{$review.Rating}.gif" alt="{$review.Rating}/5 Stars">
       <b>{$review.Summary}</b>, {$review.Date|date_format:"%B %e, %Y"}
     </p>
     {/if}

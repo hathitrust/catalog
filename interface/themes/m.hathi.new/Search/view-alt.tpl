@@ -4,7 +4,7 @@
       <div class="yui-ge">
 
         <div class="record">
-          <a href="{$url}/Search/Home" class="backtosearch">&laquo; {translate text="Back to Search Results"}</a>
+          <a href="/Search/Home" class="backtosearch">&laquo; {translate text="Back to Search Results"}</a>
 
           {include file="Search/$subTemplate"}
 

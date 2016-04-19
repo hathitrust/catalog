@@ -7,7 +7,7 @@
         </dl>
         <dl class="narrowList navmenu narrow_end" id="facet_end_{$cluster}">
       {/if}
-      <dd><a href="{$url}/Search/Home?{$facet.url}">{translate text=$facet.value}</a> ({$facet.count})</dd>
+      <dd><a href="/Search/Home?{$facet.url}">{translate text=$facet.value}</a> ({$facet.count})</dd>
       {if ($smarty.foreach.facetLoop.iteration > 5) && $smarty.foreach.facetLoop.last}
           <dd><a href="#" onclick="hideThese('{$cluster}'); return false;"><i>less...</i></a></dd>
       {/if}

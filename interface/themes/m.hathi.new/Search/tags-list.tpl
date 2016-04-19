@@ -17,12 +17,12 @@
       </div>
 {*
         {if $record.isbn}
-        <img src="{$path}/bookcover.php?isn={$record.isbn|formatISBN}&amp;size=small" class="alignleft" alt="Cover Image">
+        <img src="/bookcover.php?isn={$record.isbn|formatISBN}&amp;size=small" class="alignleft" alt="Cover Image">
         
         <img src="/images/noCover2.gif" class="alignleft" alt="Cover Image">
         {else}
         <img src="/images/noCover2.gif" class="alignleft" alt="Cover Image">
-        <img src="{$path}/bookcover.php" class="alignleft" alt="Cover Image"> 
+        <img src="/bookcover.php" class="alignleft" alt="Cover Image"> 
         {/if}
 *}
         <div class="resultitem">
@@ -34,11 +34,11 @@
           {if is_array($record.title)}
 <!-- title array -->
             {foreach from=$record.title item=title}
-              <a href="{$url}/Record/{$record.id}" class="title">{$title|truncate:180:"..."|highlight:$lookfor|default:'Title not available'}</a><br>
+              <a href="/Record/{$record.id}" class="title">{$title|truncate:180:"..."|highlight:$lookfor|default:'Title not available'}</a><br>
             {/foreach}
           {else}
 <!-- title non-array -->
-          <a href="{$url}/Record/{$record.id}" class="title">{$record.title|truncate:180:"..."|highlight:$lookfor|default:'Title not aavailable'}</a>
+          <a href="/Record/{$record.id}" class="title">{$record.title|truncate:180:"..."|highlight:$lookfor|default:'Title not aavailable'}</a>
           {/if}
           {if $record.title2}
           <br>
@@ -52,10 +52,10 @@
           {translate text='by'}
           {if is_array($record.author)}
             {foreach from=$record.author item=author}
-           <a href="{$url}/Search/Home?lookfor=%22{$author|escape:'uri'}%22&amp;type=realauth">{$author|highlight:$lookfor}</a>
+           <a href="/Search/Home?lookfor=%22{$author|escape:'uri'}%22&amp;type=realauth">{$author|highlight:$lookfor}</a>
             {/foreach}
           {else}
-          <a href="{$url}/Search/Home?lookfor=%22{$record.author|escape:'uri'}%22&amp;type=realauth">{$record.author|highlight:$lookfor}</a>
+          <a href="/Search/Home?lookfor=%22{$record.author|escape:'uri'}%22&amp;type=realauth">{$record.author|highlight:$lookfor}</a>
           {/if}
           {/if}
           </div>
@@ -87,12 +87,12 @@
             <tr id="{$location}_{$id}">
               <td class="holdingLocation">{$holding.location}</td>
             {if $holding.status eq 'See holdings'}
-              <td><a href="{$url}/Record/{$record.id}/Holdings#holdings">{$holding.status}</a></td>
+              <td><a href="/Record/{$record.id}/Holdings#holdings">{$holding.status}</a></td>
             {elseif $location eq 'ELEC'}
               {* <td><a target=link href="{$holding.link}">{$holding.status}</a></td> *}
               <td><a target=link href="{$holding.link}">{$holding.status}</a></td>
             {elseif $location eq 'HATHI'}
-              <td><a target=link href=http://hdl.handle.net/2027/{$holding.id}>{$holding.status}</a></td>
+              <td><a target=link href=https://hdl.handle.net/2027/{$holding.id}>{$holding.status}</a></td>
             {else}
               <td>{$holding.status}</td>
             {/if}
@@ -111,7 +111,7 @@
     
       <div class="yui-u">
         <div id="saveLink{$record.id}">
-<!--          <a href="{$url}/Record/{$record.id}/Save" onClick="getLightbox('Record', 'Save', '{$record.id}', null, '{translate text="Add to Favorites"}'); return false;" class="fav tool">{translate text='Add to favorites'}</a> -->
+<!--          <a href="/Record/{$record.id}/Save" onClick="getLightbox('Record', 'Save', '{$record.id}', null, '{translate text="Add to Favorites"}'); return false;" class="fav tool">{translate text='Add to favorites'}</a> -->
          <a href="#" onClick="fillLightbox('favorite_help'); return false;;return false;" class="fav tool">{translate text='Add to favorites'}</a>
 
         </div>

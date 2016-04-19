@@ -106,7 +106,7 @@ function getHTFBFormHTML() {
         }
         else
         {
-                feedbackUrl = "http://babel.hathitrust.org/cgi/feedback";
+                feedbackUrl = "https://babel.hathitrust.org/cgi/feedback";
                 captchaCgi = protocol + "//quod.lib.umich.edu/cgi/f/feedback/validatecaptcha";
         }
 

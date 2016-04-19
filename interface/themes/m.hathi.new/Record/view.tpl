@@ -1,5 +1,5 @@
-<script language="JavaScript" type="text/javascript" src="{$path}/services/Record/ajax.js"></script>
-<script language="JavaScript" type="text/javascript" src="{$path}/js/googleLinks.js"></script>
+<script language="JavaScript" type="text/javascript" src="/services/Record/ajax.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/googleLinks.js"></script>
 
 <div class="header">
     <a href="{$site.home_url}" class="htlogobutton" ></a>
@@ -63,12 +63,12 @@
 				<span class="value">
 				{foreach from=$record.author item=author name=authorLoop}
 	           		{if !$smarty.foreach.authorLoop.last}
-	           			<a ref="recmainauthor" href="{$url}/Search/Home?lookfor=%22{$author}%22&amp;type=author">{$author}</a>,
+	           			<a ref="recmainauthor" href="/Search/Home?lookfor=%22{$author}%22&amp;type=author">{$author}</a>,
 						{*{$author},*}
 						{assign var=smsmessage value="$smsmessage$author, "}
 	           		{else}
 	           			{*{$author}*}
-	           			<a ref="recmainauthor" href="{$url}/Search/Home?lookfor=%22{$author}%22&amp;type=author">{$author}</a>
+	           			<a ref="recmainauthor" href="/Search/Home?lookfor=%22{$author}%22&amp;type=author">{$author}</a>
 	           			{assign var=smsmessage value="$smsmessage$author "}
 	           		{/if}
 	           	{/foreach}
@@ -131,7 +131,7 @@
             				{if $subject} &gt; {/if}
             				{assign var=subfield value=$subfield->getData()}
             				{assign var=subject value="$subject $subfield"}
-            				<a href="{$url}/Search/Home?lookfor=%22{$subject|escape}%22&amp;type=subject&amp;inst={$inst}">{$subfield}</a>
+            				<a href="/Search/Home?lookfor=%22{$subject|escape}%22&amp;type=subject&amp;inst={$inst}">{$subfield}</a>
            				{/if}
           			{/foreach}
           			</span>

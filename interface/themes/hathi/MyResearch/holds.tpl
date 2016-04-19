@@ -20,12 +20,12 @@
         {/if}
           <div class="yui-ge">
             <div class="yui-u first">
-              <img src="{$path}/bookcover.php?isn={$record.isbn}&size=small" class="alignleft">
+              <img src="/bookcover.php?isn={$record.isbn}&size=small" class="alignleft">
 
               <div class="resultitem">
-                <a href="{$url}/Record/{$record.id}" class="title">{$record.title}</a><br>
+                <a href="/Record/{$record.id}" class="title">{$record.title}</a><br>
                 {if $record.author}
-                {translate text='by'}: <a href="{$url}/Author/Home?author={$record.author}">{$record.author}</a><br>
+                {translate text='by'}: <a href="/Author/Home?author={$record.author}">{$record.author}</a><br>
                 {/if}
                 {if $record.call_num}
                   {translate text='Call number'}: {$record.call_num}

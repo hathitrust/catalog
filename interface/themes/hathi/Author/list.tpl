@@ -4,7 +4,7 @@
 
       <div class="record">
         {if $lastsearch}
-          <p>  <a href="{$url}/Search/Home?{$lastsearch}" class="backtosearch">&laquo; Back to Search Results</a></p>
+          <p>  <a href="/Search/Home?{$lastsearch}" class="backtosearch">&laquo; Back to Search Results</a></p>
         {/if}
 
       <!-- Listing Options -->
@@ -37,7 +37,7 @@
 
             <div class="yui-ge">
               <div class="yui-u first">
-                <a href="{$url}/Search/Home?lookfor=%22{$valcount[0]}%22&amp;type=realauth">{$valcount[0]}</a>
+                <a href="/Search/Home?lookfor=%22{$valcount[0]}%22&amp;type=realauth">{$valcount[0]}</a>
               </div>
               <div class="yui-u">
                 {$valcount[1]}

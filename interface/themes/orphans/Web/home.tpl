@@ -71,7 +71,7 @@
         {foreach from=$results item=record}
         <li>
           <span class="{$record.format}">
-          <a href="{$url}/Record/{$record.id}">{$record.title}</a>
+          <a href="/Record/{$record.id}">{$record.title}</a>
           </span>
           <span style="font-size: .8em">
           {if $record.author}
@@ -83,7 +83,7 @@
         {/foreach}
       </ul>
       <hr>
-      <p><a href="{$url}/Search/Home?lookfor={$lookfor}">More catalog results...</a></p>
+      <p><a href="/Search/Home?lookfor={$lookfor}">More catalog results...</a></p>
     </div>
 
   </div>

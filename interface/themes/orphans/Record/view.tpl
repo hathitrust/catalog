@@ -1,5 +1,5 @@
-<script language="JavaScript" type="text/javascript" src="{$path}/services/Record/ajax.js"></script>
-<script language="JavaScript" type="text/javascript" src="{$path}/js/googleLinks.js"></script>
+<script language="JavaScript" type="text/javascript" src="/services/Record/ajax.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/googleLinks.js"></script>
 
 <!--<div  id="login_to_text" style="display:none;" >
   <h3>Send record via text message</h3>
@@ -27,7 +27,7 @@
              {else}{assign var=similarTitle value=$similar.title}{/if}  
              <li>
                <span class="{$similar.format|lower|replace:" ":""}">
-               <a href="{$url}/Record/{$similar.id}">{$similarTitle}</a>
+               <a href="/Record/{$similar.id}">{$similarTitle}</a>
                </span>
                <span style="font-size: .8em">
 
@@ -49,7 +49,7 @@
                {foreach from=$editions item=edition}
                <li>
                  <span class="{$similar.format|lower|replace:" ":""}">
-                 <a href="{$url}/Record/{$edition.id}">{$edition.title}</a>
+                 <a href="/Record/{$edition.id}">{$edition.title}</a>
                  </span>
                  {$edition.edition}
                  {if $edition.publishDate}({$edition.publishDate}){/if}
@@ -78,7 +78,7 @@
 {*       <h3 class="SkipLink">Tools</h3>
        <ul class="ToolLinks">
          <li><a href="#" id="emailRecord" class="mail" onClick="pageTracker._trackEvent('recordActions', 'click', 'Email this');">{translate text="Email this"}</a></li>
-         <li><a href="{$url}/Record/{$id}/Cite" class="cite" onClick="getLightbox('Record', 'Cite', '{$id}', null, '{translate text="Cite this"}'); return false;">{translate text="Cite this"}</a></li>
+         <li><a href="/Record/{$id}/Cite" class="cite" onClick="getLightbox('Record', 'Cite', '{$id}', null, '{translate text="Cite this"}'); return false;">{translate text="Cite this"}</a></li>
          <li><a class="endnotelink" href="/Search/SearchExport?handpicked={$id}&amp;method=ris" onClick="pageTracker._trackEvent('recordActions', 'click', 'Endnote');">Export to Endnote</a></li>
        </ul>
 *}       
@@ -100,12 +100,12 @@
        <div>
        <ul class="tools">
         <li>
-          <a href="{$url}/Record/{$id}/Cite" class="cite" onClick="getLightbox('Record', 'Cite', '{$id}', null, '{translate text="Cite this"}'); return false;">{translate text="Cite this"}</a>
+          <a href="/Record/{$id}/Cite" class="cite" onClick="getLightbox('Record', 'Cite', '{$id}', null, '{translate text="Cite this"}'); return false;">{translate text="Cite this"}</a>
         </li>
 
          <li>
            {if $username}
-           <a href="{$url}/Record/{$id}/SMS" class="sms" onClick="getLightbox('Record', 'SMS', '{$id}', null, '{translate text="Text this"}'); return false;">{translate text="Text this"}</a></li>
+           <a href="/Record/{$id}/SMS" class="sms" onClick="getLightbox('Record', 'SMS', '{$id}', null, '{translate text="Text this"}'); return false;">{translate text="Text this"}</a></li>
            {else}
            <a href="#" class="sms" onClick="fillLightbox('login_to_text'); return false;">{translate text="Text this"}</a>
            {/if}
@@ -113,23 +113,23 @@
                    
         -->
 
-          <!--<li><a href="{$url}/Record/{$id}/Email" class="mail" onClick="getLightbox('Record', 'Email', '{$id}', null, '{translate text="Email this"}'); return false;">{translate text="Email this"}</a></li>-->
+          <!--<li><a href="/Record/{$id}/Email" class="mail" onClick="getLightbox('Record', 'Email', '{$id}', null, '{translate text="Email this"}'); return false;">{translate text="Email this"}</a></li>-->
           <!-- <li><a href="#" class="mail" onClick="fillLightbox('email_help'); return false;;return false;">{translate text="Email this"}</a></li>              -->
 
           <!--<li><a target="RefWorksMain" href="http://www.refworks.com.proxy.lib.umich.edu/express/expressimport.asp?vendor=Univeristy+of+Michigan+Mirlyn2+Beta&amp;filter=MARC+Format&amp;database=All+MARC+Formats&amp;encoding=65001&amp;url={$url|escape:'url'}/Record/{$id}/Export%3Fstyle%3DREF">Export to Refworks</a></li>-->
-          <!--<li><a href="{$url}/Record/{$id}/Export?style=endnote" class="export" onClick="showMenu('exportMenu'); return false;">{translate text="Import Record"}</a>
+          <!--<li><a href="/Record/{$id}/Export?style=endnote" class="export" onClick="showMenu('exportMenu'); return false;">{translate text="Import Record"}</a>
            </li>-->
           <!-- <li><a href="#" onclick="hideMenu('exportMenu'); fillLightbox('export_help');return false;">Export Record</a></li>                      -->
           <!--<ul class="menu" id="exportMenu">-->
-          <!-- <li><a href="{$url}/Record/{$id}/Export?style=refworks">{translate text="Import to"} RefWorks</a></li> -->
-          <!-- <li><a onclick="hideMenu('exportMenu');return false;" href="{$url}/Record/{$id}/Export?style=endnote">{translate text="Import to"} EndNote</a></li> -->
-          <!-- <li><a onclick="hideMenu('exportMenu');return false;" href="{$url}/Record/{$id}/Export?style=zotero">{translate text="Import to"} Zotero</a></li> -->
+          <!-- <li><a href="/Record/{$id}/Export?style=refworks">{translate text="Import to"} RefWorks</a></li> -->
+          <!-- <li><a onclick="hideMenu('exportMenu');return false;" href="/Record/{$id}/Export?style=endnote">{translate text="Import to"} EndNote</a></li> -->
+          <!-- <li><a onclick="hideMenu('exportMenu');return false;" href="/Record/{$id}/Export?style=zotero">{translate text="Import to"} Zotero</a></li> -->
           <!--<li><a href="#" onclick="hideMenu('exportMenu'); fillLightbox('refworks_help');return false;">{translate text="Import to"} RefWorks</a></li>
           <li><a href="#" onclick="hideMenu('exportMenu'); fillLightbox('endnote_help');return false;">{translate text="Import to"} Endnote</a></li>-->
           <!-- <li><a href="#" onclick="hideMenu('exportMenu'); fillLightbox('zotero_help');return false;">{translate text="Import to"} Zotero</a></li> -->
           <!--</ul>-->
           <!--</li>-->
-          <!--<li id="saveLink"><a href="{$url}/Record/{$id}/Save" class="fav" onClick="getLightbox('Record', 'Save', '{$id}', null, '{translate text="Add to Favorites"}'); return false;">{translate text="Add to favorites"}</a></li> 
+          <!--<li id="saveLink"><a href="/Record/{$id}/Save" class="fav" onClick="getLightbox('Record', 'Save', '{$id}', null, '{translate text="Add to Favorites"}'); return false;">{translate text="Add to favorites"}</a></li> 
            <li id="savelink"><a href="#" onClick="fillLightbox('favorite_help'); return false;;return false;" class="fav">{translate text='Add to favorites'}</a></li>
             <script language="JavaScript" type="text/javascript">
             getSaveStatus('{$id}', 'saveLink');
@@ -171,7 +171,7 @@
     <th>{translate text='New Title'}: </th>
     <td>
       {foreach from=$marcField item=field name=loop}
-        <a href="{$url}/Search/Home?lookfor=%22{$field|getvalue:'s'}{$field|getvalue:'t'}%22&type=title&amp;inst={$inst}">{$field|getvalue:'s'}{$field|getvalue:'t'}</a><br>
+        <a href="/Search/Home?lookfor=%22{$field|getvalue:'s'}{$field|getvalue:'t'}%22&type=title&amp;inst={$inst}">{$field|getvalue:'s'}{$field|getvalue:'t'}</a><br>
       {/foreach}
     </td>
   </tr>
@@ -183,7 +183,7 @@
     <th>{translate text='Previous Title'}: </th>
     <td>
       {foreach from=$marcField item=field name=loop}
-        <a href="{$url}/Search/Home?lookfor=%22{$field|getvalue:'s'}{$field|getvalue:'t'}%22&type=title&amp;inst={$inst}">{$field|getvalue:'s'}{$field|getvalue:'t'}</a><br>
+        <a href="/Search/Home?lookfor=%22{$field|getvalue:'s'}{$field|getvalue:'t'}%22&type=title&amp;inst={$inst}">{$field|getvalue:'s'}{$field|getvalue:'t'}</a><br>
       {/foreach}
     </td>
   </tr>
@@ -196,7 +196,7 @@
   {if $marcField}
   <tr valign="top">
     <th>{translate text='Main Author'}: </th>
-    <td><a href="{$url}/Search/Home?lookfor=%22{$marcField|getvalue:'a'}{if $marcField|getvalue:'b'} {$marcField|getvalue:'b'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}{if $marcField|getvalue:'b'} {$marcField|getvalue:'b'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}</a></td>
+    <td><a href="/Search/Home?lookfor=%22{$marcField|getvalue:'a'}{if $marcField|getvalue:'b'} {$marcField|getvalue:'b'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}{if $marcField|getvalue:'b'} {$marcField|getvalue:'b'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}</a></td>
   </tr>
   {/if}
 
@@ -204,7 +204,7 @@
   {if $marcField}
   <tr valign="top">
     <th>{translate text='Corporate Author'}: </th>
-    <td><a href="{$url}/Search/Home?lookfor=%22{$marcField|getvalue:'a'|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}</a></td>
+    <td><a href="/Search/Home?lookfor=%22{$marcField|getvalue:'a'|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}</a></td>
   </tr>
   {/if}
 
@@ -214,7 +214,7 @@
     <th>{translate text='Other Authors'}: </th>
     <td>
       {foreach from=$marcField item=field name=loop}
-        <a href="{$url}/Search/Home?lookfor=%22{$field|getvalue:'a'}{if $field|getvalue:'b'} {$field|getvalue:'b'}{/if}{if $field|getvalue:'c'} {$field|getvalue:'c'}{/if}{if $field|getvalue:'d'} {$field|getvalue:'d'}{/if}%22&amp;type=author&amp;inst={$inst}">{$field|getvalue:'a'} {$field|getvalue:'b'} {$field|getvalue:'c'} {$field|getvalue:'d'}</a>{if !$smarty.foreach.loop.last}, {/if}
+        <a href="/Search/Home?lookfor=%22{$field|getvalue:'a'}{if $field|getvalue:'b'} {$field|getvalue:'b'}{/if}{if $field|getvalue:'c'} {$field|getvalue:'c'}{/if}{if $field|getvalue:'d'} {$field|getvalue:'d'}{/if}%22&amp;type=author&amp;inst={$inst}">{$field|getvalue:'a'} {$field|getvalue:'b'} {$field|getvalue:'c'} {$field|getvalue:'d'}</a>{if !$smarty.foreach.loop.last}, {/if}
       {/foreach}
     </td>
   </tr>
@@ -266,7 +266,7 @@
     <th>{translate text='Series'}: </th>
     <td>
       {foreach from=$marcField item=field name=loop}
-        <a href="{$url}/Search/Home?lookfor=%22{$field|getvalue:'a'|escape}%22&amp;type=series&amp;inst={$inst}">{$field|getvalue:'a'}</a><br>
+        <a href="/Search/Home?lookfor=%22{$field|getvalue:'a'|escape}%22&amp;type=series&amp;inst={$inst}">{$field|getvalue:'a'}</a><br>
       {/foreach}
     </td>
   </tr>
@@ -284,9 +284,9 @@
           {assign var=hlbb value=$field->getSubfield('b')}
           {assign var=hlba value=$hlba->getData()}
           {assign var=hlbb value=$hlbb->getData()}
-          <a href="{$url}/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb_both:%22{$hlba|escape:"url"}%22&amp;inst={$inst}">{$hlba|escape}</a>
+          <a href="/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb_both:%22{$hlba|escape:"url"}%22&amp;inst={$inst}">{$hlba|escape}</a>
           &gt;
-          <a href="{$url}/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb_both:%22{$hlbb|escape:"url"}%22&amp;inst={$inst}">{$hlbb|escape}</a>
+          <a href="/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb_both:%22{$hlbb|escape:"url"}%22&amp;inst={$inst}">{$hlbb|escape}</a>
           <br>
         {/foreach}
 
@@ -307,7 +307,7 @@
             {if $subject} &gt; {/if}
             {assign var=subfield value=$subfield->getData()}
             {assign var=subject value="$subject $subfield"}
-            <a href="{$url}/Search/Home?lookfor=%22{$subject|escape}%22&amp;type=subject&amp;inst={$inst}">{$subfield}</a>
+            <a href="/Search/Home?lookfor=%22{$subject|escape}%22&amp;type=subject&amp;inst={$inst}">{$subfield}</a>
            {/if}
           {/foreach}
           <br>
@@ -487,7 +487,7 @@
            <!-- {assign var=nmspace value=$url|regex_replace:"/\.\d+/":""} -->
             {assign var=nmspace value=$url|regex_replace:"/\..*/":""}
             <li class="{$field|getvalue:'r'}">
-              <a target="ht_pageturner_{$url}" href="http://hdl.handle.net/2027/{$url}"
+              <a target="ht_pageturner_{$url}" href="https://hdl.handle.net/2027/{$url}"
               {if $field|getvalue:'r' eq 'pd'}
                 class="fulltext">Full view
               {elseif $field|getvalue:'r' eq 'pdus' && $session->get('inUSA')}
@@ -566,33 +566,33 @@
 <!--          <div id="tabnav">
             <ul>
               <li{if $tab == 'Holdings' || $tab == 'Home'} class="active"{/if}>
-                <a href="{$url}/Record/{$id}/Holdings" class="first"><span></span>{translate text='Holdings'}</a>
+                <a href="/Record/{$id}/Holdings" class="first"><span></span>{translate text='Holdings'}</a>
               </li>
               <li{if $tab == 'Description'} class="active"{/if}>
-                <a href="{$url}/Record/{$id}/Description" class="first"><span></span>{translate text='Description'}</a>
+                <a href="/Record/{$id}/Description" class="first"><span></span>{translate text='Description'}</a>
               </li>
               {if $marc->getFields('505')}
               <li{if $tab == 'TOC'} class="active"{/if}>
-                <a href="{$url}/Record/{$id}/TOC" class="first"><span></span>{translate text='Table of Contents'}</a>
+                <a href="/Record/{$id}/TOC" class="first"><span></span>{translate text='Table of Contents'}</a>
               </li>
               {/if}
 -->
 <!--              <li{if $tab == 'UserComments'} class="active"{/if}>
-                <a href="{$url}/Record/{$id}/UserComments" class="first"><span></span>{translate text='Comments'}</a>
+                <a href="/Record/{$id}/UserComments" class="first"><span></span>{translate text='Comments'}</a>
               </li>
 -->
               <!-- {if $hasReviews}
               <li{if $tab == 'Reviews'} class="active"{/if}>
-                <a href="{$url}/Record/{$id}/Reviews" class="first"><span></span>{translate text='Reviews'}</a>
+                <a href="/Record/{$id}/Reviews" class="first"><span></span>{translate text='Reviews'}</a>
               </li>
               {/if} -->
 <!--              {if $hasExcerpt}
               <li{if $tab == 'Excerpt'} class="active"{/if}>
-                <a href="{$url}/Record/{$id}/Excerpt" class="first"><span></span>{translate text='Excerpt'}</a>
+                <a href="/Record/{$id}/Excerpt" class="first"><span></span>{translate text='Excerpt'}</a>
               </li>
               {/if}
               <li{if $tab == 'Details'} class="active"{/if}>
-                <a href="{$url}/Record/{$id}/Details" class="first"><span></span>{translate text='MARC View'}</a>
+                <a href="/Record/{$id}/Details" class="first"><span></span>{translate text='MARC View'}</a>
               </li>
             </ul>
           </div>

@@ -13,13 +13,13 @@
 						{if $facet.index eq 'ht_availability' && $facet.value eq 'Full text'}
 						{*{if $facet.logargs eq 'removefacet|ht_availability|Full text|'}*}
 							{* ugh... adding the sethtftonly=false is a total hack *}
-	          				<a  class="facetitem" ref="{$facet.logargs}" href="{$url}/Search/{$action}?{$facet.removalURL}&sethtftonly=false">
-	          					<img  src="{$path}/images/silk/delete.png" alt="Delete">
+	          				<a  class="facetitem" ref="{$facet.logargs}" href="/Search/{$action}?{$facet.removalURL}&sethtftonly=false">
+	          					<img  src="/images/silk/delete.png" alt="Delete">
 								{$facet.indexDisplay} : {translate text=$facet.valueDisplay}
 							</a>						
 						{else}   				
-	          				<a  class="facetitem" ref="{$facet.logargs}" href="{$url}/Search/{$action}?{$facet.removalURL}">
-	          					<img  src="{$path}/images/silk/delete.png" alt="Delete">
+	          				<a  class="facetitem" ref="{$facet.logargs}" href="/Search/{$action}?{$facet.removalURL}">
+	          					<img  src="/images/silk/delete.png" alt="Delete">
 								{$facet.indexDisplay} : {translate text=$facet.valueDisplay}
 							</a>
 						{/if}
@@ -47,7 +47,7 @@
     </div>
  
 	<div id="resultsearchbox" >
-	<form method="get" action="{$path}/Search/Home" name="searchForm" onsubmit="fixform(this)">	
+	<form method="get" action="/Search/Home" name="searchForm" onsubmit="fixform(this)">	
 		<input type="hidden" name="checkspelling" value="true" />
 		
 		<!--<div id="resultsearchrow1">-->
@@ -84,12 +84,12 @@
 		{foreach from=$narrow item=narrowItem name="narrowLoop"}
 	    	{if $smarty.foreach.narrowLoop.iteration == 6}
 			{/if}
-			<a href="{$url}/Search/Home?{$narrowItem.authurl}">{$narrowItem.name}</a> ({$narrowItem.num})<br>
+			<a href="/Search/Home?{$narrowItem.authurl}">{$narrowItem.name}</a> ({$narrowItem.num})<br>
 		{/foreach}
 	
 			{if $narrowcount > $smarty.foreach.narrowLoop.iteration}
 				<div style="clear:both; text-align: right;">
-					<a class="clickpostlog" ref="authseeall|||" href="{$url}/Author/Search?{$searchcomps}">see all ({$narrowcount})</a>
+					<a class="clickpostlog" ref="authseeall|||" href="/Author/Search?{$searchcomps}">see all ({$narrowcount})</a>
 				</div>
 			{/if}
 	{/if $narrow}
@@ -98,7 +98,7 @@
 	<!-- Spelling suggestion -->
 	{* todo -- how to test this *}
 	{if $newPhrase}
-		<p class="correction">{translate text='Did you mean'} <a class="clickpostlog" ref="spellsuggest|||" href="{$url}/Search/{$action}?lookfor={$newPhrase}&amp;type={$type}">{$newPhrase}</a>?</p>
+		<p class="correction">{translate text='Did you mean'} <a class="clickpostlog" ref="spellsuggest|||" href="/Search/{$action}?lookfor={$newPhrase}&amp;type={$type}">{$newPhrase}</a>?</p>
 	{/if}
 	
 	<div id="resultsummary">	

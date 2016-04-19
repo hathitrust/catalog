@@ -628,7 +628,7 @@ class SearchStructure
     
     function asFullURL($module = 'Home', $extra = array()) {
       global $configArray;
-      $url = $configArray['Site']['url'] . '/Search/' . $module . '?' . $this->asURL($extra);
+      $url = '/Search/' . $module . '?' . $this->asURL($extra);
       return $url;
     }
 

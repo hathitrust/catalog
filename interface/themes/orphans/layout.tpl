@@ -3,10 +3,10 @@
 <!-- Machine is {$machine} -->
   <head>
     <title>Hathi Trust Digital Library Orphan works - {$pageTitle|truncate:64:"..."}</title>
-    <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">
-    <link rel="stylesheet" type="text/css" media="screen" href="{$path}/interface/themes/orphans/css/htdl_vf.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="{$path}/interface/themes/orphans/css/styles.css">
-    <link rel="stylesheet" type="text/css" media="print" href="{$path}/interface/themes/orphans/css/print.css">
+    <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="/Search/OpenSearch?method=describe">
+    <link rel="stylesheet" type="text/css" media="screen" href="/interface/themes/orphans/css/htdl_vf.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/interface/themes/orphans/css/styles.css">
+    <link rel="stylesheet" type="text/css" media="print" href="/interface/themes/orphans/css/print.css">
 
 {if $id}
   <link rel="canonical" href="/Record/{$id}">
@@ -20,7 +20,7 @@
 <!-- Jeremy's additions 3/27/09 -->
 
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/container-core.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="{$path}/interface/themes/orphans/css/yui.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/interface/themes/orphans/css/yui.css">
 
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yuiloader/yuiloader-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/dom/dom-min.js"></script>
@@ -30,9 +30,9 @@
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/button/button-min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/yui/feedback.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/ajax.yui.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/scripts.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/yui/feedback.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/ajax.yui.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/scripts.js"></script>
 
 <!-- End Jeremy's additions -->
 
@@ -200,11 +200,11 @@ function hideMenu(elemId)
           <h2 class="SkipLink">Footer Links</h2>
           <ul>
               <!-- <li><a href="https://babel.hathitrust.org/cgi/mb?a=listcs;colltype=pub;sort=cn_a">Login</a></li> -->
-              <li><a href="http://www.hathitrust.org" title="About Hathi Trust">About</a></li>
-              <li><a href="http://www.hathitrust.org/faq" title="Help page and faq">Help</a></li>
+              <li><a href="https://www.hathitrust.org" title="About Hathi Trust">About</a></li>
+              <li><a href="https://www.hathitrust.org/faq" title="Help page and faq">Help</a></li>
               <li><a href=" " id="feedback_footer" title="Feedback form for problems or comments"><span>Feedback</span></a></li>
               <!-- <li><a href="http://mirlyn.lib.umich.edu/" title="New Search in Mirlyn">Mirlyn Library Catalog</a></li>-->
-              <li> | <a href="http://www.hathitrust.org/take_down_policy" title="item removal policy">Take-Down Policy</a></li>
+              <li> | <a href="https://www.hathitrust.org/take_down_policy" title="item removal policy">Take-Down Policy</a></li>
           </ul>
         </div>
       </div>

@@ -2,13 +2,13 @@
 <html lang="en">
   <head>
     <title>Library Resource Finder: {$pageTitle}</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="{$path}/css/reset-fonts-grids.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="{$path}/css/styles.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/reset-fonts-grids.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/styles.css">
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <script language="JavaScript" type="text/javascript">
-      path = '{$path}';
+      path = '';
     </script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/scripts.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/scripts.js"></script>
   </head>
 
   <body>

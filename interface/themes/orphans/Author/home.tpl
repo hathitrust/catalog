@@ -1,4 +1,4 @@
-<script language="JavaScript" type="text/javascript" src="{$path}/services/Search/ajax.js"></script>
+<script language="JavaScript" type="text/javascript" src="/services/Search/ajax.js"></script>
 
 <div id="bd">
   <div class="yui-main content">
@@ -6,7 +6,7 @@
 
       <div class="record">
         {if $lastsearch}
-          <p>  <a href="{$url}/Search/Home?{$lastsearch}" class="backtosearch">&laquo; Back to Search Results</a></p>
+          <p>  <a href="/Search/Home?{$lastsearch}" class="backtosearch">&laquo; Back to Search Results</a></p>
         {/if}
 
         {if $info}
@@ -45,7 +45,7 @@
       <h4>{translate text='Related Subjects'}</h4>
       <ul class="similar">
       {foreach from=$topics item="topic"}
-        <li><a href="{$url}/Search/Home?lookfor=%22{$topic}%22">{$topic}</a></li>
+        <li><a href="/Search/Home?lookfor=%22{$topic}%22">{$topic}</a></li>
       {/foreach}
     </div>
   </div>

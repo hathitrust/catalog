@@ -2,8 +2,8 @@
 <html lang="{$language}">
   <head>
     <title>VuFind Administration - {$pageTitle}</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="{$path}/interface/themes/ashsc/css/styles.css">
-    <link rel="stylesheet" type="text/css" media="print" href="{$path}/interface/themes/ashsc/css/print.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/interface/themes/ashsc/css/styles.css">
+    <link rel="stylesheet" type="text/css" media="print" href="/interface/themes/ashsc/css/print.css">
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
   </head>
 
@@ -13,7 +13,7 @@
 
       <div id="hd">
         <!-- Your header. Could be an include. -->
-        <a href="{$url}"><img src="{$path}/images/vufind.jpg" alt="vufinder"></a>
+        <a href="/"><img src="/images/vufind.jpg" alt="vufinder"></a>
         Administration
       </div>
     

@@ -12,7 +12,7 @@
       <dl>
         <dt>Identify</dt>
         <dd>Returns the Identification information of this OAI Server.</dd>
-        <form method="GET" action="{$path}/OAI/Server">
+        <form method="GET" action="/OAI/Server">
         <input type="hidden" name="verb" value="Identify">
         <table>
           <tr><td colspan="2">Accepts no additional parameters.</td></tr>
@@ -22,7 +22,7 @@
 
         <dt>ListIdentifiers</dt>
         <dd>Returns a listing of available identifiers</dd>
-        <form method="GET" action="{$path}/OAI/Server">
+        <form method="GET" action="/OAI/Server">
         <input type="hidden" name="verb" value="ListIdentifiers">
         <table>
           <tr><td width="150" align="right">From: </td><td><input type="text" name="from"></td></tr>
@@ -35,7 +35,7 @@
 
         <dt>ListMetadataFormats</dt>
         <dd>Returns a listing of available metdata formats.</dd>
-        <form method="GET" action="{$path}/OAI/Server">
+        <form method="GET" action="/OAI/Server">
         <input type="hidden" name="verb" value="ListMetadataFormats">
         <table>
           <tr><td width="150" align="right">Identifier: </td><td><input type="text" name="identifier"></td></tr>
@@ -45,7 +45,7 @@
 
         <dt>ListSets</dt>
         <dd>Returns a listing of available metdata formats.</dd>
-        <form method="GET" action="{$path}/OAI/Server">
+        <form method="GET" action="/OAI/Server">
         <input type="hidden" name="verb" value="ListSets">
         <table>
           <tr><td width="150" align="right">Metadata Prefix: </td><td><input type="text" name="metadataPrefix"></td></tr>
@@ -56,7 +56,7 @@
 
         <dt>ListRecords</dt>
         <dd>Returns a listing of available metdata formats.</dd>
-        <form method="GET" action="{$path}/OAI/Server">
+        <form method="GET" action="/OAI/Server">
         <input type="hidden" name="verb" value="ListRecords">
         <table>
           <tr><td width="150" align="right">From: </td><td><input type="text" name="from"></td></tr>
@@ -70,7 +70,7 @@
 
         <dt>GetRecord</dt>
         <dd>Returns a listing of available metdata formats.</dd>
-        <form method="GET" action="{$path}/OAI/Server">
+        <form method="GET" action="/OAI/Server">
         <input type="hidden" name="verb" value="GetRecord">
         <table>
           <tr><td width="150" align="right">Identifier: </td><td><input type="text" name="identifier"></td></tr>

@@ -1,7 +1,7 @@
 
 <div class="headerlight2darkgrad"><!----></div>
 	
-<form method="get" id="searchForm" action="{$path}/Search/Home" name="searchForm" onsubmit="fixform(this)">	
+<form method="get" id="searchForm" action="/Search/Home" name="searchForm" onsubmit="fixform(this)">	
 	<div class="contentbox searchform">
 		<input type="hidden" name="checkspelling" value="true" />
 		<input type="hidden" value="true" name="sethtftonly">

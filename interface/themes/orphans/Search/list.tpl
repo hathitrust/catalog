@@ -1,5 +1,5 @@
-<script language="JavaScript" type="text/javascript" src="{$path}/services/Search/ajax.js"></script>
-<script language="JavaScript" type="text/javascript" src="{$path}/js/googleLinks.js"></script>
+<script language="JavaScript" type="text/javascript" src="/services/Search/ajax.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/googleLinks.js"></script>
 
 
 {literal}
@@ -24,11 +24,11 @@
             </div>
             <div class="yui-u">
           {/if}
-          <a href="{$url}/Search/Home?{$narrowItem.authurl}">{translate text=$narrowItem.name}</a> ({$narrowItem.num})<br>
+          <a href="/Search/Home?{$narrowItem.authurl}">{translate text=$narrowItem.name}</a> ({$narrowItem.num})<br>
         {/foreach}
         </div>
 	      {if $narrowcount > $smarty.foreach.narrowLoop.iteration}
-        <div style="clear:both; text-align: right;"> <a href="{$url}/Author/Search?{$searchcomps}">see all ({$narrowcount})</a></div>
+        <div style="clear:both; text-align: right;"> <a href="/Author/Search?{$searchcomps}">see all ({$narrowcount})</a></div>
       {/if}
       </div>
       {/if $narrow}
@@ -36,11 +36,11 @@
  {*
       <!-- Spelling suggestion -->
       {if $newPhrase}
-      <p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action}?lookfor={$newPhrase}&amp;type={$type}">{$newPhrase}</a>?</p>
+      <p class="correction">{translate text='Did you mean'} <a href="/Search/{$action}?lookfor={$newPhrase}&amp;type={$type}">{$newPhrase}</a>?</p>
       {/if}
 
        <div class="searchtools">
-        <!-- <a href="{$url}/Search/{$action}?lookfor={$lookfor|escape}&amp;type={$type}&amp;view=rss" class="feed">{translate text='Get RSS Feed'}</a> -->
+        <!-- <a href="/Search/{$action}?lookfor={$lookfor|escape}&amp;type={$type}&amp;view=rss" class="feed">{translate text='Get RSS Feed'}</a> -->
 
         <!-- fixme:suz RSS doesn't work so well
         <a href="" id="RSSFeed">{translate text='Get RSS Feed'}</a>
@@ -108,7 +108,7 @@
       <ul class="filters">
         {foreach from=$currentFacets item=facet}
           <li>
-            <a href="{$url}/Search/{$action}?{$facet.removalURL}"><img  src="{$path}/images/silk/delete.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>
+            <a href="/Search/{$action}?{$facet.removalURL}"><img  src="/images/silk/delete.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>
         {/foreach}
       </ul>
       <div class="narrowList navmenu" id="narrowList">

@@ -17,7 +17,7 @@
 				<li class="linkeditemrightarrow">
 			{/if}
 
-			<a  ref="{$facet.logargs}" class="findme" href="{$url}/Search/Home?{$facet.url}">{translate text=$facet.value} ({$facet.count})</a>
+			<a  ref="{$facet.logargs}" class="findme" href="/Search/Home?{$facet.url}">{translate text=$facet.value} ({$facet.count})</a>
 			</li>
 
 			{if ($smarty.foreach.facetLoop.iteration > 5) && $smarty.foreach.facetLoop.last}

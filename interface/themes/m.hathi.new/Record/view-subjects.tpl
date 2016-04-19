@@ -8,7 +8,7 @@
     {foreach from=$lc_subjects item=subject}
       {assign var=subject_display value=" -- "|implode:$subject}
       {assign var=subject_search value=" "|implode:$subject}
-      <a href="{$url}/Search/Home?lookfor={$subject_search|escape}&amp;type=subject2">{$subject_display}</a>
+      <a href="/Search/Home?lookfor={$subject_search|escape}&amp;type=subject2">{$subject_display}</a>
       <br>
     {/foreach}
     </td>
@@ -22,7 +22,7 @@
     {foreach from=$other_subjects item=subject}
       {assign var=subject_display value=" -- "|implode:$subject}
       {assign var=subject_search value=" "|implode:$subject}
-      <a href="{$url}/Search/Home?lookfor={$subject_search|escape}&amp;type=subject2">{$subject_display}</a>
+      <a href="/Search/Home?lookfor={$subject_search|escape}&amp;type=subject2">{$subject_display}</a>
       <br>
     {/foreach}
     </td>
@@ -37,15 +37,15 @@
     <td>
         {foreach from=$marcField item=field name=loop}
           {if $field|getvalue:'a'}
-            <a href="{$url}/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb3Str:{$field|getvalue:'a'|escape:"url"}">{$field|getvalue:'a'|escape}</a>
+            <a href="/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb3Str:{$field|getvalue:'a'|escape:"url"}">{$field|getvalue:'a'|escape}</a>
           {/if}
           {if $field|getvalue:'b'}
             &gt;
-            <a href="{$url}/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb3Str:{$field|getvalue:'b'|escape:"url"}">{$field|getvalue:'b'|escape}</a>
+            <a href="/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb3Str:{$field|getvalue:'b'|escape:"url"}">{$field|getvalue:'b'|escape}</a>
           {/if}
           {if $field|getvalue:'c'}
             &gt;
-            <a href="{$url}/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb3Str:{$field|getvalue:'c'|escape:"url"}">{$field|getvalue:'c'|escape}</a>
+            <a href="/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb3Str:{$field|getvalue:'c'|escape:"url"}">{$field|getvalue:'c'|escape}</a>
           {/if}
           <br>
         {/foreach}
@@ -55,15 +55,15 @@
         
           {assign var="hlb3array" value="|"|explode:$field}
           {if $hlb3array.0}
-            <a href="{$url}/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb3Str:{$hlb3array.0|trim|escape:"url"}">{$hlb3array.0|escape}</a>
+            <a href="/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb3Str:{$hlb3array.0|trim|escape:"url"}">{$hlb3array.0|escape}</a>
           {/if}
           {if $hlb3array.1}
             &gt;
-            <a href="{$url}/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb3Str:{$hlb3array.1|trim|escape:"url"}">{$hlb3array.1|escape}</a>
+            <a href="/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb3Str:{$hlb3array.1|trim|escape:"url"}">{$hlb3array.1|escape}</a>
           {/if}
           {if $hlb3array.2}
             &gt;
-            <a href="{$url}/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb3Str:{$hlb3array.2|trim|escape:"url"}">{$hlb3array.2|escape}</a>
+            <a href="/Search/Home?lookfor=&amp;type=&amp;filter[]=hlb3Str:{$hlb3array.2|trim|escape:"url"}">{$hlb3array.2|escape}</a>
           {/if}
           <br>
         {/foreach}

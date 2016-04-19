@@ -81,7 +81,7 @@ class NewItem extends Action {
             $link = strstr($link, '/Search');
             $options = array('totalItems' => $newItems['count'],
                              'mode' => 'sliding',
-                             'path' => $configArray['Site']['url'],
+                             'path' => '/',
                              'fileName' => $link,
                              'delta' => 5,
                              'perPage' => 20,

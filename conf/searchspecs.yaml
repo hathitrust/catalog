@@ -78,10 +78,6 @@
 #
 # These are the stock searches as implemented in Solr.php
 
-htrights:
-  - ht_rightscode:
-    - [and, 1]
-
 callnoletters:
   - callnoletters:
     - [emstartswith, 1]

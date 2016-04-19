@@ -2,9 +2,9 @@
 <html lang="{$userLang}">
   <head>
     <title>{$pageTitle|truncate:64:"..."}</title>
-    <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">
-    <link rel="stylesheet" type="text/css" media="screen" href="{$path}/interface/themes/umichwebsite/css/styles.css">
-    <link rel="stylesheet" type="text/css" media="print" href="{$path}/interface/themes/umichwebsite/css/print.css">
+    <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="/Search/OpenSearch?method=describe">
+    <link rel="stylesheet" type="text/css" media="screen" href="/interface/themes/umichwebsite/css/styles.css">
+    <link rel="stylesheet" type="text/css" media="print" href="/interface/themes/umichwebsite/css/print.css">
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <script language="JavaScript" type="text/javascript">
       path = '{$url}';
@@ -25,14 +25,14 @@ function trimForm(infrm) {
     </script>
 
 
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/yui/yahoo-dom-event.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/yui/yahoo-min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/yui/event-min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/yui/connection-min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/yui/dragdrop-min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/scripts.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/rc4.js"></script>
-    <script language="JavaScript" type="text/javascript" src="{$path}/js/ajax.yui.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/yui/yahoo-dom-event.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/yui/yahoo-min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/yui/event-min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/yui/connection-min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/yui/dragdrop-min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/scripts.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/rc4.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/ajax.yui.js"></script>
   </head>
 
   <body>
@@ -45,7 +45,7 @@ function trimForm(infrm) {
     <!-- header -->
     <div id="header">
       <div id="logo-wrapper">
-        <a href="{$url}"><img src="{$path}/static/umichwebsite/images/logo.png" alt="mlibrary" id="logo" ></a>
+        <a href="/"><img src="/static/umichwebsite/images/logo.png" alt="mlibrary" id="logo" ></a>
       </div>
       <div class="adjustable">
         <div id="alerts" class="floating-block">
@@ -64,8 +64,8 @@ function trimForm(infrm) {
     <!-- search-options -->
     <div id="search-options">
       <div id="logo-tag-wrapper">
-        <a href="{$url}">
-        <img src="{$path}/static/umichwebsite/images/logo-tag.png" alt="university of michigan" id="logo-tag" ></a>
+        <a href="/">
+        <img src="/static/umichwebsite/images/logo-tag.png" alt="university of michigan" id="logo-tag" ></a>
       </div>
       <div class="adjustable">
         <div id="block-mlibrary_blocks-0" class="clear-block block block-mlibrary_blocks">
@@ -153,7 +153,7 @@ function trimForm(infrm) {
 
       <!--<div id="hd">-->
         <!-- Your header. Could be an include. -->
-        <!--<a href="{$url}"><img src="{$path}/images/vufind.jpg" alt="vufinder"></a>-->
+        <!--<a href="/"><img src="/images/vufind.jpg" alt="vufinder"></a>-->
       <!--</div>-->
 
 
@@ -163,7 +163,7 @@ function trimForm(infrm) {
         <div class="yui-main">
           <div class="searchbox">
             <div class="yui-b">
-              <form method="GET" action="{$path}/Search/Home" name="searchForm" class="search" onsubmit="trimForm(this.lookfor); return true;">
+              <form method="GET" action="/Search/Home" name="searchForm" class="search" onsubmit="trimForm(this.lookfor); return true;">
                 <input type="text" name="lookfor" size="30" value="{$lookfor|escape:"html"}">
                 <select name="type">
                   <option value="all">{translate text="All Fields"}</option>
@@ -177,7 +177,7 @@ function trimForm(infrm) {
                   <option value="tag"{if $type == 'tag'} selected{/if}>Tag</option>
                 </select>
                 <input type="submit" name="submit" value="{translate text="Find"}">
-                <a href="{$path}/Search/Advanced" class="small">{translate text="Advanced"}</a>
+                <a href="/Search/Advanced" class="small">{translate text="Advanced"}</a>
                 {if $lookfor }
                 <br>
                 <input type="radio" name="search" value="new" checked="on"> New Search
@@ -190,10 +190,10 @@ function trimForm(infrm) {
         </div>
           <div class="yui-b">
             {if $user}
-              <a href="{$path}/MyResearch/Home">{translate text="Your Account"}</a> |
-              <a href="{$path}/MyResearch/Logout">{translate text="Log Out"}</a>
+              <a href="/MyResearch/Home">{translate text="Your Account"}</a> |
+              <a href="/MyResearch/Logout">{translate text="Log Out"}</a>
             {else}
-              <a href="{$path}/MyResearch/Home">{translate text="Login"}</a>
+              <a href="/MyResearch/Home">{translate text="Login"}</a>
             {/if}
             <br>
             <form method="post" name="langForm">
@@ -218,21 +218,21 @@ function trimForm(infrm) {
         <!-- Your footer. Could be an include. -->
           <div><p><strong>Search Options</strong></p>
             <ul>
-              <li><a href="{$path}/Search/History">Search History</a></li>
-              <li><a href="{$path}/Search/Advanced">Advanced Search</a></li>
-              <li><a href="{$path}/Search/Advanced">Advanced Search</a></li>
+              <li><a href="/Search/History">Search History</a></li>
+              <li><a href="/Search/Advanced">Advanced Search</a></li>
+              <li><a href="/Search/Advanced">Advanced Search</a></li>
             </ul>
           </div>
         <div><p><strong>Find More</strong></p>
           <ul>
-              <li><a href="{$path}/Browse/Home">Browse the Catalog</a></li>
-              <li><a href="{$path}/Search/Reserves">Course Reserves</a></li>
-              <li><a href="{$path}/Search/NewItem">New Items</a></li>
+              <li><a href="/Browse/Home">Browse the Catalog</a></li>
+              <li><a href="/Search/Reserves">Course Reserves</a></li>
+              <li><a href="/Search/NewItem">New Items</a></li>
             </ul>
         </div>
         <div><p><strong>Need Help?</strong></p>
           <ul>
-              <li><a href="{$path}/Help/Home?topic=search">Search Tips</a></li>
+              <li><a href="/Help/Home?topic=search">Search Tips</a></li>
               <li><a href="#">Ask a Librarian</a></li>
               <li><a href="#">FAQs</a></li>
             </ul>
@@ -277,7 +277,7 @@ function trimForm(infrm) {
           <h2>Creative Commons</h2>
 
           <div class="content">
-            <img src="{$path}/static/umichwebsite/images/creative-commons.gif" >
+            <img src="/static/umichwebsite/images/creative-commons.gif" >
             <p class="cc">Except where otherwise noted, this work is subject to a Creative Commons license.<br ><a href="/%2523">Additional permissions are available</a></p>
             <p class="regents">&copy;2008, Regents of the University of Michigan</p>
             <p class="qc">Do you have <a href="/%2523">questions or comments</a> about this page?</p>

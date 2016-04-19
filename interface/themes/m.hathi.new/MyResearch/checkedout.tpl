@@ -68,11 +68,11 @@ function SetCheckBox(FormName, FieldName, Value)
 
           <div class="resultrightcol">
           
-              <!-- img src="{$path}/bookcover.php?isn={$resource.isbn|truncate:10:""}&size=small" class="alignleft" -->
+              <!-- img src="/bookcover.php?isn={$resource.isbn|truncate:10:""}&size=small" class="alignleft" -->
               <div class="resultitem">
                 <input type="checkbox" name="item_barcodes[]" value="{$resource.barcode}" style="display:none;">
                   {if $resource.id}
-                    <a href="{$url}/Record/{$resource.id}?returnpage=checkedout" class="title">{$resource.title[0]}</a><br>
+                    <a href="/Record/{$resource.id}?returnpage=checkedout" class="title">{$resource.title[0]}</a><br>
                   {else}
                     {$resource.title[0]}<br>
                   {/if}
@@ -84,7 +84,7 @@ function SetCheckBox(FormName, FieldName, Value)
                   {if $resource.tags}
                     {translate text='Your Tags'}:
 {*                   {foreach from=$resource.tags item=tag name=tagLoop}
-                       <a href="{$url}/Search/Home?tag={$tag->tag}">{$tag->tag}</a>{if !$smarty.foreach.tagLoop.last},{/if}
+                       <a href="/Search/Home?tag={$tag->tag}">{$tag->tag}</a>{if !$smarty.foreach.tagLoop.last},{/if}
                      {/foreach}
 *}                    
                       <br>

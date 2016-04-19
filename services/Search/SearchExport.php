@@ -175,25 +175,25 @@ class SearchExport {
     $this->rdf('text/xml');
   }
 
-   function rdf($contenttype = "application/rdf+xml") {
-     global $configArray;
-     global $interface;
-     header('Content-type: $contenttype; charset=UTF-8');
-     $r = $this->results['record'][0];
-
-     // Standardize the numbers
-      foreach (array('isbn') as $num) {
-       if (isset($r[$num])) {
-         foreach ($r[$num] as $i => $v) {
-           $r[$num][$i] = Normalize::stdnum($v, true); # true to leave leading zeros
-         }
-       }
-     }
-     $interface->assign('record', $r);
-     $interface->assign('marc', $this->ru->getMarcRecord($r));
-     $interface->assign('url', $configArray['Site']['url']);
-     echo $interface->fetch('Record/rdf.tpl');
-   }
+  // function rdf($contenttype = "application/rdf+xml") {
+  //   global $configArray;
+  //   global $interface;
+  //   header('Content-type: $contenttype; charset=UTF-8');
+  //   $r = $this->results['record'][0];
+  // 
+  //   // Standardize the numbers
+  //   foreach (array('isbn') as $num) {
+  //     if (isset($r[$num])) {
+  //       foreach ($r[$num] as $i => $v) {
+  //         $r[$num][$i] = Normalize::stdnum($v, true); # true to leave leading zeros
+  //       }
+  //     }
+  //   }
+  //   $interface->assign('record', $r);
+  //   $interface->assign('marc', $this->ru->getMarcRecord($r));
+  //   $interface->assign('url', $configArray['Site']['url']);
+  //   echo $interface->fetch('Record/rdf.tpl');
+  // }
 
   function xml() {
     $this->marcxmlfirst();
@@ -332,7 +332,7 @@ class SearchExport {
             if ($ecron) {
               $htid .= " (" . $ecron->getData() . ")";
             }
-            array_push($lines, $line . "http://hdl.handle.net/2027/$htid");
+            array_push($lines, $line . "https://hdl.handle.net/2027/$htid");
           }
           continue;
         }

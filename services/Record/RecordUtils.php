@@ -80,17 +80,16 @@ class RecordUtils {
   }
 
   function ht_link_data($field) {
-    global $HT_COLLECTIONS;
+    global $HT_NAMESPACES;
     $rv = array();
     $rc = $field->getSubfield('r')->getData();
     $rv['rights_code'] = $rc;
 
     $handle = $field->getSubfield('u')->getData();
     $rv['handle'] = $handle;
-    
-    $collection = $field->getSubfield('c')->getData();
-    $collection = strtolower($collection);
-    $rv['original_from'] = $HT_COLLECTIONS[$collection]['original_from'];
+
+    $namespace = preg_filter('/\..*$/', '', $handle);
+    $rv['original_from'] = $HT_NAMESPACES[$namespace];
 
     $rv['enumchron'] = $field->getSubfield('z') ? $field->getSubfield('z')->getData() : '';
     $rv['is_fullview'] = $this->is_fullview($rv['rights_code']);
@@ -116,8 +115,8 @@ class RecordUtils {
     if ($rcode == 'pdus' && $inUSA == false) {
       $fv = false;
     }
-
-    // ...unless UNLESS it's pd-private or pd-pvt
+   
+    // ...unless-UNLESS it's pd-pvt
     if (preg_match('/pd-p/', $rcode)) {
       $fv = false;
     }

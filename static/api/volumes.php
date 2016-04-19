@@ -74,7 +74,6 @@ $fieldmap = array(
 
 
 
-$ofrommap = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_collections.php'));
 $namespacemap = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_namespaces.php'));
 
 $commonargs = array(
@@ -135,8 +134,9 @@ class QObj
 
       // error_log("Working on $field for val " . $fv[1]);
       $val = trimlower($fv[1]);
-      $val = preg_replace('/([\+\-\&|!\()\{}\[\]^\"~\*\?\:\\\\])/', '\\\\$1', $val);
-//      echo "Val is now '$val'\n\n";
+      // 
+      // echo "Q is " . $_REQUEST['q'];
+      // echo "Looking for $field = $val\n";
 
       if (!isset($validField[$field])) {
         #echo "Skipping $field\n";
@@ -144,11 +144,14 @@ class QObj
       }
       $fixedval = $validField[$field]($val); // weird call-variable-value-as-name-of-function
       
+      // Escape the colons
+      
+      $val = preg_replace('/:/', '\:', $val);
+      
       $qfield = isset($fieldmap[$field])? $fieldmap[$field] : $field;
 
       $this->qspecs[] = "$qfield:$val";
       $this->tspecs[] = array($field, $qfield, $fixedval);
-//      print_r($this);
     }
   }
   
@@ -198,7 +201,7 @@ class QObj
           // For an array of vals, it matches if at least one matches
           $gotone = false;
           foreach ($dvals as $d) {
-            if (($d == $qval) ||($d == preg_replace('/\\\\/', '', $qval))) {
+            if ($d == $qval) {
               $gotone = true;
               $match = true;
               //echo "Matched '$d' and '$qval' for '$qfield' against $this->string\n";
@@ -225,7 +228,7 @@ class QObj
     foreach ($this->matches as $docid) {
       $doc = $docs[$docid];
       $rinfo = array();
-      $rinfo['recordURL'] = 'http://catalog.hathitrust.org/Record/' . $docid;
+      $rinfo['recordURL'] = '/Record/' . $docid;
       foreach (array('title', 'isbn', 'issn', 'oclc', 'lccn', 'publishDate') as $index) {
         if (isset($doc->$index)) {
           $vals = is_array($doc->$index)? $doc->$index : array($doc->$index);
@@ -247,8 +250,8 @@ class QObj
   }
   
   function itemsStructure($docs) {
-    global $ofrommap;
     global $namespacemap;
+    // global $rightsmap;
     
     $ru = new RecordUtils();
     
@@ -259,16 +262,12 @@ class QObj
         $iinfo = array();
 
         $htid = $ht['htid'];
-
-	$ccode = $ht['collection_code'];
-        $iinfo['orig'] = $ofrommap[$ccode]['original_from'];
-
-//        preg_match('/(.*?)\./', $htid, $match);
-//        $iinfo['orig'] = $namespacemap[$match[1]];
+        preg_match('/(.*?)\./', $htid, $match);
+        $iinfo['orig'] = $namespacemap[$match[1]];
 
         $iinfo['fromRecord'] = $docid;
         $iinfo['htid'] = $htid;
-        $iinfo['itemURL'] = "http://hdl.handle.net/2027/" . $htid;
+        $iinfo['itemURL'] = "https://hdl.handle.net/2027/" . $htid;
         $iinfo['rightsCode'] = isset($ht['rights']) ? $ht['rights'] : 'ic';
         $iinfo['lastUpdate'] = $ht['ingest'];
         $iinfo['enumcron'] = (isset($ht['enumcron']) && preg_match('/\S/', $ht['enumcron']))? $ht['enumcron'] : false;
@@ -311,8 +310,6 @@ if (!preg_match('/\S/', $q)) {
 // ***** Put this in a try/catch
 $results = $solr->search($q, 0, 200, $commonargs);
 
-echo "\n\n";
-//print_r($results);
 
 # Index the documents;
 $docs = array();
@@ -361,7 +358,6 @@ if ($_REQUEST['type'] == 'json') {
       header('Content-type: application/javascript; charset=UTF-8');  
       echo $_REQUEST['callback'] . "( $json)";
     } else {
-      header('Access-Control-Allow-Origin: *');
       header('Content-type: application/json; charset=UTF-8');
       echo $json;
     }
@@ -426,7 +422,7 @@ function enumsort($a, $b) {
 //       {
 //         "000366004":
 //           {
-//             "recordURL" : "http://catalog.hathitrust.org/Record/000366004",
+//             "recordURL" : "https://catalog.hathitrust.org/Record/000366004",
 //             "titles": ["The Sneetches, and other stories. Written and illustrated by Dr. Seuss."],
 //             "isbns": [],
 //             "issns": [],
@@ -438,7 +434,7 @@ function enumsort($a, $b) {
 //       {
 //         "fromRecord": "000366004",
 //         "htid": "mdp.39015079651611",
-//         "itemURL": "http://hdl.handle.net/2027/mdp.39015079651611",
+//         "itemURL": "https://hdl.handle.net/2027/mdp.39015079651611",
 //         "rightscode": "ic",
 //         "lastUpdate": "20091004",
 //         "orig": "University of Michigan",

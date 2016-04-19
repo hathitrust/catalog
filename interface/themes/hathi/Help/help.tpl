@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <title>MyResearch Help</title>
-    <link rel="stylesheet" type="text/css" href="{$path}/services/Help/help.css" >
+    <link rel="stylesheet" type="text/css" href="/services/Help/help.css" >
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
   </head>
   <body>

@@ -12,7 +12,7 @@
     <div class="MBooksNav">
       <ul>
         <!--<li><a href="https://babel.hathitrust.org/cgi/mb?a=listcs;colltype=pub;sort=cn_a">Login</a></li>-->
-        <li><a href="http://www.hathitrust.org/help" title="Help page and faq">Help</a></li>
+        <li><a href="https://www.hathitrust.org/help" title="Help page and faq">Help</a></li>
 	      <li><a href="#" id="feedback" title="Feedback form for problems or comments"><span>Feedback</span></a></li>
       </ul>
     </div>
@@ -24,10 +24,10 @@
     <div id="CBNav">
       <h2 class="SkipLink">Navigation links for search and collections</h2>
       <ul>
-        <li><a href="http://www.hathitrust.org/"><span title="HathiTrust Home">Home</span></a></li>
-        <li><a href="http://www.hathitrust.org/about"><span title="About">About</span></a></li>
-        <li><a href="http://babel.hathitrust.org/cgi/mb?a=listcs;colltype=pub"><span title="Public Collections">Public Collections</span></a></li>
-        <li><a href="http://babel.hathitrust.org/cgi/mb?a=listcs;colltype=priv"><span title="My Collections">My Collections</span></a></li>
+        <li><a href="https://www.hathitrust.org/"><span title="HathiTrust Home">Home</span></a></li>
+        <li><a href="https://www.hathitrust.org/about"><span title="About">About</span></a></li>
+        <li><a href="https://babel.hathitrust.org/cgi/mb?a=listcs;colltype=pub"><span title="Public Collections">Public Collections</span></a></li>
+        <li><a href="https://babel.hathitrust.org/cgi/mb?a=listcs;colltype=priv"><span title="My Collections">My Collections</span></a></li>
       </ul>
     </div>
   </div>

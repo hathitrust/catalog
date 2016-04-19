@@ -1,8 +1,3 @@
-<style>
-{literal}
-.localCover { border-bottom: 8px solid red !important; }
-{/literal}
-</style>
 <form name="addForm" action="#" method="GET">
 {foreach from=$recordSet item=record name="recordLoop"}
   {if ($smarty.foreach.recordLoop.iteration % 2) == 0}
@@ -18,7 +13,7 @@
 -->
     <div class="yui-ge">
       <div class="yui-u first">
-      <div id=GoogleCover_{$record.id} style="position: relative; float: left" data-hdl="{$record.hdl}">
+      <div id=GoogleCover_{$record.id} style="position: relative; float: left">
        <img src="/images/nocover-thumbnail.png"/>
       </div>
 
@@ -74,7 +69,7 @@
           </div>
 
           <!-- Viewability Link -->
-
+          
 
           <div class="AccessLink">
             <ul>
@@ -86,21 +81,20 @@
 
               <li>
                {assign var="dfields" value=$ru->displayable_ht_fields($record.marc)}
-
-
+               
+                 
                 {* If we have more than one good 974, just put in the link
                    to the catalog record *}
                 {if $dfields|@count gt 1}
-                  {assign var=ld value=$ru->ht_link_data($dfields[0])}
-                  <span class="multivolLink" data-hdl="{$ld.handle}">(view record to see multiple volumes)</span>
+                  <span class="multivolLink">(view record to see multiple volumes)</span>
                 {else}
                   {assign var=ld value=$ru->ht_link_data($dfields[0])}
                   {if $ld.is_fullview}
-                    <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext" data-hdl="{$ld.handle}">Full view</a>
+                    <a href="https://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view</a>
                   {else}
-                    <a href="http://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly" data-hdl="{$ld.handle}">Limited (search only)</a>
+                    <a href="https://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)</a>
                   {/if}
-                {/if}
+                {/if}  
                </li>
             </ul>
 

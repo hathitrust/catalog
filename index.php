@@ -85,7 +85,7 @@ if ( (strlen($_SERVER['REQUEST_URI']) <=1) &&
      ($sname != $configArray['Site']['mobile_machine']) &&
      mobile_device_detect()
    ) {
-     header("Location: http://" . $configArray['Site']['mobile_machine'] . "/");
+     header("Location: //" . $configArray['Site']['mobile_machine'] . "/");
      exit();
 }
 
@@ -95,7 +95,7 @@ if ( (strlen($_SERVER['REQUEST_URI']) <=1) &&
 
 
 if (($sname == $configArray['Site']['mobile_machine']) || (isset($_REQUEST['force_mobile']))) {
-  $configArray['Site']['url'] = 'http://' . $configArray['Site']['mobile_machine'];
+  $configArray['Site']['url'] = '//' . $configArray['Site']['mobile_machine'];
   $configArray['Site']['theme'] = $configArray['Site']['mobile_theme'];
 }
 
@@ -393,7 +393,7 @@ function handlePEARError($error, $method = null) {
 }
 
 function curPageURL() {
- $pageURL = 'http';
+ $pageURL = 'https';
  $pageURL .= "://";
  if ($_SERVER["SERVER_PORT"] != "80") {
   $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];

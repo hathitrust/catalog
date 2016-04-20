@@ -81,15 +81,15 @@
       </ul>
       -->
       <ul class="nav pull-right">
-        <li><a href="http://www.hathitrust.org/">Home</a></li>
-        <li><a href="http://www.hathitrust.org/about">About</a></li>
-        <li><a href="http://babel.hathitrust.org/cgi/mb">Collections</a></li>
-        <li><a href="http://www.hathitrust.org/help">Help</a></li>
+        <li><a href="//www.hathitrust.org/">Home</a></li>
+        <li><a href="//www.hathitrust.org/about">About</a></li>
+        <li><a href="//babel.hathitrust.org/cgi/mb">Collections</a></li>
+        <li><a href="//www.hathitrust.org/help">Help</a></li>
         <li><a href="#" data-m="ht" data-id="HathiTrust Catalog Feedback" data-toggle="feedback">Feedback</a></li>
-        <li><a href="http://m.hathitrust.org">Mobile</a></li>
-        <li><a href="http://www.hathitrust.org/take_down_policy">Take-Down Policy</a></li>
-        <li><a href="http://www.hathitrust.org/privacy">Privacy</a></li>
-        <li><a href="http://www.hathitrust.org/contact">Contact</a></li>
+        <li><a href="//m.hathitrust.org">Mobile</a></li>
+        <li><a href="//www.hathitrust.org/take_down_policy">Take-Down Policy</a></li>
+        <li><a href="//www.hathitrust.org/privacy">Privacy</a></li>
+        <li><a href="//www.hathitrust.org/contact">Contact</a></li>
       </ul>
     </div>
   </div>

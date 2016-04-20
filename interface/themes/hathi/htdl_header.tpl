@@ -3,24 +3,24 @@
   <div class="navbar navbar-static-top navbar-inverse" role="navigation">
     <div class="navbar-inner">
       <ul id="nav" class="nav">
-        <li><a href="http://www.hathitrust.org">Home</a></li>
-        <li><a href="http://www.hathitrust.org/about">About</a>
+        <li><a href="//www.hathitrust.org">Home</a></li>
+        <li><a href="//www.hathitrust.org/about">About</a>
           <ul>
-          <li><a href="http://www.hathitrust.org/partnership">Our Partnership</a></li>
-          <li><a href="http://www.hathitrust.org/digital_library">Our Digital Library</a></li>
-          <li><a href="http://www.hathitrust.org/htrc">Our Research Center</a></li>
-          <li><a href="http://www.hathitrust.org/news_publications">News &amp; Publications</a></li>
+          <li><a href="//www.hathitrust.org/partnership">Our Partnership</a></li>
+          <li><a href="//www.hathitrust.org/digital_library">Our Digital Library</a></li>
+          <li><a href="//www.hathitrust.org/htrc">Our Research Center</a></li>
+          <li><a href="//www.hathitrust.org/news_publications">News &amp; Publications</a></li>
           </ul></li>
-        <li><a href="http://babel.hathitrust.org/cgi/mb">Collections</a></li>
+        <li><a href="//babel.hathitrust.org/cgi/mb">Collections</a></li>
         <li class="divider-vertical"></li>
-        <li class="help"><a href="http://www.hathitrust.org/help">Help</a></li>
+        <li class="help"><a href="//www.hathitrust.org/help">Help</a></li>
         <li><a href="{$unicorn_root}/cgi/feedback?page=form" data-m="ht" data-id="HathiTrust Catalog Feedback" data-toggle="feedback">Feedback</a></li>      
       </ul>
       <!-- IF LOGGED IN
       <ul id="person-nav" class="nav pull-right">
         <li><span>Hi bjensen!</span></li>
-        <li><a href="http://babel.hathitrust.org/cgi/mb?a=listcs;colltype=priv">My Collections</a></li>
-        <li><a href="http://babel.hathitrust.org/cgi/logout">Logout</a></li>
+        <li><a href="//babel.hathitrust.org/cgi/mb?a=listcs;colltype=priv">My Collections</a></li>
+        <li><a href="//babel.hathitrust.org/cgi/logout">Logout</a></li>
       </ul>
       -->
     </div>
@@ -29,7 +29,7 @@
   <!-- HEADER -->
   <div class="container centered header clearfix">
     <div class="logo">
-      <a href="http://www.hathitrust.org"><span class="offscreen">HathiTrust Digital Library</span></a>
+      <a href="//www.hathitrust.org"><span class="offscreen">HathiTrust Digital Library</span></a>
     </div>
     <div class="search-form" role="search">
 
@@ -60,9 +60,9 @@
         </fieldset>
         <div class="search-extra-options">
           <ul class="search-links">
-            <li class="search-advanced-link"><a href="http://babel.hathitrust.org/cgi/ls?a=page;page=advanced">Advanced full-text search</a></li>
+            <li class="search-advanced-link"><a href="//babel.hathitrust.org/cgi/ls?a=page;page=advanced">Advanced full-text search</a></li>
             <li class="search-catalog-link"><a href="/Search/Advanced">Advanced catalog search</a></li>
-            <li><a href="http://www.hathitrust.org/help_digital_library#SearchTips">Search tips</a></li>
+            <li><a href="//www.hathitrust.org/help_digital_library#SearchTips">Search tips</a></li>
           </ul>
           <label>
             <input type="checkbox" name="ft" value="ft" {if $check_ft_checkbox}checked="checked"{/if}/>

@@ -141,7 +141,7 @@
      <!-- Display Title -->
        <div id="title_collection">
          <!-- Display Book Cover -->
-         <div id=GoogleCover_{$id} style="display:none; margin: 10px; position: relative; float: left">
+         <div id=GoogleCover_{$id} style="display:none; margin: 10px; position: relative; float: left; border: 2px solid #ccc">
          </div>
 
          <!-- End Book Cover -->

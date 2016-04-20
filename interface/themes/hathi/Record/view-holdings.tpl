@@ -90,7 +90,7 @@ function holdings_toggle(prefix)
   {else}
      <th></th>
   {/if}
-  <td><a target=link href=http://hdl.handle.net/2027/{$item.id}>{$item.status}</a></td>
+  <td><a target=link href=//hdl.handle.net/2027/{$item.id}>{$item.status}</a></td>
   <td>(original from {$item.source})</td>
 </tr>
 {/foreach}

@@ -176,6 +176,7 @@ class SearchExport {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
    function rdf($contenttype = "application/rdf+xml") {
      global $configArray;
      global $interface;
@@ -196,6 +197,8 @@ class SearchExport {
      echo $interface->fetch('Record/rdf.tpl');
    }
 =======
+=======
+>>>>>>> 0b3423f... Delete cruft; remove trailing spaces
   // function rdf($contenttype = "application/rdf+xml") {
   //   global $configArray;
   //   global $interface;
@@ -215,6 +218,9 @@ class SearchExport {
   //   $interface->assign('url', $configArray['Site']['url']);
   //   echo $interface->fetch('Record/rdf.tpl');
   // }
+<<<<<<< HEAD
+>>>>>>> 0b3423f... Delete cruft; remove trailing spaces
+=======
 >>>>>>> 0b3423f... Delete cruft; remove trailing spaces
 
   function xml() {

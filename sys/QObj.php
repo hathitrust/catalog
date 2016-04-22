@@ -35,7 +35,6 @@ class QObj
 
 
 
-  public $namespacemap; 
   public $ht_collections;
 
 
@@ -56,7 +55,6 @@ class QObj
 
     
     $this->string = $str;
-    $this->namespacemap =  eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_namespaces.php'));
     $this->ht_collections =  eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_collections.php'));
     
     $specs = explode(';', $str);

@@ -73,8 +73,7 @@ $fieldmap = array(
 // );
 
 
-
-$namespacemap = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_namespaces.php'));
+$collectionsmap = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_collections.php'));
 
 $commonargs = array(
   'fl' => 'score,id,ht_json,title,year,publishDate,oclc,lccn,isbn,issn',
@@ -250,7 +249,7 @@ class QObj
   }
   
   function itemsStructure($docs) {
-    global $namespacemap;
+    global $collectionsmap;
     // global $rightsmap;
     
     $ru = new RecordUtils();
@@ -260,10 +259,9 @@ class QObj
       $doc = $docs[$docid];
       foreach (json_decode($doc->ht_json, true) as $ht) {
         $iinfo = array();
-
         $htid = $ht['htid'];
-        preg_match('/(.*?)\./', $htid, $match);
-        $iinfo['orig'] = $namespacemap[$match[1]];
+        $collection_code = $ht['collection_code'];
+        $iinfo['orig'] = $collectionsmap[$collection_code]['original_from'];
 
         $iinfo['fromRecord'] = $docid;
         $iinfo['htid'] = $htid;

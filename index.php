@@ -174,7 +174,7 @@ if (isset($configArray['Index']['urlFile'])) {
 //#####################################
 
 $HT_NAMESPACES = $eval = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_namespaces.php'));
-
+$HT_COLLECTIONS = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_collections.php'));
 $interface->assign('ht_namespace_map', $HT_NAMESPACES);
 
 

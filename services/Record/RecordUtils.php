@@ -76,7 +76,18 @@ class RecordUtils {
     $rv['original_from'] = $HT_COLLECTIONS[$collection]['original_from'];
     $rv['enumchron'] = $e['enumcron'];
     $rv['is_fullview'] = $this->is_fullview($rv['rights_code']);
+    $rv['is_tombstone'] = $rv['rights_code'] == 'nobody';
     return $rv;
+  }
+  
+  function record_is_tombstone($rec) {
+    $htjson = json_decode($rec['ht_json'], true);
+    foreach ($htjson as $item) {
+      if ($item['rights'] != 'nobody') {
+        return false;
+      }
+    }
+    return true;
   }
 
   function ht_link_data($field) {

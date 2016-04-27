@@ -470,21 +470,23 @@
     {/foreach}
   {else}
 
-  {assign var="fields" value=$ru->displayable_ht_fields($marc)}
   {assign var="htjson" value=$record.ht_json|json_decode:true}
+  {assign var="record_is_tombstone" value=$ru->record_is_tombstone($record)}
 
    {foreach from=$htjson item=e}
      {assign var=ld value=$ru->ht_link_data_from_json($e)}
+     {if $record_is_tombstone || !($ld.is_tombstone)}
       <li>
-        {if 'tombstone'|@in_array:$record.ht_rightscode}
-        This item is no longer available (<a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
-        {elseif $ld.is_fullview}
-          <a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view<span class="IndItem">{$ld.enumchron}</span></a>
-        {else}
-          <a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)<span class="IndItem">{$ld.enumchron}</span></a>
-        {/if}
-        <em class="original_from">(original from {$ld.original_from})</em>
+        {if $record_is_tombstone}
+          This item is no longer available (<a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
+           {elseif $ld.is_fullview}
+            <a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view<span class="IndItem">{$ld.enumchron}</span></a>
+          {else}
+            <a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)<span class="IndItem">{$ld.enumchron}</span></a>
+          {/if}
+          <em class="original_from">(original from {$ld.original_from})</em>
       </li>
+      {/if}
     {/foreach}
 
   {/if} {* $mergedItems  *}

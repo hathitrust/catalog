@@ -28,7 +28,7 @@
   RewriteRule   ^unapi$                   static/unapi.php [L,QSA]
   
   # Redirect to record from htid
-  RewriteRule   ^Record/HTID/(.+).xml$    static/api/marcxml_from_htid.php?id=$1 [L] 
+  RewriteRule   ^Record/HTID/(.+)\.(xml|json|marc)$    index.php?module=Record&action=HTID&htid=$1&format=$2 [L] 
   RewriteRule   ^Record/HTID/(.+)$        index.php?module=Record&action=HTID&htid=$1 [L] 
   
   

@@ -29,6 +29,10 @@ class HTID
 
     $doc = $results->response->docs[0];
     $id = $doc->id;
+
+    if (isset($_REQUEST['format'])) {
+      $id = $id . '.' . $_REQUEST['format'];
+    }
     
       
     header("Location: /Record/$id", true, '301 Moved Permanently');

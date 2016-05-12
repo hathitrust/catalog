@@ -50,7 +50,8 @@
 
     <script type="text/javascript" src="/js/ht-layout.js"></script>
 
-
+    <meta name="title" content="{$pageTitle}" >
+    
   </head>
 
   <body>

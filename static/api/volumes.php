@@ -37,6 +37,12 @@ if (isset($configArray[$hn])) {
   }
 }
 
+# So, we need to put ACAO in the header
+# no matter what happens.
+
+header('Access-Control-Allow-Origin: *');
+
+
 
 
 // Map api fields to solr fields

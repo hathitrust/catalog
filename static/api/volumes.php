@@ -156,6 +156,16 @@ class QObj
       $qfield = isset($fieldmap[$field])? $fieldmap[$field] : $field;
 
       $this->qspecs[] = "$qfield:$val";
+      if ($qfield == 'lccn') {
+        $this->qspecs[] = "lccn:\" $val\"";
+        $this->qspecs[] = "lccn:\"  $val\"";
+        $this->qspecs[] = "lccn:\"   $val\"";
+        $this->qspecs[] = "lccn:\"    $val\"";
+        $this->qspecs[] = "lccn:\"     $val\"";
+        $this->qspecs[] = "lccn:\"      $val\"";
+        
+      }
+      
       $this->tspecs[] = array($field, $qfield, $fixedval);
     }
   }
@@ -291,6 +301,7 @@ $qstrings = explode('|', $_REQUEST['q']);
 $qobjs = array();
 $solrQueryComponents = array();
 
+
 foreach ($qstrings as $qstring) {
   $nqo = new QObj($qstring);
   $solrQueryComponents = array_merge($solrQueryComponents, $nqo->qspecs);
@@ -298,6 +309,8 @@ foreach ($qstrings as $qstring) {
 }
 
 
+
+// print_r($solrQueryComponents);
 // Build the query
 $q =  join(' OR ', $solrQueryComponents);
 

@@ -72,7 +72,7 @@
   </tr>
   <tr>
     <td>
-      <a href="javascript:(function(){id=$('a[data-hdl]').first().attr('href').toString().match('2027/([^/?]+)')[1];window.location='http://mirlyn.lib.umich.edu/Record/HTID/' + id})()">HT2M</a>
+      <a href="javascript:(function(){id=$('a[data-hdl]').first().attr('data-hdl').toString();window.location='http://mirlyn.lib.umich.edu/Record/HTID/' + id})()">HT2M</a>
     </td>
     <td>Record page</td>
     <td>Go to the equivalent record in Mirlyn</td>
@@ -80,7 +80,7 @@
   <tr>
     <td>
       <a
-      href="javascript:(function(){id=$('a[data-hdl]').first().attr('href').toString().match('2027/([^/?]+)')[1];window.location='http://mirlyn-classic.lib.umich.edu/F/?func=find-c&ccl_term=mdn%3d%22' + id + '%22'})()">HT2MC</a>
+      href="javascript:(function(){id=$('a[data-hdl]').first().attr('data-hdl').toString();window.location='http://mirlyn-classic.lib.umich.edu/F/?func=find-c&ccl_term=mdn%3d%22' + id + '%22'})()">HT2MC</a>
     </td>
     <td>Record page</td>
     <td>Go to the equivalent record in Mirlyn <em>Classic</em></td>

@@ -384,9 +384,9 @@ hlb:
 
 all:
   - title_ab:
-    - [exactmatcher, 25000]
+    - [onephrase, 25000]
   - title_a:
-    - [exactmatcher, 15000]
+    - [onephrase, 15000]
   - allfieldsProper:
     - [onephrase, 4000]
     - [and, 2000]
@@ -429,17 +429,17 @@ all:
   - isbn:
     - [stdnum, ~]
   - lccn:
-    - [exactmatcher, ~]
+    - [onephrase, ~]
   - rptnum:
-    - [exactmatcher, ~]
+    - [onephrase, ~]
   - oclc:
     - [stdnum, ~]
   - sdrnum:
-    - [exactmatcher, ~]
+    - [onephrase, ~]
   - ctrlnum:
-    - [exactmatcher, ~]
+    - [onephrase, ~]
   - ht_id:
-    - [exactmatcher, ~]
+    - [onephrase, ~]
   - isn_related:
     - [stdnum, ~]
   - topicProper:

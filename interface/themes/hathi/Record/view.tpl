@@ -470,7 +470,7 @@
     {/foreach}
   {else}
 
-  {assign var="htjson" value=$record.ht_json|json_decode:true}
+  {assign var="htjson" value=$ru->items_from_json($record)}
   {assign var="record_is_tombstone" value=$ru->record_is_tombstone($record)}
 
    {foreach from=$htjson item=e}

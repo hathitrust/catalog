@@ -9,6 +9,8 @@ class RecordUtils {
       '260' => array('tag' => '264', 'ind1' => false, 'ind2' => '1')
   );
 
+  private $memoize = array();
+
 
   # Which 245 subfields go in the long title?
   private $longTitleSubfields = array(
@@ -56,6 +58,38 @@ class RecordUtils {
     }
     return $ditems;
   }
+
+static function sortstringFromEnumcron($str) {
+  $rv = '';
+  preg_match('/\d+/', $str, $match);
+  if (isset($match[0])) {
+    if (!is_array($match[0])) {
+      $match[0]  = array($match[0]);
+    }
+    foreach ($match[0] as $digits) {
+      $rv .= strlen($digits) . $digits . ' ';
+    }
+  }
+  return $rv;
+}
+
+
+function enumsort($a, $b) {
+  $sa = $this->sortstringFromEnumcron($a['enumcron']);
+  $sb = $this->sortstringFromEnumcron($b['enumcron']);
+  if ($sa == $sb) {
+      return 0;
+  }
+  return ($sa < $sb) ? -1 : 1;
+}
+
+# Sort items from the json and return them
+
+function items_from_json($record) {
+  $items = json_decode($record['ht_json'], true);
+  usort($items, array($this, 'enumsort'));
+  return $items;
+}
 
   // Return an array of the form:
   // {

@@ -75,7 +75,7 @@
        <h3 class="SkipLink">Tools</h3>
        <ul class="ToolLinks">
          <li><a href="{$url}/Record/{$id}/Cite" class="cite" onClick="getLightbox('Record', 'Cite', '{$id}', null, '{translate text="Cite this"}'); return false;">{translate text="Cite this"}</a></li>
-         <li><a class="endnotelink" href="/Search/SearchExport?handpicked={$id}&amp;method=ris" onClick="pageTracker._trackEvent('recordActions', 'click', 'Endnote');">Export to Endnote</a></li>
+         <li><a class="endnotelink" href="/Search/SearchExport?handpicked={$id}&amp;method=ris" onClick="pageTracker._trackEvent('recordActions', 'click', 'Endnote');">Export citation file</a></li>
        </ul>
 
        <div class="recordnav">

@@ -14,7 +14,7 @@
     <div class="yui-ge">
       <div class="yui-u first">
       <div id=GoogleCover_{$record.id} style="position: relative; float: left">
-       <img src="/images/nocover-thumbnail.png"/>
+       <img src="/images/nocover-thumbnail.png" aria-hidden="true" alt="" />
       </div>
 
         <div class="resultitem">
@@ -90,9 +90,9 @@
                 {else}
                   {assign var=ld value=$ru->ht_link_data($dfields[0])}
                   {if $ld.is_fullview}
-                    <a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view</a>
+                    <a href="https://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view</a>
                   {else}
-                    <a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)</a>
+                    <a href="https://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} searchonly">Limited (search only)</a>
                   {/if}
                 {/if}  
                </li>

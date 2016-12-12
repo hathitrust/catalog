@@ -1,3 +1,10 @@
+  {if $recordCount > 0}
+  <ul id="skiplinks">
+    <li><a href="#contentContainer">Skip to search results</a></li>
+    <li><a href="#listleftcol">Skip to refine results</a></li>
+  </ul>
+  {/if}
+
   <!-- NAVBAR -->
   <h2 class="offscreen">Navigation</h2>
   <div class="navbar navbar-static-top navbar-inverse" role="navigation">
@@ -8,6 +15,7 @@
           <ul>
           <li><a href="//www.hathitrust.org/partnership">Our Partnership</a></li>
           <li><a href="//www.hathitrust.org/digital_library">Our Digital Library</a></li>
+          <li><a href="//www.hathitrust.org/collaborative-programs">Our Collaborative Programs</a></li>
           <li><a href="//www.hathitrust.org/htrc">Our Research Center</a></li>
           <li><a href="//www.hathitrust.org/news_publications">News &amp; Publications</a></li>
           </ul></li>
@@ -35,7 +43,8 @@
 
 {if !$suppress_searchbox}
       <form action="{$unicorn_root}/cgi/ls/one" method="GET">
-        <div class="search-tabs">
+        <div class="search-tabs" role="radiogroup" aria-labelledby="search-tabs-label">
+          <span id="search-tabs-label" class="offscreen">Search this index</span>
           <input name="target" type="radio" id="option-full-text-search" value="ls" />
           <label for="option-full-text-search" class="search-label-full-text">Full-text</label>
           <input name="target" type="radio" id="option-catalog-search" value="catalog" checked="checked"/>

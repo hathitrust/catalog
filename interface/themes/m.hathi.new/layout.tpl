@@ -23,7 +23,7 @@
 		{/if}
 
 
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" charset="utf-8"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" charset="utf-8"></script>
 		{literal}
 		<script type="text/javascript" charset="utf-8">
 
@@ -84,9 +84,9 @@
     			}
     		</script>{/literal}
     		</div>
-			<span style="color:black">Mobile</span> | <a href="http://www.hathitrust.org/?mdetect=no">Regular Site</a>
+			<span style="color:black">Mobile</span> | <a href="//www.hathitrust.org/?mdetect=no">Regular Site</a>
 			<br />
-			<a href="/Search/Feedback?currenturl={$smarty.server.REQUEST_URI|escape:'url'}">Feedback</a> | <a href="http://www.hathitrust.org/help_mobile">Help</a> | <a href="http://www.hathitrust.org/take_down_policy">Takedown</a>
+			<a href="/Search/Feedback?currenturl={$smarty.server.REQUEST_URI|escape:'url'}">Feedback</a> | <a href="//www.hathitrust.org/help_mobile">Help</a> | <a href="//www.hathitrust.org/take_down_policy">Takedown</a>
 			<br />
 
 			{if $smarty.server.REMOTE_ADDR eq "141.211.43.161" || $smarty.server.REMOTE_ADDR eq "141.211.43.160"}

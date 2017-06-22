@@ -29,7 +29,7 @@ return array (
   ),
   'gwla' => 
   array (
-    'original_from' => 'Technical Report Archive &amp; Image Library',
+    'original_from' => 'Technical Report Archive & Image Library',
   ),
   'hvd' => 
   array (
@@ -85,7 +85,7 @@ return array (
   ),
   'iufl' => 
   array (
-    'original_from' => 'State University System of Florida',
+    'original_from' => 'Florida State University System',
   ),
   'iuiuc' => 
   array (
@@ -103,10 +103,6 @@ return array (
   array (
     'original_from' => 'Minnesota Digital Library',
   ),
-  'mdu' => 
-  array (
-    'original_from' => 'University of Maryland, College Park',
-  ),
   'miem' => 
   array (
     'original_from' => 'Michigan State University',
@@ -123,10 +119,6 @@ return array (
   array (
     'original_from' => 'University of Missouri - Columbia',
   ),
-  'msu' => 
-  array (
-    'original_from' => 'Michigan State University',
-  ),
   'mu' => 
   array (
     'original_from' => 'University of Massachusetts Amherst',
@@ -139,10 +131,6 @@ return array (
   array (
     'original_from' => 'Brooklyn Museum',
   ),
-  'ncwsw' => 
-  array (
-    'original_from' => 'Wake Forest University',
-  ),
   'njp' => 
   array (
     'original_from' => 'Princeton University',
@@ -150,10 +138,6 @@ return array (
   'nnc' => 
   array (
     'original_from' => 'Columbia University',
-  ),
-  'nnfr' => 
-  array (
-    'original_from' => 'The Frick Collection',
   ),
   'nrlf' => 
   array (
@@ -191,19 +175,11 @@ return array (
   array (
     'original_from' => 'Texas A&amp;M University',
   ),
-  'txu' => 
-  array (
-    'original_from' => 'University of Texas at Austin',
-  ),
   'ucbk' => 
   array (
     'original_from' => 'University of California',
   ),
   'ucd' => 
-  array (
-    'original_from' => 'University of California',
-  ),
-  'uci' => 
   array (
     'original_from' => 'University of California',
   ),
@@ -214,10 +190,6 @@ return array (
   'ucm' => 
   array (
     'original_from' => 'Universidad Complutense de Madrid',
-  ),
-  'ucr' => 
-  array (
-    'original_from' => 'University of California',
   ),
   'ucsc' => 
   array (
@@ -233,7 +205,7 @@ return array (
   ),
   'ufdc' => 
   array (
-    'original_from' => 'State University System of Florida',
+    'original_from' => 'Florida State University System',
   ),
   'uiuc' => 
   array (
@@ -246,10 +218,6 @@ return array (
   'ukloku' => 
   array (
     'original_from' => 'Knowledge Unlatched',
-  ),
-  'umbus' => 
-  array (
-    'original_from' => 'University of Michigan',
   ),
   'umdb' => 
   array (

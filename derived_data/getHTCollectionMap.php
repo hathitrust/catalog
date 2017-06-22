@@ -32,7 +32,7 @@ $db    =  "ht";
      try {
        $dbh = new PDO("mysql:host=$host;dbname=$db", $uname, $pass, array(
            // PDO::ATTR_PERSISTENT => true
-       )); 
+       ));
        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
      } catch (PDOException $e) {
        print "Error!: " . $e->getMessage() . "\n$host / $db / $uname\n\n";
@@ -41,11 +41,17 @@ $db    =  "ht";
 
 
 $sql_text = "
-select lower(collection) as collection_code, 
-       name as display_name 
-from ht_institutions i 
-join ht_collections c on c.original_from_inst_id = i.inst_id 
-order by collection";
+select
+  lower(c.collection) as collection_code,
+  coalesce(i.mapto_name, i.name) as display_name
+from
+  ht_collections c,
+  ht_institutions i
+where
+  i.inst_id = c.original_from_inst_id
+order by
+  c.collection;
+";
 
 # We need to stick a copy in each of the current directory
 # and the orphans directory

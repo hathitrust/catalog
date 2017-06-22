@@ -126,12 +126,12 @@
 		{$pageContent}
 	{/if}
 	            
-	<ul id="recordTools" class="list">
+{*	<ul id="recordTools" class="list">
 		<li class="recordToolLink linkeditemrightarrow nokiosk">
-			{* <a class="linkeditemlink" href="{$regular_url}{$smarty.server.REQUEST_URI}&mdetect=no" target="Mirlyn">{translate text='View Results in Regular Catalog'}</a> *}
 			<a href="{$regular_url}{$smarty.server.REQUEST_URI}&mdetect=no" target="Mirlyn">{translate text='View Results in Regular Catalog'}</a> 
 		</li>
 	</ul>
+*}
 
 </div>
 

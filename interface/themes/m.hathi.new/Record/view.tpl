@@ -281,8 +281,10 @@
 					</div>
 				</li>
 				<li class="recordToolLink">
-					<a href="{$regular_url}{$smarty.server.REQUEST_URI}?mdetect=no" target="Mirlyn">{translate text='View Record in Regular Catalog'}</a>
+					<a href="//catalog.hathitrust.org/Record/{$record.id}}?mdetect=no" target="Mirlyn">{translate text='View Record in Regular Catalog'}</a>
 				</li>
+
+
 	</ul>
 {*
 	<script>{strip}

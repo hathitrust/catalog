@@ -100,12 +100,6 @@ if (($sname == $configArray['Site']['mobile_machine']) || (isset($_REQUEST['forc
 }
 
 
-##############################
-# allow any origin
-#############################
-
-header('Access-Control-Allow-Origin: *');
-
 $session = VFSession::singleton();
 $alog = ActivityLog::singleton();
 $user = VFUser::singleton();
@@ -371,6 +365,7 @@ if ($user) {
 
 if (is_readable("services/$module/$action.php")) {
     require_once "services/$module/$action.php";
+
     if (class_exists($action)) {
         $service = new $action();
         $service->launch();

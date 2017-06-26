@@ -100,6 +100,12 @@ if (($sname == $configArray['Site']['mobile_machine']) || (isset($_REQUEST['forc
 }
 
 
+##############################
+# allow any origin
+#############################
+
+header('Access-Control-Allow-Origin: *');
+
 $session = VFSession::singleton();
 $alog = ActivityLog::singleton();
 $user = VFUser::singleton();

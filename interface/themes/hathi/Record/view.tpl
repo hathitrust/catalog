@@ -211,7 +211,7 @@
   {assign var=marcField value=$marc->getFields('700')}
   {if $marcField}
   <tr valign="top">
-    <th>{translate text='Other Authors'}: </th>
+    <th>Related Names: </th>
     <td>
       {foreach from=$marcField item=field name=loop}
         <a href="{$url}/Search/Home?lookfor=%22{$field|getvalue:'a'}{if $field|getvalue:'b'} {$field|getvalue:'b'}{/if}{if $field|getvalue:'c'} {$field|getvalue:'c'}{/if}{if $field|getvalue:'d'} {$field|getvalue:'d'}{/if}%22&amp;type=author&amp;inst={$inst}">{$field|getvalue:'a'} {$field|getvalue:'b'} {$field|getvalue:'c'} {$field|getvalue:'d'}</a>{if !$smarty.foreach.loop.last}, {/if}

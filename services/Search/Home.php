@@ -172,6 +172,11 @@ class Home extends Action {
             $page = $_REQUEST['page'];
         }
 
+        if (isset($_REQUEST['pagesize'])) {
+            $pagesize = $_REQUEST['pagesize'];
+	    $interface->assign('pagesize', $pagesize);
+        }
+
         $limit = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : $configArray['Site']['itemsPerPage'];
 	  // $limit = $configArray['Site']['itemsPerPage'];
 

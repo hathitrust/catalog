@@ -114,32 +114,32 @@
 
       <!-- End Listing Options -->
       {assign var=pageLinks value=$pager->getLinks()}
-      <div class="options">
+      <div class="options PageInfo toolbar">
 
         <div class="sort">
-          <label for="sortOption">{translate text='Sort'}</label>
-          <select id="sortOption" name="sort" onChange="document.location.href='{$fullPath_esc|remove_url_param:"sort"}&amp;sort=' + this.options[this.selectedIndex].value;">
-            <option value="">Relevance</option>
-            <option value="year"{if $sort == "year"} selected{/if}>Date (newest first)</option>
-            <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>
-     <!--       <option value="author"{if $sort == "author"} selected{/if}>{translate text='Author'}</option>-->
-            <option value="title"{if $sort == "title"} selected{/if}>{translate text='Title'}</option>
+          <label for="sortOption" class="hidden">{translate text='Sort'}</label>
+          <select id="sortOption" name="sort" onChange="document.location.href='{$fullPath_esc|remove_url_param:"sort"}&amp;sort=' + this.options[this.selectedIndex].value;" style="margin-left: 8px">
+            <option value="">Sort by Relevance</option>
+            <option value="year"{if $sort == "year"} selected{/if}>Sort by Date (newest first)</option>
+            <option value="yearup"{if $sort == "yearup"} selected{/if}>Sort by Date (oldest first)</option>
+            <option value="author"{if $sort == "author"} selected{/if}>Sort by {translate text='Author'}</option>
+            <option value="title"{if $sort == "title"} selected{/if}>Sort by {translate text='Title'}</option>
           </select>
 	  </div>
 
 
 
 
-<div>
- <div class="sort" style='diplplay: inline-block'>
-  <select style="width: 8em; margin-left: 0;" id="pagesizeOption" name="pagesize" onChange="document.location.href='{$fullPath_esc|remove_url_param:"pagesize"}&amp;pagesize=' + this.options[this.selectedIndex].value">
+<div class="toolbar" style="vertical-align: baseline">
+ <div class="sort" style="display: inline-block">
+  <select style="" id="pagesizeOption" name="pagesize" onChange="document.location.href='{$fullPath_esc|remove_url_param:"pagesize"|remove_url_param:"page"}&amp;page=1&amp;pagesize=' + this.options[this.selectedIndex].value">
    <option value="20" {if $pagesize == "20"}selected{/if}>20 per page</option>
     <option value="50" {if $pagesize == "50"}selected{/if}>50 per page</option>
    <option value="100" {if $pagesize == "100"}selected{/if}>100 per page</option>
   </select>
  </div>
 
-<div class="pagination">
+<div class="pagination"  style="margin-top: 0.5em; display: inline-block">
 {$pageLinks.all}
 </div>
 </div>

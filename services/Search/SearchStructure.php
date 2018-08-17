@@ -28,6 +28,7 @@ class SearchStructure
     public $use_dismax = false;
     public $sort;
     public $page;
+    public $pagesize;
     public $inbandFilters = array();
     public $outofbandFilters = array();
     public $search= array();
@@ -92,6 +93,7 @@ class SearchStructure
           
       
       $this->page = isset($hash['page'])? $hash['page']: "1";
+      $this->pagesize = isset($hash['pagesize'])? $hash['pagesize']: "20";
       
 
       $this->inbandFilters = array();
@@ -606,7 +608,7 @@ class SearchStructure
     
     function pageURLComponents() {
         if ($this->page) {
-            return  array(array('page', $this->page));
+            return  array(array('page', $this->page), array('pagesize', $this->pagesize));
         } else {
             return array();
         }

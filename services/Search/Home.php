@@ -291,7 +291,7 @@ class Home extends Action {
 
 
         // Process Paging
-        $link = 'Search/Home?' . $this->ss->asURL() . '&page=%d';
+        $link = 'Search/Home?' . $this->ss->asURL() . '&pagesize='. $limit . '&page=%d';
         $rlink = '/' . $link; 	// rlink used to build record-level paging urls
         $options = array('totalItems' => $result['RecordCount'],
                          'mode' => 'loggingPager',

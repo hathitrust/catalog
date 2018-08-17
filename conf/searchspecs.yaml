@@ -383,6 +383,10 @@ hlb:
 
 
 all:
+  - ht_id:
+    - [onephrase, ~]
+    - [exactmatcher, ~]
+    - [asis, ~]
   - title_ab:
     - [exactmatcher, 25000]
   - title_a:
@@ -390,40 +394,31 @@ all:
   - allfieldsProper:
     - [onephrase, 4000]
     - [and, 2000]
-#    - [or, ~]
   - allfields:
     - [onephrase, 2000]
     - [and, 1000]
-#    - [or, ~]
   - titleProper:
     - [emstartswith, 8000]
     - [onephrase, 800]
     - [and, 160]
-#    - [or, 16]
   - title_topProper:
     - [onephrase, 600]
     - [and, 120]
-#    - [or, 12]
   - title_restProper:
     - [onephrase, 400]
     - [and, 80]
-#    - [or, 8]
   - series:
     - [onephrase, 1000]
     - [and, 100]
-#    - [or, 10]
   - series2:
     - [onephrase, 800]
     - [and, 80]
-#    - [or, 8]
   - author:
     - [onephrase, 1600]
     - [and, 160]
-#    - [or, 16]
   - author2:
     - [onephrase, 800]
     - [and, 80]
-#    - [or, 8]
   - issn:
     - [stdnum, ~]
   - isbn:
@@ -438,8 +433,8 @@ all:
     - [exactmatcher, ~]
   - ctrlnum:
     - [exactmatcher, ~]
-  - ht_id:
-    - [exactmatcher, ~]
+#  - ht_id:
+#    - [exactmatcher, ~]
   - isn_related:
     - [stdnum, ~]
   - topicProper:

@@ -357,7 +357,7 @@ isn:
     - [exactmatcher, ~]
   - isn_related:
     - [stdnum, ~]
-  - ht_id:
+  - ht_id
     - [onephrase, ~]
     - [exactmatcher, ~]
     - [asis, ~]
@@ -387,6 +387,8 @@ all:
     - [onephrase, ~]
     - [exactmatcher, ~]
     - [asis, ~]
+  - id:
+    - [asis, ~]    
   - title_ab:
     - [exactmatcher, 25000]
   - title_a:
@@ -433,8 +435,6 @@ all:
     - [exactmatcher, ~]
   - ctrlnum:
     - [exactmatcher, ~]
-#  - ht_id:
-#    - [exactmatcher, ~]
   - isn_related:
     - [stdnum, ~]
   - topicProper:

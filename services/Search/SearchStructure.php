@@ -608,7 +608,7 @@ class SearchStructure
     
     function pageURLComponents() {
         if ($this->page) {
-            return  array(array('page', $this->page));
+            return  array(array('page', $this->page), array('pagesize', $this->pagesize));
         } else {
             return array();
         }

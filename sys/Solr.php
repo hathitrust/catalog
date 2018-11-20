@@ -428,6 +428,10 @@ if ($type == 'allTest') {
           }
           // Otherwise...
 
+
+
+
+
           foreach ($filters as $indexValue) {
               $index = $indexValue[0];
               $val = $indexValue[1];
@@ -440,12 +444,19 @@ if ($type == 'allTest') {
               } else {
                   $val = $this->quoteFilterValue($val);
               }
-              $rv[] = implode(':', array($index, $val));
+
+              if ($index == "ht_availability" and $val == 'Full text') {
+	      	 $rv[] = '(ht_availability:"Full text" OR ht_rightscode:"1923_open")';
+	      } else {
+	        $rv[] = implode(':', array($index, $val));
+	      }
           }
           $tagfilter = $this->tagFilter($ss);
           if (isset($tagfilter)) {
             $rv[] = $tagfilter;
           }
+
+
           return array(array('fq', $rv));
       }
 

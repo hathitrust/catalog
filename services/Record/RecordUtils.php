@@ -152,6 +152,20 @@ function items_from_json($record) {
     // Assume false
     $fv = false;
 
+    // 1923? Return true if after the right date
+    //
+    // Except now, ditch the 1923 marker and take the single thing left in
+    // the array as a scalar.
+
+    if (is_array($rcode)) {
+      $index = array_search("1923_open", $rcode);
+      if ($index) {
+        unset($rcode[$index]);
+      }
+      $rcode = $rcode[0];
+    }
+        
+
     // Public domain? return true
     if (preg_match('/^(cc|pd)/', $rcode) || preg_match('/world/', $rcode)) {
       $fv = true;

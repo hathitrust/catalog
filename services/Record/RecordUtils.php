@@ -103,7 +103,9 @@ function items_from_json($record) {
   function ht_link_data_from_json($e) {
     global $HT_COLLECTIONS;
     $rv = array();
+
     $rc = $e['rights'];
+
     $rv['rights_code'] = $rc;
     $rv['handle'] = $e['htid'];
     $collection = $e['collection_code'];
@@ -147,17 +149,19 @@ function items_from_json($record) {
     if (!isset($inUSA)) {
       $session = VFSession::singleton();
       $inUSA = $session->get('inUSA');
-    }    
+    }
+
 
     // Assume false
     $fv = false;
 
     // 1923? Return true if after the right date
-    //
-    // Except now, ditch the 1923 marker and take the single thing left in
-    // the array as a scalar.
 
-    if (is_array($rcode)) {
+    if (is_array($rcode) && array_search("1923_open", $rcode)) {
+      // if the date is right
+      return true;
+      
+    } else if (is_array($rcode)) { // ditch the 1923 marker
       $index = array_search("1923_open", $rcode);
       if ($index) {
         unset($rcode[$index]);

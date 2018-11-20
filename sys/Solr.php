@@ -413,6 +413,11 @@ if ($type == 'allTest') {
       }
 
      /**
+       * Given a list of filters, replace 'ht_availability' => 'Full text'
+       *
+      */
+
+     /**
        * Create key-value argument(s) to correctly apply the filters in $ss
        *
        * @param SearchStructure $ss
@@ -421,7 +426,7 @@ if ($type == 'allTest') {
 
       function filterComponents($ss) {
           $rv = array();
-          $filters = $ss->allActiveFilters() ;
+          $filters = $ss->allActiveFilters();
 
           if (count($filters) == 0 && count($ss->tags()) == 0) {
               return array();
@@ -435,21 +440,28 @@ if ($type == 'allTest') {
           foreach ($filters as $indexValue) {
               $index = $indexValue[0];
               $val = $indexValue[1];
+	      $oval = $val;
                if (is_array($val)) {
                   $quoted = array();
                   foreach ($val as $v) {
                       $quoted[] = $this->quoteFilterValue($v);
                   }
+
                   $val = '(' . implode(' OR ', $quoted) . ')';
               } else {
                   $val = $this->quoteFilterValue($val);
               }
 
-              if ($index == "ht_availability" and $val == 'Full text') {
-	      	 $rv[] = '(ht_availability:"Full text" OR ht_rightscode:"1923_open")';
+              if ($index == "ht_availability" and $oval == 'Full text') {
+	         $ft = $this->quoteFilterValue('Full text');
+		 $twenty_three = $this->quoteFilterValue('1923_open');
+	      	 $rv[] = "(ht_availability:$ft OR ht_rightscode:$twenty_three)";
 	      } else {
 	        $rv[] = implode(':', array($index, $val));
 	      }
+
+print_r($rv);
+
           }
           $tagfilter = $this->tagFilter($ss);
           if (isset($tagfilter)) {

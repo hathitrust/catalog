@@ -126,23 +126,6 @@ function items_from_json($record) {
     return true;
   }
 
-  function ht_link_data($field) {
-    global $HT_COLLECTIONS;
-    $rv = array();
-    $rc = $field->getSubfield('r')->getData();
-    $rv['rights_code'] = $rc;
-
-    $handle = $field->getSubfield('u')->getData();
-    $rv['handle'] = $handle;
-    
-    $collection = $field->getSubfield('c')->getData();
-    $collection = strtolower($collection);
-    $rv['original_from'] = $HT_COLLECTIONS[$collection]['original_from'];
-
-    $rv['enumchron'] = $field->getSubfield('z') ? $field->getSubfield('z')->getData() : '';
-    $rv['is_fullview'] = $this->is_fullview($rv['rights_code']);
-    return $rv;
-  }
 
   // Take a rightscode (and, soon, other data) and return viewability
   function is_fullview($rcode, $inUSA = null) {

@@ -452,11 +452,17 @@ if ($type == 'allTest') {
                   $val = $this->quoteFilterValue($val);
               }
 
-              if ($index == "ht_availability" and $oval == 'Full text') {
+              // Hack into place a change of the full-text only facet
+	      // for the temporary 1923_open rightscode value
+	      // but only on or after Jan 1, 2019, 10:00am
+
+              $todays_date = intval(date("YmdH"));
+              if ($todays_date >= 2019010110 and $index == "ht_availability" and $oval == 'Full text') {
 	         $ft = $this->quoteFilterValue('Full text');
 		 $twenty_three = $this->quoteFilterValue('1923_open');
 	      	 $rv[] = "(ht_availability:$ft OR ht_rightscode:$twenty_three)";
-	      } else {
+
+	       } else { // otherwise, just do it like normal
 	        $rv[] = implode(':', array($index, $val));
 	      }
 

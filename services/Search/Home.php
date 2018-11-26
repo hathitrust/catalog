@@ -19,8 +19,9 @@
  */
 
 require_once 'Action.php';
-require_once 'services/MyResearch/lib/User.php';
-require_once 'services/MyResearch/lib/Search.php';
+
+# require_once 'services/MyResearch/lib/User.php';
+# require_once 'services/MyResearch/lib/Search.php';
 
 require_once 'sys/LoggingPager.php';
 require_once 'Pager/Pager.php';

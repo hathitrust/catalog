@@ -24,4 +24,3 @@ my $dbh = DBI->connect($dsn,$user,$pass);
 my $sth = $dbh->prepare("delete from vfsession where expires < unix_timestamp(NOW())");
 my $res = $sth->execute;
 
-print "Deleted " . $sth->rows . " rows.";

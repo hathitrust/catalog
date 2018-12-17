@@ -146,7 +146,6 @@ function items_from_json($record) {
 
     $todays_date = intval(date("YmdH"));
     $copyright_active_date = intval($configArray['IntoCopyright']['date']);
-    echo "Comparing $todays_date to $copyright_active_date";
     if (is_array($rcode) &&
         array_search("1923_open", $rcode) &&
 	$todays_date >= $copyright_active_date

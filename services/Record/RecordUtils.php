@@ -103,7 +103,9 @@ function items_from_json($record) {
   function ht_link_data_from_json($e) {
     global $HT_COLLECTIONS;
     $rv = array();
+
     $rc = $e['rights'];
+
     $rv['rights_code'] = $rc;
     $rv['handle'] = $e['htid'];
     $collection = $e['collection_code'];
@@ -124,40 +126,34 @@ function items_from_json($record) {
     return true;
   }
 
-  function ht_link_data($field) {
-    global $HT_COLLECTIONS;
-    $rv = array();
-    $rc = $field->getSubfield('r')->getData();
-    $rv['rights_code'] = $rc;
-
-    $handle = $field->getSubfield('u')->getData();
-    $rv['handle'] = $handle;
-    
-    $collection = $field->getSubfield('c')->getData();
-    $collection = strtolower($collection);
-    $rv['original_from'] = $HT_COLLECTIONS[$collection]['original_from'];
-
-    $rv['enumchron'] = $field->getSubfield('z') ? $field->getSubfield('z')->getData() : '';
-    $rv['is_fullview'] = $this->is_fullview($rv['rights_code']);
-    return $rv;
-  }
 
   // Take a rightscode (and, soon, other data) and return viewability
   function is_fullview($rcode, $inUSA = null) {
+
+    global $configArray;
     if (!isset($inUSA)) {
       $session = VFSession::singleton();
       $inUSA = $session->get('inUSA');
-    }    
+    }
+
 
     // Assume false
     $fv = false;
 
-    // 1923? Return true if after the right date
-    //
-    // Except now, ditch the 1923 marker and take the single thing left in
-    // the array as a scalar.
+    // Newly into copyright? Return true if after the right date
+    // The munged facet is in Solr.php -- don't forget
+    // to deal with that, too.
 
-    if (is_array($rcode)) {
+    $todays_date = intval(date("YmdH"));
+    $copyright_active_date = intval($configArray['IntoCopyright']['date']);
+    echo "Comparing $todays_date to $copyright_active_date";
+    if (is_array($rcode) &&
+        array_search("1923_open", $rcode) &&
+	$todays_date >= $copyright_active_date
+	) {
+      return true;
+      
+    } else if (is_array($rcode)) { // ditch the 1923 marker
       $index = array_search("1923_open", $rcode);
       if ($index) {
         unset($rcode[$index]);
@@ -433,7 +429,6 @@ function items_from_json($record) {
         $links[] = "ISBN:" . $isbn;
       }
     }
-#    echo "links: " . implode("<br>", $links);
     return $links;
   }
 

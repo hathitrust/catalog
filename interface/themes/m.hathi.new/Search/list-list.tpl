@@ -45,7 +45,11 @@
         {if $dfields|@count gt 1}
            <span class="viewrights">(view record to see multiple volumes)</span>
         {else}
-          {assign var=ld value=$ru->ht_link_data($dfields[0])}
+
+                  {assign var="htjson" value=$ru->items_from_json($record)}
+		  {assign var="ht_vals_from_json" value=$ru->ht_link_data_from_json($htjson[0])}
+                  {assign var=ld value=$ht_vals_from_json}
+
           {if $ld.is_fullview}
             <div class="viewrights fullview rights-{$ld.rights_code}">Full view</div>
           {else}

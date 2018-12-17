@@ -88,7 +88,10 @@
                 {if $dfields|@count gt 1}
                   <span class="multivolLink">(view record to see multiple volumes)</span>
                 {else}
-                  {assign var=ld value=$ru->ht_link_data($dfields[0])}
+                  {assign var="htjson" value=$ru->items_from_json($record)}
+		  {assign var="ht_vals_from_json" value=$ru->ht_link_data_from_json($htjson[0])}
+                  {assign var=ld value=$ht_vals_from_json}
+
                   {if $ld.is_fullview}
                     <a href="https://hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code} fulltext">Full view</a>
                   {else}

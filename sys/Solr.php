@@ -413,6 +413,11 @@ if ($type == 'allTest') {
       }
 
      /**
+       * Given a list of filters, replace 'ht_availability' => 'Full text'
+       *
+      */
+
+     /**
        * Create key-value argument(s) to correctly apply the filters in $ss
        *
        * @param SearchStructure $ss
@@ -420,32 +425,58 @@ if ($type == 'allTest') {
       */
 
       function filterComponents($ss) {
+          global $configArray;
+
+
           $rv = array();
-          $filters = $ss->allActiveFilters() ;
+          $filters = $ss->allActiveFilters();
 
           if (count($filters) == 0 && count($ss->tags()) == 0) {
               return array();
           }
           // Otherwise...
 
+
+
+
+
           foreach ($filters as $indexValue) {
               $index = $indexValue[0];
               $val = $indexValue[1];
+	      $oval = $val;
                if (is_array($val)) {
                   $quoted = array();
                   foreach ($val as $v) {
                       $quoted[] = $this->quoteFilterValue($v);
                   }
+
                   $val = '(' . implode(' OR ', $quoted) . ')';
               } else {
                   $val = $this->quoteFilterValue($val);
               }
-              $rv[] = implode(':', array($index, $val));
+
+              // Hack into place a change of the full-text only facet
+	      // for the temporary 1923_open rightscode value
+	      // but only on or after Jan 1, 2019, 10:00am
+
+              $todays_date = intval(date("YmdH"));
+              $copyright_active_date = intval($configArray['IntoCopyright']['date']);
+              if ($todays_date >= $copyright_active_date and $index == "ht_availability" and $oval == 'Full text') {
+	         $ft = $this->quoteFilterValue('Full text');
+		 $twenty_three = $this->quoteFilterValue('1923_open');
+	      	 $rv[] = "(ht_availability:$ft OR ht_rightscode:$twenty_three)";
+
+	       } else { // otherwise, just do it like normal
+	        $rv[] = implode(':', array($index, $val));
+	      }
+
           }
           $tagfilter = $this->tagFilter($ss);
           if (isset($tagfilter)) {
             $rv[] = $tagfilter;
           }
+
+
           return array(array('fq', $rv));
       }
 

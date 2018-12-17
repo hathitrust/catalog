@@ -139,9 +139,14 @@ function items_from_json($record) {
     $fv = false;
 
     // 1923? Return true if after the right date
+    // The munged facet is in Solr.php -- don't forget
+    // to deal with that, too.
 
-    if (is_array($rcode) && array_search("1923_open", $rcode)) {
-      // if the date is right
+    $todays_date = intval(date("YmdH"));
+    if (is_array($rcode) &&
+        array_search("1923_open", $rcode) &&
+	$todays_date >= 2019010110
+	) {
       return true;
       
     } else if (is_array($rcode)) { // ditch the 1923 marker

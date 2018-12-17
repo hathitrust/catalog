@@ -100,6 +100,7 @@ echo "DEPLOYDIR is $DEPLOYDIR"
 function deploy() {
   git archive --format=tar $1 | ssh $2 "mkdir -p $DEPLOYDIR && cd $DEPLOYDIR &&  tar xf -"
   ssh -T $2 <<EOF
+  chmod g+w $DEPLOYDIR/derived_data/*
   $DEPLOYDIR/derived_data/getall.sh   $DEPLOYDIR/derived_data
   mkdir $DEPLOYDIR/interface/compile
   chmod 777 $DEPLOYDIR/interface/compile

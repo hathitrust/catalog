@@ -425,6 +425,9 @@ if ($type == 'allTest') {
       */
 
       function filterComponents($ss) {
+          global $configArray;
+
+
           $rv = array();
           $filters = $ss->allActiveFilters();
 
@@ -457,7 +460,8 @@ if ($type == 'allTest') {
 	      // but only on or after Jan 1, 2019, 10:00am
 
               $todays_date = intval(date("YmdH"));
-              if ($todays_date >= 2019010110 and $index == "ht_availability" and $oval == 'Full text') {
+              $copyright_active_date = intval($configArray['IntoCopyright']['date']);
+              if ($todays_date >= $copyright_active_date and $index == "ht_availability" and $oval == 'Full text') {
 	         $ft = $this->quoteFilterValue('Full text');
 		 $twenty_three = $this->quoteFilterValue('1923_open');
 	      	 $rv[] = "(ht_availability:$ft OR ht_rightscode:$twenty_three)";
@@ -465,8 +469,6 @@ if ($type == 'allTest') {
 	       } else { // otherwise, just do it like normal
 	        $rv[] = implode(':', array($index, $val));
 	      }
-
-print_r($rv);
 
           }
           $tagfilter = $this->tagFilter($ss);

@@ -129,6 +129,8 @@ function items_from_json($record) {
 
   // Take a rightscode (and, soon, other data) and return viewability
   function is_fullview($rcode, $inUSA = null) {
+
+    global $configArray;
     if (!isset($inUSA)) {
       $session = VFSession::singleton();
       $inUSA = $session->get('inUSA');
@@ -138,14 +140,16 @@ function items_from_json($record) {
     // Assume false
     $fv = false;
 
-    // 1923? Return true if after the right date
+    // Newly into copyright? Return true if after the right date
     // The munged facet is in Solr.php -- don't forget
     // to deal with that, too.
 
     $todays_date = intval(date("YmdH"));
+    $copyright_active_date = intval($configArray['IntoCopyright']['date']);
+    echo "Comparing $todays_date to $copyright_active_date";
     if (is_array($rcode) &&
         array_search("1923_open", $rcode) &&
-	$todays_date >= 2019010110
+	$todays_date >= $copyright_active_date
 	) {
       return true;
       
@@ -425,7 +429,6 @@ function items_from_json($record) {
         $links[] = "ISBN:" . $isbn;
       }
     }
-#    echo "links: " . implode("<br>", $links);
     return $links;
   }
 

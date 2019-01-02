@@ -147,13 +147,13 @@ function items_from_json($record) {
     $todays_date = intval(date("YmdH"));
     $copyright_active_date = intval($configArray['IntoCopyright']['date']);
     if (is_array($rcode) &&
-        array_search("1923_open", $rcode) &&
+        array_search("newly_open", $rcode) &&
 	$todays_date >= $copyright_active_date
 	) {
       return true;
       
-    } else if (is_array($rcode)) { // ditch the 1923 marker
-      $index = array_search("1923_open", $rcode);
+    } else if (is_array($rcode)) { // ditch the newly_open marker
+      $index = array_search("newly_open", $rcode);
       if ($index) {
         unset($rcode[$index]);
       }

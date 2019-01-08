@@ -34,7 +34,6 @@ $yaml_url = 'http://mirlyn-aleph.lib.umich.edu/namespacemap.yaml';
 
 $output_dirs = array();
 $output_dirs[] = dirname(__FILE__);
-$output_dirs[] = dirname(__FILE__) ."/orphans";
 
 
 $output_files = array();

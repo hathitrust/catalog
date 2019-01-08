@@ -37,7 +37,7 @@ class Logout extends Action
         session_destroy();  
       
       //==== new-style session logout ==== //
-      $session = VFSession::singleton();
+      $session = VFSession:instance();
       $session->kill();
       
       $authspecs = AuthSpecs::singleton();

@@ -50,7 +50,7 @@ class SearchExport {
 
     $this->db = new $class($configArray['Index']['url']);
     $this->alog = ActivityLog::singleton();
-    $this->session = VFSession::singleton();
+    $this->session = VFSession::instance();
 
     // We have a couple special cases. if tempset is true, just get the tempset (selected items).
     // If handpicked is true, just use those IDs (used esp. from single-record export)

@@ -101,7 +101,7 @@ class Record extends Action
         if ($configArray['System']['debug']) {
             $this->db->debug = true;
         }
-        $session = VFSession::singleton();
+        $session = VFSession::instance();
         $interface->assign('inst', $session->get('inst'));
         $interface->assign('lastsearch', $session->get('lastsearch'));
         $interface->assign('lasttagsearch', $session->get('lasttagsearch'));

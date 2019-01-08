@@ -6,7 +6,7 @@ class TagLine {
     global $interface;
     
     $tags = Tags::singleton();
-    $session = VFSession::singleton();
+    $session = VFSession::instance();
     $interface->assign('tempcount', $tags->numTempItems());
     $interface->assign('uuid', $session->uuid);
   }

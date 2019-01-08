@@ -100,7 +100,7 @@ if (($sname == $configArray['Site']['mobile_machine']) || (isset($_REQUEST['forc
 }
 
 
-$session = VFSession::singleton();
+$session = VFSession::instance();
 $alog = ActivityLog::singleton();
 $user = VFUser::singleton();
 

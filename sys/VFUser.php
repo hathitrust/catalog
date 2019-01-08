@@ -29,7 +29,7 @@ class VFUser
   protected function __construct() 
   {
     global $configArray;
-    $sess = VFSession::singleton();
+    $sess = VFSession::instance();
     
     // echo "Calling construct\n";
 

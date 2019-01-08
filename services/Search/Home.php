@@ -58,7 +58,7 @@ class Home extends Action {
 
         $this->ss = new SearchStructure;
         $this->tags = Tags::singleton();
-        $this->session = VFSession::singleton();
+        $this->session = VFSession::instance();
         TagLine::initialize();
 
          // Setup Search Engine Connection

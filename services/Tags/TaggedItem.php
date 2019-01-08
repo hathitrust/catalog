@@ -40,7 +40,7 @@ class TaggedItem
   
   // all the tags except for uuid and mirlyn-favorites
   function displayTags() {
-    $session = VFSession::singleton();
+    $session = VFSession::instance();
     $tags = array();
     foreach ($this->tags() as $tag) {
       if ($tag != $session->uuid && $tag != Tags::$favoriteTag && preg_match('/\S/', $tag)) {

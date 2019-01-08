@@ -36,7 +36,7 @@ class TaggedItemsDisplay
   function __construct() {
     global $configArray;
     $this->tags = Tags::singleton();
-    $this->session = VFSession::singleton();
+    $this->session = VFSession::instance();
     $this->user = VFUser::singleton();
     $class = $configArray['Index']['engine'];
     $this->solr = new $class($configArray['Index']['url']);

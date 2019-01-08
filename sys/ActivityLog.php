@@ -38,7 +38,7 @@ class ActivityLog
   }
   
   public function log($action, $data1='', $data2='', $data3='', $data4='') {
-    $session = VFSession::singleton();
+    $session = VFSession::instance();
     
     $this->rawlog($session->uuid, $action, $data1, $data2, $data3, $data4);
   }

@@ -68,7 +68,7 @@ class SearchStructure
     
     private function _fillFromHash($hash) {
       global $configArray;
-      $session = VFSession::singleton();
+      $session = VFSession::instance();
       
       
       $this->originalHash = $hash;
@@ -308,7 +308,7 @@ class SearchStructure
         return;
       }
 
-      $session = VFSession::singleton();
+      $session = VFSession::instance();
 
       // Add location limit from sublib and collection if present
       $location = '';
@@ -727,7 +727,7 @@ class SearchStructure
       }
       
       if (count($this->tagList)) {
-        $session = VFSession::singleton();
+        $session = VFSession::instance();
         foreach ($this->tags() as $t) {
           if ($t == $session->uuid) {
             $s[] = "Temporary set";

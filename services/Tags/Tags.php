@@ -38,7 +38,7 @@ class Tags
   
   protected function __construct() {
     $this->user    = VFUser::singleton();
-    $this->session = VFSession::singleton();
+    $this->session = VFSession:instance();
     
     // Are we logged in?
     if ($this->user) {

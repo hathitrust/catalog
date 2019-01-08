@@ -132,7 +132,7 @@ function items_from_json($record) {
 
     global $configArray;
     if (!isset($inUSA)) {
-      $session = VFSession::singleton();
+      $session = VFSession::instance();
       $inUSA = $session->get('inUSA');
     }
 

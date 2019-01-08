@@ -19,8 +19,9 @@
  */
 
 require_once 'Action.php';
-require_once 'services/MyResearch/lib/User.php';
-require_once 'services/MyResearch/lib/Search.php';
+
+# require_once 'services/MyResearch/lib/User.php';
+# require_once 'services/MyResearch/lib/Search.php';
 
 require_once 'sys/LoggingPager.php';
 require_once 'Pager/Pager.php';
@@ -172,14 +173,23 @@ class Home extends Action {
             $page = $_REQUEST['page'];
         }
 
+        if (isset($_REQUEST['pagesize'])) {
+            $pagesize = $_REQUEST['pagesize'];
+	    $interface->assign('pagesize', $pagesize);
+        }
+
         $limit = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : $configArray['Site']['itemsPerPage'];
-	  // $limit = $configArray['Site']['itemsPerPage'];
 
         // Kick it up to 100 if we've got tag(s)
 
         if (count($this->ss->tags()) > 0) {
           $limit = 100;
         }
+
+        // Max of 100
+	if ($limit > 100) {
+	  $limit = 100;
+	}
 
         //******************************************************
         //     ACTUALLY DO THE SEARCH
@@ -286,16 +296,16 @@ class Home extends Action {
 
 
         // Process Paging
-        $link = 'Search/Home?' . $this->ss->asURL() . '&page=%d';
+        $link = 'Search/Home?' . $this->ss->asURL() . '&pagesize='. $limit . '&page=%d';
         $rlink = '/' . $link; 	// rlink used to build record-level paging urls
         $options = array('totalItems' => $result['RecordCount'],
                          'mode' => 'loggingPager',
                          'path' =>  $configArray['Site']['fullurl'],
                          'fileName' => $link,
-                         'delta' => 5,
+                         'delta' => 4,
                          'perPage' => $limit,
-                         'nextImg' => 'Next &raquo;',
-                         'prevImg' => '&laquo; Prev',
+                         'nextImg' => 'Next <i aria-hidden="true" class="icomoon icomoon-arrow-right"></i>',
+                         'prevImg' => '<i aria-hidden="true" class="icomoon icomoon-arrow-left"></i> Previous',
                          'separator' => '',
                          'spacesBeforeSeparator' => 0,
                          'spacesAfterSeparator' => 0,

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="search-target-catalog" lang="{$userLang}" xml:lang="{$userLang}">
+<html class="search-target-catalog" lang="{$userLang}" xml:lang="{$userLang}" data-analytics-code="UA-954893-23" data-analytics-enabled="true">
 <!-- Machine is {$machine} -->
   <head>
     <title>{$pageTitle|truncate:64:"..."} | Hathi Trust Digital Library</title>
@@ -22,6 +22,8 @@
   <script type="text/javascript" src="/common/unicorn/js/head.min.js"></script>
   <script type="text/javascript" src="/common/unicorn/js/common.js"></script>
   <link rel="stylesheet" type="text/css" media="screen" href="/static/unicorn/css/hathi.css" />
+
+  <link rel="stylesheet" type="text/css" media="screen" href="/static/screen.css" />
   
   {literal}
   <!--[if lt IE 8]>
@@ -98,19 +100,5 @@
     <div id="popupbox">
     </div>
       {include file="popout_help.html"}
-
-      <script type="text/javascript">
-      {literal}
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-      </script>
-      <script type="text/javascript">
-      try {
-      var pageTracker = _gat._getTracker("UA-954893-23");
-      pageTracker._setDomainName(".hathitrust.org");
-      pageTracker._trackPageview();
-      } catch(err) {}
-      {/literal}
-      </script>
   </body>
 </html>

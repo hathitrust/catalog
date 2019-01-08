@@ -6,10 +6,13 @@
   {assign var="fields" value=$ru->displayable_ht_fields($marc)}
 {/if}
 
-{foreach from=$fields item=field}
-  {assign var=ld value=$ru->ht_link_data($field)}
 
-  <li class="holding_container linkeditemrightarrow">
+{assign var="htjson" value=$ru->items_from_json($record)}
+
+{foreach from=$htjson item=e}
+     {assign var=ld value=$ru->ht_link_data_from_json($e)}
+
+<li class="holding_container linkeditemrightarrow">
 
   <a href="http://babel.hathitrust.org/cgi/pt?id={$ld.handle};skin=mobile" class="rights-{$ld.rights_code}">
   <div class="gotopt">

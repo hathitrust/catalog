@@ -138,12 +138,16 @@ function abbreviateName($name) {
   }
   $parts = explode(', ', $name);
   $fnameParts = array();
+
   if (isset($parts[1])) {
     $fnameParts = explode(' ', $parts[1]);
   }
-  $name = $parts[0] . ', ' . substr($fnameParts[0], 0, 1);
-  array_shift($fnameParts);
-  $name .= '. ' . implode(' ', $fnameParts);
+  
+  if (!empty($fnameParts)) {
+    $name = $parts[0] . ', ' . substr($fnameParts[0], 0, 1);
+    array_shift($fnameParts);
+    $name .= '. ' . implode(' ', $fnameParts);
+  }
   return trim($name);
 }
 

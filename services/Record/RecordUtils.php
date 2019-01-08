@@ -9,6 +9,8 @@ class RecordUtils {
       '260' => array('tag' => '264', 'ind1' => false, 'ind2' => '1')
   );
 
+  private $memoize = array();
+
 
   # Which 245 subfields go in the long title?
   private $longTitleSubfields = array(
@@ -57,6 +59,38 @@ class RecordUtils {
     return $ditems;
   }
 
+static function sortstringFromEnumcron($str) {
+  $rv = '';
+  preg_match('/\d+/', $str, $match);
+  if (isset($match[0])) {
+    if (!is_array($match[0])) {
+      $match[0]  = array($match[0]);
+    }
+    foreach ($match[0] as $digits) {
+      $rv .= strlen($digits) . $digits . ' ';
+    }
+  }
+  return $rv;
+}
+
+
+function enumsort($a, $b) {
+  $sa = $this->sortstringFromEnumcron($a['enumcron']);
+  $sb = $this->sortstringFromEnumcron($b['enumcron']);
+  if ($sa == $sb) {
+      return 0;
+  }
+  return ($sa < $sb) ? -1 : 1;
+}
+
+# Sort items from the json and return them
+
+function items_from_json($record) {
+  $items = json_decode($record['ht_json'], true);
+  usort($items, array($this, 'enumsort'));
+  return $items;
+}
+
   // Return an array of the form:
   // {
   //   rights_code => "whatever",
@@ -69,7 +103,9 @@ class RecordUtils {
   function ht_link_data_from_json($e) {
     global $HT_COLLECTIONS;
     $rv = array();
+
     $rc = $e['rights'];
+
     $rv['rights_code'] = $rc;
     $rv['handle'] = $e['htid'];
     $collection = $e['collection_code'];
@@ -90,33 +126,40 @@ class RecordUtils {
     return true;
   }
 
-  function ht_link_data($field) {
-    global $HT_COLLECTIONS;
-    $rv = array();
-    $rc = $field->getSubfield('r')->getData();
-    $rv['rights_code'] = $rc;
-
-    $handle = $field->getSubfield('u')->getData();
-    $rv['handle'] = $handle;
-    
-    $collection = $field->getSubfield('c')->getData();
-    $collection = strtolower($collection);
-    $rv['original_from'] = $HT_COLLECTIONS[$collection]['original_from'];
-
-    $rv['enumchron'] = $field->getSubfield('z') ? $field->getSubfield('z')->getData() : '';
-    $rv['is_fullview'] = $this->is_fullview($rv['rights_code']);
-    return $rv;
-  }
 
   // Take a rightscode (and, soon, other data) and return viewability
   function is_fullview($rcode, $inUSA = null) {
+
+    global $configArray;
     if (!isset($inUSA)) {
       $session = VFSession::singleton();
       $inUSA = $session->get('inUSA');
-    }    
+    }
+
 
     // Assume false
     $fv = false;
+
+    // Newly into copyright? Return true if after the right date
+    // The munged facet is in Solr.php -- don't forget
+    // to deal with that, too.
+
+    $todays_date = intval(date("YmdH"));
+    $copyright_active_date = intval($configArray['IntoCopyright']['date']);
+    if (is_array($rcode) &&
+        array_search("newly_open", $rcode) &&
+	$todays_date >= $copyright_active_date
+	) {
+      return true;
+      
+    } else if (is_array($rcode)) { // ditch the newly_open marker
+      $index = array_search("newly_open", $rcode);
+      if ($index) {
+        unset($rcode[$index]);
+      }
+      $rcode = $rcode[0];
+    }
+        
 
     // Public domain? return true
     if (preg_match('/^(cc|pd)/', $rcode) || preg_match('/world/', $rcode)) {
@@ -385,7 +428,6 @@ class RecordUtils {
         $links[] = "ISBN:" . $isbn;
       }
     }
-#    echo "links: " . implode("<br>", $links);
     return $links;
   }
 

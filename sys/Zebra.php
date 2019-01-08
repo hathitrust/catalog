@@ -20,7 +20,7 @@
 
 require_once 'XML/Unserializer.php';
 require_once 'XML/Serializer.php';
-require_once 'HTTP/Request.php';
+require_once 'HTTP/Request2.php';
 
 /**
  * Zebra SRU Search Interface
@@ -45,8 +45,8 @@ class Zebra {
     public $raw = false;
 
     /**
-     * The HTTP_Request object used for REST transactions
-     * @var object HTTP_Request
+     * The HTTP_Request2 object used for REST transactions
+     * @var object HTTP_Request2
      */
     public $client;
     
@@ -75,7 +75,7 @@ class Zebra {
         global $configArray;
     
         $this->host = $host;
-        $this->client = new HTTP_Request(null, array('useBrackets' => false));
+        $this->client = new HTTP_Request2(null, array('useBrackets' => false));
         
         if ($configArray['System']['debug']) {
             $this->debug = true;

@@ -41,7 +41,7 @@ class VFSession extends DSession
       $cargs = $authspecs['DSessionCookie'];
       $dargs = $authspecs['DSessionDB'];
       $cookiename = $cargs['cookiename'];
-      self::$instance = $self::singleton($cookiename, $cargs, $dargs);
+      self::$instance = self::singleton($cookiename, $cargs, $dargs);
     }    
     return self::$instance;    
   }

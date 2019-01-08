@@ -25,6 +25,7 @@ ini_set('date.timezone', 'America/Detroit');
 
 // Require System Libraries
 require_once 'PEAR.php';
+
 require_once 'sys/Interface.php';
 require_once 'sys/User.php';
 require_once 'sys/Translator.php';
@@ -35,6 +36,7 @@ require_once 'sys/ActivityLog.php';
 require_once 'services/Record/RecordUtils.php';
 require_once 'sys/mobile_device_detect.php';
 require_once 'services/Search/SearchStructure.php';
+require_once 'sys/SolrConnection.php';
 
 // Set up for autoload
 function sample_autoloader($class) {
@@ -49,6 +51,8 @@ PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, 'handlePEARError');
 //######################################
 // Configuration and utility objects
 //######################################
+
+// TEST //
 
 
 $configArray = parse_ini_file('conf/config.ini', true);
@@ -71,7 +75,7 @@ if (isset($configArray[$hn], $configArray[$hn]['extraFilters'])) {
 #######################################
 # Mobile detection
 #######################################
-# IF we're hitting the top page, 
+# IF we're hitting the top page,
 #  AND it's a hathitrust.org
 #  AND there's a mobile site configured
 #  AND we're not already *at* the mobile site
@@ -110,7 +114,7 @@ $authspecs = AuthSpecs::singleton();
 $interface = new UInterface();
 $interface->assign('machine', $_SERVER['SERVER_ADDR']);
 $interface->assign('session', $session);
-$interface->assign('regular_url', isset($configArray['Site']['regular_url']) ? 
+$interface->assign('regular_url', isset($configArray['Site']['regular_url']) ?
                                   $configArray['Site']['regular_url'] :
                                   $configArray['Site']['url']);
 
@@ -127,7 +131,7 @@ if (!$session->is_set('country')) {
   $ip  = $_SERVER['REMOTE_ADDR'];
   $country = geoip_country_code3_by_name($ip);
   $session->set('country', $country);
-  
+
   if ($country == 'USA') {
     $session->set('inUSA', true);
   } else {
@@ -191,17 +195,17 @@ $translator = new I18N_Translator('lang', $language);
 setlocale(LC_MONETARY, $configArray['Site']['locale']);
 
 
-// 
+//
 // //######################################
 // // Set up default institution and stick in session
 // //######################################
-// 
+//
 // $instConfig = parse_ini_file('conf/instList.ini', true);
 // $instList = $instConfig['inst'];
 // $instForIP = $instConfig['instForIP'];
 // $interface->assign('instList', $instList);
 // $ip = $_SERVER['REMOTE_ADDR'];
-// 
+//
 // // if inst is set in _REQUEST, add to session
 // if (isset($_REQUEST['inst'])) {
 //   $inst = $_REQUEST['inst'];
@@ -221,12 +225,12 @@ setlocale(LC_MONETARY, $configArray['Site']['locale']);
 //       break;
 //     }
 //   }
-//   $session->set("inst", $inst); 
-// } 
-// 
-// 
-// 
-// 
+//   $session->set("inst", $inst);
+// }
+//
+//
+//
+//
 
 //###################################################
 // Avoid XSS attacks by disallowing the '>' character
@@ -253,7 +257,7 @@ foreach ($_REQUEST as $key => $val) {
 //#########################
 /*
   Change in plans: two variables
-  
+
   setft    sets the session variable and controls the checkbox
   ft       affects the current search
 
@@ -349,7 +353,7 @@ $interface->assign('loginURLBase', $authspecs['RedirectAuth']['loginURLBase'] );
 if ($user) {
   $interface->assign('uniqname', $user->username);
   if (is_null($user->patron) || !isset($user->patron)) {
-    $interface->assign('username', $user->username); 
+    $interface->assign('username', $user->username);
   } else {
     $interface->assign('username', implode(' ', array($user->patron->firstname, $user->patron->lastname)));
   }

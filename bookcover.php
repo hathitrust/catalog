@@ -124,17 +124,17 @@ function librarything($id)
 
 function google()
 {
-    require_once 'HTTP/Request.php';
+    require_once 'HTTP/Request2.php';
 
     global $configArray;
 
     if (is_callable('json_decode')) {
         $url = 'http://books.google.com/books?jscmd=viewapi&' .
                'bibkeys=ISBN:' . $_GET['isn'] . '&callback=addTheCover';
-        $client = new HTTP_Request();
-        $client->setMethod(HTTP_REQUEST_METHOD_GET);
+        $client = new HTTP_Request2();
+        $client->setMethod(HTTP_REQUEST2::METHOD_GET);
         $client->setURL($url);
-        $result = $client->sendRequest();
+        $result = $client->send();
         if (!PEAR::isError($result)) {
             $json = $client->getResponseBody();
             // strip off addthecover(
@@ -158,7 +158,7 @@ function google()
 
 function amazon($id)
 {
-    require_once 'HTTP/Request.php';
+    require_once 'HTTP/Request2.php';
     require_once 'XML/Unserializer.php';
 
     global $configArray;
@@ -170,10 +170,10 @@ function amazon($id)
            'ResponseGroup=Images&' .
            'ItemId=' . $_GET['isn'];
 
-    $client = new HTTP_Request();
-    $client->setMethod(HTTP_REQUEST_METHOD_GET);
+    $client = new HTTP_Request2();
+    $client->setMethod(HTTP_Request2::METHOD_GET);
     $client->setURL($url);
-    $result = $client->sendRequest();
+    $result = $client->send();
     if (!PEAR::isError($result)) {
         $unxml = new XML_Unserializer();
         $unxml->unserialize($client->getResponseBody());

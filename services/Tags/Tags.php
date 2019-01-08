@@ -7,7 +7,7 @@ require_once 'services/Search/SearchStructure.php';
 require_once 'services/Tags/TaggedItem.php';
 require_once 'services/Record/RecordList.php';
 require_once 'services/Record/RecordUtils.php';
-require_once 'HTTP/Request.php';
+require_once 'HTTP/Request2.php';
 require_once 'sys/Solr.php';
 
 class Tags
@@ -20,7 +20,7 @@ class Tags
   public    $session;
   protected $user;
   private static $instance = false;
-  protected $httpRequest; // An HTTP Request object
+  protected $httpRequest; // An HTTP Request2 object
   protected $_solr;
   
   public function allItems() {
@@ -38,7 +38,7 @@ class Tags
   
   protected function __construct() {
     $this->user    = VFUser::singleton();
-    $this->session = VFSession:instance();
+    $this->session = VFSession::instance();
     
     // Are we logged in?
     if ($this->user) {
@@ -77,7 +77,7 @@ class Tags
   
   function req() {
     if (!isset($this->httpRequest)) {
-      $req = new HTTP_Request(null, array('useBrackets' => false));
+      $req = new HTTP_Request2(null, array('useBrackets' => false));
       $req->setMethod(HTTP_REQUEST_METHOD_GET);
       $this->httpRequest = $req;
     }
@@ -334,7 +334,7 @@ class Tags
   
   function fillFromDB($uname) {
 
-    $req = new HTTP_Request(null, array('useBrackets' => false));
+    $req = new HTTP_Request2(null, array('useBrackets' => false));
     $req->setMethod(HTTP_REQUEST_METHOD_GET);
     $req->setURL("http://www.lib.umich.edu/mtagger/items/api/full");
     $req->addQueryString('user', $uname);

@@ -18,7 +18,7 @@
  *
  */
 
-require_once 'HTTP/Request.php';
+require_once 'HTTP/Request2.php';
 
 class OAIHarvester
 {
@@ -28,7 +28,7 @@ class OAIHarvester
 
     public function __construct()
     {
-        $this->client = new HTTP_Request();
+        $this->client = new HTTP_Request2();
         $this->client->setMethod(HTTP_REQUEST_METHOD_GET);
     }
     

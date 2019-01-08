@@ -42,7 +42,8 @@ class Home extends Record
 
         // Execute Default Tab
         require_once 'Holdings.php';
-        Holdings::launch();
+        $h = new Holdings();
+	$h->launch();
     }
 }
 

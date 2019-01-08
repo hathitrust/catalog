@@ -20,7 +20,7 @@
  
 require_once 'Action.php';
 
-require_once 'HTTP/Request.php';
+require_once 'HTTP/Request2.php';
 require_once 'Pager/Pager.php';
 
 class Home extends Action
@@ -187,10 +187,10 @@ class Home extends Action
         $url = "http://$this->lang.wikipedia.org/w/api.php" .
                '?action=query&prop=revisions&rvprop=content&format=php' .
                '&list=allpages&titles=' . urlencode($author);
-        $client = new HTTP_Request();
+        $client = new HTTP_Request2();
         $client->setMethod(HTTP_REQUEST_METHOD_GET);
         $client->setURL($url);
-        $result = $client->sendRequest();
+        $result = $client->send();
         if (PEAR::isError($result)) {
             return $result;
         }
@@ -283,10 +283,10 @@ class Home extends Action
             $url = "http://$this->lang.wikipedia.org/w/api.php" .
                    '?prop=imageinfo&action=query&iiprop=url&iiurlwidth=150&format=php' .
                    '&titles=Image:' . str_replace(' ', '_', $image);
-            $client = new HTTP_Request();
+            $client = new HTTP_Request2();
             $client->setMethod(HTTP_REQUEST_METHOD_GET);
             $client->setURL($url);
-            $result = $client->sendRequest();
+            $result = $client->send();
             if (PEAR::isError($result)) {
                 return $result;
             }

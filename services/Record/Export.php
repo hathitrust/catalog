@@ -59,7 +59,7 @@ class Export extends Record
                 break;
             case 'refworks':
                 $url = 'http://www.refworks.com/express/expressimport.asp';
-                $client = new HTTP_Request($url, array('allowRedirects' => 'true'));
+                $client = new HTTP_Request2($url, array('allowRedirects' => 'true'));
                 $client->setMethod('GET');
                 //$client->addQueryString('vendor', $configArray['Site']['title']);
                 $client->addQueryString('vendor', 'VuFind');
@@ -67,7 +67,7 @@ class Export extends Record
                 $client->addQueryString('encoding', '65001');
                 $client->addQueryString('url', $configArray['Site']['url'] . '/Record/' . $this->id . '/Export%3Fstyle=MARC');
 
-                $result = $client->sendRequest();
+                $result = $client->send();
                 echo $client->getResponseBody();
                 break;
             case 'MARC':

@@ -52,10 +52,10 @@ class AJAX extends Action {
 
         $url = $configArray['SFX']['api'];
 
-        $client = new HTTP_Request();
+        $client = new HTTP_Request2();
         $client->setMethod('GET');
         $client->setURL($url . '&rft:issn=' . $_GET['issn']);
-        $result = $client->sendRequest();
+        $result = $client->send();
         $data = $client->getResponseBody();
         
         $xsl = new XSLTProcessor();

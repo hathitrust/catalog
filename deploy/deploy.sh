@@ -69,7 +69,7 @@ fi
 
 echo
 echo Latest tags:
-git tags | tail -4
+git tag | tail -4
 TAG=`git describe --abbrev=0`
 echo
 echo 

@@ -57,27 +57,32 @@ class Cite extends Record {
 
     $authorList = isset($this->record['mainauthor']) ?
             $this->record['mainauthor'] :
-            $this->record['author'];
+            isset($this->record['author']) ? $this->record['author'] : array();
 
     // Create Author List for APA style
-    $i = 0;
-    $authorStr = '';
-    foreach ($authorList as $author) {
-      $author = abbreviateName($author);
-      if (($i == count($authorList)) && ($i > 0)) { // Last
-        $authorStr .= ', &amp; ' . cleanTitle($author) . '.';
-      } elseif ($i > 0) {
-        $authorStr .= ', ' . cleanTitle($author) . '.';
-      } else {
-        $authorStr .= cleanTitle($author) . '.';
+    if (!empty($authorList)) {
+      $i = 0;
+      $authorStr = '';
+      foreach ($authorList as $author) {
+        $author = abbreviateName($author);
+        if (($i == count($authorList)) && ($i > 0)) { // Last
+          $authorStr .= ', &amp; ' . cleanTitle($author) . '.';
+        } elseif ($i > 0) {
+          $authorStr .= ', ' . cleanTitle($author) . '.';
+        } else {
+          $authorStr .= cleanTitle($author) . '.';
+        }
+        $i++;
       }
-      $i++;
-    }
-    $interface->assign('apaAuthorList', trim($authorStr));
+      $interface->assign('apaAuthorList', trim($authorStr));
+    } 
+      
 
     // Create Author List for MLA style
+    if (!empty($authorList)) {
     $i = 0;
     $authorStr = '';
+
     if (count($authorList) > 4) {
       $authorStr = cleanTitle($author) . ', et al.';
     } else {
@@ -92,7 +97,8 @@ class Cite extends Record {
         $i++;
       }
     }
-    $interface->assign('mlaAuthorList', trim($authorStr));
+     $interface->assign('mlaAuthorList', trim($authorStr));
+    }
 
     // Setup Publisher information
     $publisher = "";

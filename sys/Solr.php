@@ -961,8 +961,8 @@ class Solr
   // Do we just want the IDs? Spit 'em out!
   public function print_out_list_of_ids($args) {
     if ($this->is_list_of_ids_request()) {
-      $this->solr_connection->request->setContentType('text/plain');
       $j = $this->solr_connection->send();
+      header("Content-Type: text/plain");
       foreach ($j['response']['docs'] as $doc) {
         foreach ($doc['ht_id'] as $htid) {
           echo $htid, "\n";

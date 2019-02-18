@@ -31,12 +31,12 @@ require_once 'sys/User.php';
 require_once 'sys/Translator.php';
 require_once 'sys/VFSession.php';
 require_once 'sys/VFUser.php';
-require_once 'services/Tags/TaggedItem.php';
 require_once 'sys/ActivityLog.php';
 require_once 'services/Record/RecordUtils.php';
 require_once 'sys/mobile_device_detect.php';
 require_once 'services/Search/SearchStructure.php';
 require_once 'sys/SolrConnection.php';
+require_once 'sys/Solr.php';
 
 // Set up for autoload
 function sample_autoloader($class) {
@@ -52,7 +52,6 @@ PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, 'handlePEARError');
 // Configuration and utility objects
 //######################################
 
-// TEST //
 
 
 $configArray = parse_ini_file('conf/config.ini', true);

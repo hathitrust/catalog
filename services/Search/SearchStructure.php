@@ -667,7 +667,7 @@ class SearchStructure
     }
     
     function asURLComponents($extra) {
-      return $this->asURL($extra);
+      return urlencode($this->asURL($extra));
     }
     
     /**

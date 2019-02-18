@@ -6,7 +6,6 @@
  *
  */
 require_once 'services/Search/SearchStructure.php';
-require_once 'services/Tags/Tags.php';
 
 require_once 'services/Record/FilterFormat.php';
 require_once 'services/Record/RecordUtils.php';
@@ -219,13 +218,6 @@ class SearchExport {
     $this->tagSpecs = Horde_Yaml::load(file_get_contents($filename));
     $this->_buildFormatMap($this->tagSpecs['typemap']);
 
-    if ($this->tempset) {
-      $tags = Tags::singleton();
-      $this->alog->log('selectedtoris', $tags->numTempItems());
-    } else {
-      $this->alog->log('recris', $this->results['record'][0]['id']);
-    }
-
     foreach ($this->results['record'] as $rawr) {
       echo $this->taggedRecord($rawr, $this->tagSpecs['tagprefix'], $this->tagSpecs['tagsuffix']);
       echo "\nER  - \n\n";
@@ -252,7 +244,6 @@ class SearchExport {
     $this->_buildFormatMap($this->tagSpecs['typemap']);
 
     if ($this->tempset) {
-      $tags = Tags::singleton();
       $this->alog->log('selectedendnote', $tags->numTempItems());
     } else {
       $this->alog->log('recendnote', $this->results['record'][0]['id']);
@@ -462,12 +453,7 @@ class SearchExport {
     $sth = $dbh->prepare('insert into refworks_redirects values (?, ?, ?)');
     $sth->execute(array($uuid, $expires, serialize($this->results)));
 
-    if ($this->tempset) {
-      $tags = Tags::singleton();
-      $this->alog->log('selectedtorefworks', $tags->numTempItems());
-    } else {
-      $this->alog->log('recrefworks', $this->results['record'][0]['id']);
-    }
+
 
 
     // Now send refworks a request.
@@ -479,7 +465,6 @@ class SearchExport {
     } else {
       $baseURL = $rfSpec['defaultBaseURL'];
     }
-    $tags = Tags::singleton();
 
     $rfargs = $rfSpec['urlArgs'];
 
@@ -516,13 +501,6 @@ class SearchExport {
       $hasmessage = true;
     } else {
       $hasmessage = false;
-    }
-
-    if ($this->tempset) {
-      $tags = Tags::singleton();
-      $this->alog->log('selectedtoemail', $tags->numTempItems(), $sameaddress, $hasmessage);
-    } else {
-      $this->alog->log('recemail', $this->results['record'][0]['id'], $sameaddress, $hasmessage);
     }
 
     $this->emailRecords($to, $from, $message);

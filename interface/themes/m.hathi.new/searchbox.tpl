@@ -23,7 +23,8 @@
 	    {if $noresult eq "true"}
 		<div id="noresult">
 			{if $newPhrase}
-				<p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p>
+				<p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action			<a href="{$regular_url}{$smarty.server.REQUEST_URI}&mdetect=no" target="Mirlyn">{translate text='View Results in Regular Catalog'}</a> 
+}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p>
 			{/if}
 			<p>Your search - <b>{$lookfor}</b> - did not match any resources.</p>
 			<p>You may want to try to revise your search phrase by removing some words.</p>

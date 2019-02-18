@@ -6,11 +6,6 @@
   <div class="result record{$smarty.foreach.recordLoop.iteration}">
   {/if}
 
-<!--
-  <script type="text/javascript">
-     getStatuses('{$record.id}');
-  </script>
--->
     <div class="yui-ge">
       <div class="yui-u first">
       <div id=GoogleCover_{$record.id} style="position: relative; float: left">

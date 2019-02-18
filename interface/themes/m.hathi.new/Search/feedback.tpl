@@ -1,6 +1,6 @@
 <div class="header">
   <a href="{$site.home_url}" class="htlogobutton" ></a>
-  <a class="backlink"  href="{$site.url}{$smarty.get.currenturl}">&lt;&lt;&nbsp;Back</a>
+  <a class="backlink"  href="{$site.url}{$smarty.get.currenturl|escape:"url"}">&lt;&lt;&nbsp;Back</a>
 </div>
 
 <div class="contentbox">

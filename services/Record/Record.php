@@ -25,13 +25,8 @@ require_once 'File/MARCFLAT.php';
 require_once 'sys/Language.php';
 require_once 'sys/MergedItemSet.php';
 
-require_once 'services/MyResearch/lib/User.php';
-#require_once 'services/MyResearch/lib/Resource.php';
-#require_once 'services/MyResearch/lib/Resource_tags.php';
-#require_once 'services/MyResearch/lib/Tags.php';
 require_once 'services/Record/FilterFormat.php';
 require_once 'sys/VFSession.php';
-require_once 'services/Tags/Tags.php';
 require_once 'services/Record/RecordUtils.php';
 
 
@@ -53,7 +48,6 @@ class Record extends Action
 
     public $db;
     
-    public $tags;
     public $inTemp = false;
     public $inSubset = false;
     public $isFavorite = false;
@@ -66,7 +60,6 @@ class Record extends Action
         
         //$interface->caching = 1;
 
-        $this->tags = Tags::singleton();
 
         if (isset($_REQUEST['id'])) {
           $this->id = sprintf('%09d', $_GET['id']);
@@ -117,19 +110,7 @@ class Record extends Action
         }
         $this->record = $record;
  
-        if ($this->tags->inTempItems($this->id)) {
-          $this->inTemp = true;
-        }
-        if ($this->tags->inSubset($this->id)) {
-          $this->inSubset = true;
-        }
-        if ($this->tags->isFavorite($this->id)) {
-          $this->isFavorite = true;
-        }
         
-        $interface->assign('tempcount', $this->tags->numTempItems());
-        $interface->assign('inTempItems', $this->tags->inTempItems($this->id));
-        $interface->assign('tagobj', $this->tags);
         $interface->assign('record', $record);
         $interface->assign('recordFormat', $record['format']);
         if (isset($record['language']))  $interface->assign('recordLanguage', $record['language']);
@@ -193,13 +174,6 @@ class Record extends Action
 
         // Retrieve tags associated with the record
         $limit = 5;
-#        $resource = new Resource();
-#        $resource->record_id = $_GET['id'];
-#         $tags = array();
-#        if ($tags = $resource->getTags()) {
-#            array_slice($tags, 0, $limit);
-#        }
-#        $interface->assign('tagList', $tags);
         
         $this->cacheId = 'Record|' . $this->id . '|' . get_class($this);
         

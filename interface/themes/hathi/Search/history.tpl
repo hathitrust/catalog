@@ -11,7 +11,7 @@
           </tr>
           {foreach item=info key=location from=$links}
           <tr>
-            <td><a href="{$url}/Search/Home?{$location}">{$info.phrase}</a></td>
+            <td><a href="{$url|escape:"url"}/Search/Home?{$location}">{$info.phrase}</a></td>
             <td>{$info.type}</td>
             <td>{$info.format}</td>
           </tr>

@@ -20,9 +20,6 @@
 
 require_once 'Action.php';
 
-# require_once 'services/MyResearch/lib/User.php';
-# require_once 'services/MyResearch/lib/Search.php';
-
 require_once 'sys/LoggingPager.php';
 require_once 'Pager/Pager.php';
 require_once 'services/Record/FilterFormat.php';
@@ -36,8 +33,6 @@ require_once "feedcreator/include/feedcreator.class.php";
 
 require_once 'File/MARC.php';
 
-require_once 'services/Tags/Tags.php';
-require_once 'services/Tags/TagLine.php';
 
 require_once 'services/Record/RecordUtils.php';
 
@@ -48,7 +43,6 @@ class Home extends Action {
     private $filterQuery;
     private $searchStructure;
     private $ss;
-    private $tags;
     private $session;
 
 
@@ -57,9 +51,7 @@ class Home extends Action {
         global $interface;
 
         $this->ss = new SearchStructure;
-        $this->tags = Tags::singleton();
         $this->session = VFSession::instance();
-        TagLine::initialize();
 
          // Setup Search Engine Connection
          $class = $configArray['Index']['engine'];
@@ -180,11 +172,6 @@ class Home extends Action {
 
         $limit = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : $configArray['Site']['itemsPerPage'];
 
-        // Kick it up to 100 if we've got tag(s)
-
-        if (count($this->ss->tags()) > 0) {
-          $limit = 100;
-        }
 
         // Max of 100
 	if ($limit > 100) {
@@ -242,7 +229,6 @@ class Home extends Action {
         $interface->assign('subpage', 'Search/list-list.tpl');
         $interface->setTemplate('list.tpl');
         $interface->assign('atom', 1);
-        $interface->assign('tagobj', Tags::singleton());
         $interface->assign('ss', $this->ss);
         
         //*****************************************************
@@ -402,20 +388,8 @@ class Home extends Action {
           $result['record'][$num]['googleLinks'] = implode(",", $ru->getLinkNums($marcRecord));
           $url_list[$record['id']] = $ru->getURLs($marcRecord);
           $id = $record['id'];
-          if ($this->tags->inTempItems($id)) {
-            $result['record'][$num]['inTemp'] = true;
-          }
-          if ($this->tags->inSubset($id)) {
-            $result['record'][$num]['inSubset'] = true;
-          }
 
-          if ($this->tags->isFavorite($id)) {
-            $result['record'][$num]['isFavorite'] = true;
-          }
 
-          if (isset($this->tags->item[$id]) && $this->tags->item[$id]->permanentTags()) {
-            $result['record'][$num]['tags'] = $this->tags->item[$id]->permanentTags();
-          }
         }
 
 

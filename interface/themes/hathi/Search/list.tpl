@@ -1,4 +1,4 @@
-<script language="JavaScript" type="text/javascript" src="{$path}/services/Search/ajax.js"></script>
+{* <script language="JavaScript" type="text/javascript" src="{$path}/services/Search/ajax.js"></script> *}
 <script language="JavaScript" type="text/javascript" src="{$path}/js/googleLinks.js"></script>
 
 <!-- Main Listing -->
@@ -12,7 +12,7 @@
           {foreach from=$currentFacets item=facet}
             {assign var=rurl value=$facet.removalURL|regex_replace:"/&/":"&amp;"}
             <li>
-              <a href="{$url}/Search/{$action}?{$rurl}"><img  class="facetbutton" src="{$path}/images/silk/cancel.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>
+              <a href="/Search/{$action}?{$rurl}"><img  class="facetbutton" src="/images/silk/cancel.png" alt="Delete"></a>{$facet.indexDisplay} : {translate text=$facet.valueDisplay}</li>
           {/foreach}
         </ul>
     </div>
@@ -43,7 +43,7 @@
         {/foreach}
         </div>
         {if $narrowcount > $smarty.foreach.narrowLoop.iteration}
-        <div style="clear:both; text-align: right;"> <a href="{$url}/Author/Search?{$searchcomps}">see all ({$narrowcount})</a></div>
+        <div style="clear:both; text-align: right;"> <a href="{$url}/Author/Search?{$searchcomps|escape:"url"}">see all ({$narrowcount})</a></div>
       {/if}
       </div>
       {/if $narrow}
@@ -54,26 +54,6 @@
       <p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action}?lookfor={$newPhrase}&amp;type={$type}">{$newPhrase}</a>?</p>
       {/if}
 
-{*
-      <div class="searchtools">
-        <!-- <a href="{$url}/Search/{$action}?lookfor={$lookfor|escape}&amp;type={$type}&amp;view=rss" class="feed">{translate text='Get RSS Feed'}</a> -->
-
-        <!-- fixme:suz RSS doesn't work so well
-        <a href="" id="RSSFeed">{translate text='Get RSS Feed'}</a>
-        <script language="JavaScript" type="text/javascript">
-          loc = window.location.href;
-          loc.replace(/checkspelling=true/, '');
-          loc = loc + '&view=rss';
-          jq('#RSSFeed').attr('href', loc)
-        </script>
-        -->
-        <!-- <a class="feed" href="/Search/SearchExport?{$searchcomps|escape:'html'}&amp;method=atom" id="Feed">{translate text='Get Feed'}</a> -->
-
-        <a href="#" id="emailSearch" class="mail" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search top');">{translate text='Email this Search'}</a>
-
-
-      </div>
-*}
       <!-- Listing Options -->
       <h2 class="hidden">Search Results</h2>
       <div class="yui-ge resulthead">
@@ -82,7 +62,7 @@
           {translate text="Showing"}
           <span class="strong">{$recordStart} - {$recordEnd}</span>
           {translate text='of'} <span class="strong">{$recordCount}</span>
-          {translate text='Results for'} <span class="strong">{$searchterms}</span>
+          {translate text='Results for'} <span class="strong">{$searchterms|escape}</span>
         {/if}
         </div>
 
@@ -158,19 +138,6 @@
         <div class="pagination clearfix">{$pageLinks.all}</div>
       </div>
       <div class="searchtools">
-{*
-        <!-- <a href="{$url}/Search/{$action}?lookfor={$lookfor|escape}&amp;type={$type}&amp;view=rss" class="feed">{translate text='Get RSS Feed'}</a> -->
-
-
-        <!-- fixme:suz RSS doesn't work so well <a href="" id="RSSFeed">{translate text='Get RSS Feed'}</a>
-        <script language="JavaScript" type="text/javascript">
-          loc = window.location.href;
-          loc.replace(/checkspelling=true/, '');
-          loc = loc + '&view=rss';
-          jq('#RSSFeed').attr('href', loc)
-        </script>
-      -->
-        <a href="#" class="mail" id="emailSearch_lower" onClick="pageTracker._trackEvent('resultsActions', 'click', 'Email this Search bottom');">{translate text='Email this Search'}</a> *}
       </div>
     </div>
     <!-- End Main Listing -->

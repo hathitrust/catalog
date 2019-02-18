@@ -3,13 +3,13 @@
 
 <div class="header">
     <a href="{$site.home_url}" class="htlogobutton" ></a>
-	<a class="backlink" href="{$lastsearch}">&lt;&lt;&nbsp;Results</a>
+	<a class="backlink" href="{$lastsearch|escape:"url"}">&lt;&lt;&nbsp;Results</a>
 </div>
 
 {if $current}
 	<div class="recnav aligncenter">
           {if $previous}
-            <a ref="prevrec" style="text-decoration:none" href="{$url}{$previous}" class="prevrec">
+            <a ref="prevrec" style="text-decoration:none" href="{$url}{$previous|escape:"url"}" class="prevrec">
             <img alt="Previous Record" src="/images/hathimobile/record_leftarrow.png">
             </a>
           {/if}
@@ -17,7 +17,7 @@
             <span class="aligncenter">{$current|replace:'Showing record ':''}</span>
           {/if}
           {if $next}
-            <a ref="nextrec" href="{$url}{$next}" class="nextrec">
+            <a ref="nextrec" href="{$url}{$next|escape:"url"}" class="nextrec">
             <img alt="Next Record" src="/images/hathimobile/record_rightarrow.png">
            	</a>
           {/if}
@@ -226,7 +226,7 @@
 				<!-- title array -->
             	{foreach from=$record.oclc item=title loop=1 name=loop}
               		{if $smarty.foreach.loop.iteration lt 3}
-              			<a href="http://www.worldcat.org/oclc/{$title}" onClick="pageTracker._trackEvent('outLinks', 'click', 'Find in a Library');">Find in a library</a><br>
+              			<a href="http://www.worldcat.org/oclc/{$title|escape:"url"}" onClick="pageTracker._trackEvent('outLinks', 'click', 'Find in a Library');">Find in a library</a><br>
               		{/if}
             	{/foreach}
           	{else}
@@ -272,7 +272,7 @@
             						<label>Message:</label><textarea  name="message"></textarea>
 								</li>
         						<li>
-									{*<input type="button" value="Send email" onclick="emailSelectedRecordsNoFancybox({literal}{{/literal}'handpicked': '{$id}'{literal}}{/literal}); return false;">*}
+									{*<input type="button" value="Send email" onclick="emailSelectedRecordsNoFancybox({literal}{{/literal}'handpicked': '{$id|escape:"url"}'{literal}}{/literal}); return false;">*}
 									<input type="button" value="Send email" onclick="emailSelectedRecordsMobile({literal}{{/literal}'handpicked': '{$id}'{literal}}{/literal}); return false;">
 	    						</li>
 	    					</ul>
@@ -281,7 +281,7 @@
 					</div>
 				</li>
 				<li class="recordToolLink">
-					<a href="{$regular_url}{$smarty.server.REQUEST_URI}?mdetect=no" target="Mirlyn">{translate text='View Record in Regular Catalog'}</a>
+					<a href="{$regular_url}/Record/{$id|escape:"url"}?mdetect=no" target="Mirlyn">{translate text='View Record in Regular Catalog'}</a>
 				</li>
 	</ul>
 {*

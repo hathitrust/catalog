@@ -1,22 +1,10 @@
-<script language="JavaScript" type="text/javascript" src="{$path}/services/Record/ajax.js"></script>
 <script language="JavaScript" type="text/javascript" src="{$path}/js/googleLinks.js"></script>
-
-<!--<div  id="login_to_text" style="display:none;" >
-  <h3>Send record via text message</h3>
-  <p>Texting is only available to logged-in users. Please <a id="login_link" href="">log in</a>.
-  </p>
-<script language="JavaScript" type="text/javascript">
-  jq('#login_link').attr('href', loginLink());
-</script>
-</div>
--->
 
 
 <div id="bd" style="width: 100%">
    <div id="start_of_left_column_container" class='yui-b' style="margin: 0px; padding: 0px; float: left; width: 17em;">
        <div class="box submenu">
           <h3>{translate text="Similar Items"}</h3>
-     <!-- {$similarRecords} -->
            {if is_array($similarRecords)}
            <ul class="similar">
              {foreach from=$similarRecords item=similar}
@@ -74,8 +62,8 @@
 
        <h3 class="SkipLink">Tools</h3>
        <ul class="ToolLinks">
-         <li><a href="{$url}/Record/{$id}/Cite" class="cite" onClick="getLightbox('Record', 'Cite', '{$id}', null, '{translate text="Cite this"}'); return false;">{translate text="Cite this"}</a></li>
-         <li><a class="endnotelink" href="/Search/SearchExport?handpicked={$id}&amp;method=ris" onClick="pageTracker._trackEvent('recordActions', 'click', 'Endnote');">Export citation file</a></li>
+         <li><a href="/Record/{$id|escape:"url"}/Cite" class="cite" onClick="getLightbox('Record', 'Cite', '{$id|escape:"url"}', null, '{translate text="Cite this"}'); return false;">{translate text="Cite this"}</a></li>
+         <li><a class="endnotelink" href="/Search/SearchExport?handpicked={$id|escape:"url"}&amp;method=ris" onClick="pageTracker._trackEvent('recordActions', 'click', 'Endnote');">Export citation file</a></li>
        </ul>
 
        <div class="recordnav">
@@ -96,12 +84,12 @@
        <div>
        <ul class="tools">
         <li>
-          <a href="{$url}/Record/{$id}/Cite" class="cite" onClick="getLightbox('Record', 'Cite', '{$id}', null, '{translate text="Cite this"}'); return false;">{translate text="Cite this"}</a>
+          <a href="{$url}/Record/{$id|escape:"url"}/Cite" class="cite" onClick="getLightbox('Record', 'Cite', '{$id}', null, '{translate text="Cite this"}'); return false;">{translate text="Cite this"}</a>
         </li>
 
          <li>
            {if $username}
-           <a href="{$url}/Record/{$id}/SMS" class="sms" onClick="getLightbox('Record', 'SMS', '{$id}', null, '{translate text="Text this"}'); return false;">{translate text="Text this"}</a></li>
+           <a href="{$url}/Record/{$id|escape:"url"}/SMS" class="sms" onClick="getLightbox('Record', 'SMS', '{$id}', null, '{translate text="Text this"}'); return false;">{translate text="Text this"}</a></li>
            {else}
            <a href="#" class="sms" onClick="fillLightbox('login_to_text'); return false;">{translate text="Text this"}</a>
            {/if}
@@ -109,30 +97,6 @@
 
         -->
 
-          <!--<li><a href="{$url}/Record/{$id}/Email" class="mail" onClick="getLightbox('Record', 'Email', '{$id}', null, '{translate text="Email this"}'); return false;">{translate text="Email this"}</a></li>-->
-          <!-- <li><a href="#" class="mail" onClick="fillLightbox('email_help'); return false;;return false;">{translate text="Email this"}</a></li>              -->
-
-          <!--<li><a target="RefWorksMain" href="http://www.refworks.com.proxy.lib.umich.edu/express/expressimport.asp?vendor=Univeristy+of+Michigan+Mirlyn2+Beta&amp;filter=MARC+Format&amp;database=All+MARC+Formats&amp;encoding=65001&amp;url={$url|escape:'url'}/Record/{$id}/Export%3Fstyle%3DREF">Export to Refworks</a></li>-->
-          <!--<li><a href="{$url}/Record/{$id}/Export?style=endnote" class="export" onClick="showMenu('exportMenu'); return false;">{translate text="Import Record"}</a>
-           </li>-->
-          <!-- <li><a href="#" onclick="hideMenu('exportMenu'); fillLightbox('export_help');return false;">Export Record</a></li>                      -->
-          <!--<ul class="menu" id="exportMenu">-->
-          <!-- <li><a href="{$url}/Record/{$id}/Export?style=refworks">{translate text="Import to"} RefWorks</a></li> -->
-          <!-- <li><a onclick="hideMenu('exportMenu');return false;" href="{$url}/Record/{$id}/Export?style=endnote">{translate text="Import to"} EndNote</a></li> -->
-          <!-- <li><a onclick="hideMenu('exportMenu');return false;" href="{$url}/Record/{$id}/Export?style=zotero">{translate text="Import to"} Zotero</a></li> -->
-          <!--<li><a href="#" onclick="hideMenu('exportMenu'); fillLightbox('refworks_help');return false;">{translate text="Import to"} RefWorks</a></li>
-          <li><a href="#" onclick="hideMenu('exportMenu'); fillLightbox('endnote_help');return false;">{translate text="Import to"} Endnote</a></li>-->
-          <!-- <li><a href="#" onclick="hideMenu('exportMenu'); fillLightbox('zotero_help');return false;">{translate text="Import to"} Zotero</a></li> -->
-          <!--</ul>-->
-          <!--</li>-->
-          <!--<li id="saveLink"><a href="{$url}/Record/{$id}/Save" class="fav" onClick="getLightbox('Record', 'Save', '{$id}', null, '{translate text="Add to Favorites"}'); return false;">{translate text="Add to favorites"}</a></li>
-           <li id="savelink"><a href="#" onClick="fillLightbox('favorite_help'); return false;;return false;" class="fav">{translate text='Add to favorites'}</a></li>
-            <script language="JavaScript" type="text/javascript">
-            getSaveStatus('{$id}', 'saveLink');
-            </script>
-        -->
-       <!--</ul>
-      </div>-->
 
      <br>
 

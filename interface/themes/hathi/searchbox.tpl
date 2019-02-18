@@ -3,23 +3,6 @@
   <div class="yui-b" style="margin-left: 0em; *margin-left: 0em;">
 
     {if $suppress_searchbox}
-      <!--
-        <div style="margin: none; padding: none;">
-          <div style="margin-left: 5em; padding-bottom: 1em; padding-top: 15px">
-            <a href="/?&amp;inst={$inst}">&lt; Back to basic search</a>
-          </div>
-          <div>
-            <span style="position: absolute; right: 2em;">
-                {if $username}
-                    <a href="{$path}/MyResearch/Home" title="Account information for {$username}">My Account</a> |
-                    <a href="{$path}/MyResearch/Logout">{translate text="Log Out"}</a></span>
-                {else}
-                  <a href="{$path}/MyResearch/Home" title="Log in and view your  account information">My Account</a> |
-                  <a href="{$loginURL}">{translate text="Login"}</a>
-                {/if}
-            </span>
-          </div>
-        </div>-->
 
     {else}
 
@@ -73,32 +56,8 @@
               <a href="#" id="searchTips">Search Tips</a>
             </span>
 
-        <!--
-            <span style="position: absolute; right: 2em;">
-            {if $username}
-                <a href="{$path}/MyResearch/Home&amp;inst={$inst}" title="Account information for {$username}">Your Account</a> |
-                <a href="{$path}/MyResearch/Logout">{translate text="Log Out"}</a></span>
-             {else}
-                <a href="{$path}/MyResearch/Home" title="Log in and view your  account information">My Account</a> |
-                 <a href="{$loginURL}&amp;inst={$inst}">{translate text="Login"}</a>
-             {/if}
-          </span>
-      -->
 
 
-        <!-- Login
-{*         <div style="float:right;">
-           <div style="margin-left: 5em; margin-right: 2em;">
-
-           {if $username}
-              <a href="{$path}/MyResearch/Home&amp;inst={$inst}" title="Account information for {$username}">Your Account</a> |
-              <a href="{$path}/MyResearch/Logout">{translate text="Log Out"}</a></span>
-           {else}
-               <a href="{$loginURL}&amp;inst={$inst}">{translate text="Login"}</a>
-           {/if}
-           </div>
-         </div>
-*}-->
 
        </div> <!-- End of the margin:none padding:none -->
       </form>

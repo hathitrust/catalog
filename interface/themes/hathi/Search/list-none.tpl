@@ -4,13 +4,13 @@
       <div class="record">
         <!-- Suggestions? -->
         {if $newPhrase}
-        <p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p>
+        <p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action|escape:"url"}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p>
         {/if}
 
         <p class="error">Your
           <strong>{if $check_ft_checkbox}Full view only{/if}</strong>
            search &mdash; 
-           <strong>{$searchterms}</strong>
+           <strong>{$searchterms|escape}</strong>
            &mdash; did not match any resources.</p>
          
 

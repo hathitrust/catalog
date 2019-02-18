@@ -33,26 +33,27 @@
   
     
 {if $id}
-  <link rel="canonical" href="/Record/{$id}">
-  <link rel="alternate" type="application/marc" href="/Record/{$id}.mrc" >
-  <link rel="alternate" type="application/marc+xml" href="/Record/{$id}.xml" >
-  <link rel="alternate" type="application/x-Research-Info-Systems" href="/Record/{$id}.ris" >
-  <link rel="alternate" type="application/x-endnote-refer" href="/Record/{$id}.endnote" >
-  <link rel="alternate" href="/Record/{$id}.rdf" type="application/rdf+xml" >
+  <link rel="canonical" href="/Record/{$id|escape:"url"}">
+  <link rel="alternate" type="application/marc" href="/Record/{$id|escape:"url"}.mrc" >
+  <link rel="alternate" type="application/marc+xml" href="/Record/{$id|escape:"url"}.xml" >
+  <link rel="alternate" type="application/x-Research-Info-Systems" href="/Record/{$id|escape:"url"}.ris" >
+  <link rel="alternate" type="application/x-endnote-refer" href="/Record/{$id|escape:"url"}.endnote" >
+  <link rel="alternate" href="/Record/{$id|escape:"url"}.rdf" type="application/rdf+xml" >
 {/if}
 
 
+  <script language="javascript" type="text/javascript" src="/services/Search/more_less.js"/>
 
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 
     <script language="JavaScript" type="text/javascript">
-      path = '{$url}';
+      path = '{$url|escape:"url"}';
       var jq = $;
     </script>
 
     <script type="text/javascript" src="/js/ht-layout.js"></script>
 
-    <meta name="title" content="{$pageTitle}" >
+    <meta name="title" content="{$pageTitle|escape}" >
     
   </head>
 

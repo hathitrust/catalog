@@ -181,7 +181,7 @@ function reverse($str) {
 function title_case($str) {
   $exceptions = array('a', 'an', 'but', 'by', 'for', 'it', 'of', 'the', 'to');
 
-  $words = split(' ', $str);
+  $words = explode(' ', $str);
   $newwords = array();
   foreach ($words as $word) {
     if (!in_array($word, $exceptions)) {

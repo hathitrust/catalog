@@ -101,7 +101,7 @@ function hideMenu(elemId)
     $("#featured .itemList:nth-child(" + ran + ")").show();
   };
 
-  $(document).ready(function(){
+  jq(document).ready(function(){
     randomtip();
   });
 

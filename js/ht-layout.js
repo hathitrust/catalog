@@ -1,4 +1,5 @@
- function SubmitFeedback(frm) {
+var jq = jQuery.noConflict();
+function SubmitFeedback(frm) {
     jq.post('/static/feedback.php',
             {'comment': jq("[name='comment']", frm).val(),
              'uniqname': jq("[name='uniqname']", frm).val(),
@@ -37,6 +38,7 @@ function fillLightbox(id) {
   document.getElementById('popupbox').innerHTML = closeButton + document.getElementById(id).innerHTML;
   return false;
 }
+
 
 jq.fn.clearForm = function(exceptions) {
   return this.each(function() {

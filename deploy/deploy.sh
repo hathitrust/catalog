@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERVERS="moxie-1 rootbeer-1"
+SERVERS="nas-macc nas-ictc"
 DEPLOYROOT="/htapps/catalog/releases"
 SYMLINKDIR="/htapps/catalog/web"
 

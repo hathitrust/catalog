@@ -96,9 +96,9 @@ function hideMenu(elemId)
 
 
   this.randomtip = function(){
-    var length = $("#featured .itemList").length;
+    var length = jq("#featured .itemList").length;
     var ran = Math.floor(Math.random()*length) + 1;
-    $("#featured .itemList:nth-child(" + ran + ")").show();
+    jq("#featured .itemList:nth-child(" + ran + ")").show();
   };
 
   jq(document).ready(function(){

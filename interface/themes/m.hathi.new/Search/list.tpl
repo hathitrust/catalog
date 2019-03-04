@@ -89,7 +89,7 @@
 	
 			{if $narrowcount > $smarty.foreach.narrowLoop.iteration}
 				<div style="clear:both; text-align: right;">
-					<a class="clickpostlog" ref="authseeall|||" href="{$url}/Author/Search?{$searchcomps|escape:"url}">see all ({$narrowcount})</a>
+					<a class="clickpostlog" ref="authseeall|||" href="{$url}/Author/Search?{$searchcomps|escape:"url"}">see all ({$narrowcount})</a>
 				</div>
 			{/if}
 	{/if $narrow}
@@ -98,7 +98,7 @@
 	<!-- Spelling suggestion -->
 	{* todo -- how to test this *}
 	{if $newPhrase}
-		<p class="correction">{translate text='Did you mean'} <a class="clickpostlog" ref="spellsuggest|||" href="{$url}/Search/{$action|escape:"url}?lookfor={$newPhrase|escape:"url}&amp;type={$type}">{$newPhrase}</a>?</p>
+		<p class="correction">{translate text='Did you mean'} <a class="clickpostlog" ref="spellsuggest|||" href="{$url}/Search/{$action|escape:"url"}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}">{$newPhrase}</a>?</p>
 	{/if}
 	
 	<div id="resultsummary">	
@@ -128,7 +128,7 @@
 	            
 	<ul id="recordTools" class="list">
 		<li class="recordToolLink linkeditemrightarrow nokiosk">
-			<a class="linkeditemlink" href="{$regular_url}/Record/{$id|escape:"url}&mdetect=no" target="HTCAT">{translate text='View Results in Regular Catalog'}</a>
+			<a class="linkeditemlink" href="{$regular_url}/Record/{$id|escape:"url"}&mdetect=no" target="HTCAT">{translate text='View Results in Regular Catalog'}</a>
 		</li>
 	</ul>
 

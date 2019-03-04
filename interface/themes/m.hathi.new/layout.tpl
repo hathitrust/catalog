@@ -23,7 +23,7 @@
 		{/if}
 
 
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" charset="utf-8"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" charset="utf-8"></script>
 		{literal}
 		<script type="text/javascript" charset="utf-8">
 

@@ -3,7 +3,7 @@
 
 <div class="header">
     <a href="{$site.home_url}" class="htlogobutton" ></a>
-	<a class="backlink" href="{$lastsearch|escape:"url"}">&lt;&lt;&nbsp;Results</a>
+	<a class="backlink" href="{$lastsearch}">&lt;&lt;&nbsp;Results</a>
 </div>
 
 {if $current}

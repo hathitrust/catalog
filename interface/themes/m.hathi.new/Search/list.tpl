@@ -128,7 +128,7 @@
 	            
 	<ul id="recordTools" class="list">
 		<li class="recordToolLink linkeditemrightarrow nokiosk">
-			<a class="linkeditemlink" href="{$regular_url}/Record/{$id|escape:"url"}&mdetect=no" target="HTCAT">{translate text='View Results in Regular Catalog'}</a>
+			<a class="linkeditemlink" href="{$regular_url}/{$thissearch}&mdetect=no" target="HTCAT">{translate text='View Results in Regular Catalog'}</a>
 		</li>
 	</ul>
 

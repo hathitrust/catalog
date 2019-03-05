@@ -70,7 +70,7 @@ fi
 echo
 echo Latest tags:
 git tag | tail -4
-TAG=`git describe --abbrev=0`
+TAG=`git tag | tail -1`
 echo
 echo 
 read -n 1 -r -p "Using tag $TAG. OK? (Y/N) "

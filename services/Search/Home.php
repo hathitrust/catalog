@@ -138,7 +138,7 @@ class Home extends Action {
         $interface->assign('searchcomps', $this->ss->asURL());
 
         $this->session->set('lastsearch', '/Search/Home?' . $this->ss->asURL());
-
+        $interface->assign('thissearch', $this->session->get("lastsearch"));
         // The existing facets
         $interface->assign('currentFacets', $this->ss->currentFacetsStructure());
         #print_r($this->ss);

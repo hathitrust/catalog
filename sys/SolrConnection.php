@@ -41,7 +41,6 @@ class SolrConnection
       $value = $kvpair[1];
       $vstr = is_array($value) ? "[" . join(", ", $value) . "]" : $value;
       $this->request->addPostParameter(array($key => $value));
-//      $this->request->getURL()->setQueryVariable($key, $value);
     }
   }
 

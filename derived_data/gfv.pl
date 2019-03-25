@@ -11,7 +11,7 @@ my ($facet, $include_count, $q) = @ARGV;
 
 binmode STDOUT, ":utf8";
 
-my $select = "http://solr-sdr-catalog:9033/catalog/select";
+my $select = "http://solr-sdr-catalog:9033/solr/catalog/select";
 
 
 $q ||= '*:*';

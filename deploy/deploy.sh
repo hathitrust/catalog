@@ -54,6 +54,7 @@ function re_derive_data() {
   for server in $SERVERS; do
     echo "Deriving data for $server"
     ssh $server -T "$SYMLINKDIR/derived_data/getall.sh"
+    ssh $server -T "chmod g+w $SYMLINKDIR/derived_data/*"
   done
 }
 

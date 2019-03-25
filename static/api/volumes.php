@@ -1,6 +1,5 @@
 <?php
 
-
 set_include_path(get_include_path() . ':../..');
 
 // Bail immediately if there's no query
@@ -12,7 +11,8 @@ if (!isset($_REQUEST['q']) || !preg_match('/\S/', $_REQUEST['q'])) {
 }
 
 require_once 'PEAR.php';
-require_once 'Apache/Solr/Service.php';
+# require_once 'Apache/Solr/Service.php';
+require_once 'sys/SolrConnection.php';
 require_once 'services/Record/RecordUtils.php';
 
 // Set up for autoload
@@ -21,8 +21,7 @@ function sample_autoloader($class) {
 }
 spl_autoload_register('sample_autoloader');
 
-$solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/catalog');
-
+# $solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/catalog');
 
 # Get configArray
 $configArray = parse_ini_file('../../conf/config.ini', true);
@@ -91,6 +90,7 @@ if ($_REQUEST['brevity'] == 'full') {
 
 
 $validField = array(
+  'id' => 'numeric',
   'htid' => 'passthrough',
   'ht_id' => 'passthrough',
   'isbn' => 'isbnlongify',
@@ -100,7 +100,7 @@ $validField = array(
   'umid' => 'numeric',
   'sysid' => 'numeric',
   'recordid' => 'numeric',
-  'recordnumber' => 'numeric'
+  'recordnumber' => 'numeric',
 );
 
 
@@ -127,6 +127,7 @@ class QObj
 #        $fv[1] = implode(':', array_slice($fv, 1));
 #      }
       $field = trimlower($fv[0]);
+
       if ($field == 'id') {
         $this->_id = $fv[1];
       }
@@ -137,18 +138,18 @@ class QObj
         continue;
       }
 
-      // error_log("Working on $field for val " . $fv[1]);
       $val = trimlower($fv[1]);
+
       // 
       // echo "Q is " . $_REQUEST['q'];
       // echo "Looking for $field = $val\n";
 
       if (!isset($validField[$field])) {
-        #echo "Skipping $field\n";
+        // echo "Skipping $field -- not set in validField\n";
         continue;
       }
       $fixedval = $validField[$field]($val); // weird call-variable-value-as-name-of-function
-      
+     
       // Escape the colons
       
       $val = preg_replace('/:/', '\:', $val);
@@ -187,22 +188,22 @@ class QObj
         $ofield = $fv[0]; // original query field name
         $qfield = $fv[1]; // query field as a solr field
         $qval   = $fv[2]; // alredy fixed query value
-        
-        
+
         // Special-case htid because we don't actually store the ht_id
         $is_htidspec = ($qfield == 'ht_id');
         if ($is_htidspec) {
           $qfield = 'ht_json';
         }
 
-        if (isset($doc->$qfield) && ((!is_array($doc->$qfield) || count($doc->$qfield) > 0))) {
+        $docq = $doc[$qfield];
+        if (isset($docq) && ((!is_array($docq) || count($docq) > 0))) {
           if ($is_htidspec) {
             $dvals = array();
-            foreach (json_decode($doc->ht_json, true) as $ht) {
+            foreach (json_decode($doc['ht_json'], true) as $ht) {
               $dvals[] = $ht['htid'];
             }
           } else {
-            $dvals = $doc->$qfield;
+            $dvals = $docq;
           }
           if (!is_array($dvals)) {
             $dvals = array($dvals);
@@ -231,7 +232,7 @@ class QObj
         }
       }
       if ($match && !$nonmatch) {
-        $this->matches[] = $doc->id;
+        $this->matches[] = $doc['id'];
       }
     }    
   }
@@ -245,8 +246,8 @@ class QObj
       $rinfo = array();
       $rinfo['recordURL'] = 'https://catalog.hathitrust.org/Record/' . $docid;
       foreach (array('title', 'isbn', 'issn', 'oclc', 'lccn', 'publishDate') as $index) {
-        if (isset($doc->$index)) {
-          $vals = is_array($doc->$index)? $doc->$index : array($doc->$index);
+        if (isset($doc[$index])) {
+          $vals = is_array($doc[$index])? $doc[$index] : array($doc[$index]);
           $rinfo[$index . 's']  = array();
           foreach ($vals as $val) {
             $rinfo[$index . 's'][] = isset($validField[$index])? $validField[$index]($val) : $val;
@@ -257,7 +258,7 @@ class QObj
         }
       }
       if ($_REQUEST['brevity'] == 'full') {
-        $rinfo['marc-xml'] = $doc->fullrecord;
+        $rinfo['marc-xml'] = $doc['fullrecord'];
       }
       $records[$docid] = $rinfo;
     }
@@ -273,7 +274,7 @@ class QObj
     $items = array();
     foreach ($this->matches as $docid) {
       $doc = $docs[$docid];
-      foreach (json_decode($doc->ht_json, true) as $ht) {
+      foreach (json_decode($doc['ht_json'], true) as $ht) {
         $iinfo = array();
         $htid = $ht['htid'];
         $collection_code = $ht['collection_code'];
@@ -296,6 +297,7 @@ class QObj
 
 
 // Parse out the query string
+
 $origQuery = $_REQUEST['q'];
 $qstrings = explode('|', $_REQUEST['q']);
 $qobjs = array();
@@ -324,14 +326,24 @@ if (!preg_match('/\S/', $q)) {
 
 
 
-// ***** Put this in a try/catch
-$results = $solr->search($q, 0, 200, $commonargs);
+// ***** Put this in a try/catch?
+
+$commonargs['q'] = $q;
+$solr = new SolrConnection();
+
+foreach ($commonargs as $key => $value) {
+  $solr->add([[$key, $value]]);
+ }
+
+
+#$results = $solr->search($q, 0, 200, $commonargs);
+$results = $solr->send();
 
 
 # Index the documents;
 $docs = array();
-foreach ($results->response->docs as $doc) {
-  $docs[$doc->id] = $doc;
+foreach ($results['response']['docs'] as $doc) {
+  $docs[$doc['id']] = $doc;
 }
 
 

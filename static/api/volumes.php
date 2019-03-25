@@ -195,7 +195,7 @@ class QObj
           $qfield = 'ht_json';
         }
 
-        $docq = $doc[$qfield];
+        $docq = isset($doc[$qfield]) ? $doc[$qfield] : null;
         if (isset($docq) && ((!is_array($docq) || count($docq) > 0))) {
           if ($is_htidspec) {
             $dvals = array();

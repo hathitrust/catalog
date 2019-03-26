@@ -45,7 +45,8 @@ class SolrConnection
   }
 
 
-  public function send($args = []) {
+
+  public function _send($args = []) {
     $this->add($args);
     $resp = $this->request->send();
 
@@ -54,11 +55,23 @@ class SolrConnection
       print_r($resp);
     }
     else {
-      $rv =  json_decode($resp->getBody(), true);
+      $body = $resp->getBody();
       $this->setup_basic_request_object();
-      return $rv;
+      return $body;
     }
   }
+
+
+  public function send($args = []) {
+    $raw = $this->_send($args);
+    return json_decode($raw, true);
+  }
+
+  public function send_for_obj($args = []) {
+    $raw = $this->_send($args);
+    return json_decode($raw, false);
+  }
+
 
 
   public static function solr_url() {

@@ -1,7 +1,8 @@
 <?php
 
 require_once 'PEAR.php';
-require_once 'Apache/Solr/Service.php';
+#require_once 'Apache/Solr/Service.php';
+require_once 'sys/SolrConnection.php';
 
 $path = explode('/', __FILE__);
 array_pop($path);
@@ -26,7 +27,7 @@ class MergedItemSet
   
   function __construct($qst = array(), $options = array()) {
     
-    $this->solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/catalog');
+#    $this->solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/catalog');
     $this->options = array_merge($this->options, $options);
     
     $qst = is_array($qst)? $qst : array($qst);
@@ -47,7 +48,20 @@ class MergedItemSet
   }
   
   function fetch() {
-    $results = $this->solr->search($this->solrQuery(), 0, 200, $this->commonargs);
+    $solr = new SolrConnection();
+
+    $args = $this->commonargs;
+    $args['q'] = $this->solrQuery();
+
+    foreach ($args as $key => $value) {
+      $solr->add([[$key, $value]]);
+     }
+
+     
+    # $results = $olr->search($this->solrQuery(), 0, 200, $this->commonargs);
+    $results = $solr->send_for_obj();
+    
+
 
     // Index the docs
     foreach ($results->response->docs as $doc) {

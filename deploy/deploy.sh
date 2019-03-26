@@ -105,6 +105,7 @@ function deploy() {
   chmod g+s $DEPLOYDIR/derived_data
   chmod -R g+rw $DEPLOYDIR/derived_data/*
   $DEPLOYDIR/derived_data/getall.sh   $DEPLOYDIR/derived_data
+  chmod -R g+rw $DEPLOYDIR/derived_data/*
   mkdir $DEPLOYDIR/interface/compile
   chmod 777 $DEPLOYDIR/interface/compile
   rm -f $SYMLINKDIR

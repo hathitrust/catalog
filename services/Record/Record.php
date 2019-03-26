@@ -64,7 +64,9 @@ class Record extends Action
         if (isset($_REQUEST['id'])) {
           $this->id = sprintf('%09d', $_GET['id']);
         } elseif (isset($_REQUEST['mergesearch'])) {
+
           $m = new MergedItemSet(explode('|', $_REQUEST['mergesearch']));
+
           $this->mergedItemData = $m->data();
           $this->id = $m->firstRecordID();
           $itemdata = $this->mergedItemData[1]['items'];
@@ -105,9 +107,18 @@ class Record extends Action
         }
 
         // Retrieve Full Marc Record
-        if (!($record = $this->db->getRecord($this->id))) {
+	try {
+          if (!($record = $this->db->getRecord($this->id))) {
             PEAR::raiseError(new PEAR_Error('Record Does Not Exist'));
-        }
+          }
+	} catch (Exception $e) {
+	  if (isset($_REQUEST['mergesearch'])) {
+    	    header('Location: https://www.hathitrust.org/temporary-outage');
+	    exit();
+	  }
+	}
+
+
         $this->record = $record;
  
         

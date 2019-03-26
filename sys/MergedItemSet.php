@@ -59,7 +59,14 @@ class MergedItemSet
 
      
     # $results = $olr->search($this->solrQuery(), 0, 200, $this->commonargs);
-    $results = $solr->send_for_obj();
+
+    try {
+      $results = $solr->send_for_obj();
+    } catch (Exception $e) {
+      header('Location: https://www.hathitrust.org/temporary-outage');
+      die();
+    }
+      
     
 
 

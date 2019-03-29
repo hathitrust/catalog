@@ -17,8 +17,7 @@ require_once 'services/Record/RecordUtils.php';
 
 // Set up for autoload
 function sample_autoloader($class) {
-  require str_replace('_', '/', $class) . '.php';
-}
+  require str_replace('_', '/', $class) . '.php';}
 spl_autoload_register('sample_autoloader');
 
 # $solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/catalog');
@@ -207,7 +206,7 @@ class QObj
           }
           if (!is_array($dvals)) {
             $dvals = array($dvals);
-          }   
+          }
           
           // Normalize
           foreach ($dvals as $i => $dval) {
@@ -220,8 +219,8 @@ class QObj
             if ($d == $qval) {
               $gotone = true;
               $match = true;
-              //echo "Matched '$d' and '$qval' for '$qfield' against $this->string\n";
-              continue 2;
+//              echo "Matched '$d' and '$qval' for '$qfield' against $this->string\n";
+              continue;
             } 
           }
           // We wouldn't be here if there weren't values to match.
@@ -231,7 +230,8 @@ class QObj
           }
         }
       }
-      if ($match && !$nonmatch) {
+      // WTH is going on here???
+      if ($match) { // && !$nonmatch) {
         $this->matches[] = $doc['id'];
       }
     }    
@@ -339,7 +339,6 @@ foreach ($commonargs as $key => $value) {
 #$results = $solr->search($q, 0, 200, $commonargs);
 $results = $solr->send();
 
-
 # Index the documents;
 $docs = array();
 foreach ($results['response']['docs'] as $doc) {
@@ -360,7 +359,8 @@ foreach ($qobjs as $qobj) {
   // Get the record
   $records = $qobj->recordsStructure($docs);
   $items   = $qobj->itemsStructure($docs);
-  if (count($items)) {
+
+if (count($items)) {
     usort($items, 'enumsort');
   }
   $allmatches[$id]['records'] = $records;

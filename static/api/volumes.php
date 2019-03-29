@@ -283,7 +283,10 @@ class QObj
         $iinfo['fromRecord'] = $docid;
         $iinfo['htid'] = $htid;
         $iinfo['itemURL'] = "https://hdl.handle.net/2027/" . $htid;
-        $iinfo['rightsCode'] = isset($ht['rights']) ? $ht['rights'] : 'ic';
+
+        $rc = isset($ht['rights']) ? $ht['rights'] : 'ic';
+	$rc = is_array($rc) ? $rc[0] : $rc;
+        $iinfo['rightsCode'] = $rc;
         $iinfo['lastUpdate'] = $ht['ingest'];
         $iinfo['enumcron'] = (isset($ht['enumcron']) && preg_match('/\S/', $ht['enumcron']))? $ht['enumcron'] : false;
         $iinfo['usRightsString'] = $ru->is_fullview($iinfo['rightsCode'], true) ? "Full view" : "Limited (search-only)";

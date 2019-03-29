@@ -6,17 +6,17 @@
 
 require_once 'PEAR.php';
 require_once 'Apache/Solr/Service.php';
-
+require_once 'sys/SolrConnection.php';
 
 class HTID
 {
   
   function launch() {
-
-    $solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/catalog');
+    $solr = new SolrConnection();
     $htid = $_REQUEST['htid'];
     $args = array('fl' => 'id');
-    $results = $solr->search("ht_id:\"$htid\"", 0, 1, $args);
+    $solr->add([['q', "ht_id:$htid"]]);
+    $results = $solr->send_for_obj();
 
 
     if ($results->response->numFound == 0) {

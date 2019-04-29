@@ -265,8 +265,15 @@ class SearchStructure
             $end = $hash[$endkey];
           }
           unset($hash[$startkey], $hash[$endkey]);
-          
-          $this->addFilter($index, "[\"$start\" TO \"$end\"]");
+	  if (! $start == '*') {
+	    $start = '"' + $start + '"';
+          }
+
+          if (! $end == '*') {
+	    $end = '"' + $end + '"';
+	  }
+	    
+          $this->addFilter($index, "[$start TO $end]");
         }
       }
  

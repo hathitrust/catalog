@@ -77,6 +77,7 @@ class Home extends Action {
           // If we're using dismax or edismax, it's not an advanced search
           if (isset($_REQUEST['adv'])) {
             $interface->setPageTitle('Catalog Advanced Search Results');
+            $interface->assign('adv', preg_replace('/\/Home\?/', '/Advanced?', $_SERVER['REQUEST_URI']));
           } else {
             $interface->setPageTitle('Catalog Search Results');
           }
@@ -202,8 +203,19 @@ class Home extends Action {
         //******************************************************
 
         if (count($result['record']) == 0) {
+            $interface->assign('ss', $this->ss);
+
+            if ($this->ss->ftonly) {
+              $this->ss->setFTOnly(false);
+              $allitems_results = $this->newprocessSearch(1, 0);
+              $interface->assign('allitems_count', $allitems_results['RecordCount']);
+              $interface->assign('allitems_url', $this->ss->asFullURL());
+              $this->ss->setFTOnly(true);
+            }
+
             $interface->setTemplate('list-none.tpl');
             $interface->display('layout.tpl');
+
             return;
         }
 
@@ -230,11 +242,11 @@ class Home extends Action {
         $interface->setTemplate('list.tpl');
         $interface->assign('atom', 1);
         $interface->assign('ss', $this->ss);
-        
+
         //*****************************************************
         // Record Count / URLs for this tab and other tab (Project UNICORN)
         //*****************************************************
-        
+
         if ($this->ss->ftonly) {
           $interface->assign('fullview_count', $result['RecordCount']);
           $interface->assign('fullview_url', $this->ss->asFullURL());
@@ -249,7 +261,7 @@ class Home extends Action {
         } else {
           $interface->assign('allitems_count', $result['RecordCount']);
           $interface->assign('allitems_url', $this->ss->asFullURL());
-          
+
           $this->ss->setFTOnly(true);
           $fullview_results = $this->newprocessSearch(1, 0);
           $interface->assign('fullview_count', $fullview_results['RecordCount']);
@@ -257,10 +269,10 @@ class Home extends Action {
           $this->ss->setFTOnly(false);
 
         }
-        
-        
-        
-        
+
+
+
+
 
         //******************************************************
         //    DEAL WITH PAGINATION
@@ -290,16 +302,17 @@ class Home extends Action {
                          'fileName' => $link,
                          'delta' => 4,
                          'perPage' => $limit,
-                         'nextImg' => 'Next <i aria-hidden="true" class="icomoon icomoon-arrow-right"></i>',
-                         'prevImg' => '<i aria-hidden="true" class="icomoon icomoon-arrow-left"></i> Previous',
+                         'nextImg' => 'Next Page <i aria-hidden="true" class="icomoon icomoon-arrow-right"></i>',
+                         'prevImg' => '<i aria-hidden="true" class="icomoon icomoon-arrow-left"></i> Previous Page',
                          'separator' => '',
                          'spacesBeforeSeparator' => 0,
                          'spacesAfterSeparator' => 0,
                          'append' => false,
                          'clearIfVoid' => true,
                          'urlVar' => 'page',
-                         'curPageSpanPre' => '<span>',
-                         'curPageSpanPost' => '</span>');
+                         'curPageSpanPre' => '<span><strong><span class="offscreen">Results page (current) </span>',
+                         'curPageSpanPost' => '</strong></span>',
+                         'altPage' => '<span class="offscreen">Results page</span> ');
 
 
         $pager =& Pager::factory($options);
@@ -467,6 +480,10 @@ class Home extends Action {
         $interface->assign('facetConfig', $this->ss->facetConfig);
         $interface->assign('indexes', $this->ss->facetFields());
         // $interface->display('Search/facet_snippet.tpl');
+    }
+
+    function getService() {
+      return $this->ss;
     }
 
 

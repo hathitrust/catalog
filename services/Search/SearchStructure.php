@@ -641,6 +641,21 @@ class SearchStructure
       return $url;
     }
 
+    function asWildcardURL($module = 'Home', $extra = array(), $includePageComponents=true) {
+      $searchURLComponents = array();
+      $searchURLComponents[] = array('type[]', 'all');
+      $searchURLComponents[] = array('lookfor[]', '*');
+
+      return '/Search/' . $module . '?' . implode('&', array_map(array($this, "asURLComponent"), 
+                                    array_merge($searchURLComponents,
+                                                $this->filterURLComponents(),
+                                                $this->sortURLComponents(),
+                                                $this->tagURLComponents(),
+                                                ($includePageComponents ? $this->pageURLComponents() : array()),
+                                                $this->actionURLComponents(),
+                                                $extra)));   
+    }
+
     function asRecordURL($sysid, $extra=array()) {
       
       $url =  '/Record/' . $sysid;
@@ -745,10 +760,10 @@ class SearchStructure
         
       }
       foreach ($this->search as $fkb) { # field, keywords, bool
-        $index = $fkb[0] == 'all'? 'all fields' : $fkb[0];
+        $index = $fkb[0] == 'all'? 'All Fields' : $fkb[0];
         if (isset($this->indexDisplayName[$index])) $index =  $this->indexDisplayName[$index];
         
-        $l = $index . ':' . $fkb[1];
+        $l = $index . ': ' . $fkb[1];
         
         if (isset($fkb[2])) { # the boolean operator
           $l .= ' ' . $fkb[2];

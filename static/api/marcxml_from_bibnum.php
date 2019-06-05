@@ -10,12 +10,12 @@ function sample_autoloader($class) {
 }
 spl_autoload_register('sample_autoloader');
 
-$solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/catalog');
-
+$solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/solr/catalog');
 $args = array();
 $args['fl'] = 'fullrecord';
 
 $id = $_REQUEST['id'];
+
 $results = $solr->search("id:$id", 0, 1, $args);
 
 if ($results->response->numFound == 0) {

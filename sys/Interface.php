@@ -65,6 +65,11 @@ class UInterface extends Smarty
         $this->assign('ht_url', $configArray['Site']['ht_url']);
         $this->assign('home_url', $configArray['Site']['home_url']);
 
+        if ( array_key_exists('HTstatus', $_COOKIE) ) {
+            $status = $_COOKIE['HTstatus'];
+            $this->assign('ht_status', json_decode($_COOKIE['HTstatus'], TRUE));
+        }
+
         if (isset($configArray['LDAP'])) {
             $this->assign('authMethod', 'LDAP');
         }

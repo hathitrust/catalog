@@ -34,8 +34,8 @@ class Advanced extends Home {
         
         // Change the facet dir if we have it
         if (isset($configArray['Site']['facetDir'])) {
-	  $this->facetDir = $configArray['Site']['facetDir'];
-	}
+	       $this->facetDir = $configArray['Site']['facetDir'];
+	    }
         
         $this->setup();
         
@@ -58,6 +58,56 @@ class Advanced extends Home {
         $interface->assign('type2', 'author');
         $interface->assign('type3', 'title');
         $interface->assign('type4', 'subject');
+
+        $interface->assign('fqor_language', array());
+        $interface->assign('fqor_format', array());
+
+        $interface->assign('ss', $this->getService());
+
+        // Fill values when present
+        $ss = $this->getService();
+        if (count($ss->search) >= 1) {
+            foreach($ss->search as $index => $value) {
+                $suffix = $index + 1;
+                $interface->assign("type{$suffix}", $value[0]);
+                $interface->assign("lookfor{$suffix}", $value[1]);
+                if (isset($value[2]) && $value[2]) {
+                    $interface->assign("bool{$suffix}", $value[2]);
+                }
+            }
+        }
+        $interface->assign('ft', $ss->ftonly);
+        
+        $filters = $ss->activeInbandFilters();
+        foreach($filters as $filter) {
+            $key = $filter[0];
+            $value = $filter[1];
+            // print "<pre>"; print_r($value); print "</pre>";
+            if ( $key == 'publishDateTrie' ) {
+                if (preg_match('/^\[\s*\"?(.*?)\"?\s+TO\s+\"?(.*?)\"?\s*\].*$/', $value, $matcher)) {
+                    $start = $matcher[1];
+                    $end   = $matcher[2];
+                    if ($start == '*') {
+                        $interface->assign('endDate', $end);
+                        $interface->assign('dateRangeInput', 'before');
+                    }
+                    if ($end == '*') {
+                        $interface->assign('startDate', $start);
+                        $interface->assign('dateRangeInput', 'after');
+                    }
+                    if ($start == $end) {
+                        $interface->assign('date', $start);
+                        $interface->assign('dateRangeInput', 'in');
+                    } else if ( $start != '*' && $end != '*' ) {
+                        $interface->assign('startDate', $start);
+                        $interface->assign('endDate', $end);
+                        $interface->assign('dateRangeInput', 'between');
+                    }
+                }
+            } else {
+                $interface->assign("fqor_{$key}", $value);
+            }
+        }
         
         $languages = array(); 
         $langhandle = fopen($this->facetDir . '/language.txt', 'r');

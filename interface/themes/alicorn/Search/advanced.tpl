@@ -42,7 +42,7 @@
             <div class="advanced-search-filter-container">
               <h4 class="advanced-filter-label-text">Date of Publication</h4>
               <div class="advanced-filter-inner-container">
-                <div class="alert alert-error alert-block" role="alert" aria-atomic="true"></div>
+                <div class="alert alert-error alert-block" role="alert" aria-atomic="true" aria-live="assertive"></div>
                 <div class="date-range-input">
                   <fieldset class="no-margin choice-container">
                     <legend class="offscreen">Select the type of date range to search on</legend>
@@ -82,12 +82,14 @@
                   <fieldset class="multiselect-options">
                     <ul class="multiselect-options-list">
                       {foreach from=$languageList item="language" name=options}
+                        {if $language}
                       <li class="multiselect-options-list-item">
                         <input type="checkbox" name="fqor-language[]" id="language-{$smarty.foreach.options.index}" value="{$language}" {if in_array($language, $fqor_language)}checked="checked" {/if}/>
                         <label for="language-{$smarty.foreach.options.index}">
                           <span class="filter-name">{$language|escape:"html"}</span>
                         </label>
                       </li>
+                        {/if}
                       {/foreach}
                     </ul>
                   </fieldset>

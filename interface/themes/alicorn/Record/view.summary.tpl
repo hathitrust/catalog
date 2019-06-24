@@ -149,12 +149,23 @@
     <td>
         {foreach from=$marcField item=field name=loop}
           {assign var=subject value=""}
+          {assign var=ancestors value=""}
           {foreach from=$field->getSubfields() item=subfield key=subcode  name=subloop}
            {if $subcode >= 'a'}
             {if $subject} &gt; {/if}
             {assign var=subfield value=$subfield->getData()}
             {assign var=subject value="$subject $subfield"}
-            <a href="{$url}/Search/Home?lookfor=%22{$subject|escape}%22&amp;type=subject&amp;inst={$inst}">{$subfield}</a>
+            <a href="{$url}/Search/Home?lookfor=%22{$subject|escape}%22&amp;type=subject&amp;inst={$inst}">
+              {if $ancestors != ""}
+              <span class="offscreen">{$ancestors} / </span>
+              {/if}
+              {$subfield}
+            </a>
+           {/if}
+           {if $ancestors == ""}
+             {assign var=ancestors value="$subject"}
+           {else}
+             {assign var=ancestors value="$ancestors / $subfield"}
            {/if}
           {/foreach}
           <br>

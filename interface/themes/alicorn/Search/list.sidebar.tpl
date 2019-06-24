@@ -49,10 +49,10 @@
     <li>
       <ul class="filter-list" role="radiogroup" aria-label="Item Viewability">
         <li class="filter-group filter-group-checkbox">
-          <button role="radio" aria-checked="false" class="checkbox-label" {if !$is_fullview}tabindex="0"{/if} data-href="{$allitems_url}" aria-labelledby="view-all">
-            <span id="view-all" class="offscreen">View</span>
+          <button role="radio" aria-checked="{if !$is_fullview}true{else}false{/if}" class="checkbox-label" {if !$is_fullview}tabindex="0"{/if} data-href="{$allitems_url}" aria-labelledby="view-all">
+            {* <span id="view-all" class="offscreen">View</span> *}
             <div class="checkbox">{if !$is_fullview}<span class="filter-checkbox-checked">{/if}<svg class="icon"><use xlink:href="{if $is_fullview}#radio-empty{else}#radio-checked{/if}"></use></svg>{if !$is_fullview}</span>{/if}</div>
-            <span class="flex-space-between flex-center">
+            <span class="flex-space-between flex-center" id="view-all">
               <span class="filter-name">All Items </span>
               {if $allitems_count gt 0}
               <span class="filter-count">{$allitems_count|number_format:null:".":","}</span>
@@ -61,10 +61,10 @@
           </button>
         </li>
         <li class="filter-group filter-group-checkbox">
-          <button role="radio" aria-checked="true" class="checkbox-label" {if $is_fullview}tabindex="0"{/if} data-href="{$fullview_url}" aria-labelledby="view-full-view">
-            <span class="offscreen" id="view-full-view">View</span>
+          <button role="radio" aria-checked="{if $is_fullview}true{else}false{/if}" class="checkbox-label" {if $is_fullview}tabindex="0"{/if} data-href="{$fullview_url}" aria-labelledby="view-full-view">
+            {* <span class="offscreen" id="view-full-view">View</span> *}
             <div class="checkbox">{if $is_fullview}<span class="filter-checkbox-checked">{/if}<svg version="1.1" class="icon"><use xlink:href="{if $is_fullview}#radio-checked{else}#radio-empty{/if}"></use></svg>{if $is_fullview}</span>{/if}</div>
-            <span class="flex-space-between flex-center">
+            <span class="flex-space-between flex-center" id="view-full-view">
               <span class="filter-name">Full View </span>
               {if $fullview_count gt 0}
               <span class="filter-count">{$fullview_count|number_format:null:".":","}</span>

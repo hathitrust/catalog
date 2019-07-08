@@ -376,7 +376,7 @@ if (count($items)) {
 
 if (isset($_REQUEST['single']) && $_REQUEST['single']) {
   foreach ($allmatches as $key => $val) {
-#    $allmatches = $val;
+    $allmatches = $val;
   }
 }
 

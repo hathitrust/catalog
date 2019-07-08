@@ -81,6 +81,7 @@ $collectionsmap = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht
 
 $commonargs = array(
   'fl' => 'score,id,ht_json,title,year,publishDate,oclc,lccn,isbn,issn',
+  'rows' => 200
 );
 
 if ($_REQUEST['brevity'] == 'full') {
@@ -372,9 +373,10 @@ if (count($items)) {
 
 // $allmatches now has the return structure
 
+
 if (isset($_REQUEST['single']) && $_REQUEST['single']) {
   foreach ($allmatches as $key => $val) {
-    $allmatches = $val;
+#    $allmatches = $val;
   }
 }
 

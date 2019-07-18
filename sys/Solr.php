@@ -863,7 +863,7 @@ class Solr
   public function build_and_or_onephrase($lookfor = null) {
     $values = array();
 
-    $illegal = array('!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
+    $illegal = array('.', '{', '}', '/', '!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
     $lookfor = trim(str_replace($illegal, '', $lookfor));
 
     // Replace fancy quotes

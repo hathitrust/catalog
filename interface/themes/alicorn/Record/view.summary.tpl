@@ -291,14 +291,14 @@
 <!-- title array -->
             {foreach from=$record.oclc item=title loop=1 name=loop}
               {if $smarty.foreach.loop.iteration lt 3}
-              <a href="http://www.worldcat.org/oclc/{$title}" onClick="pageTracker._trackEvent('outLinks', 'click', 'Find in a Library');">Find in a library</a><br>
+              <a href="http://www.worldcat.org/oclc/{$title}" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Find in a Library" data-tracking-label="{$title}">Find in a library</a><br>
               {/if}
             {/foreach}
           {else}
 <!-- title non-array -->
             {if $record.oclc}
-             <a href="http://www.worldcat.org/oclc/{$record.oclc}" onClick="pageTracker._trackEvent('outLinks', 'click', 'Find in a Library');">Find in a library</a>
-            {else} Find in a library service is not available from this catalog. <a href="http://www.worldcat.org/" onClick="pageTracker._trackEvent('outLinks', 'click', 'Search Worldcat');" target="_blank">Search Worldcat</a>
+             <a href="http://www.worldcat.org/oclc/{$record.oclc}" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Find in a Library" data-tracking-label="{$record.oclc}">Find in a library</a>
+            {else} Find in a library service is not available from this catalog. <a href="http://www.worldcat.org/" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Search Worldcat" data-tracking-label="worldcat" target="_blank">Search Worldcat</a>
             {/if}
           {/if}
     </td>

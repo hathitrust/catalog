@@ -51,7 +51,7 @@
             <h3 class="offscreen">Tools</h3>
             <ul>
               <li><a href="/Record/{$id|escape:"url"}/Cite" class="cite"><i class="icomoon icomoon-bookmark" aria-hidden="true"></i> {translate text="Cite this"}</a></li>
-              <li><a class="endnotelink" href="/Search/SearchExport?handpicked={$id|escape:"url"}&amp;method=ris" onClick="pageTracker._trackEvent('recordActions', 'click', 'Endnote');"><i class="icomoon icomoon-upload" aria-hidden="true"></i> Export citation file</a></li>
+              <li><a class="endnotelink" href="/Search/SearchExport?handpicked={$id|escape:"url"}&amp;method=ris" data-toggle="tracking" data-tracking-category="recordActions" data-tracking-action="Catalog Export" data-tracking-label="Endnote"><i class="icomoon icomoon-upload" aria-hidden="true"></i> Export citation file</a></li>
             </ul>
           </div>
 

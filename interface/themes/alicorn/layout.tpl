@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="{$userLang}" xml:lang="{$userLang}" data-analytics-code="UA-954893-23" data-analytics-enabled="true" data-use="search">
+<html lang="{$userLang}" xml:lang="{$userLang}" data-analytics-code="UA-954893-23" data-analytics-enabled="true" data-use="search" data-app="catalog">
 <!-- Machine is {$machine} -->
 <head>
   <title>{$pageTitle|truncate:64:"..."} | HathiTrust Digital Library</title>
   <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">
 
-  <link rel="stylesheet" type="text/css" href="/common/alicorn/css/main.css" />
+  {* <link rel="stylesheet" type="text/css" href="/common/alicorn/css/main.css" /> *}
+  {css_link href="/common/alicorn/css/main.201910.css"}
 
   {if $id}
   <link rel="canonical" href="/Record/{$id|escape:"url"}">
@@ -18,8 +19,11 @@
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <meta name="title" content="{$pageTitle|escape}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <script type="text/javascript" src="/common/alicorn/js/utils.js"></script>
+  {* <script type="text/javascript" src="/common/alicorn/js/utils.js"></script> *}
+  {js_link href="/common/alicorn/js/utils.201910.js"}
+
 
 </head>
 <body>

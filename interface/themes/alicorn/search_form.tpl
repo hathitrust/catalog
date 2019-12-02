@@ -1,11 +1,11 @@
-<div class="container container-medium flex-container" style="flex-direction: row; margin-top: 1.75rem; width: 100%; padding: 1rem; max-width: 62rem">
+<div class="container container-medium flex-container container-header">
   <div class="logo">
     <a href="https://www.hathitrust.org">
       <span class="offscreen">HathiTrust Digital Library</span>
     </a>
   </div>
-  <div id="search-modal-content" style="flex-grow: 1">
-    <form id="ht-search-form" method="GET" action="{$unicorn_root}/cgi/ls/one">
+  <div id="search-modal-content" class="search-modal-content">
+    <form id="ht-search-form" class="ht-search-form" method="GET" action="{$unicorn_root}/cgi/ls/one">
       <div style="display: flex; flex-direction: row">
         <div style="flex-grow: 1">
           <div style="display: flex">
@@ -39,25 +39,26 @@
               <label for="global-search-ft">Full view only</label>
             </div>
           </div>
-          <div class="global-search-links" style="padding-top: 1rem; margin-top: -1rem">
-            <ul class="search-links">
-              <li class="search-advanced-link">
-                <a href="{$unicorn_root}/cgi/ls?a=page;page=advanced">Advanced full-text search</a>
-              </li>
-              <li class="search-catalog-link">
-                <a href="{$url}/Search/Advanced">Advanced catalog search</a>
-              </li>
-              <li>
-                <a href="https://www.hathitrust.org/help_digital_library#SearchTips">Search tips</a>
-              </li>
-            </ul>
-          </div>
         </div>
         <div style="flex-grow: 0">
           <div class="control">
             <button class="btn btn-primary" id="action-search-hathitrust"><i class="icomoon icomoon-search" aria-hidden="true"></i> Search HathiTrust</button>
           </div>
         </div>
+      </div>
+
+      <div class="global-search-links" style="padding-top: 1rem; margin-top: -1rem">
+        <ul class="search-links">
+          <li class="search-advanced-link">
+            <a href="{$unicorn_root}/cgi/ls?a=page;page=advanced">Advanced full-text search</a>
+          </li>
+          <li class="search-catalog-link">
+            <a href="{$url}/Search/Advanced">Advanced catalog search</a>
+          </li>
+          <li>
+            <a href="https://www.hathitrust.org/help_digital_library#SearchTips">Search tips</a>
+          </li>
+        </ul>
       </div>
 
       <!-- HIDDEN FACETS -->

@@ -82,7 +82,7 @@ if (isset($configArray[$hn], $configArray[$hn]['extraFilters'])) {
 # THEN redirect to the mobile site
 
 $sname = $_SERVER["HTTP_HOST"];
-if ( (strlen($_SERVER['REQUEST_URI']) <=1) &&
+if ( 0 && (strlen($_SERVER['REQUEST_URI']) <=1) &&
      (preg_match('/\.hathitrust\.org$/', $sname)) &&
      (isset($configArray['Site']['mobile_machine']))  &&
      ($sname != $configArray['Site']['mobile_machine']) &&

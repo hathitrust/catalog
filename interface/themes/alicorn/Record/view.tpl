@@ -97,14 +97,30 @@
 
             </tbody>
           </table>
+
         </article>
+
+<div style="text-align: center">
+  <a class="button btn" href="{$id|escape:"url"}.marc">View MARC data</a>
+</div>
+
+
+
       </section>
+      
+
+	
+
+
+
+
 
       {if is_array($similarRecords) or $lastsearch}
       <div class="sidebar-container sidebar-container--right" id="sidebar" tabindex="0">
         {if $lastsearch}
         <div class="back-to-results">
           <p><a href="{$lastsearch|regex_replace:"/&/":"&amp;"}"><i class="icomoon icomoon-enter" aria-hidden="true"></i> Back to Catalog Search Results</a></p>
+
         </div>
         {/if}
 
@@ -135,7 +151,9 @@
       </div>
       {/if}
 
+
     </div>
+    
 
   </main>
 

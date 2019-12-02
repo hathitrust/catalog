@@ -101,7 +101,7 @@
         </article>
 
 <div style="text-align: center">
-  <a class="button btn" href="{$id|escape:"url"}.marc">View MARC data</a>
+  <a class="button btn" href="{$id|escape:"url"}.marc">View HathiTrust MARC record</a>
 </div>
 
 

@@ -1,5 +1,13 @@
 {capture name=reset_url}{$fullPath_esc|remove_url_param:"lookfor[^=]+"|remove_url_param:"type[^=]+"|remove_url_param:"searchtype[^=]+"|regex_replace:"/\/Home&amp;/":"/Home?"}{/capture}
 <div class="sidebar-container" id="sidebar" tabindex="0">
+  <button class="for-mobile sidebar-toggle-button filter-group-toggle-show-button" aria-expanded="false">
+    <span class="flex-space-between flex-center">
+      <h3 class="filter-group-heading">Options/Filters<span class="total-filter-count"></span></h3>
+      {* <svg xmlns="http://www.w3.org/2000/svg" class="icon"><use xlink:href="#panel-collapsed"></use></svg> *}
+      <i class="icomoon icomoon-sidebar-toggle" aria-hidden="true"></i>
+    </span>
+  </button>
+
   {if $currentFacets or ( $searchterms and ($lookfor ne '*') ) }
   <h2 class="active-filters-heading">Current Filters</h2>
   <ul class="active-filters-list">

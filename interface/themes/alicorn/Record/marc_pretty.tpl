@@ -1,4 +1,4 @@
-<html>
+<html data-analytics-enabled="true">
 <head>
   <title>MARC view: {$title}</title>
   {literal}
@@ -36,6 +36,7 @@
       }
   </style>
   {/literal}
+  {js_link href="/common/alicorn/js/utils.201910.js"}
 </head>
 <body>
   <h1>{$title}</h1>

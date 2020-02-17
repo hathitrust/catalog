@@ -1107,9 +1107,9 @@ class Solr
       return null;
     }
 
-    $query = '(title:(' . str_replace(array('[', ']', '!', '&', ':', ';', '-', '/'), '', $record['title'][0]) . ')^75';
+    $query = '(title:(' . str_replace(array('[', ']', '!', '&', ':', ';', '-', '/', '"'), '', $record['title'][0]) . ')^75';
     if (isset($record['shorttitle'])) {
-      $query .= ' OR title:(' . str_replace(array('[', ']', '!', '&', ':', ';', '-', '/'), '', $record['title'][0]) . ')^100';
+      $query .= ' OR title:(' . str_replace(array('[', ']', '!', '&', ':', ';', '-', '/', '"'), '', $record['title'][0]) . ')^100';
     }
 
     if (isset($record['fulltopic'])) {

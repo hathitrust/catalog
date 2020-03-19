@@ -19,7 +19,7 @@ class HTStatus {
        $c = json_decode($_COOKIE['HTstatus'], true);
        $this->institution_code = $c['institution_code'];
        $this->auth_type = $c['auth_type'];
-       $this->display_name = $c['display_name'];
+       $this->display_name = $c['displayName'];
        $this->affiliation = $c['affiliation'];
        $this->insitution_name = $c['institution_name'];
        $this->u = $c['u'];

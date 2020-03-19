@@ -81,11 +81,22 @@
                     <td>
                      {if $record_is_tombstone}
                        This item is no longer available (<a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
+
+
+
+
+
+
+
                       {elseif $ld.is_fullview}
-                        <a href="//hdl.handle.net/2027/{$ld.handle}" data-hdl="{$ld.handle}"  class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Full view<span class="IndItem">{$ld.enumchron}</span></a>
-                       {else}
-                         <a href="//hdl.handle.net/2027/{$ld.handle}" data-hdl="{$ld.handle}" class="rights-{$ld.rights_code} searchonly"><i class="icomoon icomoon-locked" aria-hidden="true"></i> Limited (search only)<span class="IndItem">{$ld.enumchron}</span></a>
-                       {/if}
+
+            <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Full view</a></li>
+	  {elseif $ld.is_emergency_access}
+	              <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} etas"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Emergency Access</a></li>
+          {else}
+            <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} searchonly"><i class="icomoon icomoon-locked" aria-hidden="true"></i> Limited (search only)</a></li>
+          {/if}
+
                      </td>
                      <td>
                        {$ld.original_from}

@@ -26,7 +26,7 @@
 
             <div class="cover">
               {if $ld.handle}
-                <img aria-hidden="true" alt="" src="https://babel.hathitrust.org/cgi/imgsrv/cover?id={$ld.handle}" />
+                <img aria-hidden="true" alt="" src="https://beta-3.babel.hathitrust.org/cgi/imgsrv/cover?id={$ld.handle}" />
               {else}
               <img class="bookCover" aria-hidden="true" alt="" src="https://catalog.hathitrust.org/images/nocover-thumbnail.png" />
               {/if}
@@ -82,19 +82,13 @@
                      {if $record_is_tombstone}
                        This item is no longer available (<a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
 
-
-
-
-
-
-
                       {elseif $ld.is_fullview}
 
-            <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Full view</a></li>
+            <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Full view <span class="IndItem">{$ld.enumchron}</span></a></li>
 	  {elseif $ld.is_emergency_access}
-	              <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} etas"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Emergency Access Full view</a></li>
+	              <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} etas"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Temporary access <span class="IndItem">{$ld.enumchron}</span></a></li>
           {else}
-            <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} searchonly"><i class="icomoon icomoon-locked" aria-hidden="true"></i> Limited (search only)</a></li>
+            <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} searchonly"><i class="icomoon icomoon-locked" aria-hidden="true"></i> Limited (search only) <span class="IndItem">{$ld.enumchron}</span></a></li>
           {/if}
 
                      </td>

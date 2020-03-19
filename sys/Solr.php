@@ -424,10 +424,10 @@ class Solr
     $rv = array();
     $filters = $ss->allActiveFilters();
 
-    if (count($filters) == 0 && count($ss->tags()) == 0) {
-      return array();
+    $tagfilter = $this->tagFilter($ss);
+    if (isset($tagfilter)) {
+      $rv[] = $tagfilter;
     }
-    // Otherwise...
 
 
     foreach ($filters as $indexValue) {
@@ -446,32 +446,56 @@ class Solr
         $val = $this->quoteFilterValue($val);
       }
 
-      // Hack into place a change of the full-text only facet
-      // for the temporary newly_open rightscode value
-      // but only on or after the date from config.ini
-
-      $todays_date = intval(date("YmdH"));
-      $copyright_active_date = intval($configArray['IntoCopyright']['date']);
-
-      if ($todays_date >= $copyright_active_date and $index == "ht_availability" and $oval == 'Full text') {
-        $ft = $this->quoteFilterValue('Full text');
-        $newly_open = $this->quoteFilterValue('newly_open');
-        $rv[] = "(ht_availability:$ft OR ht_rightscode:$newly_open)";
-
-      }
-      else { // otherwise, just do it like normal
+      if ($index == "ht_availability" and $oval == 'Full text') {
+        $ft = $this->fulltext_filter_base();
+	$ft = $this->fulltext_filter_add_jan1_rollover($ft);
+	$ft = $this->fulltext_filter_add_etas($ft);
+	$rv[] = $ft;
+      }  else { // otherwise, just do it like normal
         $rv[] = implode(':', array($index, $val));
       }
 
     }
-    $tagfilter = $this->tagFilter($ss);
-    if (isset($tagfilter)) {
-      $rv[] = $tagfilter;
+    if (count($rv) == 0) {
+      return array();
+    } else {
+      return array(array('fq', $rv));
     }
-
-
-    return array(array('fq', $rv));
   }
+
+  function fulltext_filter_base() {
+    $ft = $this->quoteFilterValue('Full text');
+    return "ht_availability:$ft";
+   }
+
+   function fulltext_filter_add_etas($current_ft_filter) {
+     global $htstatus;
+     if ($htstatus->emergency_access) {
+       $inst_code = $this->quoteFilterValue($htstatus->institution_code);
+       return "($current_ft_filter OR print_holdings:$inst_code)";
+     } else {
+       return $current_ft_filter;
+     }
+   }
+
+   function fulltext_filter_add_jan1_rollover($current_ft_filter) {
+       // Hack into place a change of the full-text only facet
+      // for the temporary newly_open rightscode value
+      // but only on or after the date from config.ini
+
+      global $configArray;
+
+      $todays_date = intval(date("YmdH"));
+      $copyright_active_date = intval($configArray['IntoCopyright']['date']);
+
+      if ($todays_date >= $copyright_active_date) {
+        $newly_open = $this->quoteFilterValue('newly_open');
+        return "($current_ft_filter OR ht_rightscode:$newly_open)";
+      } else {
+        return $current_ft_filter;
+      }
+   }
+
 
 
   /**

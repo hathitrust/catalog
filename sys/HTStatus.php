@@ -12,7 +12,8 @@ class HTStatus {
    public $u = "";
    public $emergency_access = false;
    public $provider_name = "Unauthenticated";
-   
+   public $mapped_institution_code = null;
+
 
    function __construct() {
      if (isset($_COOKIE['HTstatus'])) {
@@ -27,6 +28,9 @@ class HTStatus {
          $this->emergency_access = true;
        }
        $this->provider_name = $c['providerName'];
+       if (isset($c['mappedInstitutionCode'])) {
+         $this->mapped_institution_code = $c['mappedInstitutionCode'];
+       }
      }
    }
 

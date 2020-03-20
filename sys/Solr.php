@@ -74,8 +74,8 @@ class Solr
    *
    * Sets up the Solr Client
    *
-   * @param   string $host The URL for the local Solr Server
-   * @param   string $index The solr index directory (default 'catalog')
+   * @param string $host The URL for the local Solr Server
+   * @param string $index The solr index directory (default 'catalog')
    * @access  public
    */
   function __construct($host, $index = 'catalog') {
@@ -448,17 +448,20 @@ class Solr
 
       if ($index == "ht_availability" and $oval == 'Full text') {
         $ft = $this->fulltext_filter_base();
-	$ft = $this->fulltext_filter_add_jan1_rollover($ft);
-	$ft = $this->fulltext_filter_add_etas($ft);
-	$rv[] = $ft;
-      }  else { // otherwise, just do it like normal
+        $ft = $this->fulltext_filter_add_jan1_rollover($ft);
+        $ft = $this->fulltext_filter_add_etas($ft);
+        echo $ft;
+        $rv[] = $ft;
+      }
+      else { // otherwise, just do it like normal
         $rv[] = implode(':', array($index, $val));
       }
 
     }
     if (count($rv) == 0) {
       return array();
-    } else {
+    }
+    else {
       return array(array('fq', $rv));
     }
   }
@@ -466,36 +469,41 @@ class Solr
   function fulltext_filter_base() {
     $ft = $this->quoteFilterValue('Full text');
     return "ht_availability:$ft";
-   }
+  }
 
-   function fulltext_filter_add_etas($current_ft_filter) {
-     global $htstatus;
-     if ($htstatus->emergency_access) {
-       $inst_code = $this->quoteFilterValue($htstatus->institution_code);
-       return "($current_ft_filter OR print_holdings:$inst_code)";
-     } else {
-       return $current_ft_filter;
-     }
-   }
-
-   function fulltext_filter_add_jan1_rollover($current_ft_filter) {
-       // Hack into place a change of the full-text only facet
-      // for the temporary newly_open rightscode value
-      // but only on or after the date from config.ini
-
-      global $configArray;
-
-      $todays_date = intval(date("YmdH"));
-      $copyright_active_date = intval($configArray['IntoCopyright']['date']);
-
-      if ($todays_date >= $copyright_active_date) {
-        $newly_open = $this->quoteFilterValue('newly_open');
-        return "($current_ft_filter OR ht_rightscode:$newly_open)";
-      } else {
-        return $current_ft_filter;
+  function fulltext_filter_add_etas($current_ft_filter) {
+    global $htstatus;
+    if ($htstatus->emergency_access) {
+      $inst_code = $this->quoteFilterValue($htstatus->institution_code);
+      if (isset($htstatus->mapped_institution_code)) {
+        $mic = $this->quoteFilterValue($htstatus->mapped_institution_code);
+        $inst_code = "($inst_code OR $mic)";
       }
-   }
+      return "($current_ft_filter OR print_holdings:$inst_code)";
+    }
+    else {
+      return $current_ft_filter;
+    }
+  }
 
+  function fulltext_filter_add_jan1_rollover($current_ft_filter) {
+    // Hack into place a change of the full-text only facet
+    // for the temporary newly_open rightscode value
+    // but only on or after the date from config.ini
+
+    global $configArray;
+
+    $todays_date = intval(date("YmdH"));
+    $copyright_active_date = intval($configArray['IntoCopyright']['date']);
+
+    if ($todays_date >= $copyright_active_date) {
+      $newly_open = $this->quoteFilterValue('newly_open');
+      return "($current_ft_filter OR ht_rightscode:$newly_open)";
+    }
+    else {
+      return $current_ft_filter;
+    }
+  }
 
 
   /**
@@ -635,11 +643,11 @@ class Solr
    * __buildQueryString -- internal method to build query string from search parameters
    *
    * @access  private
-   * @param   array $structure the SearchSpecs-derived structure or substructure defining the search, derived from the yaml file
-   * @param   array $values the various values in an array with keys 'onephrase', 'and', 'or' (and perhaps others)
-   * @param   string $joiner the value used to compose substructures (AND or OR)
-   * @throws  object              PEAR Error
+   * @param array $structure the SearchSpecs-derived structure or substructure defining the search, derived from the yaml file
+   * @param array $values the various values in an array with keys 'onephrase', 'and', 'or' (and perhaps others)
+   * @param string $joiner the value used to compose substructures (AND or OR)
    * @return  string              A search string suitable for adding to a query URL
+   * @throws  object              PEAR Error
    */
 
 
@@ -767,7 +775,7 @@ class Solr
    * Tokenizes the user input based on spaces and quotes.  Then joins phrases
    * together that have an AND, OR, NOT present.
    *
-   * @param   string $input User's input string
+   * @param string $input User's input string
    * @return  array               Tokenized array
    * @access  public
    */
@@ -813,7 +821,7 @@ class Solr
    *
    * Cleanes the input based on the Lucene Syntax rules.
    *
-   * @param   string $input User's input string
+   * @param string $input User's input string
    * @return  string                Fixed input
    * @access  public
    */
@@ -879,7 +887,7 @@ class Solr
    * return a structure that includes AND, OR, and Phrase
    * queries.
    *
-   * @param   string $lookfor User's search string
+   * @param string $lookfor User's search string
    * @return  array   $values     Includes 'and', 'or', and 'onephrase' elements
    * @access  public
    */
@@ -1015,8 +1023,8 @@ class Solr
     $action = $this->set_proper_action($action, $args);
 
     $defaults = [
-      ['qt' , $action],
-      ['fl' , $this->fields],
+      ['qt', $action],
+      ['fl', $this->fields],
       ['ps', 0]
     ];
 
@@ -1092,10 +1100,10 @@ class Solr
   /**
    * Retrieves a document specified by the ID.
    *
-   * @param   string $id The document to retrieve from Solr
+   * @param string $id The document to retrieve from Solr
    * @access  public
-   * @throws  object              PEAR Error
    * @return  string              The requested resource
+   * @throws  object              PEAR Error
    */
   function getRecord($id) {
     // The default action
@@ -1113,11 +1121,11 @@ class Solr
    * NEEDS REWRITING!!!! Get records similiar to given record.
    *
    * @access  public
-   * @param   array $record An associative array of the record data
-   * @param   string $id The record id
-   * @param   integer $max The maximum records to return; Default is 5
-   * @throws  object      PEAR Error
+   * @param array $record An associative array of the record data
+   * @param string $id The record id
+   * @param integer $max The maximum records to return; Default is 5
    * @return  array       An array of query results in standard vufind record format
+   * @throws  object      PEAR Error
    */
 
   function getMoreLikeThis($record, $id, $max = 5) {
@@ -1179,9 +1187,9 @@ class Solr
    * Used for AJAX suggestions.
    *
    * @access  public
-   * @param   string $phrase The input phrase
-   * @param   string $field The field to search on
-   * @param   int $limit The number of results to return
+   * @param string $phrase The input phrase
+   * @param string $field The field to search on
+   * @param int $limit The number of results to return
    * @return  array   An array of query results
    */
   function getSuggestion($phrase, $field, $limit) {

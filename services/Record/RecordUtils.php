@@ -102,6 +102,7 @@ function items_from_json($record) {
 
   function ht_link_data_from_json($e) {
     global $HT_COLLECTIONS;
+    global $htstatus;
     $rv = array();
 
     $rc = $e['rights'];
@@ -115,14 +116,15 @@ function items_from_json($record) {
     $rv['is_tombstone'] = $rv['rights_code'] == 'nobody';
 
     $heldby = $e['heldby'];
-    $rv['is_emergency_access'] = (!$rv['is_fullview'] && $this->is_held_by_user_institution($heldby));
+    $rv['is_emergency_access'] = $htstatus->emergency_access && (!$rv['is_fullview'] && $this->is_held_by_user_institution($heldby));
     return $rv;
   }
 
   function is_held_by_user_institution($print_holdings) {
     global $htstatus;
 
-    return in_array($htstatus->institution_code, $print_holdings);
+    return in_array($htstatus->institution_code, $print_holdings)  ||
+           in_array($htstatus->mapped_institution_code, $print_holdings) ;
   }
 
 

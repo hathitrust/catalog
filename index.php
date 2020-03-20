@@ -157,6 +157,9 @@ $htstatus = new HTStatus();
 if (isset($_REQUEST['etas'])) {
   $htstatus->fakefill($_REQUEST['etas']);
 }
+if (isset($_REQUEST['metas'])) {
+  $htstatus->fakefill_mapped($_REQUEST['metas']);
+}
 
 
 

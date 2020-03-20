@@ -450,7 +450,6 @@ class Solr
         $ft = $this->fulltext_filter_base();
         $ft = $this->fulltext_filter_add_jan1_rollover($ft);
         $ft = $this->fulltext_filter_add_etas($ft);
-        echo $ft;
         $rv[] = $ft;
       }
       else { // otherwise, just do it like normal

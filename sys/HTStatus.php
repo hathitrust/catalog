@@ -30,6 +30,8 @@ class HTStatus {
        $this->provider_name = $c['providerName'];
        if (isset($c['mappedInstitutionCode'])) {
          $this->mapped_institution_code = $c['mappedInstitutionCode'];
+       } else {
+         $this->mapped_institution_code = $this->institution_code;
        }
      }
    }
@@ -41,6 +43,12 @@ class HTStatus {
      $this->instituion_name = "$instcode (fake)";
      $this->emergency_access = true;
      $this->provider_name = "Debug";
+   }
+
+   function fakefill_mapped($mapped_code) {
+     $this->fakefill($mapped_code);
+     $this->institution_code = "INVALID";
+     $this->mapped_institution_code = $mapped_code;
    }
 
 }

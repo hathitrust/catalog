@@ -26,7 +26,7 @@
 
             <div class="cover">
               {if $ld.handle}
-                <img aria-hidden="true" alt="" src="https://beta-3.babel.hathitrust.org/cgi/imgsrv/cover?id={$ld.handle}" />
+                <img aria-hidden="true" alt="" src="https://babel.hathitrust.org/cgi/imgsrv/cover?id={$ld.handle}" />
               {else}
               <img class="bookCover" aria-hidden="true" alt="" src="https://catalog.hathitrust.org/images/nocover-thumbnail.png" />
               {/if}

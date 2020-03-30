@@ -1128,6 +1128,11 @@ class Solr
    * @throws  object      PEAR Error
    */
 
+  function mltesc($str) {
+    return str_replace(array('[', ']', '!', '&', ':', ';', '-', '/', '"'), '', $str);
+  }
+  
+
   function getMoreLikeThis($record, $id, $max = 5) {
     global $configArray;
 
@@ -1139,26 +1144,26 @@ class Solr
       return null;
     }
 
-    $query = '(title:(' . str_replace(array('[', ']', '!', '&', ':', ';', '-', '/', '"'), '', $record['title'][0]) . ')^75';
+    $query = '(title:(' . $this->mltesc($record['title'][0]) . ')^75';
     if (isset($record['shorttitle'])) {
-      $query .= ' OR title:(' . str_replace(array('[', ']', '!', '&', ':', ';', '-', '/', '"'), '', $record['title'][0]) . ')^100';
+      $query .= ' OR title:(' . $this->mltesc($record['title'][0]) . ')^100';
     }
 
     if (isset($record['fulltopic'])) {
       foreach ($record['fulltopic'] as $topic) {
-        $query .= ' OR fulltopic:("' . $topic . '")^300';
+        $query .= ' OR fulltopic:("' . $this->mltesc($topic) . '")^300';
       }
     }
 
     if (isset($record['language'])) {
       foreach ($record['language'] as $language) {
-        $query .= ' OR language:("' . $language . '")^30';
+        $query .= ' OR language:("' . $this->mltesc($language) . '")^30';
       }
     }
 
     if (isset($record['author'])) {
       foreach ($record['author'] as $author) {
-        $query .= ' OR author:("' . $author . '")^75';
+        $query .= ' OR author:("' . $this->mltesc($author) . '")^75';
       }
 
     }

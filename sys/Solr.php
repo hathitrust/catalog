@@ -451,6 +451,7 @@ class Solr
         $ft = $this->fulltext_filter_add_jan1_rollover($ft);
         $ft = $this->fulltext_filter_add_etas($ft);
         $rv[] = $ft;
+#	echo $ft;
       }
       else { // otherwise, just do it like normal
         $rv[] = implode(':', array($index, $val));

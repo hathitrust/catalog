@@ -28,11 +28,12 @@ class HTStatus {
          $this->emergency_access = true;
        }
        $this->provider_name = $c['providerName'];
-       if (isset($c['mappedInstitutionCode'])) {
+       if (isset($c['mapped_institution_code'])) {
          $this->mapped_institution_code = $c['mapped_institution_code'];
        } else {
          $this->mapped_institution_code = $this->institution_code;
        }
+       echo "Showing instituion_code as " . $this->institution_code . " and mapped code as " . $this->mapped_institution_code;
      }
    }
 

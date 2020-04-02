@@ -29,7 +29,7 @@ class HTStatus {
        }
        $this->provider_name = $c['providerName'];
        if (isset($c['mappedInstitutionCode'])) {
-         $this->mapped_institution_code = $c['mappedInstitutionCode'];
+         $this->mapped_institution_code = $c['mapped_institution_code'];
        } else {
          $this->mapped_institution_code = $this->institution_code;
        }

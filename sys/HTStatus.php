@@ -33,7 +33,6 @@ class HTStatus {
        } else {
          $this->mapped_institution_code = $this->institution_code;
        }
-       echo "Showing instituion_code as " . $this->institution_code . " and mapped code as " . $this->mapped_institution_code;
      }
    }
 

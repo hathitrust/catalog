@@ -377,7 +377,7 @@ class Home extends Action {
         if ($cookielength > 4096) {
           error_log("can't write resultIDs cookie, length is $cookielength");
          } else {
-          $cookieRC = setcookie('resultids', serialize($resultIDs), null, '/');
+#          $cookieRC = setcookie('resultids', serialize($resultIDs), null, '/');
         }
         if (isset($_REQUEST['rec'])) {
           $newOffset = $_REQUEST['rec'];

@@ -31,6 +31,7 @@ require_once 'sys/User.php';
 require_once 'sys/Translator.php';
 require_once 'sys/VFSession.php';
 require_once 'sys/VFUser.php';
+require_once 'sys/HTStatus.php';
 require_once 'sys/ActivityLog.php';
 require_once 'services/Record/RecordUtils.php';
 require_once 'sys/mobile_device_detect.php';
@@ -55,7 +56,6 @@ PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, 'handlePEARError');
 
 
 $configArray = parse_ini_file('conf/config.ini', true);
-
 
 ## Now munge it based on the hostname
 
@@ -147,6 +147,19 @@ if (isset($_REQUEST['intl'])) {
 }
 
 
+//################################
+//     HTStatus
+//
+//  Fake institution_code with etas=myinstcode in URL
+//###############################
+
+$htstatus = new HTStatus();
+if (isset($_REQUEST['etas'])) {
+  $htstatus->fakefill($_REQUEST['etas']);
+}
+if (isset($_REQUEST['metas'])) {
+  $htstatus->fakefill_mapped($_REQUEST['metas']);
+}
 
 
 

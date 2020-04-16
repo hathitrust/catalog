@@ -102,6 +102,7 @@ function items_from_json($record) {
 
   function ht_link_data_from_json($e) {
     global $HT_COLLECTIONS;
+    global $htstatus;
     $rv = array();
 
     $rc = $e['rights'];
@@ -113,9 +114,20 @@ function items_from_json($record) {
     $rv['enumchron'] = $e['enumcron'];
     $rv['is_fullview'] = $this->is_fullview($rv['rights_code']);
     $rv['is_tombstone'] = $rv['rights_code'] == 'nobody';
+
+    $heldby = $e['heldby'];
+    $rv['is_emergency_access'] = $htstatus->emergency_access && (!$rv['is_fullview'] && $this->is_held_by_user_institution($heldby));
     return $rv;
   }
-  
+
+  function is_held_by_user_institution($print_holdings) {
+    global $htstatus;
+
+    return in_array($htstatus->institution_code, $print_holdings)  ||
+           in_array($htstatus->mapped_institution_code, $print_holdings) ;
+  }
+
+
   function record_is_tombstone($rec) {
     $htjson = json_decode($rec['ht_json'], true);
     foreach ($htjson as $item) {
@@ -128,6 +140,7 @@ function items_from_json($record) {
 
 
   // Take a rightscode (and, soon, other data) and return viewability
+
   function is_fullview($rcode, $inUSA = null) {
 
     global $configArray;
@@ -135,7 +148,6 @@ function items_from_json($record) {
       $session = VFSession::instance();
       $inUSA = $session->get('inUSA');
     }
-
 
     // Assume false
     $fv = false;
@@ -185,6 +197,8 @@ function items_from_json($record) {
     // other stuff about logins and such goes here
     return $fv;
   }
+
+
 
   function __construct() {
     global $configArray;

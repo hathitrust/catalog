@@ -106,7 +106,7 @@
         </article>
 
 <div style="text-align: center">
-  <a class="button btn" href="{$id|escape:"url"}.marc">View HathiTrust MARC record</a>
+  <a class="button btn" href="/Record/{$id|escape:"url"}.marc">View HathiTrust MARC record</a>
 </div>
 
 

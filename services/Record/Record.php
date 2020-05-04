@@ -73,9 +73,21 @@ class Record extends Action
           $interface->assign('mergedItems', $itemdata);
           
           # Only one? From the OCLC? Just redirect to it and exit
-  
+
+
           if ((count($itemdata) == 1) && $_REQUEST['fromoclc'] == 1) {
-            header("Location: " . $itemdata[0]['itemURL']);
+	    $htid = $itemdata[0]['htid'];
+	    $handle = "https://hdl.handle.net/2027/$htid";
+	    if (isset($_REQUEST['signon'])) {
+	      $signon = $_REQUEST['signon'];
+	      $en_signon = rawurlencode(';signon=' . $signon);
+	      $handle .= "?urlappend=$en_signon";
+#              $handle .= "?signon=$en_signon";
+
+            }
+	    
+            header("Location: " . $handle);
+#echo $handle;
             exit;
           }
                     

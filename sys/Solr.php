@@ -311,7 +311,9 @@ class Solr
     // If the type isn't set, back up to normal arguments
 
     if (!isset($allspecs[$type])) {
-      return $this->searchArguments($ss);
+      $args =  $this->searchArguments($ss);
+      // print_r($args);
+      return $args;
     }
 
 

@@ -312,11 +312,11 @@ subject2:
 
 isbn:
   - isbn:
-    - [stdnum, ~]
+    - [asis, ~]
 
 issn:
   - issn:
-    - [stdnum, ~]
+    - [asis, ~]
 
 oclc:
   - oclc:
@@ -336,9 +336,9 @@ isbsnish:
 
 isn:
   - issn:
-    - [stdnum, ~]
+    - [asis, ~]
   - isbn:
-    - [stdnum, ~]
+    - [asis, ~]
   - lccn:
     - [onephrase, ~]
     - [asis, ~]
@@ -424,9 +424,9 @@ all:
     - [onephrase, 800]
     - [and, 80]
   - issn:
-    - [stdnum, ~]
+    - [asis, ~]
   - isbn:
-    - [stdnum, ~]
+    - [asis, ~]
   - lccn:
     - [onephrase, ~]
   - rptnum:

@@ -70,8 +70,8 @@ fi
 
 echo
 echo Latest tags:
-git tag | tail -4
-TAG=`git tag | tail -1`
+git tag --sort=taggerdate | tail -4
+TAG=`git tag --sort=taggerdate | tail -1`
 echo
 echo 
 read -n 1 -r -p "Using tag $TAG. OK? (Y/N) "

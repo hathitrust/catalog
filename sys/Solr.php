@@ -1131,7 +1131,7 @@ class Solr
    */
 
   function mltesc($str) {
-    return str_replace(array('[', ']', '!', '&', ':', ';', '-', '/', '"'), '', $str);
+    return str_replace(array('(', ')','[', ']', '!', '&', ':', ';', '-', '/', '"'), '', $str);
   }
   
 

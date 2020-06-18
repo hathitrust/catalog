@@ -126,21 +126,19 @@ class SearchStructure
 
 
       # Clean up the lookfors
+      #  * change '- ' and '- EOF' to ' '
+      #  * Ditch teh blanks
       
-      //      foreach ($lookfor as $i => $val) {
-      //        $new = $this->convert_smart_quotes($val);
-      //        if ($new != $val) {
-      //          // echo "Changed '$val' into '$new'\n";
-      //          $lookfor[$i] = $new;
-      //        }
-      //      }
 
       # Ditch all the blank lookfors
       $ss = array();
-      foreach($lookfor as $i => $val) {
-          if (preg_match('/\S/', $lookfor[$i])) {
+      foreach($lookfor as $i => $value) {
+          $val = $value;
+          $val = preg_replace('/\-\s+/', ' ', $val);
+          $val = preg_replace('/\-$/', '', $val);
+          if (preg_match('/\S/', $val)) {
               array_push($ss, array(isset($type[$i])? $type[$i] : 'all', 
-                                    $lookfor[$i], 
+                                    $val,
                                     isset($bool[$i])? $bool[$i] : null
                                     )
                          );

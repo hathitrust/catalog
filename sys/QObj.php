@@ -125,7 +125,8 @@ class QObj
       }
     }    
   }
-  
+
+
   function recordsStructure($docs) {
     $records = array();
     foreach ($this->matches as $docid) {
@@ -142,6 +143,15 @@ class QObj
       $records[$docid] = $rinfo;
     }
     return $records;
+  }
+
+  function ht_jsons($docs) {
+    $j = array();
+    foreach ($this->matches as $docid) {
+      $doc = $docs[$docid];
+      $j = array_merge($j, json_decode($doc->ht_json,true));
+    }
+    return $j;
   }
   
   function itemsStructure($docs) {

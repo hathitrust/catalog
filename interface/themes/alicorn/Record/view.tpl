@@ -11,7 +11,13 @@
 <div id="root" class="catalog-record">
   {include file="header.tpl"}
 
-  {assign var="htjson" value=$ru->items_from_json($record)}
+{if $mergeset}
+  {assign var="mhtj" value=$mergeset->combined_ht_json() }
+  {assign var="htjson" value=$mhtj}  
+{else}
+  {assign var="htjson" value=$ru->items_from_json($record)}  
+{/if}
+
   {assign var="ht_vals_from_json" value=$ru->ht_link_data_from_json($htjson[0])}
   {assign var=ld value=$ht_vals_from_json}
 
@@ -66,29 +72,20 @@
               </tr>
             </thead>
             <tbody>
-              {if $mergedItems}
-                {foreach from=$mergedItems item=item}
-                  <tr>
-                    <td><a href="{$item.itemURL}">{$item.usRightsString} {if $item.enumcron}<span class="IndItem">{$item.enumcron}</span>{/if}</a></td>
-                    <td>{$item.orig}</td>
-                  </tr>
-                {/foreach}
-              {else}
-                {foreach from=$htjson item=e}
-                  {assign var=ld value=$ru->ht_link_data_from_json($e)}
-                  {if $record_is_tombstone || !($ld.is_tombstone)}
-                   <tr>
-                    <td>
-                     {if $record_is_tombstone}
-                       This item is no longer available (<a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
+              {foreach from=$htjson item=e}
+                {assign var=ld value=$ru->ht_link_data_from_json($e)}
+                {if $record_is_tombstone || !($ld.is_tombstone)}
+                 <tr>
+                  <td>
+                   {if $record_is_tombstone}
+                     This item is no longer available (<a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
+                     {elseif $ld.is_fullview}
 
-                      {elseif $ld.is_fullview}
-
-            <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Full view <span class="IndItem">{$ld.enumchron}</span></a></li>
+            <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Full view <span class="IndItem">{$ld.enumchron}</span></a>
 	  {elseif $ld.is_emergency_access}
-	              <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} etas"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Temporary access <span class="IndItem">{$ld.enumchron}</span></a></li>
+	              <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} etas"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Temporary access <span class="IndItem">{$ld.enumchron}</span></a>
           {else}
-            <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} searchonly"><i class="icomoon icomoon-locked" aria-hidden="true"></i> Limited (search only) <span class="IndItem">{$ld.enumchron}</span></a></li>
+            <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} searchonly"><i class="icomoon icomoon-locked" aria-hidden="true"></i> Limited (search only) <span class="IndItem">{$ld.enumchron}</span></a>
           {/if}
 
                      </td>
@@ -98,7 +95,6 @@
                    </tr>
                    {/if}
                 {/foreach}
-              {/if}
 
             </tbody>
           </table>

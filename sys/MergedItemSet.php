@@ -17,13 +17,12 @@ class MergedItemSet
   public $solrQueryComponents = array();
   private $_data;
   public $commonargs = array(
-    'fl' => 'score,id,ht_json,title,year,publishDate,oclc,lccn,isbn,issn'
+   //'fl' => 'score,id,ht_json,title,year,publishDate,oclc,lccn,isbn,issn'
+   'fl' => "*"
   );
   public $docs = array();
   public $options = array();
-  public $solr; 
-
-  
+  public $solr;
   
   function __construct($qst = array(), $options = array()) {
     
@@ -57,18 +56,14 @@ class MergedItemSet
       $solr->add([[$key, $value]]);
      }
 
-     
-    # $results = $olr->search($this->solrQuery(), 0, 200, $this->commonargs);
-
     try {
       $results = $solr->send_for_obj();
+      
     } catch (Exception $e) {
       header('Location: https://www.hathitrust.org/temporary-outage');
       die();
     }
       
-    
-
 
     // Index the docs
     foreach ($results->response->docs as $doc) {
@@ -88,15 +83,34 @@ class MergedItemSet
       // Get the record
       $records = $qobj->recordsStructure($this->docs);
       $items   = $qobj->itemsStructure($this->docs);
+      $htj     = $qobj->ht_jsons($this->docs);
       if (count($items) > 1) {
         usort($items,  array('MergedItemSet','enumsort'));
       }
       $allmatches[$id]['records'] = $records;
       $allmatches[$id]['items'] = $items;
+      $allmatches[$id]['htjson'] = $htj;
     }
     
     
     $this->_data = $allmatches;
+  }
+
+
+  function allrecords() {
+    $allrecords = array();
+    foreach ($this->data() as $id => $recs) {
+      $allrecords[] = $recs;
+    }
+    return $allrecords;
+  }
+
+  function combined_ht_json() {
+    $htjsons = array();
+    foreach ($this->data() as $r) {
+      $htjsons = array_merge($htjsons, $r['htjson']);
+    }
+    return $htjsons;
   }
 
   function data() {

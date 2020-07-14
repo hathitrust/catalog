@@ -71,6 +71,7 @@ class Record extends Action
           $this->id = $m->firstRecordID();
           $itemdata = $this->mergedItemData[1]['items'];
           $interface->assign('mergedItems', $itemdata);
+	  $interface->assign('mergeset', $m);
           
           # Only one? From the OCLC? Just redirect to it and exit
 

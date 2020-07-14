@@ -86,10 +86,28 @@ function enumsort($a, $b) {
 # Sort items from the json and return them
 
 function items_from_json($record) {
-  $items = json_decode($record['ht_json'], true);
+  return $this->items_from_raw_json($record['ht_json']);
+}
+
+function items_from_mergeditemset($m) {
+  return $this->items_from_many_raw_jsons($m->raw_ht_jsons);
+}
+
+function items_from_many_raw_jsons($jsons) {
+   $merged_items = array();
+   foreach ($jsons as $j) {
+     $merged_items = array_merge($merged_items, $this->items_from_raw_json($j));
+   }
+  usort($merged_items, array($this, 'enumsort'));
+  return $merged_items;
+}
+
+function items_from_raw_json($json_string) {
+  $items = json_decode($json_string, true);
   usort($items, array($this, 'enumsort'));
   return $items;
 }
+  
 
   // Return an array of the form:
   // {

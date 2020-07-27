@@ -15,11 +15,12 @@
 
         <form method="GET" action="{$url}/Search/Home" name="searchForm" class="advanced-search-form" data-ignore-empty-query="true">
 
-          <h2>{translate text='Advanced Catalog Search'}</h2>
+          <h1>{translate text='Advanced Catalog Search'}</h1>
           <p>Search information <em>about</em> the item (<a target="_blank" href="http://www.hathitrust.org/help_digital_library#SearchTips">Search Tips</a>).</p>
-          <p>Prefer to search <em>within</em> the item in an <a href="//babel.hathitrust.org/cgi/ls?a=page&page=advanced">Advanced Full-text search</a>?</p>
+          <p style="margin-bottom: 1rem">Prefer to search <em>within</em> the item in an <a href="//babel.hathitrust.org/cgi/ls?a=page&page=advanced">Advanced Full-text search</a>?</p>
 
-          <h3 class="offscreen">Search by field</h3>
+          {* <h3 class="offscreen">Search by field</h3> *}
+          <h2>Search by field</h2>
 
           {include file="Search/advanced_search_field.tpl" index='1' type=$type1 lookfor=$lookfor1}
           {include file="Search/advanced_search_field.tpl" index='2' type=$type2 lookfor=$lookfor2 bool=$bool1}
@@ -28,10 +29,10 @@
 
           <button kind="primary" class="button btn btn-primary"><i class="icomoon icomoon-search" aria-hidden="true"></i> Advanced Search</button>
 
-          <h3>Additional search options</h3>
+          <h2>Additional search options</h2>
           <div class="advanced-filters-inner-container">
             <div class="advanced-search-filter-container">
-              <h4 class="advanced-filter-label-text">View Options</h4>
+              <h3 class="advanced-filter-label-text">View Options</h3>
               <div class="advanced-filter-inner-container">
                 <input type="hidden" name="setft" value="true" />
                 <input type="checkbox" name="ft" value="ft" id="filter-full-view-only" {if $ft eq 'ft'}checked="checked"{/if} />
@@ -40,12 +41,12 @@
             </div>
 
             <div class="advanced-search-filter-container">
-              <h4 class="advanced-filter-label-text">Date of Publication</h4>
+              <h3 class="advanced-filter-label-text">Date of Publication</h3>
               <div class="advanced-filter-inner-container">
                 <div class="alert alert-error alert-block" role="alert" aria-atomic="true" aria-live="assertive"></div>
                 <div class="date-range-input">
                   <fieldset class="no-margin choice-container">
-                    <legend class="offscreen">Select the type of date range to search on</legend>
+                    <legend class="offscreen">Date range</legend>
                     <div>
                       <input type="radio" id="date-range-input-radio-0" name="yop" value="before" {if $dateRangeInput eq 'before'}checked="checked"{/if} />
                       <label class="multiple-choice" for="date-range-input-radio-0"><span>Before</span></label>
@@ -73,12 +74,12 @@
             </div>
 
             <div class="advanced-search-filter-container">
-              <h4 class="advanced-filter-label-text">Language</h4>
+              <h3 class="advanced-filter-label-text">Language</h3>
               <div class="advanced-filter-inner-container">
                 <div class="multiselect">
                   <p>Select one or more checkboxes to narrow your results to items that match all of your language selections.</p>
-                  <input name=".language-filter" type="text" class="multiselect-search" aria-label="Filter options" aria-describedby="language" placeholder="Filter" value="" />
-                  <p id="language" class="offscreen">Below this edit box is a list of check boxes that allow you to filter down your options. As you type in this edit box, the list of check boxes is updated to reflect only those that match the query typed in this box.</p>
+                  <input name=".language-filter" type="text" class="multiselect-search" aria-label="Filter options" aria-describedby="language" placeholder="Filter by language" value="" />
+                  <p id="language" style="font-size: 0.75rem">Below this edit box is a list of check boxes that allow you to filter down your options. As you type in this edit box, the list of check boxes is updated to reflect only those that match the query typed in this box.</p>
                   <fieldset class="multiselect-options">
                     <ul class="multiselect-options-list">
                       {foreach from=$languageList item="language" name=options}
@@ -99,14 +100,15 @@
             </div>
 
             <div class="advanced-search-filter-container">
-              <h4 class="advanced-filter-label-text">Original Format</h4>
+              <h3 class="advanced-filter-label-text">Original Format</h3>
               <div class="advanced-filter-inner-container">
                 <div class="multiselect">
                   <p>Select one or more checkboxes to narrow your results to items that match all of your format selections.</p>
-                  <input name=".format-filter" type="text" class="multiselect-search" aria-label="Filter options" aria-describedby="format" placeholder="Filter" value="" />
-                  <p id="format" class="offscreen">Below this edit box is a list of check boxes that allow you to filter down your options. As you type in this edit box, the list of check boxes is updated to reflect only those that match the query typed in this box.</p>
+                  <input name=".format-filter" type="text" class="multiselect-search" aria-label="Filter options" aria-describedby="format" placeholder="Filter by format" value="" />
+                  <p id="format" style="font-size: 0.75rem">Below this edit box is a list of check boxes that allow you to filter down your options. As you type in this edit box, the list of check boxes is updated to reflect only those that match the query typed in this box.</p>
                   <fieldset class="multiselect-options">
                     <ul class="multiselect-options-list">
+                      <legend class="offscreen">Format</legend>
                       {foreach from=$formatList item="format" name=options}
                         {if $format}
                       <li class="multiselect-options-list-item">

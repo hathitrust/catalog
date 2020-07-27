@@ -32,14 +32,14 @@
 
             <div class="cover">
               {if $ld.handle}
-                <img aria-hidden="true" alt="" src="https://babel.hathitrust.org/cgi/imgsrv/cover?id={$ld.handle}" />
+                <img aria-hidden="true" alt="" src="{$unicorn_root}/cgi/imgsrv/cover?id={$ld.handle}" />
               {else}
               <img class="bookCover" aria-hidden="true" alt="" src="https://catalog.hathitrust.org/images/nocover-thumbnail.png" />
               {/if}
               </div>
             </xsl:if>
             {assign var=marcField value=$marc->getFields('245')}
-            <h2>
+            <h1>
               {foreach from=$marcField item=field name=loop}
                 {foreach from=$field->getSubfields() item=subfield key=subcode  name=subloop}
                   {if $subcode >= 'a' and $subcode <= 'z'}
@@ -51,10 +51,11 @@
               {if $record.vtitle}
                <br /><span>{$record.vtitle}</span>
               {/if}
-            </h2>
+            </h1>
           </div>
-          <div class="article-actions">
-            <h3 class="offscreen">Tools</h3>
+          <h2 style="font-size: 1.1rem">Description</h2>
+          <div class="article-actions" style="display: flex; align-items: center">
+            <h3 class="xx-offscreen" style="font-size: 1rem; margin-right: 1rem;">Tools</h3>
             <ul>
               <li><a href="/Record/{$id|escape:"url"}/Cite" class="cite"><i class="icomoon icomoon-bookmark" aria-hidden="true"></i> {translate text="Cite this"}</a></li>
               <li><a class="endnotelink" href="/Search/SearchExport?handpicked={$id|escape:"url"}&amp;method=ris" data-toggle="tracking" data-tracking-category="recordActions" data-tracking-action="Catalog Export" data-tracking-label="Endnote"><i class="icomoon icomoon-upload" aria-hidden="true"></i> Export citation file</a></li>
@@ -63,7 +64,7 @@
 
           {include file="$module/view.summary.tpl"}
 
-          <h3>Viewability</h3>
+          <h2 style="font-size: 1.1rem">Viewability</h2>
           <table class="viewability-table">
             <thead>
               <tr>

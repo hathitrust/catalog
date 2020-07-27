@@ -14,6 +14,10 @@
       {include file="$module/list.sidebar.tpl"}
 
       <section class="section-container" id="section" data-record-count="{$recordCount}">
+        <h1 class="listcs-intro" style="margin-left: 0; font-weight: normal; margin-bottom: 1rem">
+            Search results from the HathiTrust biblographic catalog.
+        </h1>
+
         <div class="results-container">
           <div class="results-summary-container">
             <h2 class="results-summary"><b>No results</b> matched your search.</h2>

@@ -2,14 +2,16 @@
 <div class="sidebar-container" id="sidebar" tabindex="0">
   <button class="for-mobile sidebar-toggle-button filter-group-toggle-show-button" aria-expanded="false">
     <span class="flex-space-between flex-center">
-      <h3 class="filter-group-heading">Options/Filters<span class="total-filter-count"></span></h3>
+      <span class="filter-group-heading">Options/Filters<span class="total-filter-count"></span></span>
       {* <svg xmlns="http://www.w3.org/2000/svg" class="icon"><use xlink:href="#panel-collapsed"></use></svg> *}
       <i class="icomoon icomoon-sidebar-toggle" aria-hidden="true"></i>
     </span>
   </button>
 
+  <h2 class="filters-heading" style="font-size: 1.125rem; padding-bottom: 0">Filter your search</h2>
+
   {if $currentFacets or ( $searchterms and ($lookfor ne '*') ) }
-  <h2 class="active-filters-heading">Current Filters</h2>
+  <h3 class="active-filters-heading">Current Filters</h3>
   <ul class="active-filters-list">
     {if ($searchterms) and ($lookfor ne '*') }
       {assign var=rurl value=$ss->asWildcardURL()|regex_replace:"/&/":"&amp;"}
@@ -51,11 +53,11 @@
     </ul>
   {/if}
 
-  <h2 class="filters-heading">Filter your search</h2>
   <ul class="filter-group-list">
   {if $allitems_count gt 0}
     <li>
-      <ul class="filter-list" role="radiogroup" aria-label="Item Viewability">
+      <h3 class="active-filters-heading" id="filter-item-viewability-desc">Item Viewability</h3>
+      <ul class="filter-list" role="radiogroup" aria-labelledby="filter-item-viewability-desc">
         <li class="filter-group filter-group-checkbox">
           <button role="radio" aria-checked="{if !$is_fullview}true{else}false{/if}" class="checkbox-label" {if !$is_fullview}tabindex="0"{/if} data-href="{$allitems_url}" aria-labelledby="view-all">
             {* <span id="view-all" class="offscreen">View</span> *}

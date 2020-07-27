@@ -28,8 +28,6 @@
 </head>
 <body>
 
-  <h1 class="offscreen">{$pageTitle} | HathiTrust Digital Library</h1>
-
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
     <symbol id="checkbox-empty" viewBox="0 0 18 18">
       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-61.000000, -957.000000)"><g transform="translate(60.000000, 918.000000)"><g transform="translate(0.000000, 38.000000)"><path d="M16.9994,0.99807 L2.99939,0.99807 C1.89439,0.99807 0.99939,1.89307 0.99939,2.99807 L0.99939,16.9981 C0.99939,18.1031 1.89439,18.9981 2.99939,18.9981 L16.9994,18.9981 C18.1034,18.9981 18.9994,18.1031 18.9994,16.9981 L18.9994,2.99807 C18.9994,1.89307 18.1034,0.99807 16.9994,0.99807 L16.9994,0.99807 Z M16.9994,2.99807 L16.9994,16.9981 L2.99939,16.9991 L2.99939,2.99807 L16.9994,2.99807 L16.9994,2.99807 Z"></path></g></g></g></g>

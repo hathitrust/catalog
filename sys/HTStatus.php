@@ -13,6 +13,7 @@ class HTStatus {
    public $emergency_access = false;
    public $provider_name = "Unauthenticated";
    public $mapped_institution_code = null;
+   public $is_NFB = false;
 
 
    function __construct() {
@@ -24,9 +25,8 @@ class HTStatus {
        $this->affiliation = $c['affiliation'];
        $this->insitution_name = $c['institution_name'];
        $this->u = $c['u'];
-       if (isset($c['x']) && $c['x'] == 1) {
-         $this->emergency_access = true;
-       }
+       $this->emergency_access = $this->determine_emergency_access($c);
+       $this->is_NFB = $this->determine_NFB($c);
        $this->provider_name = $c['providerName'];
        if (isset($c['mapped_institution_code'])) {
          $this->mapped_institution_code = $c['mapped_institution_code'];
@@ -34,6 +34,20 @@ class HTStatus {
          $this->mapped_institution_code = $this->institution_code;
        }
      }
+   }
+
+   function determine_emergency_access($c) {
+     return (isset($c['x']) && $c['x'] == 1);
+   }
+
+   function determine_NFB($c) {
+     $special_access = $c['r'];
+     if (!is_array($special_access)) {
+       return false;
+     }
+
+     return (isset($special_access['enhancedTextUser']) && $special_access['enhancedTextUser'] == 1) ||
+            (isset($special_access['enhancedTextProxy']) && $special_access['enhancedTextProxy'] == 1);
    }
 
    function fakefill($instcode) {

@@ -135,6 +135,7 @@ function items_from_raw_json($json_string) {
 
     $heldby = $e['heldby'];
     $rv['is_emergency_access'] = $htstatus->emergency_access && (!$rv['is_fullview'] && $this->is_held_by_user_institution($heldby));
+    $rv['is_NFB'] = $htstatus->is_NFB;
     return $rv;
   }
 

@@ -80,7 +80,7 @@
                   <td>
                    {if $record_is_tombstone}
                      This item is no longer available (<a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
-                     {elseif $ld.is_fullview}
+                     {elseif ($ld.is_fullview || $ld.is_NFB)}
 
             <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Full view <span class="IndItem">{$ld.enumchron}</span></a>
 	  {elseif $ld.is_emergency_access}

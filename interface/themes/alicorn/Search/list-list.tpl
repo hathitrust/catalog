@@ -59,7 +59,7 @@
           <li><span>(view record to see multiple volumes)</span></li>
         {else}
 
-          {if $ld.is_fullview}
+          {if ($ld.is_fullview || $ld.is_NFB) }
             <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Full view</a></li>
 	  {elseif $ld.is_emergency_access}
 	              <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} etas"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Temporary access</a></li>

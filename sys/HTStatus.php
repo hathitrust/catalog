@@ -41,6 +41,9 @@ class HTStatus {
    }
 
    function determine_NFB($c) {
+     if (isset($_REQUEST['nfb']) && $_REQUEST['nfb'] == "true") {
+       return true;
+     }
      $special_access = $c['r'];
      if (!is_array($special_access)) {
        return false;

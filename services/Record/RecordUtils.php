@@ -134,8 +134,12 @@ function items_from_raw_json($json_string) {
     $rv['is_tombstone'] = $rv['rights_code'] == 'nobody';
 
     $heldby = $e['heldby'];
-    $rv['is_emergency_access'] = $htstatus->emergency_access && (!$rv['is_fullview'] && $this->is_held_by_user_institution($heldby));
-    $rv['is_NFB'] = $htstatus->is_NFB;
+    $open_to_no_one = $this->is_open_to_no_one($rv['rights_code']);
+    $rv['is_emergency_access'] = $htstatus->emergency_access &&
+                                 (!$rv['is_fullview'] &&
+				 (!$open_to_no_one) &&
+				 $this->is_held_by_user_institution($heldby));
+    $rv['is_NFB'] = $htstatus->is_NFB && (!$open_to_no_one);
     return $rv;
   }
 
@@ -158,7 +162,7 @@ function items_from_raw_json($json_string) {
   }
 
 
-  // Take a rightscode (and, soon, other data) and return viewability
+  // Take a rightscode
 
   function is_fullview($rcode, $inUSA = null) {
 
@@ -166,6 +170,12 @@ function items_from_raw_json($json_string) {
     if (!isset($inUSA)) {
       $session = VFSession::instance();
       $inUSA = $session->get('inUSA');
+    }
+
+
+    // If it's just plain closed, return false
+    if ($this->is_open_to_no_one($rcode)) {
+      return false;
     }
 
     // Assume false
@@ -202,11 +212,6 @@ function items_from_raw_json($json_string) {
       $fv = false;
     }
 
-    // ...unless UNLESS it's pd-private or pd-pvt
-    if (preg_match('/pd-p/', $rcode)) {
-      $fv = false;
-    }
-    
     // ...or it's ICUS and we're *outside* the USA
     
     if ($rcode == 'icus' && $inUSA  == false) {
@@ -218,6 +223,21 @@ function items_from_raw_json($json_string) {
   }
 
 
+  function is_open_to_no_one($rcodes) {
+    if (!is_array($rcodes)) {
+      $rcodes = array($rcodes);
+    }
+    foreach ($rcodes as $rcode) {
+      if (
+          (preg_match('/pd-pvt/', $rcode)) ||
+          (preg_match('/nobody/', $rcode)) ||
+          (preg_match('/supp/', $rcode))
+	 ) {
+	 return true;
+      }
+    }
+    return false;
+  }  
 
   function __construct() {
     global $configArray;

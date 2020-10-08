@@ -16,7 +16,8 @@ class QObj
   // Map api fields to solr fields
   public $fieldmap = array(
     'umid' => 'id',
-    'htid' => 'ht_id'
+    'htid' => 'ht_id',
+    'oclc' => 'oclc_search'
   );
 
 
@@ -42,6 +43,7 @@ class QObj
     'htid' => array('Normalize', 'exactmatcher'),
     'isbn' => array('Normalize', 'isbnlongify'),
     'oclc' => array('Normalize', 'numeric'),
+    'oclc_search' => array('Normalize', 'numeric'),
     'issn' => array('Normalize', 'stdnum'),
     'lccn' => array('Normalize', 'lccnnormalize'),
     'umid' => array('Normalize', 'numeric')

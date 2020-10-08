@@ -319,7 +319,7 @@ issn:
     - [asis, ~]
 
 oclc:
-  - oclc:
+  - oclc_search:
     - [stdnum, ~]
 
 lccn:
@@ -348,7 +348,7 @@ isn:
     - [onephrase, ~]
     - [asis, ~]
     - [exactmatcher, ~]
-  - oclc:
+  - oclc_search:
     - [stdnum, 100]
     - [onephrase, ~]
     - [exactmatcher, ~]
@@ -431,7 +431,7 @@ all:
     - [onephrase, ~]
   - rptnum:
     - [onephrase, ~]
-  - oclc:
+  - oclc_search:
     - [stdnum, ~]
   - sdrnum:
     - [onephrase, ~]

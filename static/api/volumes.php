@@ -49,7 +49,8 @@ $fieldmap = array(
   'sysid' => 'id',
   'recordid' => 'id',
   'recordnumber' => 'id',
-  'htid' => 'ht_id'
+  'htid' => 'ht_id',
+  'oclc' => 'oclc_search'
 );
 
 
@@ -80,7 +81,7 @@ $fieldmap = array(
 $collectionsmap = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_collections.php'));
 
 $commonargs = array(
-  'fl' => 'score,id,ht_json,title,year,publishDate,oclc,lccn,isbn,issn',
+  'fl' => 'score,id,ht_json,title,year,publishDate,oclc,oclc_search,lccn,isbn,issn',
   'rows' => 200
 );
 
@@ -156,6 +157,7 @@ class QObj
       
       $qfield = isset($fieldmap[$field])? $fieldmap[$field] : $field;
 
+
       $this->qspecs[] = "$qfield:$val";
       if ($qfield == 'lccn') {
         $this->qspecs[] = "lccn:\" $val\"";
@@ -168,6 +170,7 @@ class QObj
       }
       
       $this->tspecs[] = array($field, $qfield, $fixedval);
+
     }
   }
   
@@ -196,7 +199,9 @@ class QObj
         }
 
         $docq = isset($doc[$qfield]) ? $doc[$qfield] : null;
-        if (isset($docq) && ((!is_array($docq) || count($docq) > 0))) {
+
+
+    if (isset($docq) && ((!is_array($docq) || count($docq) > 0))) {
           if ($is_htidspec) {
             $dvals = array();
             foreach (json_decode($doc['ht_json'], true) as $ht) {

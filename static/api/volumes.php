@@ -153,12 +153,11 @@ class QObj
      
       // Escape the colons
       
-      $fixedval = preg_replace('/:/', '\:', $val);
-      
+      $fixedval = preg_replace('/:/', '\:', $fixedval);
       $qfield = isset($fieldmap[$field])? $fieldmap[$field] : $field;
 
 
-      $this->qspecs[] = "$qfield:$val";
+      $this->qspecs[] = "$qfield:$fixedval";
       if ($qfield == 'lccn') {
         $this->qspecs[] = "lccn:\" $fixedval\"";
         $this->qspecs[] = "lccn:\"  $fixeval\"";

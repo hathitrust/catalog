@@ -91,7 +91,7 @@ if ($_REQUEST['brevity'] == 'full') {
 
 
 $validField = array(
-  'id' => 'numeric',
+  'id' => 'passthrough',
   'htid' => 'passthrough',
   'ht_id' => 'passthrough',
   'isbn' => 'isbnlongify',
@@ -101,7 +101,7 @@ $validField = array(
   'umid' => 'numeric',
   'sysid' => 'numeric',
   'recordid' => 'numeric',
-  'recordnumber' => 'numeric',
+  'recordnumber' => 'zero_pad_id'
 );
 
 
@@ -131,6 +131,7 @@ class QObj
 
       if ($field == 'id') {
         $this->_id = $fv[1];
+	continue;
       }
       if (!isset($fv[1])) {
         continue;
@@ -167,7 +168,6 @@ class QObj
         $this->qspecs[] = "lccn:\"      $fixeval\"";
         
       }
-      
       $this->tspecs[] = array($field, $qfield, $fixedval);
 
     }
@@ -318,8 +318,6 @@ foreach ($qstrings as $qstring) {
   $qobjs[$qstring] = $nqo;
 }
 
-
-
 // print_r($solrQueryComponents);
 // Build the query
 $q =  join(' OR ', $solrQueryComponents);
@@ -333,7 +331,6 @@ if (!preg_match('/\S/', $q)) {
 }
 
 
-
 // ***** Put this in a try/catch?
 
 $commonargs['q'] = $q;
@@ -344,8 +341,10 @@ foreach ($commonargs as $key => $value) {
  }
 
 
+
 #$results = $solr->search($q, 0, 200, $commonargs);
 $results = $solr->send();
+
 
 # Index the documents;
 $docs = array();
@@ -484,6 +483,14 @@ function enumsort($a, $b) {
 //============================================
 // NORMALIZATION FUNCTIONS
 //============================================
+
+function zero_pad_id($str) {
+  while (strlen($str) < 9) {
+    $str = '0' . $str;
+  }
+  return $str;
+  
+}
 
 function passthrough($str) {
   return $str;

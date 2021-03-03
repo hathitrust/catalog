@@ -161,11 +161,11 @@ class QObj
       $this->qspecs[] = "$qfield:$fixedval";
       if ($qfield == 'lccn') {
         $this->qspecs[] = "lccn:\" $fixedval\"";
-        $this->qspecs[] = "lccn:\"  $fixeval\"";
-        $this->qspecs[] = "lccn:\"   $fixeval\"";
-        $this->qspecs[] = "lccn:\"    $fixeval\"";
-        $this->qspecs[] = "lccn:\"     $fixeval\"";
-        $this->qspecs[] = "lccn:\"      $fixeval\"";
+        $this->qspecs[] = "lccn:\"  $fixedval\"";
+        $this->qspecs[] = "lccn:\"   $fixedval\"";
+        $this->qspecs[] = "lccn:\"    $fixedval\"";
+        $this->qspecs[] = "lccn:\"     $fixedval\"";
+        $this->qspecs[] = "lccn:\"      $fixedval\"";
         
       }
       $this->tspecs[] = array($field, $qfield, $fixedval);

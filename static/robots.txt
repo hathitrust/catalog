@@ -1,7 +1,9 @@
 Sitemap: http://catalog.hathitrust.org/static/sitemaps/sitemapindex.xml
 User-agent: *
 Crawl-delay: 2
+Disallow: /
 Disallow: /Search
 Disallow: /static/api
 Disallow: /Tags
+Disallow: /Record
 

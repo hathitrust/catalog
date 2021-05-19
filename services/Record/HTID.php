@@ -10,12 +10,18 @@ require_once 'sys/SolrConnection.php';
 
 class HTID
 {
+  function lucene_escape($str) {
+    $pattern = '/(\+|-|&&|\|\||!|\(|\)|\{|}|\[|]|\^|"|~|\*|\?|:|\\\)/';
+    $replace = '\\\$1';
+    return preg_replace($pattern, $replace, $str);
+  }
   
   function launch() {
     $solr = new SolrConnection();
     $htid = $_REQUEST['htid'];
+    $htid_clean = self::lucene_escape($htid);
     $args = array('fl' => 'id');
-    $solr->add([['q', "ht_id:$htid"]]);
+    $solr->add([['q', "ht_id:$htid_clean"]]);
     $results = $solr->send_for_obj();
 
 

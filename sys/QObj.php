@@ -125,7 +125,7 @@ class QObj
       if ($match && !$nonmatch) {
         $this->matches[] = $doc->id;
       }
-    }    
+    }
   }
 
 

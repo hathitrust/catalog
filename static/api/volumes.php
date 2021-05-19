@@ -14,6 +14,7 @@ require_once 'PEAR.php';
 # require_once 'Apache/Solr/Service.php';
 require_once 'sys/SolrConnection.php';
 require_once 'services/Record/RecordUtils.php';
+require_once 'sys/Normalize.php';
 
 // Set up for autoload
 function sample_autoloader($class) {
@@ -154,7 +155,9 @@ class QObj
      
       // Escape the colons
       
-      $fixedval = preg_replace('/:/', '\:', $fixedval);
+      
+#      $fixedval = preg_replace('/:/', '\:', $fixedval);
+      $fixedval = $this->lucene_escape($fixedval);
       $qfield = isset($fieldmap[$field])? $fieldmap[$field] : $field;
 
 
@@ -169,9 +172,15 @@ class QObj
         
       }
       $this->tspecs[] = array($field, $qfield, $fixedval);
-
     }
   }
+
+  function lucene_escape($str) {
+    $pattern = '/(\+|-|&&|\|\||!|\(|\)|\{|}|\[|]|\^|"|~|\*|\?|:|\\\)/';
+    $replace = '\\\$1';
+    return preg_replace($pattern, $replace, $str);
+  }
+
   
   function id() {
     if (isset($this->_id)) {
@@ -199,7 +208,6 @@ class QObj
 
         $docq = isset($doc[$qfield]) ? $doc[$qfield] : null;
 
-
     if (isset($docq) && ((!is_array($docq) || count($docq) > 0))) {
           if ($is_htidspec) {
             $dvals = array();
@@ -221,10 +229,11 @@ class QObj
           // For an array of vals, it matches if at least one matches
           $gotone = false;
           foreach ($dvals as $d) {
-            if ($d == $qval) {
+            $d_esc = Normalize::lucene_escape($d);
+            if ($d_esc == $qval) {
               $gotone = true;
               $match = true;
-//              echo "Matched '$d' and '$qval' for '$qfield' against $this->string\n";
+#             echo "Matched '$d' and '$qval' for '$qfield' against $this->string\n";
               continue;
             } 
           }
@@ -340,11 +349,8 @@ foreach ($commonargs as $key => $value) {
   $solr->add([[$key, $value]]);
  }
 
-
-
 #$results = $solr->search($q, 0, 200, $commonargs);
 $results = $solr->send();
-
 
 # Index the documents;
 $docs = array();
@@ -352,12 +358,10 @@ foreach ($results['response']['docs'] as $doc) {
   $docs[$doc['id']] = $doc;
 }
 
-
 // OK. Now we need to go through and find the matches
 $matches = array();
 $matchingdocs = array();
 $allmatches = array();
-
 
 foreach ($qobjs as $qobj) {
   $qobj->setDocMatches($docs);

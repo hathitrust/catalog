@@ -9,6 +9,14 @@ class Normalize
   // NORMALIZATION FUNCTIONS
   //============================================
 
+
+  static function lucene_escape($str) {
+    $pattern = '/(\+|-|&&|\|\||!|\(|\)|\{|}|\[|]|\^|"|~|\*|\?|:|\\\)/';
+    $replace = '\\\$1';
+    return preg_replace($pattern, $replace, $str);
+  }
+
+
   static function trimlower($str) {
     return trim(strtolower($str));
   }

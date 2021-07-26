@@ -186,13 +186,10 @@ if (isset($configArray['Index']['urlFile'])) {
 }
 
 //#####################################
-// Load up ht HT namespace map
+// Load up ht HT collections map
 //#####################################
 
-$HT_NAMESPACES = $eval = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_namespaces.php'));
 $HT_COLLECTIONS = eval(file_get_contents($configArray['Site']['facetDir'] . '/ht_collections.php'));
-$interface->assign('ht_namespace_map', $HT_NAMESPACES);
-
 
 //######################################
 // Language translation

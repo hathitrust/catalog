@@ -66,7 +66,7 @@ class Home extends Action {
     {
         global $interface;
         global $configArray;
-
+ 
         $this->setup();
 
         // module and action are set in the rewrite rules; they'll still be here even

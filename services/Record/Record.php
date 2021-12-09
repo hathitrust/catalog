@@ -65,9 +65,18 @@ class Record extends Action
           $this->id = sprintf('%09d', $_GET['id']);
         } elseif (isset($_REQUEST['mergesearch'])) {
 
+
           $m = new MergedItemSet(explode('|', $_REQUEST['mergesearch']));
 
           $this->mergedItemData = $m->data();
+
+          if (count($this->mergedItemData[1]['records']) == 0) {
+             header('HTTP/1.1 404 Not Found');
+              $interface->setTemplate('error.tpl');
+              $interface->display('layout.tpl');
+              exit;
+          }
+
           $this->id = $m->firstRecordID();
           $itemdata = $this->mergedItemData[1]['items'];
           $interface->assign('mergedItems', $itemdata);
@@ -88,7 +97,6 @@ class Record extends Action
             }
 	    
             header("Location: " . $handle);
-#echo $handle;
             exit;
           }
                     
@@ -122,7 +130,11 @@ class Record extends Action
         // Retrieve Full Marc Record
 	try {
           if (!($record = $this->db->getRecord($this->id))) {
-            PEAR::raiseError(new PEAR_Error('Record Does Not Exist'));
+          #  PEAR::raiseError(new PEAR_Error('Record Does Not Exist'));
+            header('HTTP/1.1 404 Not Found');
+            $interface->setTemplate('error.tpl');
+            $interface->display('layout.tpl');
+            exit;
           }
 	} catch (Exception $e) {
 	  if (isset($_REQUEST['mergesearch'])) {

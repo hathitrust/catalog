@@ -27,10 +27,10 @@ spl_autoload_register('sample_autoloader');
 $host  =  'mysql-sdr';
 $uname =  "vufind";
 $pass  =  "notvillanova";
-$db    =  "ht";
+$db    =  "ht_repository";
 
      try {
-       $dbh = new PDO("mysql:host=$host;dbname=$db", $uname, $pass, array(
+       $dbh = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $uname, $pass, array(
            // PDO::ATTR_PERSISTENT => true
        )); 
        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

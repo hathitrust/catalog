@@ -37,7 +37,7 @@ return array (
   ),
   'gri' => 
   array (
-    'original_from' => 'The Getty Research Institute',
+    'original_from' => 'Getty Research Institute',
   ),
   'gwla' => 
   array (
@@ -113,7 +113,7 @@ return array (
   ),
   'keio' => 
   array (
-    'original_from' => 'Keio University',
+    'original_from' => '慶應義塾大学 (Keio University)',
   ),
   'lebau' => 
   array (
@@ -223,9 +223,17 @@ return array (
   array (
     'original_from' => 'McGill University',
   ),
+  'scu' => 
+  array (
+    'original_from' => 'University of South Carolina',
+  ),
   'srlf' => 
   array (
     'original_from' => 'University of California',
+  ),
+  'tu' => 
+  array (
+    'original_from' => 'University of Tennessee, Knoxville',
   ),
   'txcm' => 
   array (

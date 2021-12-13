@@ -69,7 +69,7 @@
       <li class="nav-item wide"><a class="nav-link" href="{$unicorn_root}/cgi/mb?colltype=my-collections;a=listcs">My Collections</a></li>
       {/if}
       <li class="nav-item wide">
-        <a class="nav-link" href="/cgi/mb">Collections</a>
+        <a class="nav-link" href="{$unicorn_root}/cgi/mb">Collections</a>
       </li>
       <li class="nav-item help wide">
         <a class="nav-link" href="https://www.hathitrust.org/help">Help</a>

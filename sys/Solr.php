@@ -1118,15 +1118,27 @@ class Solr
    */
   function getRecord($id) {
     // The default action
-    $result = $this->solrSearch(array(array('q', "id:$id")));
+    $query = "id:$id OR old_ids:$id";
+    $result = $this->solrSearch(array(array('q', $query)));
     if (!PEAR::isError($result) && isset($result['record'][0])) {
-      return $result['record'][0];
+      $rec =  $result['record'][0];
+      $returned_id = $rec['id'];
+      if ($returned_id == $id) {
+        return $rec;
+      } else {
+        $this->old_id_301($returned_id);
+      }
     }
     else {
       return null;
     }
   }
 
+  function old_id_301($newid) {
+    header("HTTP/1.1 301 Moved Permanently"); 
+    header("Location: /Record/$newid");
+    exit();
+  }
 
   /**
    * NEEDS REWRITING!!!! Get records similiar to given record.

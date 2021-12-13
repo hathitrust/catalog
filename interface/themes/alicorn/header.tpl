@@ -1,53 +1,83 @@
 <header class="site-navigation" role="banner">
   <nav aria-label="about the site">
-  <ul id="nav" class="nav">
-    <li>
-      <a class="home-link" href="https://www.hathitrust.org"><span class="offscreen-for-narrowest">Home</span></a>
-    </li>
-    <li class="menu nav-links">
-      <a aria-expanded="false" class="menu" href="#" id="burger-menu"><i class="icomoon icomoon-reorder" aria-hidden="true"></i> Menu</a>
-      <ul>
-        <li class="menu">
-          <a href="#" class="menu" aria-expanded="false" aria-haspopup="true" id="about-menu">About <span class="caret" aria-hidden="true"></span></a>
-          <ul role="menu" aria-labelledby="about-menu" aria-hidden="true">
-            <li>
-              <a href="https://www.hathitrust.org/about" aria-role="menuitem">Welcome to HathiTrust</a>
-            </li>
-            <li>
-              <a href="https://www.hathitrust.org/partnership" aria-role="menuitem">Our Partnership</a>
-            </li>
-            <li>
-              <a href="https://www.hathitrust.org/digital_library" aria-role="menuitem">Our Digital Library</a>
-            </li>
-            <li>
-              <a href="https://www.hathitrust.org/collaborative-programs" aria-role="menuitem">Our Collaborative Programs</a>
-            </li>
-            <li>
-              <a href="https://www.hathitrust.org/htrc" aria-role="menuitem">Our Research Center</a>
-            </li>
-            <li>
-              <a href="https://www.hathitrust.org/news_publications" aria-role="menuitem">News &amp; Publications</a>
-            </li>
-          </ul>
-        </li>
-        {if $ht_status.affiliation}
-        <li><a href="{$unicorn_root}/cgi/mb?colltype=my-collections;a=listcs">My Collections</a></li>
-        {/if}
-        <li>
-          <a href="{$unicorn_root}/cgi/mb">Collections</a>
-        </li>
-        <li class="help">
-          <a href="https://www.hathitrust.org/help">Help</a>
-        </li>
-        <li>
-          <a href="{$unicorn_root}/cgi/feedback?page=form" data-m="pt" data-toggle="feedback tracking-action" data-id="" data-tracking-action="Show Feedback">Feedback</a>
-        </li>
-        {if false && $ht_status.affiliation}
-        <li class="on-for-narrowest"><a class="logout-link" href="{$unicorn_root}/cgi/logout?{$fullPath_esc}">Log out</a></li>
-        {/if}
-      </ul>
-    </li>
-  </ul>
+    <ul id="nav" class="nav">
+      <li class="nav-item">
+        <a class="nav-link home-link" href="https://www.hathitrust.org">
+          <span class="offscreen-for-narrowest">Home</span>
+        </a>
+      </li>
+      <li class="nav-item dropdown" id="burger-menu-container">
+        <a id="burger-menu-trigger" href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"><i class="icomoon icomoon-reorder" aria-hidden="true"></i> Menu</a>
+        <ul id="burger-menu" class="dropdown-menu">
+          <li class="fixed">
+            <span class="dropdown-header">About</span>
+          </li>
+          <li class="nested">
+            <a class="dropdown-item" href="https://www.hathitrust.org/about">Welcome to HathiTrust</a>
+          </li>
+          <li class="nested">
+            <a class="dropdown-item" href="https://www.hathitrust.org/partnership">Our Partnership</a>
+          </li>
+          <li class="nested">
+            <a class="dropdown-item" href="https://www.hathitrust.org/digital_library">Our Digital Library</a>
+          </li>
+          <li class="nested">
+            <a class="dropdown-item" href="https://www.hathitrust.org/collaborative-programs">Our Collaborative Programs</a>
+          </li>
+          <li class="nested">
+            <a class="dropdown-item" href="https://www.hathitrust.org/htrc">Our Research Center</a>
+          </li>
+          <li class="nested">
+            <a class="dropdown-item" href="https://www.hathitrust.org/news_publications">News &amp; Publications</a>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          {if $ht_status.affiliation}
+          <li><a class="dropdown-item" href="{$unicorn_root}/cgi/mb?colltype=my-collections;a=listcs">My Collections</a></li>
+          {/if}
+          <li class="help">
+            <a class="dropdown-item" href="https://www.hathitrust.org/help">Help</a>
+          </li>
+          <li>
+            <a href="//babel.hathitrust.org/cgi/feedback?page=form" data-m="pt" data-toggle="feedback tracking-action" data-id="" data-tracking-action="Show Feedback">Feedback</a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item" id="about-menu-container">
+        <a id="about-menu" href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">About</a>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="dropdown-item" href="https://www.hathitrust.org/about">Welcome to HathiTrust</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="https://www.hathitrust.org/partnership">Our Partnership</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="https://www.hathitrust.org/digital_library">Our Digital Library</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="https://www.hathitrust.org/collaborative-programs">Our Collaborative Programs</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="https://www.hathitrust.org/htrc">Our Research Center</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="https://www.hathitrust.org/news_publications">News &amp; Publications</a>
+          </li>
+        </ul>
+      </li>
+      {if $ht_status.affiliation}
+      <li class="nav-item wide"><a class="nav-link" href="{$unicorn_root}/cgi/mb?colltype=my-collections;a=listcs">My Collections</a></li>
+      {/if}
+      <li class="nav-item wide">
+        <a class="nav-link" href="/cgi/mb">Collections</a>
+      </li>
+      <li class="nav-item help wide">
+        <a class="nav-link" href="https://www.hathitrust.org/help">Help</a>
+      </li>
+      <li class="nav-item wide">
+        <a href="//babel.hathitrust.org/cgi/feedback?page=form" data-m="pt" data-toggle="feedback tracking-action" data-id="" data-tracking-action="Show Feedback">Feedback</a>
+      </li>
+    </ul> 
   <ul id="person-nav" class="nav pull-right">
     <li class="on-for-pt on-for-narrow">
       <button class="btn action-search-hathitrust control-search">

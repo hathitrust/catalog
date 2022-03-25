@@ -1,0 +1,41 @@
+---
+version: '3'
+
+services:
+  #  traject:
+  #    image: hathitrust-catalog-indexer
+  #    environment:
+  #      - SOLR_URL=http://solr-sdr-catalog:9033/solr/catalog
+  #      - redirect_file=/dev/null
+  #      - NO_DB=1
+  #      - DDIR=/app/examples
+  #
+  #  solr-sdr-catalog:
+  #    image: solr-sdr-catalog
+  #    ports:
+  #      - "9033:9033"
+
+  nginx:
+    image: nginx
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./docker/nginx-default.conf:/etc/nginx/conf.d/default.conf
+      - .:/app
+    depends_on:
+      - vufind
+
+  vufind:
+    build: .
+    hostname: 'catalog-dev'
+    volumes:
+      - .:/app
+    depends_on:
+      - mysql-sdr
+
+  mysql-sdr:
+    image: mariadb
+    volumes:
+      - ./docker/vufind.sql:/docker-entrypoint-initdb.d/vufind.sql
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=1

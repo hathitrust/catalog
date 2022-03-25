@@ -10,10 +10,10 @@ services:
   #      - NO_DB=1
   #      - DDIR=/app/examples
   #
-  #  solr-sdr-catalog:
-  #    image: solr-sdr-catalog
-  #    ports:
-  #      - "9033:9033"
+  solr-sdr-catalog:
+    image: solr-sdr-catalog
+    ports:
+      - "9033:9033"
 
   nginx:
     image: nginx

@@ -1,5 +1,5 @@
 /* 
-  As of 2022-03-24, only 'vfsession' appears to be actively used in production.
+  As of 2022-03-24, only 'vfsession' is used in production.
 */
 
 CREATE DATABASE `vufind`;

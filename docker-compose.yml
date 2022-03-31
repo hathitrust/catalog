@@ -11,7 +11,7 @@ services:
   #      - DDIR=/app/examples
   #
   solr-sdr-catalog:
-    image: solr-sdr-catalog
+    image: ghcr.io/hathitrust/catalog-solr
     ports:
       - "9033:9033"
 

@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y \
       php-mdb2-driver-mysql \
       php-xsl \
       php-mbstring \
-      pear-channels
+      pear-channels \
+      php-yaml
 
 # Actual stuff installed on bullseye for ht-web-preview
 

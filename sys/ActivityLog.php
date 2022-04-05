@@ -14,7 +14,7 @@ class ActivityLog
   public static $donotlog = false;
   
   private function __construct($file) {
-    self::$config = Horde_Yaml::load(file_get_contents($file));
+    self::$config = yaml_parse_file($file);
     if (self::$config['style'] == 'db') {
       $this->dbh = DBH::singleton(self::$config['DBLogging']);
       $table = self::$config['DBLogging']['table'];

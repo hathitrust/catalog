@@ -215,7 +215,7 @@ class SearchExport {
     header('Content-type: application/x-Research-Info-Systems; charset=UTF-8');
     header('Content-disposition: attachment; filename=references.ris');
 
-    $this->tagSpecs = Horde_Yaml::load(file_get_contents($filename));
+    $this->tagSpecs = yaml_parse_file($filename);
     $this->_buildFormatMap($this->tagSpecs['typemap']);
 
     foreach ($this->results['record'] as $rawr) {
@@ -226,7 +226,7 @@ class SearchExport {
 
   function ristext() {
     header("Content-type: text/plain");
-    $this->tagSpecs = Horde_Yaml::load(file_get_contents('conf/risexport.yaml'));
+    $this->tagSpecs = yaml_parse_file('conf/risexport.yaml');
     $this->_buildFormatMap($this->tagSpecs['typemap']);
 
     foreach ($this->results['record'] as $rawr) {
@@ -240,7 +240,7 @@ class SearchExport {
     header('Content-disposition: attachment; filename=references.enw');
     // header('Content-type: text/plain; charset=UTF-8');
 
-    $this->tagSpecs = Horde_Yaml::load(file_get_contents('conf/endnote.yaml'));
+    $this->tagSpecs = yaml_parse_file('conf/endnote.yaml');
     $this->_buildFormatMap($this->tagSpecs['typemap']);
 
     if ($this->tempset) {
@@ -259,7 +259,7 @@ class SearchExport {
   function rfFormat() {
     header('Content-type: text/plain; charset=UTF-8');
     header('Content-disposition: attachment; filename=references.rft');
-    $this->tagSpecs = Horde_Yaml::load(file_get_contents('conf/refworksFormatExport.yaml'));
+    $this->tagSpecs = yaml_parse_file('conf/refworksFormatExport.yaml');
     $this->_buildFormatMap($this->tagSpecs['typemap']);
 
     foreach ($this->results['record'] as $rawr) {
@@ -458,7 +458,7 @@ class SearchExport {
 
     // Now send refworks a request.
 
-    $rfSpec = Horde_Yaml::load(file_get_contents('conf/refworks.yaml'));
+    $rfSpec = yaml_parse_file('conf/refworks.yaml');
 
     if (isset($_REQUEST['campus'])) {
       $baseURL = $rfSpec['baseURLs'][$_REQUEST['campus']];

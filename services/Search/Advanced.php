@@ -125,12 +125,6 @@ class Advanced extends Home {
         }
         fclose($formathandle);
 
-        // get location/collection info from config file
-        $locColl = Horde_Yaml::load(file_get_contents('conf/locColl.yaml'));
-        $instLocs = Horde_Yaml::load(file_get_contents('conf/instLocs.yaml'));
-        $interface->assign('locColl', $locColl);
-        $interface->assign('locCollJSON', json_encode($locColl));
-        $interface->assign('instLocsJSON', json_encode($instLocs));
 
         $interface->assign('formatList', $formatlist);
         $interface->assign('languageList', $languages);

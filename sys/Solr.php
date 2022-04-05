@@ -1173,9 +1173,9 @@ class Solr
       return null;
     }
 
-    $query = '(title:(' . $this->lucene_escape($this->mltesc($record['title'][0])) . ')^75';
+    $query = '(title:("' . $this->lucene_escape($this->mltesc($record['title'][0])) . '")^75';
     if (isset($record['shorttitle'])) {
-      $query .= ' OR title:(' . $this->lucene_escape($this->mltesc($record['title'][0])) . ')^100';
+      $query .= ' OR title:("' . $this->lucene_escape($this->mltesc($record['title'][0])) . '")^100';
     }
 
     if (isset($record['fulltopic'])) {

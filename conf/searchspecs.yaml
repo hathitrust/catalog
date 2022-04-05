@@ -1,5 +1,5 @@
 ---
-# Listing of search types, their component parts, their "type" and their 
+# Listing of search types, their component parts, their "type" and their
 # weights for named searches in vufind.
 #
 # Format is:
@@ -9,17 +9,17 @@
 #      - [differentMunge, weight]
 #    - DifferentSolrField:
 #      - [howToMunge, weight]
-# 
+#
 # ...etc.
 #
 #
-# Fields are OR'd together, unless they're in an anonymous array, in which case the 
+# Fields are OR'd together, unless they're in an anonymous array, in which case the
 # first element is a two-value array that tells us what the type (AND or OR) and weight of the whole
 # group should be (see example, below)
 #
 # Munge types are based on the original Solr.php code, and consist of:
 #
-# onephrase: eliminate all quotes and do it as a single phrase. 
+# onephrase: eliminate all quotes and do it as a single phrase.
 #   testing "one two"
 #    ...becomes ("testing one two")
 #
@@ -31,7 +31,7 @@
 #  testing "one two"
 #   ...becomes (testing OR "one two")
 #
-# 
+#
 #
 # So, given:
 #
@@ -41,11 +41,11 @@
 #     - [onephrase, 500]
 #     - [and, 200]
 #   - B:
-#     - [and, 100]   
-#     - [or, 50]  
+#     - [and, 100]
+#     - [or, 50]
 #   # Start an anonymous array to group; first element indicates AND grouping and a weight of 50
 #   -
-#     - [AND, 50]                 
+#     - [AND, 50]
 #     - C:
 #       - [onephrase, 200]
 #     - D:
@@ -55,15 +55,15 @@
 #       - [or, ~]
 #   - D:
 #     - [or, 100]
-# 
-# 
-#  ...and the search string 
+#
+#
+#  ...and the search string
 
 #      test "one two"
 
 #  ...we'd get
-#   
-#   (A:"test one two"^500 OR 
+#
+#   (A:"test one two"^500 OR
 #    A:(test AND "one two")^ 200 OR
 #    B:(test AND "one two")^100 OR
 #    B:(test OR "one two")^50
@@ -79,386 +79,386 @@
 # These are the stock searches as implemented in Solr.php
 
 callnoletters:
-  - callnoletters:
-    - [emstartswith, 1]
+  callnoletters:
+  - [emstartswith, 1]
 
 journaltitle:
-  - title_ab:
-    - [exactmatcher, 25000]
-  - title_a:
-    - [exactmatcher, 15000]
-  - titleProper:
-    - [emstartswith, 8000]    
-    - [onephrase, 1200]
-    - [and, 120]
-#    - [or, 12]
-  - title_topProper:
-    - [onephrase, 600]
-    - [and, 60]
-#    - [or, 6]
-  - title_restProper:
-    - [onephrase, 400]
-    - [and, 40]
-#   - [or, 4]
-  - series:
-    - [onephrase, 500]
-    - [and, 50]
-#    - [or, 5]
-  - series2:
-    - [onephrase, 500]
-    - [and, 50]
-#    - [or, 5]
-  - title:
-    - [and, 30]
-#    - [or, 3]
-  - title_top:
-    - [and, 20]
-#    - [or, ~]
-  - title_rest:
-    - [and, 1]
-#    - [or, ~]
+  title_ab:
+  - [exactmatcher, 25000]
+  title_a:
+  - [exactmatcher, 15000]
+  titleProper:
+  - [emstartswith, 8000]
+  - [onephrase, 1200]
+  - [and, 120]
+#  - [or, 12]
+  title_topProper:
+  - [onephrase, 600]
+  - [and, 60]
+#  - [or, 6]
+  title_restProper:
+  - [onephrase, 400]
+  - [and, 40]
+# - [or, 4]
+  series:
+  - [onephrase, 500]
+  - [and, 50]
+#  - [or, 5]
+  series2:
+  - [onephrase, 500]
+  - [and, 50]
+#  - [or, 5]
+  title:
+  - [and, 30]
+#  - [or, 3]
+  title_top:
+  - [and, 20]
+#  - [or, ~]
+  title_rest:
+  - [and, 1]
+#  - [or, ~]
 
 serialtitle:
-  - serialTitle_ab:
-    - [exactmatcher, 25000]
-  - serialTitle_a:
-    - [exactmatcher, 15000]
-  - serialTitleProper:
-    - [emstartswith, 8000]    
-    - [onephrase, 1200]
-    - [and, 120]
-#    - [or, 12]
-  - serialTitle_restProper:
-    - [onephrase, 400]
-    - [and, 40]
-#    - [or, 4]
-  - serialTitle:
-    - [and, 30]
-#    - [or, 3]
-  - serialTitle_rest:
-    - [and, 1]
-#    - [or, ~]
+  serialTitle_ab:
+  - [exactmatcher, 25000]
+  serialTitle_a:
+  - [exactmatcher, 15000]
+  serialTitleProper:
+  - [emstartswith, 8000]
+  - [onephrase, 1200]
+  - [and, 120]
+#  - [or, 12]
+  serialTitle_restProper:
+  - [onephrase, 400]
+  - [and, 40]
+#  - [or, 4]
+  serialTitle:
+  - [and, 30]
+#  - [or, 3]
+  serialTitle_rest:
+  - [and, 1]
+#  - [or, ~]
 
 title_starts_with:
-  - title_ab:
-    - [emstartswith, ~]
+  title_ab:
+  - [emstartswith, ~]
 
 title:
-  - title_ab:
-    - [exactmatcher, 25000]
-  - title_a:
-    - [exactmatcher, 15000]
-  - titleProper:
-    - [emstartswith, 8000]    
-    - [onephrase, 1200]
-    - [and, 120]
-#    - [or, 12]
-  - title_topProper:
-    - [onephrase, 600]
-    - [and, 60]
-#    - [or, 6]
-  - title_restProper:
-    - [onephrase, 400]
-    - [and, 40]
-#    - [or, 4]
-  - series:
-    - [onephrase, 500]
-    - [and, 50]
-#    - [or, 5]
-  - series2:
-    - [onephrase, 500]
-    - [and, 50]
-#    - [or, 5]
-  - title:
-    - [and, 30]
-#    - [or, 3]
-  - title_top:
-    - [and, 20]
-#    - [or, ~]
-  - title_rest:
-    - [and, 1]
-#    - [or, ~]
+  title_ab:
+  - [exactmatcher, 25000]
+  title_a:
+  - [exactmatcher, 15000]
+  titleProper:
+  - [emstartswith, 8000]
+  - [onephrase, 1200]
+  - [and, 120]
+#  - [or, 12]
+  title_topProper:
+  - [onephrase, 600]
+  - [and, 60]
+#  - [or, 6]
+  title_restProper:
+  - [onephrase, 400]
+  - [and, 40]
+#  - [or, 4]
+  series:
+  - [onephrase, 500]
+  - [and, 50]
+#  - [or, 5]
+  series2:
+  - [onephrase, 500]
+  - [and, 50]
+#  - [or, 5]
+  title:
+  - [and, 30]
+#  - [or, 3]
+  title_top:
+  - [and, 20]
+#  - [or, ~]
+  title_rest:
+  - [and, 1]
+#  - [or, ~]
 
 id:
-  - id:
-    - [onephrase, ~]
-    - [asis, ~]
+  id:
+  - [onephrase, ~]
+  - [asis, ~]
 
 author:
-  - author:
-    - [and, 200]
-#    - [or, 100]
-  - author2:
-    - [and, 50]
-#    - [or, ~]
+  author:
+  - [and, 200]
+#  - [or, 100]
+  author2:
+  - [and, 50]
+#  - [or, ~]
 
 authorSuggest:
-  - author:
-    - [and, ~]
+  author:
+  - [and, ~]
 
 
 realauth:
-  - authorStr:
-    - [onephrase, ~]
+  authorStr:
+  - [onephrase, ~]
 
 callnumber:
-  - callnumber:
-    - [emstartswith, ~]    
-  - callnosort:
-    - [lcnormalized, 1000]
-  - sudoc:
-    - [onephrase, 1000]
-    - [emstartswith, ~]    
+  callnumber:
+  - [emstartswith, ~]
+  callnosort:
+  - [lcnormalized, 1000]
+  sudoc:
+  - [onephrase, 1000]
+  - [emstartswith, ~]
     
 
 callno:
-  - callnumber:
-    - [emstartswith, ~]    
-  - callnosort:
-    - [lcnormalized, 1000]
+  callnumber:
+  - [emstartswith, ~]
+  callnosort:
+  - [lcnormalized, 1000]
 
 publisher:
-  - publisher:
-    - [and, 100]
-#    - [or, ~]
+  publisher:
+  - [and, 100]
+#  - [or, ~]
 
 year:
-  - publishDate:
-    - [onephrase, ~]
+  publishDate:
+  - [onephrase, ~]
 
 series:
-  - series:
-    - [onephrase, 500]
-    - [and, 200]
-#    - [or, 100]
-  - series2:
-    - [onephrase, 50]
-    - [and, 50]
-#    - [or, ~]
+  series:
+  - [onephrase, 500]
+  - [and, 200]
+#  - [or, 100]
+  series2:
+  - [onephrase, 50]
+  - [and, 50]
+#  - [or, ~]
 
 seriestitle:
-  - series:
-    - [onephrase, 500]
-    - [and, 200]
-#    - [or, 100]
-  - series2:
-    - [onephrase, 50]
-    - [and, 50]
-#    - [or, ~]
+  series:
+  - [onephrase, 500]
+  - [and, 200]
+#  - [or, 100]
+  series2:
+  - [onephrase, 50]
+  - [and, 50]
+#  - [or, ~]
 
 
 
 language:
-  - language:
-    - [and, 5]
-#    - [or, ~]
+  language:
+  - [and, 5]
+#  - [or, ~]
 
 topic:
-  - topic:
-    - [and, 50]
-#    - [or, 10]
-  - fulltopic:
-    - [and, 10]
-#    - [or, ~]
+  topic:
+  - [and, 50]
+#  - [or, 10]
+  fulltopic:
+  - [and, 10]
+#  - [or, ~]
 
 geographic:
-  - geographic:
-    - [and, 50]
-#    - [or, 10]
-  - fullgeographic:
-    - [and, 10]
-#    - [or, ~]
-    
+  geographic:
+  - [and, 50]
+#  - [or, 10]
+  fullgeographic:
+  - [and, 10]
+#  - [or, ~]
+
 genre:
-  - genre:
-    - [and, 50]
-#    - [or, 10]
-  - fullgenre:
-    - [and, 10]
-#    - [or, ~]
+  genre:
+  - [and, 50]
+#  - [or, 10]
+  fullgenre:
+  - [and, 10]
+#  - [or, ~]
 
 era:
-  - era:
-    - [and, 10]
-#    - [or, ~]
+  era:
+  - [and, 10]
+#  - [or, ~]
 
 subject:
-  - topicProper:
-    - [onephrase, 1200]
-    - [and, 120]
-  - topic:
-    - [onephrase, 100]
-    - [and, 10]
-#    - [or, ~]
-  - fullgeographic:
-    - [onephrase, 100]
-    - [and, 10]
-#    - [or, ~]
-  - fullgenre:
-    - [onephrase, 100]
-    - [and, 10]
-#    - [or, ~]
-  - era:
-    - [and, 10]
-#    - [or, ~]
+  topicProper:
+  - [onephrase, 1200]
+  - [and, 120]
+  topic:
+  - [onephrase, 100]
+  - [and, 10]
+#  - [or, ~]
+  fullgeographic:
+  - [onephrase, 100]
+  - [and, 10]
+#  - [or, ~]
+  fullgenre:
+  - [onephrase, 100]
+  - [and, 10]
+#  - [or, ~]
+  era:
+  - [and, 10]
+#  - [or, ~]
 
 subject2:
-  - topicProper:
-    - [onephrase, 1200]
-    - [and, 120]
-  - topic:
-    - [onephrase, 100]
-    - [and, 10]
+  topicProper:
+  - [onephrase, 1200]
+  - [and, 120]
+  topic:
+  - [onephrase, 100]
+  - [and, 10]
 
 isbn:
-  - isbn:
-    - [asis, ~]
+  isbn:
+  - [asis, ~]
 
 issn:
-  - issn:
-    - [asis, ~]
+  issn:
+  - [asis, ~]
 
 oclc:
-  - oclc_search:
-    - [stdnum, ~]
+  oclc_search:
+  - [stdnum, ~]
 
 lccn:
-  - lccn:
-    - [stdnum, ~]
+  lccn:
+  - [stdnum, ~]
     
 isbsnish:
-  - issn:
-    - [stdnum, ~]
-  - isbn:
-    - [stdnum, ~]
-  - isn_related:
-    - [stdnum, ~]
+  issn:
+  - [stdnum, ~]
+  isbn:
+  - [stdnum, ~]
+  isn_related:
+  - [stdnum, ~]
 
 isn:
-  - issn:
-    - [asis, ~]
-  - isbn:
-    - [asis, ~]
-  - lccn:
-    - [onephrase, ~]
-    - [asis, ~]
-  - ctrlnum:
-    - [exactmatcher, ~]
-  - rptnum:
-    - [onephrase, ~]
-    - [asis, ~]
-    - [exactmatcher, ~]
-  - oclc_search:
-    - [stdnum, 100]
-    - [onephrase, ~]
-    - [exactmatcher, ~]
-  - sdrnum:
-    - [onephrase, ~]
-    - [exactmatcher, ~]
-  - isn_related:
-    - [stdnum, ~]
-  - ht_id:
-    - [onephrase, ~]
-    - [exactmatcher, ~]
-    - [asis, ~]
-  - id:
-    - [onephrase, ~]
+  issn:
+  - [asis, ~]
+  isbn:
+  - [asis, ~]
+  lccn:
+  - [onephrase, ~]
+  - [asis, ~]
+  ctrlnum:
+  - [exactmatcher, ~]
+  rptnum:
+  - [onephrase, ~]
+  - [asis, ~]
+  - [exactmatcher, ~]
+  oclc_search:
+  - [stdnum, 100]
+  - [onephrase, ~]
+  - [exactmatcher, ~]
+  sdrnum:
+  - [onephrase, ~]
+  - [exactmatcher, ~]
+  isn_related:
+  - [stdnum, ~]
+  ht_id:
+  - [onephrase, ~]
+  - [exactmatcher, ~]
+  - [asis, ~]
+  id:
+  - [onephrase, ~]
     
 
 htid:
-  - ht_id:
-    - [onephrase, ~]
-    - [exactmatcher, ~]
-    - [asis, ~]
+  ht_id:
+  - [onephrase, ~]
+  - [exactmatcher, ~]
+  - [asis, ~]
 
 ht_id:
-  - ht_id:
-    - [onephrase, ~]
-    - [exactmatcher, ~]
-    - [asis, ~]
+  ht_id:
+  - [onephrase, ~]
+  - [exactmatcher, ~]
+  - [asis, ~]
     
 hlb:
-  - hlb3:
-    - [onephrase, 100]
-    - [and, 50]
-#    - [or, ~]
+  hlb3:
+  - [onephrase, 100]
+  - [and, 50]
+#  - [or, ~]
 
 
 all:
-  - ht_id:
-    - [onephrase, ~]
-    - [exactmatcher, ~]
-    - [asis, ~]
-  - id:
-    - [asis, ~]    
-  - title_ab:
-    - [onephrase, 25000]
-  - title_a:
-    - [onephrase, 15000]
-  - allfieldsProper:
-    - [onephrase, 4000]
-    - [and, 2000]
-  - allfields:
-    - [onephrase, 2000]
-    - [and, 1000]
-  - titleProper:
-    - [emstartswith, 8000]
-    - [onephrase, 800]
-    - [and, 160]
-  - title_topProper:
-    - [onephrase, 600]
-    - [and, 120]
-  - title_restProper:
-    - [onephrase, 400]
-    - [and, 80]
-  - series:
-    - [onephrase, 1000]
-    - [and, 100]
-  - series2:
-    - [onephrase, 800]
-    - [and, 80]
-  - author:
-    - [onephrase, 1600]
-    - [and, 160]
-  - author2:
-    - [onephrase, 800]
-    - [and, 80]
-  - issn:
-    - [asis, ~]
-  - isbn:
-    - [asis, ~]
-  - lccn:
-    - [onephrase, ~]
-  - rptnum:
-    - [onephrase, ~]
-  - oclc_search:
-    - [stdnum, ~]
-  - sdrnum:
-    - [onephrase, ~]
-  - ctrlnum:
-    - [onephrase, ~]
-  - ht_id:
-    - [onephrase, ~]
-  - isn_related:
-    - [stdnum, ~]
-  - topicProper:
-    - [onephrase, 1200]
-    - [and, 120]
-  - topic:
-    - [onephrase, 750]
-    - [and, 75]
-#    - [or, ~]
-  - fullgeographic:
-    - [onephrase, 100]
-    - [and, 10]
-#    - [or, ~]
-  - fullgenre:
-    - [onephrase, 100]
-    - [and, 10]
-#    - [or, ~]
-  - era:
-    - [and, 10]
-#    - [or, ~]
-  - hlb3:
-    - [and, 10]
+  ht_id:
+  - [onephrase, ~]
+  - [exactmatcher, ~]
+  - [asis, ~]
+  id:
+  - [asis, ~]
+  title_ab:
+  - [onephrase, 25000]
+  title_a:
+  - [onephrase, 15000]
+  allfieldsProper:
+  - [onephrase, 4000]
+  - [and, 2000]
+  allfields:
+  - [onephrase, 2000]
+  - [and, 1000]
+  titleProper:
+  - [emstartswith, 8000]
+  - [onephrase, 800]
+  - [and, 160]
+  title_topProper:
+  - [onephrase, 600]
+  - [and, 120]
+  title_restProper:
+  - [onephrase, 400]
+  - [and, 80]
+  series:
+  - [onephrase, 1000]
+  - [and, 100]
+  series2:
+  - [onephrase, 800]
+  - [and, 80]
+  author:
+  - [onephrase, 1600]
+  - [and, 160]
+  author2:
+  - [onephrase, 800]
+  - [and, 80]
+  issn:
+  - [asis, ~]
+  isbn:
+  - [asis, ~]
+  lccn:
+  - [onephrase, ~]
+  rptnum:
+  - [onephrase, ~]
+  oclc_search:
+  - [stdnum, ~]
+  sdrnum:
+  - [onephrase, ~]
+  ctrlnum:
+  - [onephrase, ~]
+  ht_id:
+  - [onephrase, ~]
+  isn_related:
+  - [stdnum, ~]
+  topicProper:
+  - [onephrase, 1200]
+  - [and, 120]
+  topic:
+  - [onephrase, 750]
+  - [and, 75]
+#  - [or, ~]
+  fullgeographic:
+  - [onephrase, 100]
+  - [and, 10]
+#  - [or, ~]
+  fullgenre:
+  - [onephrase, 100]
+  - [and, 10]
+#  - [or, ~]
+  era:
+  - [and, 10]
+#  - [or, ~]
+  hlb3:
+  - [and, 10]
 

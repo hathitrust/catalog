@@ -655,14 +655,7 @@ class SearchStructure
     }
 
     function asRecordURL($sysid, $extra=array()) {
-      
-      $url =  '/Record/' . $sysid;
-      if (count($ss->search) <= 1) {
-        $url .= '?' . $this->asURL($extra, false);
-      } else {
-        $url .= '?' .  implode('&', array_map(array($this, "asURLComponent"), $this->actionURLComponents()));
-      }
-      return $url;
+      return '/Record/' . $sysid . '?' . $this->asURL($extra, false);
     }
 
 

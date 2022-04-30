@@ -31,7 +31,7 @@
             <a class="dropdown-item" href="https://www.hathitrust.org/news_publications">News &amp; Publications</a>
           </li>
           <li><hr class="dropdown-divider" /></li>
-          {if $ht_status.affiliation}
+          {if FALSE && $ht_status.affiliation}
           <li><a class="dropdown-item" href="{$unicorn_root}/cgi/mb?colltype=my-collections;a=listcs">My Collections</a></li>
           {/if}
           <li class="help">
@@ -65,7 +65,7 @@
           </li>
         </ul>
       </li>
-      {if $ht_status.affiliation}
+      {if FALSE && $ht_status.affiliation}
       <li class="nav-item wide"><a class="nav-link" href="{$unicorn_root}/cgi/mb?colltype=my-collections;a=listcs">My Collections</a></li>
       {/if}
       <li class="nav-item wide">
@@ -82,6 +82,11 @@
     <li class="on-for-pt on-for-narrow">
       <button class="btn action-search-hathitrust control-search">
         <i class="icomoon icomoon-search"></i><span class="off-for-narrowest"> Search</span> HathiTrust</button>
+    </li>
+    <li>
+      <button disabled="disabled" class="btn action-toggle-notifications" aria-label="Toggle Notifications">
+        <i class="icomoon icomoon-bell" aria-hidden="true"></i>
+      </button>
     </li>
     {if $ht_status.affiliation}
     <li class="item-vanishing"><span>{$ht_status.affiliation}</span></li>

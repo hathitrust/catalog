@@ -39,6 +39,10 @@ return array (
   array (
     'original_from' => 'Getty Research Institute',
   ),
+  'gu' => 
+  array (
+    'original_from' => 'University of Georgia',
+  ),
   'gwla' => 
   array (
     'original_from' => 'Technical Report Archive &amp; Image Library',
@@ -46,6 +50,10 @@ return array (
   'hvd' => 
   array (
     'original_from' => 'Harvard University',
+  ),
+  'iagg' => 
+  array (
+    'original_from' => 'Grinnell College',
   ),
   'iau' => 
   array (
@@ -170,6 +178,10 @@ return array (
   'njp' => 
   array (
     'original_from' => 'Princeton University',
+  ),
+  'njr' => 
+  array (
+    'original_from' => 'Rutgers University',
   ),
   'nnc' => 
   array (

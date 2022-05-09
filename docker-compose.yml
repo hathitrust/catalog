@@ -2,14 +2,7 @@
 version: '3'
 
 services:
-  #  traject:
-  #    image: hathitrust-catalog-indexer
-  #    environment:
-  #      - SOLR_URL=http://solr-sdr-catalog:9033/solr/catalog
-  #      - redirect_file=/dev/null
-  #      - NO_DB=1
-  #      - DDIR=/app/examples
-  #
+
   solr-sdr-catalog:
     image: ghcr.io/hathitrust/catalog-solr
     ports:
@@ -25,6 +18,8 @@ services:
     depends_on:
       - vufind
 
+  # Uncomment the networks block if you want to connect to solr running
+  # elsewhere
   vufind:
     build: .
     hostname: 'catalog-dev'
@@ -32,6 +27,9 @@ services:
       - .:/app
     depends_on:
       - mysql-sdr
+#     networks:
+#       - catalog_indexer
+#       - default
 
   mysql-sdr:
     image: mariadb
@@ -39,3 +37,11 @@ services:
       - ./docker/vufind.sql:/docker-entrypoint-initdb.d/vufind.sql
     environment:
       - MARIADB_RANDOM_ROOT_PASSWORD=1
+
+# networks:
+#   catalog_indexer:
+#     external: true
+#     # Adjust this if the running solr is in another docker network
+#     name: hathitrust_catalog_indexer_default
+#   default:
+#     external: false

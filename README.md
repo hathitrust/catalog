@@ -9,8 +9,8 @@ docker-compose up
 ## Indexing Records
 
 Follow the README from https://github.com/hathitrust/hathitrust_catalog_indexer
-and use the instructions for `traject_external` to add records to the solr you
-just started with docker-compose.
+and use the instructions for "Using with other projects via docker" to use this
+project with the solr running in that docker-compose environment.
 
 ## What Works
 

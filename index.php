@@ -386,7 +386,7 @@ if (is_readable("services/$module/$action.php")) {
         PEAR::raiseError(new PEAR_Error('Unknown Action'));
     }
 } else {
-    PEAR::RaiseError(new PEAR_Error("Cannot Load Action: module=$module, action=$action"));
+    PEAR::raiseError(new PEAR_Error("Cannot Load Action: module=$module, action=$action"));
 }
 
 
@@ -399,7 +399,7 @@ function handlePEARError($error, $method = null) {
     $interface = new UInterface();
     $interface->assign('error', $error);
     header('HTTP/1.1 404 Not Found');
-    $interface->display('error.tpl');
+    $interface->display('Search/error.tpl');
     foreach ($error->backtrace as $trace) {
         echo '[' . $trace['line'] . '] ' . $trace['file'] . '<br>';
     }

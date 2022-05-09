@@ -72,7 +72,7 @@ class Record extends Action
 
           if (count($this->mergedItemData[1]['records']) == 0) {
              header('HTTP/1.1 404 Not Found');
-              $interface->setTemplate('error.tpl');
+              $interface->setTemplate('Record/error.tpl');
               $interface->display('layout.tpl');
               exit;
           }
@@ -132,7 +132,7 @@ class Record extends Action
           if (!($record = $this->db->getRecord($this->id))) {
           #  PEAR::raiseError(new PEAR_Error('Record Does Not Exist'));
             header('HTTP/1.1 404 Not Found');
-            $interface->setTemplate('error.tpl');
+            $interface->setTemplate('Record/error.tpl');
             $interface->display('layout.tpl');
             exit;
           }

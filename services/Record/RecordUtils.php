@@ -140,6 +140,10 @@ function items_from_raw_json($json_string) {
 				 (!$open_to_no_one) &&
 				 $this->is_held_by_user_institution($heldby));
     $rv['is_NFB'] = $htstatus->is_NFB && (!$open_to_no_one);
+    $rv['has_activated_role'] = $htstatus->has_activated_role &&
+                                     (!$rv['is_fullview'] &&
+				 (!$open_to_no_one));
+
     return $rv;
   }
 

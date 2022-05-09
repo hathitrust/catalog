@@ -6,7 +6,7 @@ class AuthSpecs
   private static $data;
   
   private function __construct($file) {
-    self::$data = Horde_Yaml::load(file_get_contents($file));
+    self::$data = yaml_parse_file($file);
   }
   
   public function singleton($file = 'config/authspecs.yaml') {

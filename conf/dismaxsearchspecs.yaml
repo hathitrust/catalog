@@ -1,7 +1,7 @@
 # dismax stuff; for now, just all
 
 
-Junk
+Junk:
   pf:
     - [serialTitle_ab, 25000]
     - [serialTitle_a, 15000]

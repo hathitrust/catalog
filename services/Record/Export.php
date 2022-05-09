@@ -119,7 +119,7 @@ class Export extends Record
         global $configArray;
         $m = $this->marcRecord;
         $lines = array();
-        $specs = Horde_Yaml::load(file_get_contents('conf/risexport.yaml'));
+        $specs = yaml_parse_file('conf/risexport.yaml');
         foreach ($specs as $ristag => $tagspec) {
             foreach ($tagspec as $tuple) {
                 $line = $ristag . '  - ';

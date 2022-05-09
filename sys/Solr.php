@@ -306,7 +306,7 @@ class Solr
       $value = '*:*';
     }
     // Get the yaml file
-    $allspecs = Horde_Yaml::load(file_get_contents('conf/dismaxsearchspecs.yaml'));
+    $allspecs = yaml_parse_file('conf/dismaxsearchspecs.yaml');
 
     // If the type isn't set, back up to normal arguments
 
@@ -359,7 +359,7 @@ class Solr
 
     $searchComponents = array();
 
-    $specs = Horde_Yaml::load(file_get_contents('conf/searchspecs.yaml'));
+    $specs = yaml_parse_file('conf/searchspecs.yaml');
     $query = '';
 
     foreach ($ss->search as $tvb) { // Type, Value (keywords), Boolen AND or OR

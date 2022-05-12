@@ -14,6 +14,7 @@ class HTStatus {
    public $provider_name = "Unauthenticated";
    public $mapped_institution_code = null;
    public $is_NFB = false;
+   public $has_activated_role = false;
 
 
    function __construct() {
@@ -27,6 +28,7 @@ class HTStatus {
        $this->u = $c['u'];
        $this->emergency_access = $this->determine_emergency_access($c);
        $this->is_NFB = $this->determine_NFB($c);
+       $this->has_activated_role = $this->determine_activated_role($c);
        $this->provider_name = $c['providerName'];
        if (isset($c['mapped_institution_code'])) {
          $this->mapped_institution_code = $c['mapped_institution_code'];
@@ -51,6 +53,10 @@ class HTStatus {
 
      return (isset($special_access['enhancedTextUser']) && $special_access['enhancedTextUser'] == 1) ||
             (isset($special_access['enhancedTextProxy']) && $special_access['enhancedTextProxy'] == 1);
+   }
+
+   function determine_activated_role($c) {
+     return isset($c['u']) ? $c['u'] : FALSE;
    }
 
    function fakefill($instcode) {

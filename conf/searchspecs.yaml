@@ -377,13 +377,6 @@ ht_id:
   - [exactmatcher, ~]
   - [asis, ~]
     
-hlb:
-  hlb3:
-  - [onephrase, 100]
-  - [and, 50]
-#  - [or, ~]
-
-
 all:
   ht_id:
   - [onephrase, ~]
@@ -459,6 +452,4 @@ all:
   era:
   - [and, 10]
 #  - [or, ~]
-  hlb3:
-  - [and, 10]
 

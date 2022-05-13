@@ -8,7 +8,7 @@ class Error extends Action {
         global $interface;
         $interface->setPageTitle('Search Syntax Error');
         $interface->assign('error', $_REQUEST['error']);
-        $interface->setTemplate('searchError.tpl');
+        $interface->setTemplate('Search/error.tpl');
         $interface->display('layout.tpl');
     }
 }

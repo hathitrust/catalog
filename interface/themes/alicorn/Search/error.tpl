@@ -11,7 +11,7 @@
 
     <div class="container container-medium flex-container flex-container-expanded container-boxed" style="margin-top: 1.75rem; margin-bottom: 1.75rem">
 
-      {include file="$module/list.sidebar.tpl"}
+      {include file="Search/list.sidebar.tpl"}
 
       <section class="section-container" id="section" data-record-count="{$recordCount}">
         <h1 class="listcs-intro" style="margin-left: 0; font-weight: normal; margin-bottom: 1rem">

@@ -6,6 +6,8 @@ git clone https://github.com/hathitrust/catalog
 docker-compose up
 ```
 
+This will use a Solr index pre-loaded with a sample set of 2,000 records.
+
 ## Indexing Records
 
 Follow the README from https://github.com/hathitrust/hathitrust_catalog_indexer

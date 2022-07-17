@@ -280,123 +280,126 @@ class SearchExport {
     global $configArray;
     $m = $this->ru->getMarcRecord($record);
     $lines = array();
-    foreach ($this->tagSpecs['fieldmap'] as $exportTag => $tagspec) {
-      foreach ($tagspec as $tuple) {
-        $line = $tagprefix . $exportTag . $tagsuffix;
 
-        // Take care of special cases
-        $tag = $tuple[0];
+    foreach($this->tagSpecs['fieldmap'] as $fieldMapItem) {
+      foreach ($fieldMapItem as $exportTag => $tagspec) {
+        foreach ($tagspec as $tuple) {
+          $line = $tagprefix . $exportTag . $tagsuffix;
 
-        if (preg_match('/^\d+$/', $tag)) {
-          $tag = sprintf('%03d', $tag);
-        }
-        if ($tag == 'TITLE') {
-          $titles = $this->ru->getLongTitles($m);
-          $title = $titles[0];
-          array_push($lines, $line . $title);
-          continue;
-        }
-        if ($tag == 'ID') {
-          array_push($lines, $line . $record['id']);
-          continue;
-        }
-        if ($tag == 'RECORDURL') {
-          array_push($lines, $line . $configArray['Site']['url'] . '/Record/' . $record['id']);
-          continue;
-        }
-        if ($tag == 'TYPE') {
-          $type = $this->bestFormat($record['baseFormat']);
-          array_push($lines, $line . $type);
-          continue;
-        }
+          // Take care of special cases
+          $tag = $tuple[0];
 
-        if ($tag == 'ALEPHTYPE') {
-          $type = $this->bestFormat($record['baseFormat'], true);
-          array_push($lines, $line . $type);
-          continue;
-        }
-
-        if ($tag == 'HTLINK') {
-          foreach ($m->getFields('974', true) as $f) {
-            $htid = $f->getSubfield('u')->getData();
-            $ecron = $f->getSubfield('z');
-            if ($ecron) {
-              $htid .= " (" . $ecron->getData() . ")";
-            }
-            array_push($lines, $line . "http://hdl.handle.net/2027/$htid");
+          if (preg_match('/^\d+$/', $tag)) {
+            $tag = sprintf('%03d', $tag);
           }
-          continue;
-        }
-
-
-        # if it's a control tag...
-
-        if ($tag < 10 && preg_match('/^\d+$/', $tag)) {
-          foreach ($this->ru->getRDAFields($m, $tag, true) as $cfield) {
-            $data = $cfield->getData();
-            if (isset($tuple[1])) {
-              $start = $tuple[1] - 1;
-              $length = $tuple[2];
-              $data = substr($data, $start, $length);
-            }
-            $newline = $line . $data;
-            if (!isset($alllines[$newline])) {
-              array_push($lines, $newline);
-              $alllines[$newline] = true;
-            }
-          }
-          continue;
-        }
-
-        # Otherwise, data
-        $join = isset($tuple[2]) ? $tuple[2] : '';
-        $join = $join == 'SPACE' ? ' ' : $join;
-        $join = $join == '~' ? '' : $join;
-
-        $match = $tuple[1];
-        $match = $match == '~' ? null : $match;
-
-        $alwaysmatch = isset($match) ? false : true;
-
-        $realtag = substr($tag, 0, 3);
-
-        $ind1 = substr($tag, 3, 1);
-        $ind2 = substr($tag, 4, 1);
-
-        foreach ($this->ru->getRDAFields($m, $realtag, true) as $dfield) {
-          if (!(preg_match("/$ind1/", $dfield->getIndicator(1)) &&
-                  preg_match("/$ind2/", $dfield->getIndicator(2)))
-          ) {
+          if ($tag == 'TITLE') {
+            $titles = $this->ru->getLongTitles($m);
+            $title = $titles[0];
+            array_push($lines, $line . $title);
             continue;
           }
-          $str = array();
-          foreach ($dfield->getSubfields() as $sub) {
-            // if ($alwaysmatch || strspn($sub->getCode(), $match)) {
-            $code = $sub->getCode();
-            if (!($alwaysmatch || preg_match("/$code/i", $match))) {
-              continue;
-            }
-            $val = $sub->getData();
-            if (preg_match('/^Mode of access:/i', $val)) {
-              continue;
-            }
-            $val = preg_replace('/(\d)[.\s]+$/', '$1', $val);
-            // Add it unless we've got a case mismatch (hence uppercase) and already have a value
-            // if (!(!preg_match("/$code/", $match) && count($str))) {
-            $str[$val] = true;
-            // }
+          if ($tag == 'ID') {
+            array_push($lines, $line . $record['id']);
+            continue;
           }
-          if (count($str)) {
-            $data = implode($join, array_keys($str));
-            $data = preg_replace('/[;:,\/\s+]+$/', '', $data);
-            $data = preg_replace('/^\[c?(\d+)\]\s*$/', '$1', $data);
-            $data = preg_replace('/^c(\d{4})[;\-\.]*$/', '$1', $data); // Fudge for dates
+          if ($tag == 'RECORDURL') {
+            array_push($lines, $line . $configArray['Site']['url'] . '/Record/' . $record['id']);
+            continue;
+          }
+          if ($tag == 'TYPE') {
+            $type = $this->bestFormat($record['baseFormat']);
+            array_push($lines, $line . $type);
+            continue;
+          }
 
-            $newline = $line . $data;
-            $newlineclean = preg_replace('/\W$/', '', $newline);
-            if (!isset($alllines[$newlineclean])) {
-              array_push($lines, $newline);
-              $alllines[$newlineclean] = true;
+          if ($tag == 'ALEPHTYPE') {
+            $type = $this->bestFormat($record['baseFormat'], true);
+            array_push($lines, $line . $type);
+            continue;
+          }
+
+          if ($tag == 'HTLINK') {
+            foreach ($m->getFields('974', true) as $f) {
+              $htid = $f->getSubfield('u')->getData();
+              $ecron = $f->getSubfield('z');
+              if ($ecron) {
+                $htid .= " (" . $ecron->getData() . ")";
+              }
+              array_push($lines, $line . "http://hdl.handle.net/2027/$htid");
+            }
+            continue;
+          }
+
+
+          # if it's a control tag...
+
+          if ($tag < 10 && preg_match('/^\d+$/', $tag)) {
+            foreach ($this->ru->getRDAFields($m, $tag, true) as $cfield) {
+              $data = $cfield->getData();
+              if (isset($tuple[1])) {
+                $start = $tuple[1] - 1;
+                $length = $tuple[2];
+                $data = substr($data, $start, $length);
+              }
+              $newline = $line . $data;
+              if (!isset($alllines[$newline])) {
+                array_push($lines, $newline);
+                $alllines[$newline] = true;
+              }
+            }
+            continue;
+          }
+
+          # Otherwise, data
+          $join = isset($tuple[2]) ? $tuple[2] : '';
+          $join = $join == 'SPACE' ? ' ' : $join;
+          $join = $join == '~' ? '' : $join;
+
+          $match = $tuple[1];
+          $match = $match == '~' ? null : $match;
+
+          $alwaysmatch = isset($match) ? false : true;
+
+          $realtag = substr($tag, 0, 3);
+
+          $ind1 = substr($tag, 3, 1);
+          $ind2 = substr($tag, 4, 1);
+
+          foreach ($this->ru->getRDAFields($m, $realtag, true) as $dfield) {
+            if (!(preg_match("/$ind1/", $dfield->getIndicator(1)) &&
+                    preg_match("/$ind2/", $dfield->getIndicator(2)))
+            ) {
+              continue;
+            }
+            $str = array();
+            foreach ($dfield->getSubfields() as $sub) {
+              // if ($alwaysmatch || strspn($sub->getCode(), $match)) {
+              $code = $sub->getCode();
+              if (!($alwaysmatch || preg_match("/$code/i", $match))) {
+                continue;
+              }
+              $val = $sub->getData();
+              if (preg_match('/^Mode of access:/i', $val)) {
+                continue;
+              }
+              $val = preg_replace('/(\d)[.\s]+$/', '$1', $val);
+              // Add it unless we've got a case mismatch (hence uppercase) and already have a value
+              // if (!(!preg_match("/$code/", $match) && count($str))) {
+              $str[$val] = true;
+              // }
+            }
+            if (count($str)) {
+              $data = implode($join, array_keys($str));
+              $data = preg_replace('/[;:,\/\s+]+$/', '', $data);
+              $data = preg_replace('/^\[c?(\d+)\]\s*$/', '$1', $data);
+              $data = preg_replace('/^c(\d{4})[;\-\.]*$/', '$1', $data); // Fudge for dates
+
+              $newline = $line . $data;
+              $newlineclean = preg_replace('/\W$/', '', $newline);
+              if (!isset($alllines[$newlineclean])) {
+                array_push($lines, $newline);
+                $alllines[$newlineclean] = true;
+              }
             }
           }
         }

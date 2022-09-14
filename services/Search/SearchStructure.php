@@ -149,7 +149,7 @@ class SearchStructure
 
       # Hang onto the first set of search terms for display
 
-      $this->cleaned_up_original_lookfor = $ss;
+      $this->cleaned_up_original_search = $ss;
 
 
       foreach($ss as $i => $fkb) {
@@ -168,18 +168,6 @@ class SearchStructure
         unset($last[2]);
         array_push($ss, $last);
       }
-
-      # Make a copy to fix trailing operators
-      $cleaned_up_ss = $ss;
-      foreach ($cleaned_up_ss as $i => $fkb) {
-        $val = $fkb[1];
-        $val = preg_replace('/AND\s*$/', "and", $val);
-        $val = preg_replace('/OR\s*$/', "or", $val);
-        $val = preg_replace('/NOT\s*$/', "not", $val);
-        $fkb[1] = $val;
-      }
-      $this->cleaned_up_original_search = $cleaned_up;
-
 
       // CHECK FOR DISMAX USE
 
@@ -777,7 +765,7 @@ class SearchStructure
         }
 
       }
-      foreach ($this->cleaned_up_original_lookfor as $fkb) { # field, keywords, bool
+      foreach ($this->cleaned_up_original_search as $fkb) { # field, keywords, bool
         $index = $fkb[0] == 'all'? 'All Fields' : $fkb[0];
         if (isset($this->indexDisplayName[$index])) $index =  $this->indexDisplayName[$index];
         

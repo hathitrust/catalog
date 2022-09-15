@@ -28,7 +28,8 @@ class OpenSearch extends Action {
         
         if (isset($_GET['method'])) {
             if (is_callable(array($this, $_GET['method']))) {
-                $this->$_GET['method']();
+                $meth = $_GET['method'];
+                $this->$meth();
             } else {
                 echo '<Error>Invalid Method. Use either "describe" or "search"</Error>';
             }

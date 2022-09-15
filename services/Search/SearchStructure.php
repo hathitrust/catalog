@@ -42,6 +42,7 @@ class SearchStructure
     public $action = 'standard';
     public $checkSpelling = false;
     public $originalHash;
+    public $cleaned_up_original_search;
     public $indexDisplayName = array(
       'publishDateTrie' => 'Year', 
       'subject2' => 'Subject',
@@ -127,24 +128,38 @@ class SearchStructure
 
       # Clean up the lookfors
       #  * change '- ' and '- EOF' to ' '
-      #  * Ditch teh blanks
+      #  * Ditch the empty keywords
+      #  * lowercase trailing AND/OR/NOT
       
+     $ss = array();
 
       # Ditch all the blank lookfors
-      $ss = array();
       foreach($lookfor as $i => $value) {
           $val = $value;
           $val = preg_replace('/\-\s+/', ' ', $val);
           $val = preg_replace('/\-$/', '', $val);
-          if (preg_match('/\S/', $val)) {
-              array_push($ss, array(isset($type[$i])? $type[$i] : 'all', 
-                                    $val,
-                                    isset($bool[$i])? $bool[$i] : null
-                                    )
-                         );
-          }
+          $lookfor[$i] = $val;
+         if (preg_match('/\S/', $val)) {
+             array_push($ss, array(isset($type[$i])? $type[$i] : 'all',
+                                   $val,
+                                   isset($bool[$i])? $bool[$i] : null
+                                   )
+                        );
+         }     }
+
+      # Hang onto the first set of search terms for display
+
+      $this->cleaned_up_original_search = $ss;
+
+
+      foreach($ss as $i => $fkb) {
+        $val = $fkb[1];
+        $val = preg_replace('/AND\s*$/', "and", $val);
+        $val = preg_replace('/OR\s*$/', "or", $val);
+        $val = preg_replace('/NOT\s*$/', "not", $val);
+        $ss[$i][1] = $val;
       }
-      
+
 
       // The last bool need to be nil. Pop it off, change it, and
       // push it back on again.
@@ -153,16 +168,16 @@ class SearchStructure
         unset($last[2]);
         array_push($ss, $last);
       }
-      
+
       // CHECK FOR DISMAX USE
-      
+
       // First, assume we can use dismax
-      
+
       $this->use_dismax = true;
-      
+
       // If we have multiple types, we can't use dismax
       // If our single index is unsupported, we can't use dismax.
-      
+
       if (count($ss) > 1) {
         $this->use_dismax = false;
       } elseif (count($ss) == 1) {
@@ -172,14 +187,14 @@ class SearchStructure
           $this->use_dismax = false;
         }
       }
-      $this->search = $ss; 
+      $this->search = $ss;
   }
-    
-            
-    function __construct ($blank = false) 
+
+
+    function __construct ($blank = false)
     {
         global $configArray;
-        
+
         if ($blank) {
             $this->ss = array();
             $this->inbandFilters = array();
@@ -187,17 +202,17 @@ class SearchStructure
             $this->fillOOBFilters();
             return;
         }
-        
+
        $this->_fillFromHash($_REQUEST);
- 
+
 
     }
-    
+
    /**
      * Turn an array of filter (facet) values into a string normalized by first (a) sorting the values, then (b)
      * imploding them with a '|'
    **/
-   
+
      function filterkey($val) {
        if (!is_array($val)) {
          return $val;
@@ -205,14 +220,14 @@ class SearchStructure
        $key = $val;
        sort($key);
        return implode('|', $key);
-     }  
+     }
 
    /**
      * Build a list of OR'd filtes. They must be named filteror-<indexname>
      * Note that if you want to create an OR'd filter manually, you can
      * just call addFiilter with something like ("Bill" OR "Dueber")
    **/
-  
+
     function fillORFilters($hash) {
         foreach (array_keys($hash) as $key) {
             if (!preg_match('/^fqor-(.*)$/', $key, $matches)) {
@@ -230,9 +245,9 @@ class SearchStructure
      * Find inputs of the form fqrange-start-XXX and fqrange-end-XXX
      * and create a range filter.
      *
-     * 
+     *
     **/
-    
+
     function fillRangeFilters($hash) {
       foreach (array_keys($hash) as $key) {
           if (!preg_match('/^fqrange-(start|end)-(.*?)-(\d+)$/', $key, $matches)) {
@@ -249,13 +264,13 @@ class SearchStructure
           if (!preg_match('/\S/', $val)) {
             continue;
           }
-                    
+
           $startkey = implode('-', array("fqrange", "start", $index, $seq));
           $endkey   = implode('-', array("fqrange", "end",   $index, $seq));
-          
+
           $start = '*';
           $end   = '*';
-          
+
           if (isset($hash[$startkey]) && preg_match('/^\s*\d+\s*$/',$hash[$startkey])) {
             $start = $hash[$startkey];
           }
@@ -270,18 +285,18 @@ class SearchStructure
           if (! $end == '*') {
 	    $end = '"' + $end + '"';
 	  }
-	    
+
           $this->addFilter($index, "[$start TO $end]");
         }
       }
- 
-    
+
+
    /**
      *
      * Build up a list of filters based on the $_REQUEST['filter'] values, if any,
      * as well as any extra filters from the extraFilters area of the config file
-   **/    
-    
+   **/
+
     function fillOOBFilters() {
         global $configArray;
 
@@ -292,7 +307,7 @@ class SearchStructure
                 $this->addOOBFilter($kv[0], $kv[1]);
             }
         }
-        
+
         if ($this->ftonly) {
           $this->addOOBFilter('ht_availability', 'Full text');
         }
@@ -306,7 +321,7 @@ class SearchStructure
 
 
      }
-    
+
     function fillInstFilter($hash) {
       global $configArray;
       if (isset($configArray['Switches']['ignoreInst']) && $configArray['Switches']['ignoreInst']) {
@@ -317,12 +332,12 @@ class SearchStructure
 
       // Add location limit from sublib and collection if present
       $location = '';
-      if (isset($hash['sublib']) && 
+      if (isset($hash['sublib']) &&
                 $hash['sublib'] != '' &&
                 $hash['sublib'] != 'ALL') {
         $location = $hash['sublib'];
       }
-      if (isset($hash['sublibColl']) && 
+      if (isset($hash['sublibColl']) &&
                 $hash['sublibColl'] != '' &&
                 $hash['sublibColl'] != 'ALL') {
         $location = $hash['sublibColl'];
@@ -330,15 +345,15 @@ class SearchStructure
       //if ($location != '') $this->addOOBFilter('location', $location);
       if ($location != '') $this->addFilter('location', $location);
     }
-    
+
     function fillInbandFilters($hash) {
-                
+
         if (!isset($hash['filter'])) {
             return;
         }
         $request = $hash['filter'];
-        
-        
+
+
         if (!is_array($request)) {
             $request = array($request);
         }
@@ -349,17 +364,17 @@ class SearchStructure
               $this->addFilter($item[0], $item[1]);
             }
         }
-        
+
     }
-    
+
     function setAction($hash) {
       // if (isset($hash['checkspelling']) && !$this->use_dismax) {
       //      $this->action = 'spellCheckCompRH';
             $this->checkSpelling = true;
-      //  } 
+      //  }
      }
-    
-    
+
+
      function setFTOnly($ft) {
        $this->ftonly = $ft;
        if ($ft) {
@@ -368,28 +383,28 @@ class SearchStructure
          $this->removeOOBFilter('ht_availability', 'Full text');
        }
      }
-    
-    
+
+
     function actionURLComponents() {
       $aucs = array();
       // if ($this->use_dismax) {
       //   $aucs[] = array('use_dismax', true);
       // }
-      
+
       if ($this->ftonly) {
         $aucs[] = array('ft', 'ft');
       } else {
         $aucs[] = array('ft', '');
       }
-      
+
       return $aucs;
     }
-    
+
     /**
       * Add a tag directive
       *
     **/
-    
+
     function addTag($tag) {
       $this->tagList[$tag] = true;
     }
@@ -397,7 +412,7 @@ class SearchStructure
       * Hold onto any tag directives
       *
     **/
-    
+
     function fillTags($hash) {
       if (!isset($hash['tag'])) {
         return;
@@ -411,15 +426,15 @@ class SearchStructure
         $this->addTag($tag);
       }
     }
-    
+
     function tags() {
       return array_keys($this->tagList);
     }
-    
+
     /**
       * Add any search components of the form id=XXX to manualIDs
     **/
-    
+
     function fillManualIDs($hash) {
       if (!isset($hash['id'])) {
         return;
@@ -431,49 +446,49 @@ class SearchStructure
       foreach ($ids as $id) {
         $multiids = preg_split('/[,; ]+/', $id);
         foreach ($multiids as $oneid) {
-          $this->addIDs($oneid);          
+          $this->addIDs($oneid);
         }
       }
     }
-    
+
     /**
       * Add a filter, possibly keeping it out-of-band (and hence not displayed to the user)
-      * 
-      * @param string index       The solr index to filter on. 
+      *
+      * @param string index       The solr index to filter on.
       * @param string value       The value or array of values
     **/
-    
+
     function addFilter($index, $value) {
       $this->inbandFilters[$index][$this->filterkey($value)] = $value;
     }
-    
+
     function addOOBFilter($index, $value) {
       $this->outofbandFilters[$index][$this->filterkey($value)] = $value;
     }
-    
+
     function removeFilter($index, $value) {
       $key = $this->filterkey($value);
       unset($this->inbandFilters[$index][$key]);
     }
-     
+
     function removeOOBFilter($index, $value) {
       $key = $this->filterkey($value);
       unset($this->outofbandFilters[$index][$key]);
      }
-    
+
     function hasFilter($index, $value) {
        $key = $this->filterkey($value);
       return isset($this->inbandFilters[$index], $this->inbandFilters[$index][$key]) ||
              isset($this->inbandFilters[$index], $this->inbandFilters[$index][$key]);
     }
-    
+
   /**
-    * Create a list of the form 
+    * Create a list of the form
     *  [
     *    [index, val], [index2, val2], [index2, val3], [index2, [orval1, orval2]], ...
     *  ]
   **/
-    
+
     function _activeFilters($farray) {
       $rv = array();
       foreach (array_keys($farray) as $index) {
@@ -483,25 +498,25 @@ class SearchStructure
       }
       return $rv;
     }
-    
+
      function activeInbandFilters() {
          return $this->_activeFilters($this->inbandFilters);
      }
-     
+
      function activeOOBFilters() {
        return $this->_activeFilters($this->outofbandFilters);
      }
-     
+
      function allActiveFilters() {
          return array_merge($this->activeInbandFilters(), $this->activeOOBFilters());
      }
-     
-     
-    /** 
+
+
+    /**
       * Deal with extra IDs (for manually-created lists)
       *
     **/
-    
+
     function addIDs($ids) {
       if (!is_array($ids)) {
         $ids = array($ids);
@@ -511,7 +526,7 @@ class SearchStructure
         $this->manuallyAddedIDs[$id] = true;
       }
     }
-    
+
     function removeIDs($id) {
       if (!is_array($ids)) {
         $ids = array($ids);
@@ -521,32 +536,32 @@ class SearchStructure
         unset($this->manuallyAddedIDs[$id]);
       }
     }
-    
+
     function extraIDs() {
       return array_keys($this->manuallyAddedIDs);
     }
-    
+
     /**
       * Utilities to easily determine if we have an empty search (or various components)
       *
     **/
-    
+
     function isEmpty() {
       return $this->noSearch() && $this->noExtraIDs() && $this->noInbandFilters();
     }
-    
+
     function noSearch() {
       return count($this->search()) == 0;
     }
-    
+
     function noExtraIDs() {
       return count($this->manuallyAddedIDs) == 0;
     }
-    
+
     function noInbandFilters() {
       return count($this->inbandFilters) == 0;
     }
-    
+
     /**
       * Create URL components that will re-create this search. Basically, this should be everything after
       * /Search/Home?
@@ -556,9 +571,9 @@ class SearchStructure
       *
       * @return array A series of tuples of the form (data[], value) where the data options
       *               are type, lookfor, and bool.
-    **/    
-    
-    
+    **/
+
+
     function searchURLComponents() {
         $urlcomps = array();
         foreach ($this->search as $tlb) {
@@ -570,7 +585,7 @@ class SearchStructure
          }
         return $urlcomps;
     }
-    
+
     /**
       * Create URL components for the inband filters of this query
       *
@@ -595,14 +610,14 @@ class SearchStructure
         }
         return $urlcomps;
     }
-    
+
     /**
       * Create URL components for the sort options of this query
       *
       * @return array A tuple of the form ('sort', sortspec), or () if no sort is specified
       *
      */
-    
+
     function sortURLComponents() {
         if ($this->sort) {
             return  array(array('sort', $this->sort));
@@ -610,7 +625,7 @@ class SearchStructure
             return array();
         }
     }
-    
+
     function pageURLComponents() {
         if ($this->page) {
             return  array(array('page', $this->page), array('pagesize', $this->pagesize));
@@ -618,7 +633,7 @@ class SearchStructure
             return array();
         }
     }
-    
+
     function tagURLComponents() {
       $rv = array();
       foreach ($this->tags() as $t) {
@@ -626,13 +641,13 @@ class SearchStructure
       }
       return $rv;
     }
-    
+
 
     static function asURLComponent($kvpair) {
         return rawurlencode($kvpair[0]) . '=' . rawurlencode($kvpair[1]);
     }
-    
-    
+
+
     function asFullURL($module = 'Home', $extra = array()) {
       global $configArray;
       $url = $configArray['Site']['url'] . '/Search/' . $module . '?' . $this->asURL($extra);
@@ -644,14 +659,14 @@ class SearchStructure
       $searchURLComponents[] = array('type[]', 'all');
       $searchURLComponents[] = array('lookfor[]', '*');
 
-      return '/Search/' . $module . '?' . implode('&', array_map(array($this, "asURLComponent"), 
+      return '/Search/' . $module . '?' . implode('&', array_map(array($this, "asURLComponent"),
                                     array_merge($searchURLComponents,
                                                 $this->filterURLComponents(),
                                                 $this->sortURLComponents(),
                                                 $this->tagURLComponents(),
                                                 ($includePageComponents ? $this->pageURLComponents() : array()),
                                                 $this->actionURLComponents(),
-                                                $extra)));   
+                                                $extra)));
     }
 
     function asRecordURL($sysid, $extra=array()) {
@@ -669,20 +684,20 @@ class SearchStructure
      */
 
     function asURL($extra = array(), $includePageComponents=true) {
-        return implode('&', array_map(array($this, "asURLComponent"), 
+        return implode('&', array_map(array($this, "asURLComponent"),
                                       array_merge($this->searchURLComponents(),
                                                   $this->filterURLComponents(),
                                                   $this->sortURLComponents(),
                                                   $this->tagURLComponents(),
                                                   ($includePageComponents ? $this->pageURLComponents() : array()),
                                                   $this->actionURLComponents(),
-                                                  $extra)));    
+                                                  $extra)));
     }
-    
+
     function asURLComponents($extra) {
       return urlencode($this->asURL($extra));
     }
-    
+
     /**
      * Construct and return a URL which extends the current search with an additional
      * filter. A simple wrapper for addFilter/removeFilter
@@ -692,18 +707,18 @@ class SearchStructure
      * @param array $extra  An array of (key, value) duples to add to the URL
      * @return string The URL for the current search with an extra filter
     */
-    
+
     function asURLPlusFilter($index, $value, $extra = array()) {
         if ($this->hasFilter($index, $value)) {
             return $this->asURL($extra);
         }
-        
+
         $this->addFilter($index, $value);
         $url = $this->asURL($extra);
         $this->removeFilter($index,$value);
         return $url;
     }
-    
+
 
     /**
      * Construct and return a URL which broadens the current search to ignore
@@ -711,11 +726,11 @@ class SearchStructure
      *
      * @param string $index The (actual solr) index for the filter
      * @param string $value The (already quoted and parenthesized, if need be) value
-     * @param array $extra  An array of (key, value) duples to add to the URL     
+     * @param array $extra  An array of (key, value) duples to add to the URL
      * @return string The URL for the current search without the given filter
      *
     */
-    
+
     function asURLMinusFilter($index, $value, $extra=array()) {
         if (!$this->hasFilter($index, $value)) {
             return $this->asURL($extra);
@@ -726,19 +741,19 @@ class SearchStructure
         $this->addFilter($index,$value);
         return $url;
     }
-    
+
     /**
       * Construct a string representing the search string for display
       * @return Array An array of displayable search terms with trailing bools
       *    ['title:Title words AND', 'author: Dueber']
     **/
-    
+
     function searchtermsForDisplay() {
       $s = array();
       if (!count($this->search) && !count($this->tagList)) {
         return array("(no keywords)");
       }
-      
+
       if (count($this->tagList)) {
         $session = VFSession::instance();
         foreach ($this->tags() as $t) {
@@ -748,14 +763,14 @@ class SearchStructure
             $s[] = "tag: $t";
           }
         }
-        
+
       }
-      foreach ($this->search as $fkb) { # field, keywords, bool
+      foreach ($this->cleaned_up_original_search as $fkb) { # field, keywords, bool
         $index = $fkb[0] == 'all'? 'All Fields' : $fkb[0];
         if (isset($this->indexDisplayName[$index])) $index =  $this->indexDisplayName[$index];
         
         $l = $index . ': ' . $fkb[1];
-        
+
         if (isset($fkb[2])) { # the boolean operator
           $l .= ' ' . $fkb[2];
         }
@@ -861,6 +876,9 @@ class SearchStructure
           return isset($this->facetConfig[$facet])? $this->facetConfig[$facet] : $facet;
         }
     }
+
+
+
     
     
     // function convert_smart_quotes($text) 

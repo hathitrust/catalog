@@ -73,4 +73,5 @@ COPY ./docker/php_pool.conf /etc/php/7.4/fpm/pool.d/www.conf
 STOPSIGNAL SIGQUIT
 
 EXPOSE 9000
-CMD ["/usr/sbin/php-fpm7.4","-F","-O"]
+WORKDIR /app
+CMD ["/app/docker/run_catalog.sh"]

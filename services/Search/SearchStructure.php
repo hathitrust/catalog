@@ -136,11 +136,27 @@ class SearchStructure
       # Ditch all the blank lookfors
       foreach($lookfor as $i => $value) {
           $val = $value;
-          $val = preg_replace('/\-\s+/', ' ', $val);
-          $val = preg_replace('/\-$/', '', $val);
+          $empty = true;
+          if (is_array($val)) {
+              $newvals = array();
+              foreach($val as $k => $v) {
+                 $v = $this->clean_up_search_term($v);
+                 if (preg_match('/\S/', $v)) {
+                     $newvals[] = $v;
+                     $empty = false;
+                 }
+              }
+              $val = $newvals;
+          } else {
+              $val = $this->clean_up_search_term($val);
+              if (preg_match('/\S/', $val)) {
+                  $empty = false;
+              }
+          }
           $lookfor[$i] = $val;
-         if (preg_match('/\S/', $val)) {
-             array_push($ss, array(isset($type[$i])? $type[$i] : 'all',
+         if (!$empty) {
+             $field = isset($type[$i])? $type[$i] : 'all';
+             array_push($ss, array($field,
                                    $val,
                                    isset($bool[$i])? $bool[$i] : null
                                    )
@@ -188,6 +204,14 @@ class SearchStructure
         }
       }
       $this->search = $ss;
+  }
+
+  function clean_up_search_term($value) {
+      $val = $value;
+      $val = preg_replace('/--+/', " ", $val);
+      $val = preg_replace('/\-\s+/', ' ', $val);
+      $val = preg_replace('/\-$/', '', $val);
+      return $val;
   }
 
 

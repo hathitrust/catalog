@@ -33,14 +33,23 @@ class SolrConnection
     $this->add($args);
   }
 
+  public function empty_value($val) {
+      return (
+          (is_array($val) && count($val) == 0) ||
+          (!preg_match('/\S/', $val))
+      );
+  }
+
   // There are different mechanisms for adding data to GET and POST
   // requests, so I guess I'll have to switch on them.
   public function add($args) {
     foreach ($args as $kvpair) {
       $key = $kvpair[0];
       $value = $kvpair[1];
-      $vstr = is_array($value) ? "[" . join(", ", $value) . "]" : $value;
-      $this->request->addPostParameter(array($key => $value));
+      if (! $this->empty_value($value)) {
+          $vstr = is_array($value) ? "[" . join(", ", $value) . "]" : $value;
+          $this->request->addPostParameter(array($key => $vstr));
+      }
     }
   }
 

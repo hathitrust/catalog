@@ -252,6 +252,9 @@ class Solr
     // Turn it into the exposed return value
 
     foreach ($fields as $field) {
+      if (!array_key_exists($field, $body['facet_counts']['facet_fields'])) {
+        continue;
+      }
       $values = $body['facet_counts']['facet_fields'][$field];
       $rv['values'][$field] = array();
 
@@ -701,7 +704,11 @@ class Solr
             if (preg_match('/^\s*0*([\d\-\.]+[xX]?).*$/', $values['asis'], $match)) {
               $stdnum = $match[1];
               $stdnum = preg_replace('/[\.\-]/', '', $stdnum);
-              $values[$val] = $stdnum;
+              if (preg_match('/\S/', $stdnum)) {
+                $values[$val] = $stdnum;
+              } else {
+                continue;
+              }
             }
           }
         }

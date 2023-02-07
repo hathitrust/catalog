@@ -50,8 +50,9 @@ class SolrConnection
     $this->add($args);
     $resp = $this->request->send();
 
+    #TODO: do this better
     if ($resp->getStatus() > 200) {
-      print_r($this);
+      #print_r($this);
       throw new Exception("Problem talking to Solr");
     }
     else {

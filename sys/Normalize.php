@@ -41,12 +41,14 @@ class Normalize
 
   static function stdnum($str, $leaveLeadZeros=false) {
     $str = trim(strtolower($str));
+
     if ($leaveLeadZeros) {
      $str = preg_replace('/^[\s\-\.]*([\d\.\-]+x?).*$/', '$1', $str);
     } else {
       $str = preg_replace('/^[\s0\-\.]*([\d\.\-]+x?).*$/', '$1', $str);
     }
-    return preg_replace('/[\-\.]/', '', $str);
+    $just_digits =  preg_replace('/[\-\.]/', '', $str);
+
 
   }
 

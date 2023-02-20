@@ -20,7 +20,12 @@
 
         <div class="results-container">
           <div class="results-summary-container">
-            <h2 class="results-summary"><b>No results</b> matched your search.</h2>
+            {if $error_message}
+              <h2 class="results-summary"><b>Error</b> executing your search:</h2>
+              <p><code>{$error_message}</code></p>
+            {else}
+              <h2 class="results-summary"><b>No results</b> matched your search.</h2>
+            {/if}
           </div>
 
           <div class="results-container-inner">

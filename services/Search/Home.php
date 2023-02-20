@@ -193,8 +193,7 @@ class Home extends Action {
         }
         catch(Exception $e) {
           # The error template doesn't do anything with this but it could...
-          $interface->assign('errormessage', $e->getMessage());
-          $interface->display('error.tpl');
+          $interface->assign('error_message', $e->getMessage());
         }
 
         //******************************************************

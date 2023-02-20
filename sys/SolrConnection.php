@@ -44,16 +44,14 @@ class SolrConnection
     }
   }
 
-
-
   public function _send($args = []) {
     $this->add($args);
     $resp = $this->request->send();
 
     #TODO: do this better
     if ($resp->getStatus() > 200) {
-      #print_r($this);
-      throw new Exception("Problem talking to Solr");
+      $msg = json_decode($resp->getBody(), true)['error']['msg'];
+      throw new Exception("Problem talking to Solr: $msg");
     }
     else {
       $body = $resp->getBody();

@@ -50,7 +50,7 @@ class SolrConnection
 
     #TODO: do this better
     if ($resp->getStatus() > 200) {
-      $msg = json_decode($resp->getBody(), true)['error']['msg'];
+      $msg = $resp->getBody();
       throw new Exception("Problem talking to Solr: $msg");
     }
     else {

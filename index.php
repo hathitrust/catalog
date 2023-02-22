@@ -396,10 +396,14 @@ if (is_readable("services/$module/$action.php")) {
 
 // Process any errors that are thrown
 function handlePEARError($error, $method = null) {
+    $module = (isset($_GET['module'])) ? $_GET['module'] : 'Search';
     $interface = new UInterface();
     $interface->assign('error', $error);
+    $interface->assign('module', $module);
     header('HTTP/1.1 404 Not Found');
-    $interface->display('Search/error.tpl');
+    $interface->setTemplate('error.tpl');
+    $interface->display('layout.tpl');
+
     foreach ($error->backtrace as $trace) {
         echo '[' . $trace['line'] . '] ' . $trace['file'] . '<br>';
     }

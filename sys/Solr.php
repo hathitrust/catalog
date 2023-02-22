@@ -707,7 +707,7 @@ class Solr
             }
           }
         }
-        if (($values[$val] == "") || !isset($values[$val])) {
+        if (!isset($values[$val]) || ($values[$val] == "")) {
           continue;
         }
         $sstring = $field . ':(' . $values[$val] . ')';

@@ -58,7 +58,7 @@
   
   RewriteRule   ^(Record)/([0-9]+)/(.+)$   index.php?module=$1&id=$2&action=$3   [QSA,L]
   RewriteRule   ^(Record)/(AJAX)$         index.php?module=$1&action=$2         [QSA,L]
-  RewriteRule   ^(Record)/([0-9]+)$           index.php?module=$1&id=$2&action=Home [QSA,L]
+  RewriteRule   ^(Record)/([0-9A-Za-z]+)$           index.php?module=$1&id=$2&action=Home [QSA,L]
   RewriteRule   ^(Search)/(Advanced)/(.+)$ index.php?module=$1&action=$2&inst=$3 [QSA,L]
   
   

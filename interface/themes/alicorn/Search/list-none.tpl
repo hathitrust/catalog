@@ -20,7 +20,16 @@
 
         <div class="results-container">
           <div class="results-summary-container">
-            <h2 class="results-summary"><b>No results</b> matched your search.</h2>
+            {if $error_message}
+              <h2 class="results-summary">
+                There was a problem talking to the catalog.
+              </h2>
+              <!--
+              {$error_message}
+              -->
+            {else}
+              <h2 class="results-summary"><b>No results</b> matched your search.</h2>
+            {/if}
           </div>
 
           <div class="results-container-inner">

@@ -25,6 +25,7 @@ require_once 'services/Search/SearchStructure.php';
 require_once 'services/Record/FilterFormat.php';
 require_once 'lib/LCCallNumberNormalizer.php';
 require_once 'sys/ActivityLog.php';
+require_once "sys/Normalize.php";
 
 /**
  * Solr HTTP Interface
@@ -700,12 +701,13 @@ class Solr
           if ($val == 'stdnum') {
             if (preg_match('/^\s*0*([\d\-\.]+[xX]?).*$/', $values['asis'], $match)) {
               $stdnum = $match[1];
-              $stdnum = preg_replace('/[\.\-]/', '', $stdnum);
+//              $stdnum = preg_replace('/[\.\-]/', '', $stdnum);
+              $stdnum = Normalize::stdnum($stdnum);
               $values[$val] = $stdnum;
             }
           }
         }
-        if (!isset($values[$val])) {
+        if (!isset($values[$val]) || ($values[$val] == "")) {
           continue;
         }
         $sstring = $field . ':(' . $values[$val] . ')';
@@ -886,7 +888,7 @@ class Solr
   function exactmatcherify($str) {
     $str = strtolower($str);
     $str = trim($str);
-    $str = preg_replace('/[^\p{L}\p{N}\*\?]/u', '', $str);
+    $str = preg_replace('/[^\p{L}\p{N}\*\?\-]/u', '', $str);
     return $str;
   }
 

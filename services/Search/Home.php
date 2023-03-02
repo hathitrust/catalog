@@ -182,13 +182,19 @@ class Home extends Action {
         //******************************************************
         //     ACTUALLY DO THE SEARCH
         //******************************************************
-
-
-        $result = $this->newprocessSearch($page, $limit);
-        if (PEAR::isError($result)) {
-            PEAR::raiseError($result->getMessage());
+        $result = [];
+        try {
+          $result = $this->newprocessSearch($page, $limit);
+          //If the exception is thrown, this text will not be shown
+          if (PEAR::isError($result)) {
+            #PEAR::raiseError($result->getMessage());
+            $interface->display('error.tpl');
+          }
         }
-
+        catch(Exception $e) {
+          # The error template doesn't do anything with this but it could...
+          $interface->assign('error_message', $e->getMessage());
+        }
 
         //******************************************************
         //     GET SPELLING RESULTS

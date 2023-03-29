@@ -17,6 +17,12 @@ services:
 
   nginx:
     image: nginx
+    healthcheck:
+      test: ["CMD", "/usr/bin/curl", "-s", "-f", "http://localhost:8080/Search/Home?lookfor=stuff&searchtype=all&ft=&setft=false"]
+      interval: 5s
+      timeout: 10s
+      start_period: 30s
+      retries: 5
     ports:
       - "8080:8080"
     volumes:
@@ -40,3 +46,19 @@ services:
       - ./docker/vufind.sql:/docker-entrypoint-initdb.d/vufind.sql
     environment:
       - MARIADB_RANDOM_ROOT_PASSWORD=1
+
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.32.0-focal
+    volumes:
+      - ./playwright:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    working_dir: /usr/src/app
+    depends_on:
+      nginx:
+        condition: service_healthy
+    command: /bin/sh /usr/src/app/docker_run_playwright_test.sh
+    profiles:
+      - playwright
+
+volumes:
+  node_modules:

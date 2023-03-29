@@ -16,6 +16,15 @@ Follow the README from https://github.com/hathitrust/hathitrust_catalog_indexer
 and use the instructions for `traject_external` to add records to the solr you
 just started with docker-compose.
 
+## Testing
+
+PlayWright browser tests are done automatically by GitHub Actions on push,
+and can be done locally with:
+
+```bash
+docker compose run --rm playwright
+```
+
 ## What Works
 
 See all records with http://localhost:8080/Search/Home

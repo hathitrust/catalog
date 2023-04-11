@@ -5,8 +5,8 @@
   <title>{$pageTitle|truncate:64:"..."} | HathiTrust Digital Library</title>
   <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">
 
-  {* <link rel="stylesheet" type="text/css" href="/common/alicorn/css/main.css" /> *}
-  {css_link href="/common/alicorn/css/main.201910.css"}
+  <link rel="stylesheet" href="https://hathitrust-firebird-common.netlify.app/assets/main.css" />
+  <script type="module" src="https://hathitrust-firebird-common.netlify.app/assets/main.js"></script>
 
   {if $id}
   <link rel="canonical" href="/Record/{$id|escape:"url"}">
@@ -20,10 +20,6 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <meta name="title" content="{$pageTitle|escape}" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  {* <script type="text/javascript" src="/common/alicorn/js/utils.js"></script> *}
-  {js_link href="/common/alicorn/js/utils.201910.js"}
-
 
 </head>
 <body>

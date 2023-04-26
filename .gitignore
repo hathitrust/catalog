@@ -6,3 +6,5 @@ derived_data/*txt
 interface/compile
 /nbproject/private/
 *.sass-cache*
+.gitmodules
+node_modules/*

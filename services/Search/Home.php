@@ -197,7 +197,9 @@ class Home extends Action {
           $solr_err = true;
         }
 
-        $interface->assign('fixedUnbalancedQuotes', $this->ss->fixedUnbalancedQuotes);
+        if (isset($this->ss->fixedUnbalancedQuotes)) {
+          $interface->assign('fixedUnbalancedQuotes', $this->ss->fixedUnbalancedQuotes);
+        }
 
         //******************************************************
         //     GET SPELLING RESULTS

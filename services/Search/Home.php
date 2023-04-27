@@ -182,7 +182,8 @@ class Home extends Action {
         //******************************************************
         //     ACTUALLY DO THE SEARCH
         //******************************************************
-        $result = [];
+        $result = ['record' => []];
+        $solr_err = false;
         try {
           $result = $this->newprocessSearch($page, $limit);
           //If the exception is thrown, this text will not be shown
@@ -192,8 +193,12 @@ class Home extends Action {
           }
         }
         catch(Exception $e) {
-          # The error template doesn't do anything with this but it could...
           $interface->assign('error_message', $e->getMessage());
+          $solr_err = true;
+        }
+
+        if (isset($this->ss->fixedUnbalancedQuotes)) {
+          $interface->assign('fixedUnbalancedQuotes', $this->ss->fixedUnbalancedQuotes);
         }
 
         //******************************************************
@@ -211,7 +216,7 @@ class Home extends Action {
         if (count($result['record']) == 0) {
             $interface->assign('ss', $this->ss);
 
-            if ($this->ss->ftonly) {
+            if ($this->ss->ftonly && !$solr_err) {
               $this->ss->setFTOnly(false);
               $allitems_results = $this->newprocessSearch(1, 0);
               $interface->assign('allitems_count', $allitems_results['RecordCount']);
@@ -224,7 +229,6 @@ class Home extends Action {
 
             return;
         }
-
 
         //******************************************************
         //    TURN IT INTO AN ARRAY IF WE ONLY GOT ONE ITEM
@@ -450,7 +454,6 @@ class Home extends Action {
 
 
         // If we've got a simple (one-type) clause, do a simple search
-
         return $this->db->simpleSearch($this->ss,
                                        ($page-1)*$limit, $limit
                                       );

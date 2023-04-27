@@ -163,6 +163,7 @@ class SearchStructure
             $val = preg_replace('/--+/', ' ', $val);
             $val = preg_replace('/\-\s+/', ' ', $val);
             $val = preg_replace('/\-$/', '', $val);
+            $val = $this->fix_unbalanced_quotes($val);
             if ($this->is_empty($val)) {
                 continue;
             }
@@ -996,6 +997,17 @@ class SearchStructure
         return $text;
     }
 
+    # Detects an odd number of double quotes and removes the last one.
+    function fix_unbalanced_quotes($str)
+    {
+      if (substr_count($str, '"', 0) % 2 != 0) {
+        $pos = strrpos($str, "\"", -1);
+        # So we can inform the user
+        $this->fixedUnbalancedQuotes = true;
+        $str = substr_replace($str, '', $pos, 1);
+      }
+      return $str;
+    }
 }
 
 ?>

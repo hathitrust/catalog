@@ -18,6 +18,12 @@
             Search results from the HathiTrust biblographic catalog.
         </h1>
 
+        {if $fixedUnbalancedQuotes}
+          <div class="alert">
+            <p>Your query contained ambiguous quotes and was modified by removing the last one.</p>
+          </div>
+        {/if}
+
         <div class="results-container">
           <div class="results-summary-container">
             {if $error_message}

@@ -12,7 +12,7 @@
   {include file="header.tpl"}
 
   <main class="main-container" id="main">
-    {include file="search_form.tpl"}
+    {* {include file="search_form.tpl"} *}
 
     <div class="container container-medium flex-container flex-container-expanded container-boxed" style="margin-top: 1.75rem; margin-bottom: 1.75rem">
 

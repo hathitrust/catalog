@@ -1,4 +1,5 @@
-<footer class="site-navigation" role="contentinfo">
+<hathi-website-footer></hathi-website-footer>
+{* <footer class="site-navigation" role="contentinfo">
   <nav>
     <ul class="nav pull-right">
       <li>
@@ -28,4 +29,4 @@
       </li>
     </ul>
   </nav>
-</footer>
+</footer> *}

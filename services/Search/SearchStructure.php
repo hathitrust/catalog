@@ -1002,11 +1002,9 @@ class SearchStructure
     {
       if (substr_count($str, '"', 0) % 2 != 0) {
         $pos = strrpos($str, "\"", -1);
-        if ($pos !== false) {
-          # So we can inform the user
-          $this->fixedUnbalancedQuotes = true;
-          $str = substr_replace($str, '', $pos, 1);
-        }
+        # So we can inform the user
+        $this->fixedUnbalancedQuotes = true;
+        $str = substr_replace($str, '', $pos, 1);
       }
       return $str;
     }

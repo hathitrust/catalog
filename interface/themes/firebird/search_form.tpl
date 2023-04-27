@@ -1,4 +1,5 @@
-<div class="container container-medium flex-container container-header">
+
+{* <div class="container container-medium flex-container container-header">
   <div class="logo">
     <a href="https://www.hathitrust.org">
       <span class="offscreen">HathiTrust Digital Library</span>
@@ -71,4 +72,4 @@
 
     </form>
   </div>
-</div>
+</div> *}

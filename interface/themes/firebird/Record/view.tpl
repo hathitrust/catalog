@@ -22,7 +22,7 @@
   {assign var=ld value=$ht_vals_from_json}
 
   <main class="main-container" id="main">
-    {include file="search_form.tpl"}
+    {* {include file="search_form.tpl"} *}
 
     <div class="container container-medium flex-container flex-container-expanded container-boxed">
 

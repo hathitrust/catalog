@@ -9,7 +9,7 @@
   {include file="header.tpl"}
 
   <main class="main-container" id="main">
-    {include file="search_form.tpl"}
+    {* {include file="search_form.tpl"} *}
     <div class="container container-medium" style="margin-top: 1.75rem">
 
       <h1 class="listcs-intro">

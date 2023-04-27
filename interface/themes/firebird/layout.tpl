@@ -7,7 +7,8 @@
 
   <script src="https://kit.fontawesome.com/1c6c3b2b35.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://hathitrust-firebird-common.netlify.app/assets/main.css" />
-  <script type="module" src="https://hathitrust-firebird-common.netlify.app/assets/main.js"></script>
+  <script type="module" src="//localhost:5174/js/main.js"></script>
+  {* <script type="module" src="https://hathitrust-firebird-common.netlify.app/assets/main.js"></script> *}
 
   {if $id}
   <link rel="canonical" href="/Record/{$id|escape:"url"}">

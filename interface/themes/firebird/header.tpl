@@ -1,4 +1,5 @@
-<header class="site-navigation" role="banner">
+<hathi-website-header></hathi-website-header>
+{* <header class="site-navigation" role="banner">
   <nav aria-label="about the site">
     <ul id="nav" class="nav">
       <li class="nav-item">
@@ -100,4 +101,4 @@
     {/if}
   </ul>
   </nav>
-</header>
+</header> *}

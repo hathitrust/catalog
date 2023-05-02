@@ -6,7 +6,7 @@
   <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">
 
   <script src="https://kit.fontawesome.com/1c6c3b2b35.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://hathitrust-firebird-common.netlify.app/assets/main.css" />
+  <link rel="stylesheet" href="//localhost:5174/scss/styles.scss" />
   <script type="module" src="//localhost:5174/js/main.js"></script>
   {* <script type="module" src="https://hathitrust-firebird-common.netlify.app/assets/main.js"></script> *}
 
@@ -24,7 +24,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 </head>
-<body>
+<body class="apps">
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
     <symbol id="checkbox-empty" viewBox="0 0 18 18">

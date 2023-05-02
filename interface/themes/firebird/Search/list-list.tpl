@@ -2,17 +2,44 @@
   {assign var="htjson" value=$ru->items_from_json($record)}
   {assign var="ht_vals_from_json" value=$ru->ht_link_data_from_json($htjson[0])}
   {assign var=ld value=$ht_vals_from_json}
+  {* {assign var=limitedSearchOnly value=$ld.is_NFB}
+  {assign var=limitedAccessPermitted value=$ld.has_activated_role}
 
-<article class="record">
-  <div class="cover" data-hdl="{$ld.handle}">
+  {if $limitedSearchOnly}
+     {assign var=access value="limited-search-only"}
+  {elseif $limitedAccessPermitted}
+       {assign var=access value="limited-access-permitted"}
+  {else}
+     {assign var=access value="full-view"}
+  {/if} *}
+  
+
+{* <hathi-results-item
+data-prop-htid="{$ld.handle}"
+data-prop-access="{$access}"
+data-prop-catalog-id="{$record.id}"
+data-prop-title="{$record.title.0}"
+data-prop-author="{$record.author.0}"
+data-prop-support-selection="false"
+data-prop-publication-date="{$record.publishDate.0}"></hathi-results-item> *}
+ {* {$ld|@var_dump} 
+ {$limitedSearchOnly|@var_dump}  *}
+  {* {$record.id|@var_dump}  *}
+<article class="record d-flex gap-3 p-3 mb-3 mt-3 shadow-sm">
+  {* {$ld.handle|@var_dump}
+  {$record.title|@var_dump} *}
+ 
+  {* {$ld|@var_dump} *}
+  <div class="cover d-none d-md-block" data-hdl="{$ld.handle}">
     {if $ld.handle}
-    <img class="bookCover" aria-hidden="true" alt="" src="{$unicorn_root}/cgi/imgsrv/cover?id={$ld.handle}" />
+    <img loading="lazy" class="bookCover border p-1 flex-grow-0 flex-shrink-0" aria-hidden="true" alt="" src="{$unicorn_root}/cgi/imgsrv/cover?id={$ld.handle}" />
     {else}
-    <img class="bookCover" aria-hidden="true" alt="" src="/images/nocover-thumbnail.png" />
+    <img loading="lazy" class="bookCover border p-1 flex-grow-0 flex-shrink-0" aria-hidden="true" alt="" src="/images/nocover-thumbnail.png" />
     {/if}
   </div>
-  <div class="record-container record-medium-container">
-    <div class="record-title-and-actions-container">
+  {* <div class="record-container record-medium-container"> *}
+  <div class="flex-grow-1 d-flex flex-column justify-content-between">
+    <div class="container-fluid p-1">
       {if is_array($record.title)}
         {foreach from=$record.title item=title}
           <h3 class="record-title">
@@ -34,42 +61,47 @@
       </blockquote>
       {/if}
 
-      <dl>
+      <dl class="metadata">
         {if $record.publishDate}
-        <dt>{translate text='Published'}</dt>
-        <dd>{$record.publishDate.0}</dd>
+        <div class="grid">
+        <dt class="g-col-lg-4 g-col-12">{translate text='Published'}</dt>
+        <dd class="g-col-lg-4 g-col-12">{$record.publishDate.0}</dd>
+        </div>
         {/if}
+
         {if $record.author}
-        <dt>Author</dt>
+                    <div class="grid">
+        <dt class="g-col-lg-4 g-col-12">Author</dt>
           {if is_array($record.author)}
             {foreach from=$record.author item=author}
-            <dd>{$author|highlight:$lookfor}</dd>
+            <dd class="g-col-lg-4 g-col-12">{$author|highlight:$lookfor}</dd>
             {/foreach}
           {else}
-            <dd>{$record.author|highlight:$lookfor}</dd>
+            <dd class="g-col-lg-4 g-col-12">{$record.author|highlight:$lookfor}</dd>
+            </div>
           {/if}
         {/if}
       </dl>
     </div>
     <div class="resource-access-container">
-      <ul>
-        <li><a href="{$ss->asRecordURL($record.id)}" class="cataloglinkhref"><i class="icomoon icomoon-info-circle" aria-hidden="true"></i> Catalog Record</a></li>
+      <div class="list-group list-group-horizontal-sm align-items-center">
+        <a href="{$ss->asRecordURL($record.id)}" class="list-group-item list-group-item-action w-sm-50"><i class="icomoon icomoon-info-circle" aria-hidden="true"></i> Catalog Record</a>
         {assign var="dfields" value=$ru->displayable_ht_fields($record.marc)}
         {if $dfields|@count gt 1}
-          <li><span>(view record to see multiple volumes)</span></li>
+          <span>(view record to see multiple volumes)</span>
         {else}
 
           {if ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
-            <li><a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-unlocked" aria-hidden="true"></i> Limited (Access Permitted)</a></li>
+            <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-unlocked" aria-hidden="true"></i> Limited (Access Permitted)</a>
           {elseif ($ld.is_fullview || $ld.is_NFB) }
-            <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Full view</a></li>
+            <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Full view</a>
 	        {elseif $ld.is_emergency_access}
-	              <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} etas"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Temporary access</a></li>
+	              <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} etas"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Temporary access</a>
           {else}
-            <li><a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} searchonly"><i class="icomoon icomoon-locked" aria-hidden="true"></i> Limited (search only)</a></li>
+            <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} searchonly"><i class="icomoon icomoon-locked" aria-hidden="true"></i> Limited (search only)</a>
           {/if}
         {/if}
-      </ul>
+      </div>
     </div>
   </div>
 </article>

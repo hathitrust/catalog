@@ -1,5 +1,6 @@
 {capture name=reset_url}{$fullPath_esc|remove_url_param:"lookfor[^=]+"|remove_url_param:"type[^=]+"|remove_url_param:"searchtype[^=]+"|regex_replace:"/\/Home&amp;/":"/Home?"}{/capture}
-<div class="sidebar-container" id="sidebar" tabindex="0">
+{* <div class="sidebar-container" id="sidebar" tabindex="0"> *}
+<div class="twocol-side" id="sidebar" tabindex="0">
   <button class="for-mobile sidebar-toggle-button filter-group-toggle-show-button" aria-expanded="false">
     <span class="flex-space-between flex-center">
       <span class="filter-group-heading">Options/Filters<span class="total-filter-count"></span></span>
@@ -8,7 +9,8 @@
     </span>
   </button>
 
-  <h2 class="filters-heading" style="font-size: 1.125rem; padding-bottom: 0">Filter your search</h2>
+  {* <h2 class="filters-heading" style="font-size: 1.125rem; padding-bottom: 0">Filter your search</h2> *}
+  <h2 class="filters-heading fs-3 mt-3">Filter your search</h2>
 
   {if $currentFacets or ( $searchterms and ($lookfor ne '*') ) }
   <h3 class="active-filters-heading">Current Filters</h3>

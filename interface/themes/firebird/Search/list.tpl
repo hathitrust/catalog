@@ -14,11 +14,13 @@
   <main class="main-container" id="main">
     {* {include file="search_form.tpl"} *}
 
-    <div class="container container-medium flex-container flex-container-expanded container-boxed" style="margin-top: 1.75rem; margin-bottom: 1.75rem">
+    {* <div class="container container-medium flex-container flex-container-expanded container-boxed" style="margin-top: 1.75rem; margin-bottom: 1.75rem"> *}
+    <div class="twocol mt-1">
 
       {include file="Search/list.sidebar.tpl"}
 
-      <section class="section-container" id="section" data-record-count="{$recordCount}">
+      {* <section class="section-container" id="section" data-record-count="{$recordCount}"> *}
+      <section class="twocol-main" id="section" data-record-count="{$recordCount}">
         <h1 class="listcs-intro">
             Search results from the HathiTrust biblographic catalog.
         </h1>

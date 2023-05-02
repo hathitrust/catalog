@@ -5,10 +5,40 @@
   <title>{$pageTitle|truncate:64:"..."} | HathiTrust Digital Library</title>
   <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">
 
-  <script src="https://kit.fontawesome.com/1c6c3b2b35.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="//localhost:5174/scss/styles.scss" />
-  <script type="module" src="//localhost:5174/js/main.js"></script>
-  {* <script type="module" src="https://hathitrust-firebird-common.netlify.app/assets/main.js"></script> *}
+{literal}
+<script type="text/javascript">
+  let head = document.head;
+  function addScript(options) {
+    let scriptEl = document.createElement('script');
+    if ( options.crossOrigin ) { scriptEl.crossOrigin = options.crossOrigin; }
+    if ( options.type ) { scriptEl.type = options.type; }
+    scriptEl.src = options.href;
+    document.head.appendChild(scriptEl);
+  }
+  function addStylesheet(options) {
+    let linkEl = document.createElement('link');
+    linkEl.rel = 'stylesheet';
+    linkEl.href = options.href;
+    document.head.appendChild(linkEl);
+  }
+
+  addScript({ href: 'https://kit.fontawesome.com/1c6c3b2b35.js', crossOrigin: 'anonymous' });
+
+  let firebird_config = localStorage.getItem('firebird') || '';
+  if ( firebird_config == 'proxy' ) {
+    addScript({ href: `//${location.host}/js/main.js`, type: 'module' });
+  } else if ( firebird_config.match('localhost') ) {
+    addScript({ href: `//${firebird_config}/js/main.js`, type: 'module' });
+  } else {
+    // connect to netlify
+    if ( firebird_config ) { firebird_config += '--'; }
+    let hostname = `//${firebird_config}hathitrust-firebird-common.netlify.app`;
+    addStylesheet({ href: `${hostname}/assets/main.css` });
+    addScript({ href: `${hostname}/assets/main.js`, type: 'module' });
+  }
+</script>
+{/literal}
+
 
   {if $id}
   <link rel="canonical" href="/Record/{$id|escape:"url"}">

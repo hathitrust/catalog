@@ -70,28 +70,39 @@ data-prop-publication-date="{$record.publishDate.0}"></hathi-results-item> *}
         {/if}
 
         {if $record.author}
-                    <div class="grid">
-        <dt class="g-col-lg-4 g-col-12">Author</dt>
+        <div class="grid">
+          <dt class="g-col-lg-4 g-col-12">Author</dt>
           {if is_array($record.author)}
             {foreach from=$record.author item=author}
             <dd class="g-col-lg-4 g-col-12">{$author|highlight:$lookfor}</dd>
             {/foreach}
           {else}
             <dd class="g-col-lg-4 g-col-12">{$record.author|highlight:$lookfor}</dd>
-            </div>
+        </div>
           {/if}
         {/if}
       </dl>
     </div>
+    {* need to come back and figure this out *}
     <div class="resource-access-container">
       <div class="list-group list-group-horizontal-sm align-items-center">
-        <a href="{$ss->asRecordURL($record.id)}" class="list-group-item list-group-item-action w-sm-50"><i class="icomoon icomoon-info-circle" aria-hidden="true"></i> Catalog Record</a>
+        <a href="{$ss->asRecordURL($record.id)}" class="list-group-item list-group-item-action w-sm-50"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></i> Catalog Record</a>
         {assign var="dfields" value=$ru->displayable_ht_fields($record.marc)}
         {if $dfields|@count gt 1}
-          <span>(view record to see multiple volumes)</span>
+          <span class="ms-3">(view record to see multiple volumes)</span>
         {else}
 
           {if ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
+            {* need to figure out if data-activated-role="true" is still in use orrr if it's data-access-role="superuser" like in storybook *}
+            <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i aria-hidden="true" class="fa-solid fa-unlock"></i> Limited (Access Permitted)</a>
+          {elseif ($ld.is_fullview || $ld.is_NFB) }
+            <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50 active"><i class="fa-regular fa-file-lines" aria-hidden="true"></i></i> Full view</a>
+	        {elseif $ld.is_emergency_access}
+	              <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-unlock"></i> Temporary access</a>
+          {else}
+            <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-lock"></i></i> Limited (search only)</a>
+          {/if}
+           {* {if ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
             <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-unlocked" aria-hidden="true"></i> Limited (Access Permitted)</a>
           {elseif ($ld.is_fullview || $ld.is_NFB) }
             <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Full view</a>
@@ -99,7 +110,7 @@ data-prop-publication-date="{$record.publishDate.0}"></hathi-results-item> *}
 	              <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} etas"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Temporary access</a>
           {else}
             <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} searchonly"><i class="icomoon icomoon-locked" aria-hidden="true"></i> Limited (search only)</a>
-          {/if}
+          {/if} *}
         {/if}
       </div>
     </div>

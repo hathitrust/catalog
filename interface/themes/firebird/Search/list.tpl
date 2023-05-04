@@ -1,3 +1,15 @@
+{*
+FIREBIRD TODOS:
+
+1. when I set the results-toolbar currentSortOption prompt to "{$sort}", the initial dropdown is blank but works once clicked
+  a. thanks to var_dump, the inital value of $sort is NULL but the value of the "Relevance" option in the sortOptions array is false
+  b. in HTML in console, value="false"
+  c. value needs to be false in order to send proper option to URL during on change/onSubmit
+  d. tried many things but I must not understand smarty templates well enough to get the syntax right;
+     either need to figure out how to set initial $sort variable to false (instead of null)
+     or assign a variable to handle the conditional:
+        if ($sort == '') {currentSortOption="false"} else currentSortOption={$sort}
+*}
 <div id="skiplinks" role="complementary" aria-label="Skip links">
   <ul>
     <li>
@@ -26,12 +38,17 @@
         </h1>
         <div class="results-container">
           <div class="results-summary-container">
-            <h2 class="results-summary">
-              {if $recordCount}
-              {$recordStart} - {$recordEnd} of {$recordCount|number_format:null:".":","} Catalog results
-              {/if}
-            </h2>
-            <div class="results-actions">
+             {if $recordCount}
+                {* {if $sort == ''} *}
+            <hathi-results-toolbar
+              data-prop-first-record-number='{$recordStart}'
+              data-prop-last-record-number='{$recordEnd}'
+              data-prop-total-records='{$recordCount|number_format:null:".":","}'
+              data-prop-target='catalog'
+                data-prop-current-sort-option='{$sort}'
+              ></hathi-results-toolbar>
+             {/if}
+            {* <div class="results-actions">
               <label for="sort-option">Sort by</label>
               <select id="sort-option" name="sort" data-toggle="select" data-href="{$fullPath_esc|remove_url_param:"sort"}&amp;sort=">
                 <option value=""{if $sort == ""} selected{/if}>Relevance</option>
@@ -47,7 +64,7 @@
                 <option value="50" {if $pagesize == "50"}selected{/if}>50</option>
                 <option value="100" {if $pagesize == "100"}selected{/if}>100</option>
               </select>
-            </div>
+            </div> *}
           </div>
 
           {* <pre>{$ss->asFullURL()}</pre>
@@ -66,6 +83,8 @@
           {if $numPages gt 1}
             {assign var=pageLinks value=$pager->getLinks()}
             {assign var=pageLinksArray value=$pager->getPageLinksArray()}
+            <hathi-results-pagination></hathi-results-pagination>
+
           <nav class="pagination-container" aria-label="Pagination">
             <div class="page-back-link">
               {if $pageLinks.back}{$pageLinks.back}{/if}

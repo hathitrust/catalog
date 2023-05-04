@@ -1,27 +1,18 @@
+{*
+FIREBIRD TODOS:
+  1. when more than one option for viewing book, the "(view record to see multiple volumes)" text is not styled like storybook
+    a. I had issues wit the layout every time I tried to move the span outside of the list-group
+  2. I need to test out the limited/temporary access options but didn't want to mock HT.login or whatever, so I'll come back to this
+
+*}
 {foreach from=$recordSet item=record name="recordLoop"}
   {assign var="htjson" value=$ru->items_from_json($record)}
   {assign var="ht_vals_from_json" value=$ru->ht_link_data_from_json($htjson[0])}
   {assign var=ld value=$ht_vals_from_json}
-  {* {assign var=limitedSearchOnly value=$ld.is_NFB}
-  {assign var=limitedAccessPermitted value=$ld.has_activated_role}
-
-  {if $limitedSearchOnly}
-     {assign var=access value="limited-search-only"}
-  {elseif $limitedAccessPermitted}
-       {assign var=access value="limited-access-permitted"}
-  {else}
-     {assign var=access value="full-view"}
-  {/if} *}
+  
   
 
-{* <hathi-results-item
-data-prop-htid="{$ld.handle}"
-data-prop-access="{$access}"
-data-prop-catalog-id="{$record.id}"
-data-prop-title="{$record.title.0}"
-data-prop-author="{$record.author.0}"
-data-prop-support-selection="false"
-data-prop-publication-date="{$record.publishDate.0}"></hathi-results-item> *}
+
  {* {$ld|@var_dump} 
  {$limitedSearchOnly|@var_dump}  *}
   {* {$record.id|@var_dump}  *}
@@ -37,7 +28,7 @@ data-prop-publication-date="{$record.publishDate.0}"></hathi-results-item> *}
     <img loading="lazy" class="bookCover border p-1 flex-grow-0 flex-shrink-0" aria-hidden="true" alt="" src="/images/nocover-thumbnail.png" />
     {/if}
   </div>
-  {* <div class="record-container record-medium-container"> *}
+
   <div class="flex-grow-1 d-flex flex-column justify-content-between">
     <div class="container-fluid p-1">
       {if is_array($record.title)}

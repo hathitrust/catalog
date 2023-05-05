@@ -1,92 +1,128 @@
+{* 
+FIREBIRD TODOS:
+
+1. add sideways arrow icon to current filters box
+2. make sure the "remove filter" X icon is actually removing filters
+
+
+*}
 {capture name=reset_url}{$fullPath_esc|remove_url_param:"lookfor[^=]+"|remove_url_param:"type[^=]+"|remove_url_param:"searchtype[^=]+"|regex_replace:"/\/Home&amp;/":"/Home?"}{/capture}
 {* <div class="sidebar-container" id="sidebar" tabindex="0"> *}
 <div class="twocol-side" id="sidebar" tabindex="0">
-  <button class="for-mobile sidebar-toggle-button filter-group-toggle-show-button" aria-expanded="false">
+  {* <button class="for-mobile sidebar-toggle-button filter-group-toggle-show-button" aria-expanded="false">
     <span class="flex-space-between flex-center">
-      <span class="filter-group-heading">Options/Filters<span class="total-filter-count"></span></span>
+      <span class="filter-group-heading">Options/Filters<span class="total-filter-count"></span></span> *}
       {* <svg xmlns="http://www.w3.org/2000/svg" class="icon"><use xlink:href="#panel-collapsed"></use></svg> *}
-      <i class="icomoon icomoon-sidebar-toggle" aria-hidden="true"></i>
+      {* <i class="icomoon icomoon-sidebar-toggle" aria-hidden="true"></i>
     </span>
-  </button>
+  </button> *}
 
   {* <h2 class="filters-heading" style="font-size: 1.125rem; padding-bottom: 0">Filter your search</h2> *}
   <h2 class="filters-heading fs-3 mt-3">Filter your search</h2>
 
+  <!-- current filters accordion -->
   {if $currentFacets or ( $searchterms and ($lookfor ne '*') ) }
-  <h3 class="active-filters-heading">Current Filters</h3>
-  <ul class="active-filters-list">
+    <div class="accordion mb-1">
+    <div class="panel accordion-item">
+  <h3 class="accordion-header" id="heading-current">
+  <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-current" aria-controls="collapse-current" aira-expanded="true">
+  Current Filters
+  </button></h3>
+  <div id="collapse-current" class="accordion-collapse collapse show" aria-labelledby="heading-current">
+  <div class="accordion-body">
+  
+          <ul class="list-group list-group-flush">
     {if ($searchterms) and ($lookfor ne '*') }
       {assign var=rurl value=$ss->asWildcardURL()|regex_replace:"/&/":"&amp;"}
-
-    <li class="active-filter-item">
-      <button class="active-filter-button" data-href="{$rurl}" data-xhref="{$smarty.capture.reset_url}&amp;lookfor%5B%5D=*&amp;type%5B%5D=all">
+      {* {$searchterms|@var_dump} *}
+    <li class="list-group-item d-flex justify-content-between align-items-center px-0 gap-3">
+      <span class="d-inline-flex align-items-center gap-2">{$searchterms|escape}
+        {* there should be a little sideways arrow here, but I don't want to take the time to figure that out right now*}
+        {* <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i> *}
+        </span>
+        <a class="btn btn-outline-dark btn-lg" data-href="{$rurl}" href="{$smarty.capture.reset_url}&amp;lookfor%5B%5D=*&amp;type%5B%5D=all">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
+        </a>
+      {* <button class="active-filter-button" data-href="{$rurl}" data-xhref="{$smarty.capture.reset_url}&amp;lookfor%5B%5D=*&amp;type%5B%5D=all">
         <span class="flex-space-between flex-center">
           <span class="active-filter-button-text">{$searchterms|escape}</span>
           <svg viewBox="0 0 14 14" version="1.1" class="icon"><use xlink:href="#action-remove"></use></svg>
           <span class="offpage">Remove</span>
         </span>
-      </button>
+      </button> *}
     </li>
     {/if}
+   
     {foreach from=$currentFacets item=facet}
       {assign var=rurl value=$facet.removalURL|regex_replace:"/&/":"&amp;"}
-      <li class="active-filter-item">
-        <button class="active-filter-button" data-href="/Search/{$action}?{$rurl}">
+      <li class="list-group-item d-flex justify-content-between align-items-center px-0 gap-3">
+        <span class="d-inline-flex align-items-center gap-2">{$facet.indexDisplay}
+        <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i>
+        {translate text=$facet.valueDisplay}</span>
+        <a class="btn btn-outline-dark btn-lg" data-href="/Search/{$action}?{$rurl}">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
+        </a>
+
+        {* <button class="active-filter-button" data-href="/Search/{$action}?{$rurl}">
           <span class="flex-space-between flex-center">
             <span class="active-filter-button-text">{$facet.indexDisplay}: {translate text=$facet.valueDisplay}</span>
             <svg viewBox="0 0 14 14" version="1.1" class="icon"><use xlink:href="#action-remove"></use></svg>
             <span class="offpage">Remove</span>
           </span>
-        </button>
+        </button> *}
       </li>
     {/foreach}
+     </ul>
+    </div>
+    </div>
+    </div>
+    </div> <!-- end of current filters accordion -->
+    <!-- clear filters -->
+    <div class="d-flex flex-column gap-2 mb-3">
     {if $adv}
-    <li class="filter-action">
-      <button class="button-link-light clear-all-filters" data-href="{$adv}">
+      <a class="btn btn-outline-dark btn-sm clear-all-filters" href="{$adv}">
+      {* <button class="button-link-light clear-all-filters" data-href="{$adv}"> *}
         <span>Revise this advanced search</span>
-      </button>
-    </li>
+      {* </button> *}
+      </a>
     {/if}
-    <li class="filter-action">
-      <button class="button-link-light clear-all-filters" data-href="/Search/Home?lookfor=*&type=all">
+            <a class="btn btn-outline-dark btn-sm clear-all-filters" href="/Search/Home?lookfor=*&type=all">
+      {* <button class="button-link-light clear-all-filters" data-href="/Search/Home?lookfor=*&type=all"> *}
         <span>Clear filters</span>
-      </button>
-    </li>
-    </ul>
+      {* </button> *}
+      </a>
+    </div>
+     <!-- end clear filters -->
+
+    
   {/if}
 
-  <ul class="filter-group-list">
+  <div class="accordion mb-3">
   {if $allitems_count gt 0}
-    <li>
-      <h3 class="active-filters-heading" id="filter-item-viewability-desc">Item Viewability</h3>
-      <ul class="filter-list" role="radiogroup" aria-labelledby="filter-item-viewability-desc">
-        <li class="filter-group filter-group-checkbox">
-          <button role="radio" aria-checked="{if !$is_fullview}true{else}false{/if}" class="checkbox-label" {if !$is_fullview}tabindex="0"{/if} data-href="{$allitems_url}" aria-labelledby="view-all">
-            {* <span id="view-all" class="offscreen">View</span> *}
-            <div class="checkbox">{if !$is_fullview}<span class="filter-checkbox-checked">{/if}<svg class="icon"><use xlink:href="{if $is_fullview}#radio-empty{else}#radio-checked{/if}"></use></svg>{if !$is_fullview}</span>{/if}</div>
-            <span class="flex-space-between flex-center" id="view-all">
-              <span class="filter-name">All Items </span>
-              {if $allitems_count gt 0}
-              <span class="filter-count">{$allitems_count|number_format:null:".":","}</span>
-              {/if}
-            </span>
-          </button>
-        </li>
-        <li class="filter-group filter-group-checkbox">
-          <button role="radio" aria-checked="{if $is_fullview}true{else}false{/if}" class="checkbox-label" {if $is_fullview}tabindex="0"{/if} data-href="{$fullview_url}" aria-labelledby="view-full-view">
-            {* <span class="offscreen" id="view-full-view">View</span> *}
-            <div class="checkbox">{if $is_fullview}<span class="filter-checkbox-checked">{/if}<svg version="1.1" class="icon"><use xlink:href="{if $is_fullview}#radio-checked{else}#radio-empty{/if}"></use></svg>{if $is_fullview}</span>{/if}</div>
-            <span class="flex-space-between flex-center" id="view-full-view">
-              <span class="filter-name">Full View </span>
-              {if $fullview_count gt 0}
-              <span class="filter-count">{$fullview_count|number_format:null:".":","}</span>
-              {/if}
-            </span>
-          </button>
-        </li>
-      </ul>
-    </li>
+    <div class="panel accordion-item">
+      <h3 class="accordion-header" id="heading-viewability">
+      <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-viewability" aria-controls="collapse-viewability">Item Viewability</button></h3>
+      <div id="collapse-viewability" class="accordion-collapse"  aria-labelledby="heading-viewability">
+      <div class="accordion-body">
+        {* <li class="filter-group filter-group-checkbox"> *}
+        <div class="list-group list-group-flush">
+  <a href="{$allitems_url}" class="list-group-item d-flex justify-content-between align-items-center {if !$is_fullview}active{/if}" aria-current="{if !$is_fullview}true{else}false{/if}">All Items 
+    {if $allitems_count gt 0}
+    <span class="badge bg-dark rounded-pill">{$allitems_count|number_format:null:".":","}</span>
+    {/if}
+    </a>
+  <a href="{$fullview_url}" class="list-group-item d-flex justify-content-between align-items-center {if $is_fullview}active{/if}" aria-current="{if $is_fullview}true{else}false{/if}">Full View 
+     {if $fullview_count gt 0}
+    <span class="badge bg-dark rounded-pill">{$fullview_count|number_format:null:".":","}</span>
+    {/if}
+    </a>
+       
+        </div>
+      </div>
+    </div>
   {/if}
+  </div>
+  </div>
 
   {foreach from=$indexes item=cluster}
   {if $cluster eq 'ht_availability'}

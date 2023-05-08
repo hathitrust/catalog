@@ -10,7 +10,7 @@ FIREBIRD TODOS:
      or assign a variable to handle the conditional:
         if ($sort == '') {currentSortOption="false"} else currentSortOption={$sort}
 *}
-<div id="skiplinks" role="complementary" aria-label="Skip links">
+<div id="skiplinks" class="visually-hidden-focusable" role="complementary" aria-label="Skip links">
   <ul>
     <li>
       <a href="#section">Skip to search results</a>

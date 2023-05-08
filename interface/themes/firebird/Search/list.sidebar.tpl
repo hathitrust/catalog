@@ -26,12 +26,12 @@ FIREBIRD TODOS:
 
   <!-- current filters accordion -->
   {if $currentFacets or ( $searchterms and ($lookfor ne '*') ) }
-    <div class="accordion mb-1">
+  <div class="accordion mb-1">
     <div class="panel accordion-item">
-  <h3 class="accordion-header" id="heading-current">
-  <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-current" aria-controls="collapse-current" aria-expanded="true">
-  Current Filters
-  </button></h3>
+      <h3 class="accordion-header" id="heading-current">
+      <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-current" aria-controls="collapse-current" aria-expanded="true">
+      Current Filters
+      </button></h3>
   <div id="collapse-current" class="accordion-collapse collapse show" aria-labelledby="heading-current">
   <div class="accordion-body">
   
@@ -83,35 +83,32 @@ FIREBIRD TODOS:
       </a>
     </div>
      <!-- end clear filters -->
-
-    
-  {/if}
+  {/if} <!-- end current facets conditional -->
 
   <div class="accordion mb-3">
-  {if $allitems_count gt 0}
+    {if $allitems_count gt 0}
     <div class="panel accordion-item">
       <h3 class="accordion-header" id="heading-viewability">
       <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-viewability" aria-controls="collapse-viewability">Item Viewability</button></h3>
       <div id="collapse-viewability" class="accordion-collapse"  aria-labelledby="heading-viewability">
-      <div class="accordion-body">
-        {* <li class="filter-group filter-group-checkbox"> *}
-        <div class="list-group list-group-flush">
-  <a href="{$allitems_url}" class="list-group-item d-flex justify-content-between align-items-center {if !$is_fullview}active{/if}" aria-current="{if !$is_fullview}true{else}false{/if}">All Items 
-    {if $allitems_count gt 0}
-    <span class="badge bg-dark rounded-pill">{$allitems_count|number_format:null:".":","}</span>
-    {/if}
-    </a>
-  <a href="{$fullview_url}" class="list-group-item d-flex justify-content-between align-items-center {if $is_fullview}active{/if}" aria-current="{if $is_fullview}true{else}false{/if}">Full View 
-     {if $fullview_count gt 0}
-    <span class="badge bg-dark rounded-pill">{$fullview_count|number_format:null:".":","}</span>
-    {/if}
-    </a>
-       
+        <div class="accordion-body">
+          {* <li class="filter-group filter-group-checkbox"> *}
+          <div class="list-group list-group-flush">
+            <a href="{$allitems_url}" class="list-group-item d-flex justify-content-between align-items-center {if !$is_fullview}active{/if}" aria-current="{if !$is_fullview}true{else}false{/if}">All Items 
+              {if $allitems_count gt 0}
+              <span class="badge bg-dark rounded-pill">{$allitems_count|number_format:null:".":","}</span>
+              {/if}
+              </a>
+            <a href="{$fullview_url}" class="list-group-item d-flex justify-content-between align-items-center {if $is_fullview}active{/if}" aria-current="{if $is_fullview}true{else}false{/if}">Full View 
+              {if $fullview_count gt 0}
+              <span class="badge bg-dark rounded-pill">{$fullview_count|number_format:null:".":","}</span>
+              {/if}
+              </a>
+          </div>
         </div>
       </div>
-    </div>
-  {/if}
-  </div>
+     </div>
+    {/if}
   </div>
 
   <div class="accordion" id="accordion-filters">
@@ -138,45 +135,11 @@ FIREBIRD TODOS:
         <div class="mt-3">
           {/foreach}
            {if $counts.$cluster|@count gt 6}
-
           <button class="btn btn-sm bt-outline-dark">Show all {$counts.$cluster|@count} {$facetConfig.$cluster} Filters</button> 
            {/if}
         </div>
       </div>
     </div>
-
-
-    {* <li class="filter-group filter-group-multiselect">
-      <button class="filter-group-toggle-show-button" aria-expanded="true">
-        <span class="flex-space-between flex-center">
-          <h3 class="filter-group-heading">{$facetConfig.$cluster}</h3>
-          <svg class="icon"><use xlink:href="#panel-expanded"></use></svg>
-        </span>
-      </button>
-      <div class="filter-list-container">
-        <ul class="filter-list">
-          {foreach from=$counts.$cluster item=facet name="facetLoop"}
-            <li class="filter-item">
-              <button class="filter-button" data-href="/Search/Home?{$facet.url|regex_replace:"/&/":"&amp;"}" aria-label="{translate text=$facet.value} - {$facet.count|number_format:null:".":","}">
-                <span class="flex-space-between flex-center">
-                  <span class="filter-value">{translate text=$facet.value}</span>
-                  <span class="filter-count">{$facet.count|number_format:null:".":","}</span>
-                </span>
-              </button>
-            </li>
-          {/foreach}
-          {if $counts.$cluster|@count gt 6}
-          <li class="filter-action">
-            <button class="button-link-light show-all-button" aria-expanded="false">
-              <span class="show-all-button__text">Show all {$counts.$cluster|@count} {$facetConfig.$cluster} Filters</span>
-              <span class="show-fewer-button__text">Show fewer {$facetConfig.$cluster} Filters</span>
-            </button>
-          </li>
-          {/if}
-        </ul>
-      </div>
-    </li> *}
-
 
   {/if}
   </div>

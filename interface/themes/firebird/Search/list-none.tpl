@@ -1,4 +1,4 @@
-<ul id="skiplinks" role="complementary" aria-label="Skip links">
+<ul id="skiplinks" class="visually-hidden-focusable" role="complementary" aria-label="Skip links">
   <li>
     <a href="#section">Skip to main</a>
   </li>
@@ -21,7 +21,7 @@
             Search Results 
         </h1>
 
-        <div class="results-container">
+        <div>
           <div class="alert alert-info alert-block">
             {if $error_message}
                <strong>There was a problem talking to the catalog.</strong>
@@ -29,13 +29,14 @@
             {else}
               <strong>No results</strong> matched your search.</h2>
             {/if}
-          </div>
+            </div>
           
-
-          <div class="results-container-inner">
+         
 
             {if $newPhrase}
-            <div class="alert alert-block alert-info"><p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action|escape:"url"}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p></div>
+            <div class="alert alert-block alert-info">
+              <p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action|escape:"url"}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p>
+            </div>
             {/if}
 
             
@@ -51,7 +52,7 @@
           </div>
 
         </div>
-        </div>
+      
       </section>
     </div>
 

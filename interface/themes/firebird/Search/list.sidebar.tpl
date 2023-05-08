@@ -1,8 +1,12 @@
 {* 
 FIREBIRD TODOS:
 
+
 1. add sideways arrow icon to current filters box
 2. make sure the "remove filter" X icon is actually removing filters
+3. Item viewability has a collapsing bug
+4. is the "show all" button in the filters supposed to do something??
+5. some of my buttons/badges are styled differently, but that might be the difference between what's up on netlify vs locally
 
 
 *}
@@ -25,7 +29,7 @@ FIREBIRD TODOS:
     <div class="accordion mb-1">
     <div class="panel accordion-item">
   <h3 class="accordion-header" id="heading-current">
-  <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-current" aria-controls="collapse-current" aira-expanded="true">
+  <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-current" aria-controls="collapse-current" aria-expanded="true">
   Current Filters
   </button></h3>
   <div id="collapse-current" class="accordion-collapse collapse show" aria-labelledby="heading-current">
@@ -34,8 +38,7 @@ FIREBIRD TODOS:
           <ul class="list-group list-group-flush">
     {if ($searchterms) and ($lookfor ne '*') }
       {assign var=rurl value=$ss->asWildcardURL()|regex_replace:"/&/":"&amp;"}
-      {* {$searchterms|@var_dump} *}
-    <li class="list-group-item d-flex justify-content-between align-items-center px-0 gap-3">
+    <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
       <span class="d-inline-flex align-items-center gap-2">{$searchterms|escape}
         {* there should be a little sideways arrow here, but I don't want to take the time to figure that out right now*}
         {* <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i> *}
@@ -43,19 +46,13 @@ FIREBIRD TODOS:
         <a class="btn btn-outline-dark btn-lg" data-href="{$rurl}" href="{$smarty.capture.reset_url}&amp;lookfor%5B%5D=*&amp;type%5B%5D=all">
         <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
         </a>
-      {* <button class="active-filter-button" data-href="{$rurl}" data-xhref="{$smarty.capture.reset_url}&amp;lookfor%5B%5D=*&amp;type%5B%5D=all">
-        <span class="flex-space-between flex-center">
-          <span class="active-filter-button-text">{$searchterms|escape}</span>
-          <svg viewBox="0 0 14 14" version="1.1" class="icon"><use xlink:href="#action-remove"></use></svg>
-          <span class="offpage">Remove</span>
-        </span>
-      </button> *}
+     
     </li>
     {/if}
    
     {foreach from=$currentFacets item=facet}
       {assign var=rurl value=$facet.removalURL|regex_replace:"/&/":"&amp;"}
-      <li class="list-group-item d-flex justify-content-between align-items-center px-0 gap-3">
+      <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
         <span class="d-inline-flex align-items-center gap-2">{$facet.indexDisplay}
         <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i>
         {translate text=$facet.valueDisplay}</span>
@@ -63,13 +60,6 @@ FIREBIRD TODOS:
         <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
         </a>
 
-        {* <button class="active-filter-button" data-href="/Search/{$action}?{$rurl}">
-          <span class="flex-space-between flex-center">
-            <span class="active-filter-button-text">{$facet.indexDisplay}: {translate text=$facet.valueDisplay}</span>
-            <svg viewBox="0 0 14 14" version="1.1" class="icon"><use xlink:href="#action-remove"></use></svg>
-            <span class="offpage">Remove</span>
-          </span>
-        </button> *}
       </li>
     {/foreach}
      </ul>
@@ -124,10 +114,39 @@ FIREBIRD TODOS:
   </div>
   </div>
 
+  <div class="accordion" id="accordion-filters">
   {foreach from=$indexes item=cluster}
-  {if $cluster eq 'ht_availability'}
+    {* {$indexes|@var_dump}
+    {$cluster|@var_dump} *}
+    <div class="panel accordion-item">
+  {if $cluster eq 'ht_availability'} {*why is nothing in this if block??*}
   {else}
-    <li class="filter-group filter-group-multiselect">
+    <h3 class="accordion-header" id="heading-{$cluster}">
+      <button class="accordion-button fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{$cluster}" aria-controls="collapse-{$cluster}" aria-expanded="false">
+      {$facetConfig.$cluster}
+      </button>
+    </h3>
+    <div id="collapse-{$cluster}" class="accordion-collapse collapse" aria-labelledby="heading-{$cluster}" data-bs-parent="#accordion-filters">
+      <div class="accordion-body">
+        <div class="filter-list" data-expanded="false">
+          {foreach from=$counts.$cluster item=facet name="facetLoop"}
+          <div class="filter-list-item d-flex flex-nowrap align-items-center justify-content-between gap-3 mb-2 px-3">
+         <a href="/Search/Home?{$facet.url|regex_replace:"/&/":"&amp;"}">{translate text=$facet.value}</a>
+         <span>{$facet.count|number_format:null:".":","}</span> 
+          </div> 
+        </div>
+        <div class="mt-3">
+          {/foreach}
+           {if $counts.$cluster|@count gt 6}
+
+          <button class="btn btn-sm bt-outline-dark">Show all {$counts.$cluster|@count} {$facetConfig.$cluster} Filters</button> 
+           {/if}
+        </div>
+      </div>
+    </div>
+
+
+    {* <li class="filter-group filter-group-multiselect">
       <button class="filter-group-toggle-show-button" aria-expanded="true">
         <span class="flex-space-between flex-center">
           <h3 class="filter-group-heading">{$facetConfig.$cluster}</h3>
@@ -156,8 +175,12 @@ FIREBIRD TODOS:
           {/if}
         </ul>
       </div>
-    </li>
+    </li> *}
+
+
   {/if}
+  </div>
   {/foreach}
+  </div>
 
 </div>

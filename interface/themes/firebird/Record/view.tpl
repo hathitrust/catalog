@@ -24,9 +24,10 @@
   <main class="main-container" id="main">
     {* {include file="search_form.tpl"} *}
 
-    <div class="container container-medium flex-container flex-container-expanded container-boxed">
+    {* <div class="container container-medium flex-container flex-container-expanded container-boxed"> *}
+    <div class="twocol mt-1">
 
-      <section class="section-container" id="section" data-record-count="{$recordCount}">
+      <section class="twocol-main" id="section" data-record-count="{$recordCount}">
         <article class="record" data-hdl="{$hdl.handle}">
           <div class="article-heading">
 
@@ -53,18 +54,31 @@
               {/if}
             </h1>
           </div>
-          <h2 style="font-size: 1.1rem">Description</h2>
-          <div class="article-actions" style="display: flex; align-items: center">
+          <h2 class="fs-3 mt-3">Description</h2>
+          <div class="d-flex flex-row">
+            <h3 class="mt-3">Tools</h3>
+            <div class="list-group list-group-horizontal-sm align-items-center">
+                <a href="/Record/{$id|escape:"url"}/Cite" class="list-group-item list-group-item-action w-sm-50">
+                  <i class="fa-solid fa-bookmark" aria-hidden="true"></i>
+                  Cite this
+                </a>
+                <a download href="/Search/SearchExport?handpicked={$id|escape:"url"}&amp;method=ris" class="list-group-item list-group-item-action w-sm-50">
+                  <i class="fa-solid fa-file-export" aria-hidden="true"></i>
+                  Export citation file
+                </a>
+            </div>
+          </div>
+          {* <div class="article-actions" style="display: flex; align-items: center">
             <h3 class="xx-offscreen" style="font-size: 1rem; margin-right: 1rem;">Tools</h3>
             <ul>
               <li><a href="/Record/{$id|escape:"url"}/Cite" class="cite"><i class="icomoon icomoon-bookmark" aria-hidden="true"></i> {translate text="Cite this"}</a></li>
               <li><a download class="endnotelink" href="/Search/SearchExport?handpicked={$id|escape:"url"}&amp;method=ris" data-toggle="tracking" data-tracking-category="recordActions" data-tracking-action="Catalog Export" data-tracking-label="Endnote"><i class="icomoon icomoon-upload" aria-hidden="true"></i> Export citation file</a></li>
             </ul>
-          </div>
+          </div> *}
 
           {include file="$module/view.summary.tpl"}
 
-          <h2 style="font-size: 1.1rem">Viewability</h2>
+          <h2 class="fs-3 mt-3">Viewability</h2>
           <table class="viewability-table">
             <thead>
               <tr>
@@ -119,7 +133,7 @@
 
 
       {if is_array($similarRecords) or $lastsearch}
-      <div class="sidebar-container sidebar-container--right" id="sidebar" tabindex="0">
+      <div class="twocol-side" id="sidebar" tabindex="0">
         {if $lastsearch}
         <div class="back-to-results">
           <p><a href="{$lastsearch|regex_replace:"/&/":"&amp;"}"><i class="icomoon icomoon-enter" aria-hidden="true"></i> Back to Catalog Search Results</a></p>
@@ -127,7 +141,7 @@
         </div>
         {/if}
 
-        <h3 id="similar-items">Similar Items</h3>
+        <h2 class="fs-3 mt-3" id="similar-items">Similar Items</h2>
         <ul class="similar-items">
           {foreach from=$similarRecords item=similar}
           {if is_array($similar.title)}{assign var=similarTitle value=$similar.title.0}

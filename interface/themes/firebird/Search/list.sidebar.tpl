@@ -1,7 +1,6 @@
 {* 
 FIREBIRD TODOS:
 
-
 1. add sideways arrow icon to current filters box
 2. make sure the "remove filter" X icon is actually removing filters
 3. Item viewability has a collapsing bug
@@ -26,46 +25,43 @@ FIREBIRD TODOS:
 
   <!-- current filters accordion -->
   {if $currentFacets or ( $searchterms and ($lookfor ne '*') ) }
-  <div class="accordion mb-1">
-    <div class="panel accordion-item">
-      <h3 class="accordion-header" id="heading-current">
-      <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-current" aria-controls="collapse-current" aria-expanded="true">
-      Current Filters
-      </button></h3>
-  <div id="collapse-current" class="accordion-collapse collapse show" aria-labelledby="heading-current">
-  <div class="accordion-body">
-  
-          <ul class="list-group list-group-flush">
-    {if ($searchterms) and ($lookfor ne '*') }
-      {assign var=rurl value=$ss->asWildcardURL()|regex_replace:"/&/":"&amp;"}
-    <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
-      <span class="d-inline-flex align-items-center gap-2">{$searchterms|escape}
-        {* there should be a little sideways arrow here, but I don't want to take the time to figure that out right now*}
-        {* <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i> *}
-        </span>
-        <a class="btn btn-outline-dark btn-lg" data-href="{$rurl}" href="{$smarty.capture.reset_url}&amp;lookfor%5B%5D=*&amp;type%5B%5D=all">
-        <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
-        </a>
-     
-    </li>
-    {/if}
-   
-    {foreach from=$currentFacets item=facet}
-      {assign var=rurl value=$facet.removalURL|regex_replace:"/&/":"&amp;"}
-      <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
-        <span class="d-inline-flex align-items-center gap-2">{$facet.indexDisplay}
-        <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i>
-        {translate text=$facet.valueDisplay}</span>
-        <a class="btn btn-outline-dark btn-lg" data-href="/Search/{$action}?{$rurl}">
-        <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
-        </a>
-
-      </li>
-    {/foreach}
-     </ul>
-    </div>
-    </div>
-    </div>
+    <div class="accordion mb-1">
+      <div class="panel accordion-item">
+        <h3 class="accordion-header" id="heading-current">
+        <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-current" aria-controls="collapse-current" aria-expanded="true">
+        Current Filters
+        </button></h3>
+        <div id="collapse-current" class="accordion-collapse collapse show" aria-labelledby="heading-current">
+          <div class="accordion-body">
+            <ul class="list-group list-group-flush">
+              {if ($searchterms) and ($lookfor ne '*') }
+                {assign var=rurl value=$ss->asWildcardURL()|regex_replace:"/&/":"&amp;"}
+                <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
+                  <span class="d-inline-flex align-items-center gap-2">{$searchterms|escape}
+                    {* there should be a little sideways arrow here, but I don't want to take the time to figure that out right now*}
+                    {* <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i> *}
+                    </span>
+                    <a class="btn btn-outline-dark btn-lg" data-href="{$rurl}" href="{$smarty.capture.reset_url}&amp;lookfor%5B%5D=*&amp;type%5B%5D=all">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
+                    </a>
+                
+                </li>
+              {/if}
+              {foreach from=$currentFacets item=facet}
+              {assign var=rurl value=$facet.removalURL|regex_replace:"/&/":"&amp;"}
+                <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
+                  <span class="d-inline-flex align-items-center gap-2">{$facet.indexDisplay}
+                  <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i>
+                  {translate text=$facet.valueDisplay}</span>
+                  <a class="btn btn-outline-dark btn-lg" data-href="/Search/{$action}?{$rurl}">
+                  <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
+                  </a>
+                </li>
+              {/foreach}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div> <!-- end of current filters accordion -->
     <!-- clear filters -->
     <div class="d-flex flex-column gap-2 mb-3">
@@ -76,7 +72,7 @@ FIREBIRD TODOS:
       {* </button> *}
       </a>
     {/if}
-            <a class="btn btn-outline-dark btn-sm clear-all-filters" href="/Search/Home?lookfor=*&type=all">
+      <a class="btn btn-outline-dark btn-sm clear-all-filters" href="/Search/Home?lookfor=*&type=all">
       {* <button class="button-link-light clear-all-filters" data-href="/Search/Home?lookfor=*&type=all"> *}
         <span>Clear filters</span>
       {* </button> *}
@@ -113,37 +109,34 @@ FIREBIRD TODOS:
 
   <div class="accordion" id="accordion-filters">
   {foreach from=$indexes item=cluster}
-    {* {$indexes|@var_dump}
-    {$cluster|@var_dump} *}
-    <div class="panel accordion-item">
-  {if $cluster eq 'ht_availability'} {*why is nothing in this if block??*}
+  {if $cluster eq 'ht_availability'} 
   {else}
-    <h3 class="accordion-header" id="heading-{$cluster}">
-      <button class="accordion-button fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{$cluster}" aria-controls="collapse-{$cluster}" aria-expanded="false">
-      {$facetConfig.$cluster}
-      </button>
-    </h3>
-    <div id="collapse-{$cluster}" class="accordion-collapse collapse" aria-labelledby="heading-{$cluster}" data-bs-parent="#accordion-filters">
-      <div class="accordion-body">
-        <div class="filter-list" data-expanded="false">
-          {foreach from=$counts.$cluster item=facet name="facetLoop"}
-          <div class="filter-list-item d-flex flex-nowrap align-items-center justify-content-between gap-3 mb-2 px-3">
-         <a href="/Search/Home?{$facet.url|regex_replace:"/&/":"&amp;"}">{translate text=$facet.value}</a>
-         <span>{$facet.count|number_format:null:".":","}</span> 
-          </div> 
-        </div>
-        <div class="mt-3">
-          {/foreach}
-           {if $counts.$cluster|@count gt 6}
-          <button class="btn btn-sm bt-outline-dark">Show all {$counts.$cluster|@count} {$facetConfig.$cluster} Filters</button> 
-           {/if}
+    <div class="panel accordion-item">
+      <h3 class="accordion-header" id="heading-{$cluster}">
+        <button class="accordion-button fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{$cluster}" aria-controls="collapse-{$cluster}" aria-expanded="false">
+        {$facetConfig.$cluster}
+        </button>
+      </h3>
+      <div id="collapse-{$cluster}" class="accordion-collapse collapse" aria-labelledby="heading-{$cluster}" data-bs-parent="#accordion-filters">
+        <div class="accordion-body">
+          <div class="filter-list" data-expanded="false">
+            {foreach from=$counts.$cluster item=facet name="facetLoop"}
+            <div class="filter-list-item d-flex flex-nowrap align-items-center justify-content-between gap-3 mb-2 px-3">
+          <a href="/Search/Home?{$facet.url|regex_replace:"/&/":"&amp;"}">{translate text=$facet.value}</a>
+          <span>{$facet.count|number_format:null:".":","}</span> 
+            </div> 
+          </div>
+          <div class="mt-3">
+            {/foreach}
+            {if $counts.$cluster|@count gt 6}
+            <button class="btn btn-sm bt-outline-dark">Show all {$counts.$cluster|@count} {$facetConfig.$cluster} Filters</button> 
+            {/if}
+          </div>
         </div>
       </div>
     </div>
-
   {/if}
-  </div>
+  
   {/foreach}
   </div>
-
 </div>

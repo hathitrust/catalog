@@ -1,11 +1,9 @@
 {* 
 FIREBIRD TODOS:
 
-1. add sideways arrow icon to current filters box
 2. make sure the "remove filter" X icon is actually removing filters
 3. Item viewability has a collapsing bug
 4. is the "show all" button in the filters supposed to do something??
-5. some of my buttons/badges are styled differently, but that might be the difference between what's up on netlify vs locally
 
 
 *}
@@ -37,9 +35,11 @@ FIREBIRD TODOS:
               {if ($searchterms) and ($lookfor ne '*') }
                 {assign var=rurl value=$ss->asWildcardURL()|regex_replace:"/&/":"&amp;"}
                 <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
-                  <span class="d-inline-flex align-items-center gap-2">{$searchterms|escape}
-                    {* there should be a little sideways arrow here, but I don't want to take the time to figure that out right now*}
-                    {* <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i> *}
+                  <span class="d-inline-flex align-items-center gap-2">
+                  {* {$searchterms|escape} *}
+                  {* this feels hacky, but $searchterms is some kind of generated string and exploding the string on the : in the string was a quick fix *}
+                  {assign var=allFields value=":"|explode:$searchterms}
+                    {$allFields[0]} <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i> {$allFields[1]}
                     </span>
                     <a class="btn btn-outline-dark btn-lg" data-href="{$rurl}" href="{$smarty.capture.reset_url}&amp;lookfor%5B%5D=*&amp;type%5B%5D=all">
                     <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
@@ -129,7 +129,7 @@ FIREBIRD TODOS:
           <div class="mt-3">
             {/foreach}
             {if $counts.$cluster|@count gt 6}
-            <button class="btn btn-sm bt-outline-dark">Show all {$counts.$cluster|@count} {$facetConfig.$cluster} Filters</button> 
+            <button class="btn btn-sm btn-outline-dark">Show all {$counts.$cluster|@count} {$facetConfig.$cluster} Filters</button> 
             {/if}
           </div>
         </div>

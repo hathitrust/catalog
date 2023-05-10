@@ -7,9 +7,14 @@
 </div>
 <div id="root">
   {include file="header.tpl" logo=true}
-
-
   <main class="main-container" id="main">
+    <hathi-advanced-search-form
+      data-prop-language-data="{$languageList|@json_encode|escape}" 
+       data-prop-format-data='{$formatList|@json_encode|escape}'
+    ></hathi-advanced-search-form>
+  </main>
+  {* <main class="main-container" id="main">
+
     <div class="container container-narrow flex-container flex-container-expanded container-boxed">
       <section id="section" class="section-container" tabindex="-1">
 
@@ -19,7 +24,7 @@
           <p>Search information <em>about</em> the item (<a target="_blank" href="http://www.hathitrust.org/help_digital_library#SearchTips">Search Tips</a>).</p>
           <p style="margin-bottom: 1rem">Prefer to search <em>within</em> the item in an <a href="//babel.hathitrust.org/cgi/ls?a=page&page=advanced">Advanced Full-text search</a>?</p>
 
-          {* <h3 class="offscreen">Search by field</h3> *}
+           <h3 class="offscreen">Search by field</h3> 
           <h2>Search by field</h2>
 
           {include file="Search/advanced_search_field.tpl" index='1' type=$type1 lookfor=$lookfor1}
@@ -136,7 +141,7 @@
         </form>
       </section>
     </div>
-  </main>
+  </main> *}
 
   {include file="footer.tpl"}
 </div>

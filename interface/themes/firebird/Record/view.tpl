@@ -29,11 +29,12 @@
 
       <section class="twocol-main" id="section" data-record-count="{$recordCount}">
         <article class="record d-flex flex-column gap-3 p-3 mb-3 mt-3" data-hdl="{$hdl.handle}">
-          <div class="article-heading d-flex">
+          <div class="article-heading d-flex gap-3">
 
-            <div class="cover">
+            <div class="cover d-none d-md-block">
               {if $ld.handle}
-                <img aria-hidden="true" alt="" src="{$unicorn_root}/cgi/imgsrv/cover?id={$ld.handle}" />
+                <img class="border p-1" aria-hidden="true" alt="" src="{$unicorn_root}/cgi/imgsrv/cover?id={$ld.handle};width=250" />
+                {* <img aria-hidden="true" alt="" src="https://preview.babel.hathitrust.org/cgi/imgsrv/cover?id=mdp.35112104694155" /> *}
               {else}
               <img class="bookCover" aria-hidden="true" alt="" src="https://catalog.hathitrust.org/images/nocover-thumbnail.png" />
               {/if}

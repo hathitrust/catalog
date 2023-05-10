@@ -87,11 +87,11 @@ FIREBIRD TODOS:
             {* need to figure out if data-activated-role="true" is still in use orrr if it's data-access-role="superuser" like in storybook *}
             <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i aria-hidden="true" class="fa-solid fa-unlock"></i> Limited (Access Permitted)</a>
           {elseif ($ld.is_fullview || $ld.is_NFB) }
-            <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50 active"><i class="fa-regular fa-file-lines" aria-hidden="true"></i></i> Full view</a>
+            <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50 active"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> Full view</a>
 	        {elseif $ld.is_emergency_access}
 	              <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-unlock"></i> Temporary access</a>
           {else}
-            <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-lock"></i></i> Limited (search only)</a>
+            <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-lock"></i> Limited (search only)</a>
           {/if}
            {* {if ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
             <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-unlocked" aria-hidden="true"></i> Limited (Access Permitted)</a>

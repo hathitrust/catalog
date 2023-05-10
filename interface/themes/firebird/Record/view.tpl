@@ -28,8 +28,8 @@
     <div class="twocol mt-1">
 
       <section class="twocol-main" id="section" data-record-count="{$recordCount}">
-        <article class="record" data-hdl="{$hdl.handle}">
-          <div class="article-heading">
+        <article class="record d-flex flex-column gap-3 p-3 mb-3 mt-3" data-hdl="{$hdl.handle}">
+          <div class="article-heading d-flex">
 
             <div class="cover">
               {if $ld.handle}
@@ -54,17 +54,17 @@
               {/if}
             </h1>
           </div>
-          <h2 class="fs-3 mt-3">Description</h2>
-          <div class="d-flex flex-row">
+          <h2 class="mt-3">Description</h2>
+          <div class="d-flex flex-row gap-3">
             <h3 class="mt-3">Tools</h3>
             <div class="list-group list-group-horizontal-sm align-items-center">
-                <a href="/Record/{$id|escape:"url"}/Cite" class="list-group-item list-group-item-action w-sm-50">
+                <a href="/Record/{$id|escape:"url"}/Cite" class="list-group-item list-group-item-action">
                   <i class="fa-solid fa-bookmark" aria-hidden="true"></i>
-                  Cite this
+                  <span>Cite this</span>
                 </a>
-                <a download href="/Search/SearchExport?handpicked={$id|escape:"url"}&amp;method=ris" class="list-group-item list-group-item-action w-sm-50">
+                <a download href="/Search/SearchExport?handpicked={$id|escape:"url"}&amp;method=ris" class="list-group-item list-group-item-action">
                   <i class="fa-solid fa-file-export" aria-hidden="true"></i>
-                  Export citation file
+                  <span>Export citation file</span>
                 </a>
             </div>
           </div>
@@ -78,8 +78,8 @@
 
           {include file="$module/view.summary.tpl"}
 
-          <h2 class="fs-3 mt-3">Viewability</h2>
-          <table class="viewability-table">
+          <h2 class="mt-3">Viewability</h2>
+          <table class="table-branded viewability-table">
             <thead>
               <tr>
                 <th>Item Link</th>
@@ -95,13 +95,13 @@
                    {if $record_is_tombstone}
                      This item is no longer available (<a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
          {elseif ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
-              <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-unlocked" aria-hidden="true"></i> Limited (Access Permitted) <span class="IndItem">{$ld.enumchron}</span></a>
+              <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i aria-hidden="true" class="fa-solid fa-unlock"></i> <span>Limited (Access Permitted)</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
                      {elseif ($ld.is_fullview || $ld.is_NFB)}
-            <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Full view <span class="IndItem">{$ld.enumchron}</span></a>
+            <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> <span>Full view</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
 	       {elseif $ld.is_emergency_access}
-	              <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} etas"><i class="icomoon icomoon-document-2" aria-hidden="true"></i> Temporary access <span class="IndItem">{$ld.enumchron}</span></a>
+	              <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} etas"><i aria-hidden="true" class="fa-solid fa-unlock"></i> <span>Temporary access</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
           {else}
-            <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} searchonly"><i class="icomoon icomoon-locked" aria-hidden="true"></i> Limited (search only) <span class="IndItem">{$ld.enumchron}</span></a>
+            <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} searchonly"><i aria-hidden="true" class="fa-solid fa-lock"></i> <span>Limited (search only)</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
           {/if}
 
                      </td>
@@ -115,14 +115,16 @@
             </tbody>
           </table>
 
+          <div style="text-align: center">
+            <a class="btn btn btn-outline-secondary mb-3" href="/Record/{$id|escape:"url"}.marc">View HathiTrust MARC record</a>
+          </div>
+
         </article>
 
-<div style="text-align: center">
-  <a class="button btn" href="/Record/{$id|escape:"url"}.marc">View HathiTrust MARC record</a>
-</div>
 
 
 
+                
       </section>
       
 
@@ -136,35 +138,39 @@
       <div class="twocol-side" id="sidebar" tabindex="0">
         {if $lastsearch}
         <div class="back-to-results">
-          <p><a href="{$lastsearch|regex_replace:"/&/":"&amp;"}"><i class="icomoon icomoon-enter" aria-hidden="true"></i> Back to Catalog Search Results</a></p>
+          <a class="btn btn-secondary" href="{$lastsearch|regex_replace:"/&/":"&amp;"}">
+          <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i> Back to Catalog Search Results
+          </a>
 
         </div>
         {/if}
 
         <h2 class="fs-3 mt-3" id="similar-items">Similar Items</h2>
-        <ul class="similar-items">
+        <div class="similar-items">
           {foreach from=$similarRecords item=similar}
           {if is_array($similar.title)}{assign var=similarTitle value=$similar.title.0}
           {else}{assign var=similarTitle value=$similar.title}{/if}
-          <li>
-            <div>
-              <p><a href="{$url}/Record/{$similar.id}">{$similarTitle}</a></p>
+            <div class="d-flex gap-3 p-3 mb-3 mt-3 shadow-sm rounded">
+            <div class="container-fluid p-1">
+              <h3 class="record-title h4 mb-3 fw-normal"><a href="{$url}/Record/{$similar.id}">{$similarTitle}</a></h3>
               {if $similar.author or $similar.publishDate}
-              <dl>
+              <dl class="metadata mb-0">
+              <div class="grid gap-2">
                 {if $similar.author}
-                <dt>Author</dt>
-                <dd>{$similar.author.0}</dd>
+                <dt class="g-col-lg-3 g-col-12">Author</dt>
+                <dd class="g-col-lg-9 g-col-12">{$similar.author.0}</dd>
                 {/if}
                 {if $similar.publishDate}
-                <dt>Published</dt>
-                <dd>{$similar.publishDate.0}</dd>
+                <dt class="g-col-lg-3 g-col-12">Published</dt>
+                <dd class="g-col-lg-9 g-col-12">{$similar.publishDate.0}</dd>
                 {/if}
+                </div>
               </dl>
               {/if}
             </div>
-          </li>
+            </div>
           {/foreach}
-        </ul>
+        </div>
       </div>
       {/if}
 

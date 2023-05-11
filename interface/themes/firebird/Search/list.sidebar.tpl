@@ -86,7 +86,7 @@ FIREBIRD TODOS:
     <div class="panel accordion-item">
       <h3 class="accordion-header" id="heading-viewability">
       <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-viewability" aria-controls="collapse-viewability">Item Viewability</button></h3>
-      <div id="collapse-viewability" class="accordion-collapse"  aria-labelledby="heading-viewability">
+      <div id="collapse-viewability" class="accordion-collapse collapse show"  aria-labelledby="heading-viewability">
         <div class="accordion-body">
           {* <li class="filter-group filter-group-checkbox"> *}
           <div class="list-group list-group-flush">

@@ -56,7 +56,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 </head>
-<body class="apps">
+<body class="apps" style="opacity: 0; visibility:hidden;>
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
     <symbol id="checkbox-empty" viewBox="0 0 18 18">

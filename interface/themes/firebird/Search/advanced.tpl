@@ -6,7 +6,10 @@
   </ul>
 </div>
 <div id="root">
-  {include file="header.tpl" logo=true}
+<div role="status" aria-atomic="true" aria-live="polite" class="visually-hidden"></div>
+  <hathi-website-header
+    data-prop-search-state="none"> 
+  </hathi-website-header>
   <main class="main-container" id="main">
     <hathi-advanced-search-form
       data-prop-language-data="{$languageList|@json_encode|escape}" 

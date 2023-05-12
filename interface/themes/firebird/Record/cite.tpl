@@ -1,7 +1,8 @@
 {assign var=marcField value=$marc->getFields('245')}
 
-<div style="width: 90%; margin: 0 auto">
-<h3>APA Citation</h3>
+{* <div style="width: 90%; margin: 0 auto"> *}
+<div class="mt-3">
+<h2>APA Citation</h2>
 <p class="record-citation">
 {if $apaAuthorList}{$apaAuthorList}{/if}
 
@@ -27,7 +28,7 @@
 {$publisher}.
 </p>
 
-<h3>MLA Citation</h3>
+<h2>MLA Citation</h2>
 <p class="record-citation">
 {if $mlaAuthorList}{$mlaAuthorList}.{/if}
 

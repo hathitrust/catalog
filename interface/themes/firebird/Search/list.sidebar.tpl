@@ -2,7 +2,6 @@
 FIREBIRD TODOS:
 
 2. make sure the "remove filter" X icon is actually removing filters
-3. Item viewability has a collapsing bug
 4. is the "show all" button in the filters supposed to do something??
 
 

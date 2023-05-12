@@ -53,6 +53,6 @@
 </p>
 
 
-<div class="alert alert-block alert-warning"><p><strong>Warning</strong>: These citations may not always be complete (especially for serials).</p>
+<div class="alert alert-block alert-warning"><span><i class="fa-solid fa-circle-exclamation me-2" aria-hidden="true"></i><strong>Warning</strong>: These citations may not always be complete (especially for serials).</span>
 </div>
 </div>

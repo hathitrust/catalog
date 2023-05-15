@@ -38,7 +38,11 @@ FIREBIRD TODOS:
                   {* {$searchterms|escape} *}
                   {* this feels hacky, but $searchterms is some kind of generated string and exploding the string on the : in the string was a quick fix *}
                   {assign var=allFields value=":"|explode:$searchterms}
+                    {if $allFields|@count <= 1}
+                    {$allFields[0]}
+                      {else}
                     {$allFields[0]} <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i> {$allFields[1]}
+                      {/if}
                     </span>
                     <a class="btn btn-outline-dark btn-lg" data-href="{$rurl}" href="{$smarty.capture.reset_url}&amp;lookfor%5B%5D=*&amp;type%5B%5D=all">
                     <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>

@@ -1,9 +1,7 @@
 {* 
 FIREBIRD TODOS:
 
-2. make sure the "remove filter" X icon is actually removing filters
 4. is the "show all" button in the filters supposed to do something??
-
 
 *}
 {capture name=reset_url}{$fullPath_esc|remove_url_param:"lookfor[^=]+"|remove_url_param:"type[^=]+"|remove_url_param:"searchtype[^=]+"|regex_replace:"/\/Home&amp;/":"/Home?"}{/capture}
@@ -38,16 +36,18 @@ FIREBIRD TODOS:
                   {* {$searchterms|escape} *}
                   {* this feels hacky, but $searchterms is some kind of generated string and exploding the string on the : in the string was a quick fix *}
                   {assign var=allFields value=":"|explode:$searchterms}
+
                     {if $allFields|@count <= 1}
                     {$allFields[0]}
                       {else}
                     {$allFields[0]} <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i> {$allFields[1]}
                       {/if}
                     </span>
-                    <a class="btn btn-outline-dark btn-lg" data-href="{$rurl}" href="{$smarty.capture.reset_url}&amp;lookfor%5B%5D=*&amp;type%5B%5D=all">
+                    {* <a class="btn btn-outline-dark btn-lg" data-href="{$rurl}" href="{$smarty.capture.reset_url}&amp;lookfor%5B%5D=*&amp;type%5B%5D=all"> *}
+                    <a class="btn btn-outline-dark btn-lg" href="{$rurl}">
                     <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
                     </a>
-                
+                  
                 </li>
               {/if}
               {foreach from=$currentFacets item=facet}
@@ -56,7 +56,7 @@ FIREBIRD TODOS:
                   <span class="d-inline-flex align-items-center gap-2">{$facet.indexDisplay}
                   <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i>
                   {translate text=$facet.valueDisplay}</span>
-                  <a class="btn btn-outline-dark btn-lg" data-href="/Search/{$action}?{$rurl}">
+                  <a class="btn btn-outline-dark btn-lg" href="/Search/{$action}?{$rurl}">
                   <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
                   </a>
                 </li>

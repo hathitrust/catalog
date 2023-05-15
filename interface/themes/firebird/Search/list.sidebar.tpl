@@ -5,17 +5,9 @@ FIREBIRD TODOS:
 
 *}
 {capture name=reset_url}{$fullPath_esc|remove_url_param:"lookfor[^=]+"|remove_url_param:"type[^=]+"|remove_url_param:"searchtype[^=]+"|regex_replace:"/\/Home&amp;/":"/Home?"}{/capture}
-{* <div class="sidebar-container" id="sidebar" tabindex="0"> *}
 <div class="twocol-side" id="sidebar" tabindex="0">
-  {* <button class="for-mobile sidebar-toggle-button filter-group-toggle-show-button" aria-expanded="false">
-    <span class="flex-space-between flex-center">
-      <span class="filter-group-heading">Options/Filters<span class="total-filter-count"></span></span> *}
-      {* <svg xmlns="http://www.w3.org/2000/svg" class="icon"><use xlink:href="#panel-collapsed"></use></svg> *}
-      {* <i class="icomoon icomoon-sidebar-toggle" aria-hidden="true"></i>
-    </span>
-  </button> *}
+  
 
-  {* <h2 class="filters-heading" style="font-size: 1.125rem; padding-bottom: 0">Filter your search</h2> *}
   <h2 class="filters-heading fs-3 mt-3">Filter your search</h2>
 
   <!-- current filters accordion -->
@@ -33,7 +25,6 @@ FIREBIRD TODOS:
                 {assign var=rurl value=$ss->asWildcardURL()|regex_replace:"/&/":"&amp;"}
                 <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
                   <span class="d-inline-flex align-items-center gap-2">
-                  {* {$searchterms|escape} *}
                   {* this feels hacky, but $searchterms is some kind of generated string and exploding the string on the : in the string was a quick fix *}
                   {assign var=allFields value=":"|explode:$searchterms}
 
@@ -43,7 +34,6 @@ FIREBIRD TODOS:
                     {$allFields[0]} <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i> {$allFields[1]}
                       {/if}
                     </span>
-                    {* <a class="btn btn-outline-dark btn-lg" data-href="{$rurl}" href="{$smarty.capture.reset_url}&amp;lookfor%5B%5D=*&amp;type%5B%5D=all"> *}
                     <a class="btn btn-outline-dark btn-lg" href="{$rurl}">
                     <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
                     </a>
@@ -70,15 +60,12 @@ FIREBIRD TODOS:
     <div class="d-flex flex-column gap-2 mb-3">
     {if $adv}
       <a class="btn btn-outline-dark btn-sm clear-all-filters" href="{$adv}">
-      {* <button class="button-link-light clear-all-filters" data-href="{$adv}"> *}
         <span>Revise this advanced search</span>
       {* </button> *}
       </a>
     {/if}
       <a class="btn btn-outline-dark btn-sm clear-all-filters" href="/Search/Home?lookfor=*&type=all">
-      {* <button class="button-link-light clear-all-filters" data-href="/Search/Home?lookfor=*&type=all"> *}
         <span>Clear filters</span>
-      {* </button> *}
       </a>
     </div>
      <!-- end clear filters -->
@@ -91,7 +78,6 @@ FIREBIRD TODOS:
       <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-viewability" aria-controls="collapse-viewability">Item Viewability</button></h3>
       <div id="collapse-viewability" class="accordion-collapse collapse show"  aria-labelledby="heading-viewability">
         <div class="accordion-body">
-          {* <li class="filter-group filter-group-checkbox"> *}
           <div class="list-group list-group-flush">
             <a href="{$allitems_url}" class="list-group-item d-flex justify-content-between align-items-center {if !$is_fullview}active{/if}" aria-current="{if !$is_fullview}true{else}false{/if}">All Items 
               {if $allitems_count gt 0}

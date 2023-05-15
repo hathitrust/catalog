@@ -34,7 +34,7 @@ FIREBIRD TODOS:
       {* <section class="section-container" id="section" data-record-count="{$recordCount}"> *}
       <section class="twocol-main" id="section" data-record-count="{$recordCount}">
         <h1 class="listcs-intro">
-            Search results from the HathiTrust biblographic catalog.
+            Search results
         </h1>
         <div class="results-container">
           <div class="results-summary-container">

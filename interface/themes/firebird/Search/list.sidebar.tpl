@@ -31,7 +31,7 @@ FIREBIRD TODOS:
                     {if $allFields|@count <= 1}
                     {$allFields[0]}
                       {else}
-                    {$allFields[0]} <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i> {$allFields[1]}
+                    {$allFields[0]}: {$allFields[1]}
                       {/if}
                     </span>
                     <a class="btn btn-outline-dark btn-lg" href="{$rurl}">
@@ -43,9 +43,7 @@ FIREBIRD TODOS:
               {foreach from=$currentFacets item=facet}
               {assign var=rurl value=$facet.removalURL|regex_replace:"/&/":"&amp;"}
                 <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
-                  <span class="d-inline-flex align-items-center gap-2">{$facet.indexDisplay}
-                  <i class="fa-solid fa-chevron-right text-secondary fs-7" aria-hidden="true"></i>
-                  {translate text=$facet.valueDisplay}</span>
+                  <span class="d-inline-flex align-items-center gap-2">{$facet.indexDisplay}: {translate text=$facet.valueDisplay}</span>
                   <a class="btn btn-outline-dark btn-lg" href="/Search/{$action}?{$rurl}">
                   <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
                   </a>
@@ -111,14 +109,14 @@ FIREBIRD TODOS:
           <div class="filter-list" data-expanded="false">
             {foreach from=$counts.$cluster item=facet name="facetLoop"}
             <div class="filter-list-item d-flex flex-nowrap align-items-center justify-content-between gap-3 mb-2 px-3">
-          <a href="/Search/Home?{$facet.url|regex_replace:"/&/":"&amp;"}">{translate text=$facet.value}</a>
-          <span>{$facet.count|number_format:null:".":","}</span> 
+              <a href="/Search/Home?{$facet.url|regex_replace:"/&/":"&amp;"}">{translate text=$facet.value}</a>
+              <span>{$facet.count|number_format:null:".":","}</span> 
             </div> 
+            {/foreach}
           </div>
           <div class="mt-3">
-            {/foreach}
             {if $counts.$cluster|@count gt 6}
-            <button class="btn btn-sm btn-outline-dark">Show all {$counts.$cluster|@count} {$facetConfig.$cluster} Filters</button> 
+            <button type="button" class="btn btn-sm btn-outline-dark" data-action="expand-filter" aria-expanded="false">Show all {$counts.$cluster|@count} {$facetConfig.$cluster} Filters</button> 
             {/if}
           </div>
         </div>

@@ -24,7 +24,7 @@ FIREBIRD TODOS:
               {if ($searchterms) and ($lookfor ne '*') }
                 {assign var=rurl value=$ss->asWildcardURL()|regex_replace:"/&/":"&amp;"}
                 <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
-                  <span class="d-inline-flex align-items-center gap-2">
+                  <span >
                   {* this feels hacky, but $searchterms is some kind of generated string and exploding the string on the : in the string was a quick fix *}
                   {assign var=allFields value=":"|explode:$searchterms}
 
@@ -43,7 +43,7 @@ FIREBIRD TODOS:
               {foreach from=$currentFacets item=facet}
               {assign var=rurl value=$facet.removalURL|regex_replace:"/&/":"&amp;"}
                 <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
-                  <span class="d-inline-flex align-items-center gap-2">{$facet.indexDisplay}: {translate text=$facet.valueDisplay}</span>
+                  <span >{$facet.indexDisplay}: {translate text=$facet.valueDisplay}</span>
                   <a class="btn btn-outline-dark btn-lg" href="/Search/{$action}?{$rurl}">
                   <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
                   </a>

@@ -119,7 +119,7 @@ class SearchStructure
 
 
         $this->page = isset($hash['page']) ? $hash['page'] : "1";
-        $this->pagesize = isset($hash['pagesize']) ? $hash['pagesize'] : "20";
+        $this->pagesize = isset($hash['pagesize']) ? $hash['pagesize'] : "100";
 
 
         $this->inbandFilters = array();

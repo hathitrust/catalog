@@ -1,9 +1,3 @@
-{* 
-FIREBIRD TODOS:
-
-4. is the "show all" button in the filters supposed to do something??
-
-*}
 {capture name=reset_url}{$fullPath_esc|remove_url_param:"lookfor[^=]+"|remove_url_param:"type[^=]+"|remove_url_param:"searchtype[^=]+"|regex_replace:"/\/Home&amp;/":"/Home?"}{/capture}
 <div class="twocol-side" id="sidebar" tabindex="0">
   
@@ -23,17 +17,10 @@ FIREBIRD TODOS:
             <ul class="list-group list-group-flush">
               {if ($searchterms) and ($lookfor ne '*') }
                 {assign var=rurl value=$ss->asWildcardURL()|regex_replace:"/&/":"&amp;"}
-                <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
-                  <span >
-                  {* this feels hacky, but $searchterms is some kind of generated string and exploding the string on the : in the string was a quick fix *}
-                  {assign var=allFields value=":"|explode:$searchterms}
 
-                    {if $allFields|@count <= 1}
-                    {$allFields[0]}
-                      {else}
-                    {$allFields[0]}: {$allFields[1]}
-                      {/if}
-                    </span>
+                <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
+              
+                  <span>{$searchterms}</span>
                     <a class="btn btn-outline-dark btn-lg" href="{$rurl}">
                     <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
                     </a>

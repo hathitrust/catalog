@@ -26,12 +26,10 @@ FIREBIRD TODOS:
   <main class="main-container" id="main">
     {* {include file="search_form.tpl"} *}
 
-    {* <div class="container container-medium flex-container flex-container-expanded container-boxed" style="margin-top: 1.75rem; margin-bottom: 1.75rem"> *}
     <div class="twocol mt-1">
 
       {include file="Search/list.sidebar.tpl"}
 
-      {* <section class="section-container" id="section" data-record-count="{$recordCount}"> *}
       <section class="twocol-main" id="section" data-record-count="{$recordCount}">
         <h1 class="listcs-intro">
             Search results
@@ -39,38 +37,22 @@ FIREBIRD TODOS:
         <div class="results-container">
           <div class="results-summary-container">
              {if $recordCount}
-                {* {if $sort == ''} *}
             <hathi-results-toolbar
               data-prop-first-record-number='{$recordStart}'
               data-prop-last-record-number='{$recordEnd}'
               data-prop-total-records='{$recordCount|number_format:null:".":","}'
               data-prop-target='catalog'
+              {* force 'Relevance' to appear in dropdown as default *}
+              {if $sort == ''}
+                data-prop-current-sort-option='false'
+              {/if}
                 data-prop-current-sort-option='{$sort}'
               ></hathi-results-toolbar>
              {/if}
-            {* <div class="results-actions">
-              <label for="sort-option">Sort by</label>
-              <select id="sort-option" name="sort" data-toggle="select" data-href="{$fullPath_esc|remove_url_param:"sort"}&amp;sort=">
-                <option value=""{if $sort == ""} selected{/if}>Relevance</option>
-                <option value="year"{if $sort == "year"} selected{/if}>Date (newest first)</option>
-                <option value="yearup"{if $sort == "yearup"} selected{/if}>Date (oldest first)</option>
-                <option value="author"{if $sort == "author"} selected{/if}>{translate text='Author'}</option>
-                <option value="title"{if $sort == "title"} selected{/if}>{translate text='Title'}</option>
-              </select>
-
-              <label for="pagesize-option">Items per page</label>
-              <select id="pagesize-option" name="pagesize" data-toggle="select" data-href="{$fullPath_esc|remove_url_param:"pagesize"|remove_url_param:"page"}&amp;page=1&amp;pagesize=">
-                <option value="20" {if $pagesize == "20"}selected{/if}>20</option>
-                <option value="50" {if $pagesize == "50"}selected{/if}>50</option>
-                <option value="100" {if $pagesize == "100"}selected{/if}>100</option>
-              </select>
-            </div> *}
+            
           </div>
 
-          {* <pre>{$ss->asFullURL()}</pre>
-          <pre>{$ss->asWildcardURL()}</pre>
-          <pre>{$ss->searchURLComponents()|@var_dump}</pre> *}
-
+         
           <!-- results list -->
           {if $subpage}
           {include file="$subpage"}
@@ -91,21 +73,6 @@ FIREBIRD TODOS:
             data-prop-value = '{$pager->_currentPage}'
             ></hathi-results-pagination>
 
-          {* <nav class="pagination-container" aria-label="Pagination">
-            <div class="page-back-link">
-              {if $pageLinks.back}{$pageLinks.back}{/if}
-            </div>
-
-            <ul>
-              {foreach from=$pageLinksArray item="page" name="pageLoop"}
-              <li>{$page}</li>
-              {/foreach}
-            </ul>
-
-            <div class="page-advance-link">
-              {if $pageLinks.next}{$pageLinks.next}{/if}
-            </div>
-          </nav> *}
           {/if}
         </div>
       </section>

@@ -48,7 +48,7 @@ services:
       - MARIADB_RANDOM_ROOT_PASSWORD=1
 
   playwright:
-    image: mcr.microsoft.com/playwright:v1.32.0-focal
+    image: mcr.microsoft.com/playwright:v1.34.3-focal
     volumes:
       - ./playwright:/usr/src/app
       - node_modules:/usr/src/app/node_modules

@@ -5,7 +5,10 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - name: Check out with submodules
+      uses: actions/checkout@v3
+      with:
+        submodules: true
 
     - name: Set up tests
       run: docker compose build

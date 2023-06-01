@@ -103,9 +103,3 @@ test('Pagination', async ({ page }) => {
   await page.getByRole('link', { name: 'Results Page 3' }).click();
   await expect(page.getByRole('heading', { name: /41 \- 60 of \d+ Catalog results/i })).toBeVisible();
 });
-
-
-
-  
-
-

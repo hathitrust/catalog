@@ -158,8 +158,7 @@ class Record extends Action
         $interface->assign('marc', $marc);
         $links = $ru->getLinkNums($this->marcRecord); 
         $interface->assign('googleLinks', implode(",", $links));
-
-
+        $interface->assign('related_names', $ru->getAdditionalNames($this->marcRecord));
 
         // Define External Content Provider
         if ($this->marcRecord->getField('020')) {

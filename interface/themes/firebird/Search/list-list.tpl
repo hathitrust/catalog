@@ -74,6 +74,13 @@ FIREBIRD TODOS:
         {/if}
       </dl>
     </div>
+
+    {if $record.content_advice|@count gt 0}
+      {foreach from=$record.content_advice item=advice}
+        <div class="alert alert-danger">{$advice}</div>
+      {/foreach}
+    {/if}
+
     {* need to come back and figure this out *}
     <div class="resource-access-container">
       <div class="list-group list-group-horizontal-sm align-items-center">

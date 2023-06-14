@@ -158,6 +158,7 @@ class Record extends Action
         $this->marcRecord = $marc;
         $interface->assign('marc', $marc);
         $interface->assign('content_advice', $ru->getContentAdvice($marc));
+        $interface->assign('summary', $ru->getSummary($marc));
         $links = $ru->getLinkNums($this->marcRecord); 
         $interface->assign('googleLinks', implode(",", $links));
 
@@ -418,9 +419,9 @@ class Record extends Action
     # Randomly adds a fake content advice entry to 1 in 10 records.
     # FIXME: this is only for development/UI mock-ups, remove before merging.
     function addAdvice($marc) {
-      if (rand(0, 10) != 0) {
-        return;
-      }
+      #if (rand(0, 10) != 11) {
+      #  return;
+      #}
       $subfields[] = new File_MARC_Subfield('a', 'This resource may contain antisemitic and/or racist content.');
       $new_field = new File_MARC_Data_Field('520', $subfields, 4, null);
       $marc->appendField($new_field);

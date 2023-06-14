@@ -152,13 +152,23 @@
   </div>
   {/if}
 
-  <!-- content advice -->
   {if $content_advice}
   <div class="grid">
     <dt class="g-col-lg-4 g-col-12">{translate text='Content Advice'}</dt>
     <dd class="g-col-lg-8 g-col-12">
       {foreach from=$content_advice item=field name=loop}
-        <div class="alert alert-danger">{$field}</div>
+        {$field}<br>
+      {/foreach}
+    </dd>
+  </div>
+  {/if}
+
+  {if $summary}
+  <div class="grid">
+    <dt class="g-col-lg-4 g-col-12">{translate text='Summary'}</dt>
+    <dd class="g-col-lg-8 g-col-12">
+      {foreach from=$summary item=field name=loop}
+        {$field}<br>
       {/foreach}
     </dd>
   </div>

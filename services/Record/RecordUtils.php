@@ -503,6 +503,21 @@ function items_from_raw_json($json_string) {
     return $advice;
   }
 
+  # Return array of 520a where ind1 != 4
+  function getSummary($marc) {
+    $summary = array();
+    if ($f520List = $marc->getFields('520')) {
+      foreach ($f520List as $field) {
+        if ($field->getIndicator(1) != '4') {
+          if ($summaryField = $field->getSubfield('a')) {
+            $summary[] = $summaryField->getData();
+          }
+        }
+      }
+    }
+    return $summary;
+  }
+
 }
 
 ?>

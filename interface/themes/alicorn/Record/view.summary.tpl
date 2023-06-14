@@ -174,13 +174,23 @@
   </tr>
   {/if}
 
-  <!-- content advice -->
   {if $content_advice}
   <tr valign="top">
     <th>{translate text='Content Advice'}: </th>
     <td>
-      {foreach from=$content_advice item=field name=loop}
-        <div class="alert alert-danger">{$field}</div>
+      {foreach from=$marcField item=field name=loop}
+        {$field}<br>
+      {/foreach}
+    </td>
+  </tr>
+  {/if}
+
+  {if $summary}
+  <tr valign="top">
+    <th>{translate text='Summary'}: </th>
+    <td>
+      {foreach from=$marcField item=field name=loop}
+        {$field}<br>
       {/foreach}
     </td>
   </tr>

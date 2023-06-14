@@ -51,11 +51,6 @@
         {/if}
       </dl>
     </div>
-    {if $record.content_advice|@count gt 0}
-      {foreach from=$record.content_advice item=advice}
-        <div class="alert alert-danger">{$advice}</div>
-      {/foreach}
-    {/if}
     <div class="resource-access-container">
       <ul>
         <li><a href="{$ss->asRecordURL($record.id)}" class="cataloglinkhref"><i class="icomoon icomoon-info-circle" aria-hidden="true"></i> Catalog Record</a></li>

@@ -75,24 +75,29 @@ FIREBIRD TODOS:
       </dl>
     </div>
     {* need to come back and figure this out *}
+
+    {assign var="dfields" value=$ru->displayable_ht_fields($record.marc)}
+    {if $dfields|@count gt 1}
+      <p class="fs-7 text-secondary mb-1">
+        Use the Catalog Record to view multiple volumes
+      </p>
+    {/if}
+
     <div class="resource-access-container">
       <div class="list-group list-group-horizontal-sm align-items-center">
         <a href="{$ss->asRecordURL($record.id)}" class="list-group-item list-group-item-action w-sm-50"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></i> Catalog Record</a>
-        {assign var="dfields" value=$ru->displayable_ht_fields($record.marc)}
-        {if $dfields|@count gt 1}
-          <span class="ms-3">(view record to see multiple volumes)</span>
-        {else}
-
+        {if $dfields|@count eq 1}
           {if ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
             {* need to figure out if data-activated-role="true" is still in use orrr if it's data-access-role="superuser" like in storybook *}
             <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i aria-hidden="true" class="fa-solid fa-unlock"></i> Limited (Access Permitted)</a>
           {elseif ($ld.is_fullview || $ld.is_NFB) }
             <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50 active"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> Full view</a>
-	        {elseif $ld.is_emergency_access}
-	              <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-unlock"></i> Temporary access</a>
+          {elseif $ld.is_emergency_access}
+            <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-unlock"></i> Temporary access</a>
           {else}
             <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-lock"></i> Limited (search only)</a>
           {/if}
+        {/if}
            {* {if ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
             <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-unlocked" aria-hidden="true"></i> Limited (Access Permitted)</a>
           {elseif ($ld.is_fullview || $ld.is_NFB) }
@@ -102,7 +107,6 @@ FIREBIRD TODOS:
           {else}
             <a href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} searchonly"><i class="icomoon icomoon-locked" aria-hidden="true"></i> Limited (search only)</a>
           {/if} *}
-        {/if}
       </div>
     </div>
   </div>

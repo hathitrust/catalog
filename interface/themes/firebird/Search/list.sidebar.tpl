@@ -1,6 +1,13 @@
 {capture name=reset_url}{$fullPath_esc|remove_url_param:"lookfor[^=]+"|remove_url_param:"type[^=]+"|remove_url_param:"searchtype[^=]+"|regex_replace:"/\/Home&amp;/":"/Home?"}{/capture}
 <div class="twocol-side" id="sidebar" tabindex="0">
   
+  <button id="action-toggle-filters" class="btn btn-outline-primary" aria-expanded="false">
+    <span>
+      <span class="not-expanded">Show</span>
+      <span class="is-expanded">Hide</span>
+      Search Filters
+    </span>
+  </button>
 
   <h2 class="filters-heading fs-3 mt-3">Filter your search</h2>
 
@@ -103,7 +110,12 @@
           </div>
           <div class="mt-3">
             {if $counts.$cluster|@count gt 6}
-            <button type="button" class="btn btn-sm btn-outline-dark" data-action="expand-filter" aria-expanded="false">Show all {$counts.$cluster|@count} {$facetConfig.$cluster} Filters</button> 
+            <button type="button" class="btn btn-sm btn-outline-dark" data-action="expand-filter" aria-expanded="false">
+              Show 
+                <span class="not-expanded">all {$counts.$cluster|@count} </span>
+                <span class="is-expanded">fewer </span>
+                {$facetConfig.$cluster} Filters
+            </button> 
             {/if}
           </div>
         </div>

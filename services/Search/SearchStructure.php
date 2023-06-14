@@ -47,7 +47,26 @@ class SearchStructure
         'publishDateTrie' => 'Year',
         'subject2' => 'Subject',
         'location' => 'Location',
-        'ht_rightscode' => "Rights"
+        'ht_rightscode' => "Rights",
+        'series' => 'Series Title',
+        'title' => "Title",
+        'author' => "Author",
+        'topicStr' => "Subject",
+        'authorStr' => "Author",
+        'hlb_both' => "Academic Discipline",
+        'availability' => "Availability",
+        'language' => "Language",
+        'country_of_pub_facet' => "Place of Publication",
+        'publishDateRange' => "Date of Publication",
+        'geographicStr' => "Region",
+        'era' => "Time Period",
+        'institution' => "Institution",
+        'building' => "Library",
+        'subtopicStr' => "Subtopic",
+        'callnumber' => "Call Number",
+        'format' => "Original Format",
+        'htsource' => "Original Location",
+        'isn' => "ISBN/ISSN",
     );
 
 
@@ -837,7 +856,7 @@ class SearchStructure
 
         }
         foreach ($this->cleaned_up_original_search as $fkb) { # field, keywords, bool
-            $index = $fkb[0] == 'all' ? 'All Fields' : $fkb[0];
+            $index = $fkb[0] == 'all' ? 'All Bibliographic Fields' : $fkb[0];
             if (isset($this->indexDisplayName[$index])) $index = $this->indexDisplayName[$index];
 
             $l = $index . ': ' . $fkb[1];

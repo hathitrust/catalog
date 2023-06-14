@@ -23,7 +23,7 @@ FIREBIRD TODOS:
   {* {$ld|@var_dump} *}
   <div class="cover d-none d-md-block" data-hdl="{$ld.handle}">
     {if $ld.handle}
-    <img loading="lazy" class="bookCover border p-1 flex-grow-0 flex-shrink-0" aria-hidden="true" alt="" src="{$unicorn_root}/cgi/imgsrv/cover?id={$ld.handle}" />
+    <img loading="lazy" class="bookCover border p-1 flex-grow-0 flex-shrink-0" aria-hidden="true" alt="" src="{$unicorn_root}/cgi/imgsrv/cover?id={$ld.handle};width=250" />
     {else}
     <img loading="lazy" class="bookCover border p-1 flex-grow-0 flex-shrink-0" aria-hidden="true" alt="" src="/images/nocover-thumbnail.png" />
     {/if}

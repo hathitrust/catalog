@@ -125,7 +125,7 @@ return array (
   ),
   'keio' => 
   array (
-    'original_from' => '慶應義塾大学 (Keio University)',
+    'original_from' => 'Keio University 慶應義塾大学 ',
   ),
   'lebau' => 
   array (

@@ -3,6 +3,7 @@ const { test, expect } = require('@playwright/test');
 const test_cid = '100681548'; // "North Sea Pilot" arbitrarily chosen
 const full_view_cid = '008374016'; // "Domesday Book" all volumes full view
 const limited_view_cid = '008700748'; // "On free exhibition day and evening at the Lihou Art Galleries" limited view 
+const summary_cid = '006153412'; // "Toby Tyler" one of our sample records that has a 520 summary
 
 // Test for standard static items on record page.
 test('Record page', async ({ page }) => {
@@ -47,4 +48,11 @@ test('Citation download', async ({ page }) => {
   await page.getByRole('link', { name: 'Export citation file' }).click();
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toEqual('references.ris');
+});
+
+// Make sure there is a Summary (not Content Advice) field.
+test('Record page has Summary but not Content Advice', async ({ page }) => {
+  await page.goto(`/Record/${summary_cid}`);
+  await expect(page.getByRole('cell', { name: 'Summary:' })).toBeVisible();
+  await expect(page.getByRole('cell', { name: 'Content Advice:' })).not.toBeVisible();
 });

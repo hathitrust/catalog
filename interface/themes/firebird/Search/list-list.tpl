@@ -77,7 +77,7 @@ FIREBIRD TODOS:
     {* need to come back and figure this out *}
 
     {assign var="dfields" value=$ru->displayable_ht_fields($record.marc)}
-    {if $dfields|@count gt 1}
+    {if false && $dfields|@count gt 1}
       <p class="fs-7 text-secondary mb-1">
         Use the Catalog Record to view multiple volumes
       </p>
@@ -97,6 +97,8 @@ FIREBIRD TODOS:
           {else}
             <a href="{$handle_prefix}{$ld.handle}" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-lock"></i> Limited (search only)</a>
           {/if}
+        {elseif $dfields|@count gt 1}
+            <a href="{$ss->asRecordURL($record.id)}#viewability" class="list-group-item list-group-item-action w-sm-50"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></i> Multiple Items</a>
         {/if}
            {* {if ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
             <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-unlocked" aria-hidden="true"></i> Limited (Access Permitted)</a>

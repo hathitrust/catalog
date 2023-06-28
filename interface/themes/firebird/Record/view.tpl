@@ -79,7 +79,7 @@
 
           {include file="$module/view.summary.tpl"}
 
-          <h2 class="mt-3">Viewability</h2>
+          <h2 id="viewability" class="mt-3">Viewability</h2>
           <table class="table-branded viewability-table">
             <thead>
               <tr>

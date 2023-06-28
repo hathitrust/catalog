@@ -51,6 +51,7 @@ class SearchStructure
         'series' => 'Series Title',
         'title' => "Title",
         'author' => "Author",
+        'subject' => "Subject",
         'topicStr' => "Subject",
         'authorStr' => "Author",
         'hlb_both' => "Academic Discipline",
@@ -856,10 +857,11 @@ class SearchStructure
 
         }
         foreach ($this->cleaned_up_original_search as $fkb) { # field, keywords, bool
-            $index = $fkb[0] == 'all' ? 'All Bibliographic Fields' : $fkb[0];
+            $index = $fkb[0] == 'all' ? 'All Fields' : $fkb[0];
             if (isset($this->indexDisplayName[$index])) $index = $this->indexDisplayName[$index];
 
-            $l = $index . ': ' . $fkb[1];
+            // $l = $index . ': ' . $fkb[1];
+            $l = $index . ': ' . '<span class="query-term">' . $fkb[1] . '</span>';
 
             if (isset($fkb[2])) { # the boolean operator
                 $l .= ' ' . $fkb[2];

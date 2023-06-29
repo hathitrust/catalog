@@ -1,5 +1,5 @@
 {capture name=reset_url}{$fullPath_esc|remove_url_param:"lookfor[^=]+"|remove_url_param:"type[^=]+"|remove_url_param:"searchtype[^=]+"|regex_replace:"/\/Home&amp;/":"/Home?"}{/capture}
-<div class="twocol-side" id="sidebar" tabindex="0">
+<div class="twocol-side" id="sidebar">
   
   <button id="action-toggle-filters" class="btn btn-outline-primary" aria-expanded="false">
     <span>

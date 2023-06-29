@@ -136,7 +136,7 @@
 
 
       {if is_array($similarRecords) or $lastsearch}
-      <div class="twocol-side" id="sidebar" tabindex="0">
+      <div class="twocol-side" id="sidebar">
         {if $lastsearch}
         <div class="back-to-results">
           <a class="btn btn-secondary" href="{$lastsearch|regex_replace:"/&/":"&amp;"}">

@@ -5,6 +5,9 @@
   <title>{$pageTitle|truncate:64:"..."} | HathiTrust Digital Library</title>
   <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">
 
+<script>
+let $$assets = {firebird_manifest};
+</script>
 {literal}
 <script type="text/javascript">
   let head = document.head;
@@ -22,21 +25,21 @@
     document.head.appendChild(linkEl);
   }
 
-  addScript({ href: 'https://kit.fontawesome.com/1c6c3b2b35.js', crossOrigin: 'anonymous' });
-  // addScript({ href: `//localhost:5173/js/main.js`, type: 'module' });
-   
-
   let firebird_config = localStorage.getItem('firebird') || '';
   if ( firebird_config == 'proxy' ) {
     addScript({ href: `//${location.host}/js/main.js`, type: 'module' });
   } else if ( firebird_config.match('localhost') ) {
     addScript({ href: `//${firebird_config}/js/main.js`, type: 'module' });
-  } else {
+  } else if ( firebird_config ) {
     // connect to netlify
     if ( firebird_config ) { firebird_config += '--'; }
     let hostname = `//${firebird_config}hathitrust-firebird-common.netlify.app`;
     addStylesheet({ href: `${hostname}/assets/main.css` });
     addScript({ href: `${hostname}/assets/main.js`, type: 'module' });
+  } else {
+    // local hosting
+    addStylesheet({ href: $$assets.stylesheet});
+    addScript({ href: $$assets.script, type: 'module' });
   }
 </script>
 {/literal}

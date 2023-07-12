@@ -1,4 +1,4 @@
-<ul id="skiplinks" role="complementary" aria-label="Skip links">
+<ul id="skiplinks" class="visually-hidden-focusable" role="complementary" aria-label="Skip links">
   <li>
     <a href="#section">Skip to main</a>
   </li>

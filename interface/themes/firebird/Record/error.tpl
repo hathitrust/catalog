@@ -1,4 +1,4 @@
-<ul id="skiplinks" role="complementary" aria-label="Skip links">
+<ul id="skiplinks" class="visually-hidden-focusable" role="complementary" aria-label="Skip links">
   <li>
     <a href="#section">Skip to main</a>
   </li>
@@ -12,19 +12,13 @@
     <div class="container container-medium flex-container flex-container-expanded container-boxed" style="margin-top: 1.75rem; margin-bottom: 1.75rem">
 
       <section class="section-container" id="section" data-record-count="{$recordCount}">
-        <h1 class="listcs-intro" style="margin-left: 0; font-weight: normal; margin-bottom: 1rem">
-            Search results from the HathiTrust biblographic catalog.
+        <h1>
+            The catalog record could not found.
         </h1>
 
-        <div class="results-container">
-          <div class="results-summary-container">
-            <h2 class="results-summary">No catalog record was found with that identifier. Please check your url or try searching HathiTrust.</h2>
-          </div>
-
-          <div class="results-container-inner">
-          </div>
-
-        </div>
+        <p>
+          No catalog record was found with that identifier. Please check your url or try searching HathiTrust.
+        </p>
       </section>
     </div>
 

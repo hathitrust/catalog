@@ -19,6 +19,10 @@ return array (
   array (
     'original_from' => 'Cornell University',
   ),
+  'cou' => 
+  array (
+    'original_from' => 'University of Colorado Boulder',
+  ),
   'ctu' => 
   array (
     'original_from' => 'University of Connecticut',
@@ -39,6 +43,10 @@ return array (
   array (
     'original_from' => 'Getty Research Institute',
   ),
+  'gu' => 
+  array (
+    'original_from' => 'University of Georgia',
+  ),
   'gwla' => 
   array (
     'original_from' => 'Technical Report Archive &amp; Image Library',
@@ -46,6 +54,10 @@ return array (
   'hvd' => 
   array (
     'original_from' => 'Harvard University',
+  ),
+  'iagg' => 
+  array (
+    'original_from' => 'Grinnell College',
   ),
   'iau' => 
   array (
@@ -113,11 +125,11 @@ return array (
   ),
   'keio' => 
   array (
-    'original_from' => '慶應義塾大学 (Keio University)',
+    'original_from' => 'Keio University 慶應義塾大学 ',
   ),
   'lebau' => 
   array (
-    'original_from' => 'American University of Beirut',
+    'original_from' => 'American University of Beirut - الجامعة الأميركيّة في بيروت',
   ),
   'mdbj' => 
   array (
@@ -170,6 +182,14 @@ return array (
   'njp' => 
   array (
     'original_from' => 'Princeton University',
+  ),
+  'njpt' => 
+  array (
+    'original_from' => 'Princeton Theological Seminary',
+  ),
+  'njr' => 
+  array (
+    'original_from' => 'Rutgers University',
   ),
   'nnc' => 
   array (

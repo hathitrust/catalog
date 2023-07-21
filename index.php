@@ -71,6 +71,10 @@ if (isset($configArray[$hn], $configArray[$hn]['extraFilters'])) {
   $configArray['extraFilters'] = array('ht' => $configArray[$hn]['extraFilters']);
 }
 
+if (isset($_GET['skin']) && ($_GET['skin'] == 'alicorn')) {
+  $configArray['Site']['theme'] = 'alicorn';
+}
+
 #######################################
 # Mobile detection
 #######################################

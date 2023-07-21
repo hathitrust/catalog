@@ -47,7 +47,27 @@ class SearchStructure
         'publishDateTrie' => 'Year',
         'subject2' => 'Subject',
         'location' => 'Location',
-        'ht_rightscode' => "Rights"
+        'ht_rightscode' => "Rights",
+        'series' => 'Series Title',
+        'title' => "Title",
+        'author' => "Author",
+        'subject' => "Subject",
+        'topicStr' => "Subject",
+        'authorStr' => "Author",
+        'hlb_both' => "Academic Discipline",
+        'availability' => "Availability",
+        'language' => "Language",
+        'country_of_pub_facet' => "Place of Publication",
+        'publishDateRange' => "Date of Publication",
+        'geographicStr' => "Region",
+        'era' => "Time Period",
+        'institution' => "Institution",
+        'building' => "Library",
+        'subtopicStr' => "Subtopic",
+        'callnumber' => "Call Number",
+        'format' => "Original Format",
+        'htsource' => "Original Location",
+        'isn' => "ISBN/ISSN",
     );
 
 
@@ -119,7 +139,7 @@ class SearchStructure
 
 
         $this->page = isset($hash['page']) ? $hash['page'] : "1";
-        $this->pagesize = isset($hash['pagesize']) ? $hash['pagesize'] : "20";
+        $this->pagesize = isset($hash['pagesize']) ? $hash['pagesize'] : "100";
 
 
         $this->inbandFilters = array();
@@ -840,7 +860,8 @@ class SearchStructure
             $index = $fkb[0] == 'all' ? 'All Fields' : $fkb[0];
             if (isset($this->indexDisplayName[$index])) $index = $this->indexDisplayName[$index];
 
-            $l = $index . ': ' . $fkb[1];
+            // $l = $index . ': ' . $fkb[1];
+            $l = $index . ': ' . '<span class="query-term">' . $fkb[1] . '</span>';
 
             if (isset($fkb[2])) { # the boolean operator
                 $l .= ' ' . $fkb[2];

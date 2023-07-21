@@ -73,6 +73,12 @@ class UInterface extends Smarty
         if (isset($configArray['LDAP'])) {
             $this->assign('authMethod', 'LDAP');
         }
+
+        $BABEL_ROOT = str_replace('catalog', 'babel', dirname($_SERVER['DOCUMENT_ROOT']));
+        $firebird_manifest_filename = $BABEL_ROOT . '/firebird-common/dist/manifest.json';
+        if (file_exists(($firebird_manifest_filename))) {
+            $this->assign('firebird_manifest', json_decode(file_get_contents($firebird_manifest_filename), true));
+        }
     }
 
     function setTemplate($tpl)

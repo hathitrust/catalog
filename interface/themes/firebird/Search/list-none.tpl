@@ -22,6 +22,13 @@
         </h1>
 
         <div>
+
+          {if $fixedUnbalancedQuotes}
+            <div class="alert alert-info">
+              <p>Your query contained ambiguous quotes and was modified by removing the last one.</p>
+            </div>
+          {/if}
+
           <div class="alert alert-info alert-block">
             {if $error_message}
                <strong>There was a problem talking to the catalog.</strong>

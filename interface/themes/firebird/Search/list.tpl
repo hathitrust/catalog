@@ -34,6 +34,13 @@ FIREBIRD TODOS:
         <h1 class="listcs-intro">
             Search results
         </h1>
+
+        {if $fixedUnbalancedQuotes}
+          <div class="alert alert-info">
+            <p>Your query contained ambiguous quotes and was modified by removing the last one.</p>
+          </div>
+        {/if}
+
         <div class="results-container">
           <div class="results-summary-container">
              {if $recordCount}

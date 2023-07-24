@@ -42,6 +42,13 @@ let $$assets = {firebird_manifest};
     addScript({ href: $$assets.script, type: 'module' });
   }
 </script>
+<script>
+  // in case any of the links and scripts fail
+  setTimeout(function() {
+    document.body.style.visibility = 'visible';
+    document.body.style.opacity = '1';
+  }, 1500);
+</script>
 {/literal}
 
 

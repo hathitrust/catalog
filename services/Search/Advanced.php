@@ -84,6 +84,9 @@ class Advanced extends Home {
             $value = $filter[1];
             // print "<pre>"; print_r($value); print "</pre>";
             if ( $key == 'publishDateTrie' ) {
+                if(is_array($value)) {
+                    $value = implode(' TO ', $value);
+                }
                 if (preg_match('/^\[\s*\"?(.*?)\"?\s+TO\s+\"?(.*?)\"?\s*\].*$/', $value, $matcher)) {
                     $start = $matcher[1];
                     $end   = $matcher[2];

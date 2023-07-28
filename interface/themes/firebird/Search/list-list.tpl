@@ -85,20 +85,20 @@ FIREBIRD TODOS:
 
     <div class="resource-access-container">
       <div class="list-group list-group-horizontal-sm align-items-center">
-        <a href="{$ss->asRecordURL($record.id)}" class="list-group-item list-group-item-action w-sm-50"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></i> Catalog Record</a>
+        <a href="{$ss->asRecordURL($record.id)}" class="list-group-item list-group-item-action w-sm-50"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></i> Catalog Record<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
         {if $dfields|@count eq 1}
           {if ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
             {* need to figure out if data-activated-role="true" is still in use orrr if it's data-access-role="superuser" like in storybook *}
-            <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="rights-{$ld.rights_code} fulltext"><i aria-hidden="true" class="fa-solid fa-unlock"></i> Limited (Access Permitted)</a>
+            <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="rights-{$ld.rights_code} fulltext"><i aria-hidden="true" class="fa-solid fa-unlock"></i> Limited (Access Permitted)<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
           {elseif ($ld.is_fullview || $ld.is_NFB) }
-            <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50 active"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> Full view</a>
+            <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50 active"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> Full view<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
           {elseif $ld.is_emergency_access}
-            <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-unlock"></i> Temporary access</a>
+            <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-unlock"></i> Temporary access<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
           {else}
-            <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-lock"></i> Limited (search only)</a>
+            <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50"><i aria-hidden="true" class="fa-solid fa-lock"></i> Limited (search only)<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
           {/if}
         {elseif $dfields|@count gt 1}
-            <a href="{$ss->asRecordURL($record.id)}#viewability" class="list-group-item list-group-item-action w-sm-50"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></i> Multiple Items</a>
+            <a href="{$ss->asRecordURL($record.id)}#viewability" class="list-group-item list-group-item-action w-sm-50"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></i> Multiple Items<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
         {/if}
            {* {if ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
             <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" class="rights-{$ld.rights_code} fulltext"><i class="icomoon icomoon-unlocked" aria-hidden="true"></i> Limited (Access Permitted)</a>

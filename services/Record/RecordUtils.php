@@ -488,36 +488,22 @@ function items_from_raw_json($json_string) {
     return $links;
   }
 
-  # Return array of 520a where ind1 == 4
-  function getContentAdvice($marc) {
-    $advice = array();
+  # Return arrays of 520a where ind1 == 4 ("content_advice") and where ind1 != 4 ("summary")
+  function getSummaryAndContentAdvice($marc) {
+    $data = array('summary' => array(), 'content_advice' => array());
     if ($f520List = $marc->getFields('520')) {
       foreach ($f520List as $field) {
-        if ($field->getIndicator(1) == '4') {
-          if ($adviceField = $field->getSubfield('a')) {
-            $advice[] = $adviceField->getData();
+        if ($subfield = $field->getSubfield('a')) {
+          if ($field->getIndicator(1) == '4') {
+            $data['content_advice'][] = $subfield->getData();
+          } else {
+            $data['summary'][] = $subfield->getData();
           }
         }
       }
     }
-    return $advice;
+    return $data;
   }
-
-  # Return array of 520a where ind1 != 4
-  function getSummary($marc) {
-    $summary = array();
-    if ($f520List = $marc->getFields('520')) {
-      foreach ($f520List as $field) {
-        if ($field->getIndicator(1) != '4') {
-          if ($summaryField = $field->getSubfield('a')) {
-            $summary[] = $summaryField->getData();
-          }
-        }
-      }
-    }
-    return $summary;
-  }
-
 }
 
 ?>

@@ -156,8 +156,9 @@ class Record extends Action
         $marc = $ru->getMarcRecord($record);
         $this->marcRecord = $marc;
         $interface->assign('marc', $marc);
-        $interface->assign('content_advice', $ru->getContentAdvice($marc));
-        $interface->assign('summary', $ru->getSummary($marc));
+        $summaryData = $ru->getSummaryAndContentAdvice($marc);
+        $interface->assign('content_advice', $summaryData['content_advice']);
+        $interface->assign('summary', $summaryData['summary']);
         $links = $ru->getLinkNums($this->marcRecord); 
         $interface->assign('googleLinks', implode(",", $links));
 

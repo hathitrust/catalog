@@ -42,26 +42,20 @@
   </tr>
   {/if}
 
-  {assign var=marcField value=$marc->getFields('700')}
-  {assign var=subfieldlist value=','|explode:'a,b,c,d,e'}
+  {assign var=marcField value=$marc->getField('111')}
   {if $marcField}
   <tr valign="top">
-    <th>Related Names: </th>
+    <th>{translate text='Meeting Name'}: </th>
+    <td><a href="{$url}/Search/Home?lookfor=%22{$marcField|getvalue:'a'|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}{if $marcField|getvalue:'n'} {$marcField|getvalue:'n'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}</a></td>
+  </tr>
+  {/if}
+
+  {if $related_names}
+  <tr valign="top">
+    <th>{translate text='Related Names'}: </th>
     <td>
-      {foreach from=$marcField item=field name=loop}
-        {foreach from=$subfieldlist item=subfield name=subfield_loop}
-          {assign var=subval value=$field|getvalue:$subfield}
-          {if !empty($subval)}
-      {assign var="subfield_$subfield" value=$subval|regex_replace:"/,\$/":""}
-    {else}
-      {assign var="subfield_$subfield" value=""}
-          {/if}
-         {/foreach}
-
-
-        <a href="{$url}/Search/Home?lookfor=%22{$subfield_a $subfield_b $subfield_c $subfield_d}%22&amp;type=author&amp;inst={$inst}">{$subfield_a} {$subfield_b} {$subfield_c} {$subfield_d}</a>{if !empty($subfield_e)}, {$subfield_e}{/if}{if (!$smarty.foreach.loop.last)}, {/if}
-
-
+      {foreach from=$related_names item=name name=loop}
+         <a href="{$url}/Search/Home?lookfor=%22{$name.search|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$name.display}</a>{if (!$smarty.foreach.loop.last)}; {/if}
       {/foreach}
     </td>
   </tr>

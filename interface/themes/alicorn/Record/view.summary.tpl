@@ -174,6 +174,28 @@
   </tr>
   {/if}
 
+  {if $content_advice}
+  <tr valign="top">
+    <th>{translate text='Content Advice'}: </th>
+    <td>
+      {foreach from=$content_advice item=field name=loop}
+        {$field}<br>
+      {/foreach}
+    </td>
+  </tr>
+  {/if}
+
+  {if $summary}
+  <tr valign="top">
+    <th>{translate text='Summary'}: </th>
+    <td>
+      {foreach from=$summary item=field name=loop}
+        {$field}<br>
+      {/foreach}
+    </td>
+  </tr>
+  {/if}
+
   {assign var=marcField value=$marc->getFields('500|501|521|525|526|530|547|550|552|561|565|584|585',true)}
   {if $marcField}
   <tr valign="top">

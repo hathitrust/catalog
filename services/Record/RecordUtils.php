@@ -488,6 +488,22 @@ function items_from_raw_json($json_string) {
     return $links;
   }
 
+  # Return arrays of 520a where ind1 == 4 ("content_advice") and where ind1 != 4 ("summary")
+  function getSummaryAndContentAdvice($marc) {
+    $data = array('summary' => array(), 'content_advice' => array());
+    if ($f520List = $marc->getFields('520')) {
+      foreach ($f520List as $field) {
+        if ($subfield = $field->getSubfield('a')) {
+          if ($field->getIndicator(1) == '4') {
+            $data['content_advice'][] = $subfield->getData();
+          } else {
+            $data['summary'][] = $subfield->getData();
+          }
+        }
+      }
+    }
+    return $data;
+  }
 }
 
 ?>

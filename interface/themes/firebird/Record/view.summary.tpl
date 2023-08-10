@@ -152,6 +152,28 @@
   </div>
   {/if}
 
+  {if $content_advice}
+  <div class="grid">
+    <dt class="g-col-lg-4 g-col-12">{translate text='Content Advice'}</dt>
+    <dd class="g-col-lg-8 g-col-12">
+      {foreach from=$content_advice item=field name=loop}
+        {$field}<br>
+      {/foreach}
+    </dd>
+  </div>
+  {/if}
+
+  {if $summary}
+  <div class="grid">
+    <dt class="g-col-lg-4 g-col-12">{translate text='Summary'}</dt>
+    <dd class="g-col-lg-8 g-col-12">
+      {foreach from=$summary item=field name=loop}
+        {$field}<br>
+      {/foreach}
+    </dd>
+  </div>
+  {/if}
+
   {assign var=marcField value=$marc->getFields('500|501|521|525|526|530|547|550|552|561|565|584|585',true)}
   {if $marcField}
   <div class="grid">

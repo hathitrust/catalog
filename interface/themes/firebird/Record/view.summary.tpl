@@ -135,7 +135,7 @@
             {assign var=subject value="$subject $subfield"}
             <a href="{$url}/Search/Home?lookfor=%22{$subject|escape}%22&amp;type=subject&amp;inst={$inst}">
               {if $ancestors != ""}
-              <span class="offscreen">{$ancestors} / </span>
+              <span class="visually-hidden">{$ancestors} / </span>
               {/if}
               {$subfield}
             </a>

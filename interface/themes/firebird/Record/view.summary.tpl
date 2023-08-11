@@ -53,7 +53,7 @@
 
   {if $related_names}
     <div class="grid">
-      <dt class="g-col-lg-4 g-col-12">Related Names</dt>
+      <dt class="g-col-lg-4 g-col-12">{translate text='Related Names'}</dt>
       <dd class="g-col-lg-8 g-col-12">
         {foreach from=$related_names item=name name=loop}
          <a href="{$url}/Search/Home?lookfor=%22{$name.search|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$name.display}</a>{if (!$smarty.foreach.loop.last)}; {/if}

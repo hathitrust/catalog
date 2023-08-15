@@ -1,4 +1,5 @@
 {* <table summary="This table displays bibliographic information about this specific book or series" class="citation"> *}
+
 <dl class="metadata">
   {assign var=marcField value=$marc->getFields('785')}
   {if $marcField}
@@ -24,14 +25,13 @@
     </div>
   {/if}
 
-
-
-
   {assign var=marcField value=$marc->getField('100')}
   {if $marcField}
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='Main Author'}</dt>
-      <dd class="g-col-lg-8 g-col-12"><a href="{$url}/Search/Home?lookfor=%22{$marcField|getvalue:'a'}{if $marcField|getvalue:'b'} {$marcField|getvalue:'b'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}{if $marcField|getvalue:'b'} {$marcField|getvalue:'b'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}</a></dd>
+      <dd class="g-col-lg-8 g-col-12">
+        {record_author_display marc_field=$marcField inst=$inst}
+      </dd>
     </div>
   {/if}
 
@@ -39,7 +39,9 @@
   {if $marcField}
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='Corporate Author'}</dt>
-      <dd class="g-col-lg-8 g-col-12"><a href="{$url}/Search/Home?lookfor=%22{$marcField|getvalue:'a'|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}</a></dd>
+      <dd class="g-col-lg-8 g-col-12">
+        {record_author_display marc_field=$marcField inst=$inst}
+      </dd>
     </div>
   {/if}
 
@@ -47,16 +49,19 @@
   {if $marcField}
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='Meeting Name'}</dt>
-      <dd class="g-col-lg-8 g-col-12"><a href="{$url}/Search/Home?lookfor=%22{$marcField|getvalue:'a'|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}{if $marcField|getvalue:'n'} {$marcField|getvalue:'n'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}</a></dd>
+      <dd class="g-col-lg-8 g-col-12">
+        {record_author_display marc_field=$marcField inst=$inst}
+      </dd>
     </div>
   {/if}
 
-  {if $related_names}
+  {assign var=marcField value=$marc->getFields('700|710|711', 1)}
+  {if $marcField}
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='Related Names'}</dt>
       <dd class="g-col-lg-8 g-col-12">
-        {foreach from=$related_names item=name name=loop}
-         <a href="{$url}/Search/Home?lookfor=%22{$name.search|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$name.display}</a>{if (!$smarty.foreach.loop.last)}; {/if}
+        {foreach from=$marcField item=field name=loop}
+          {record_author_display marc_field=$field inst=$inst}<br/>
         {/foreach}
       </dd>
     </div>

@@ -30,7 +30,7 @@
   {if $marcField}
   <tr valign="top">
     <th>{translate text='Main Author'}: </th>
-    <td><a href="{$url}/Search/Home?lookfor=%22{$marcField|getvalue:'a'}{if $marcField|getvalue:'b'} {$marcField|getvalue:'b'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}{if $marcField|getvalue:'b'} {$marcField|getvalue:'b'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}</a></td>
+    <td>{record_author_display marc_field=$marcField inst=$inst}</td>
   </tr>
   {/if}
 
@@ -38,7 +38,7 @@
   {if $marcField}
   <tr valign="top">
     <th>{translate text='Corporate Author'}: </th>
-    <td><a href="{$url}/Search/Home?lookfor=%22{$marcField|getvalue:'a'|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}</a></td>
+    <td>{record_author_display marc_field=$marcField inst=$inst}</td>
   </tr>
   {/if}
 
@@ -46,16 +46,17 @@
   {if $marcField}
   <tr valign="top">
     <th>{translate text='Meeting Name'}: </th>
-    <td><a href="{$url}/Search/Home?lookfor=%22{$marcField|getvalue:'a'|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$marcField|getvalue:'a'}{if $marcField|getvalue:'n'} {$marcField|getvalue:'n'}{/if}{if $marcField|getvalue:'d'} {$marcField|getvalue:'d'}{/if}{if $marcField|getvalue:'c'} {$marcField|getvalue:'c'}{/if}</a></td>
+    <td>{record_author_display marc_field=$marcField inst=$inst}</td>
   </tr>
   {/if}
 
-  {if $related_names}
+  {assign var=marcField value=$marc->getFields('700|710|711', 1)}
+  {if $marcField}
   <tr valign="top">
     <th>{translate text='Related Names'}: </th>
     <td>
-      {foreach from=$related_names item=name name=loop}
-         <a href="{$url}/Search/Home?lookfor=%22{$name.search|escape:'uri'}%22&amp;type=author&amp;inst={$inst}">{$name.display}</a>{if (!$smarty.foreach.loop.last)}; {/if}
+      {foreach from=$marcField item=field name=loop}
+        {record_author_display marc_field=$field inst=$inst}<br/>
       {/foreach}
     </td>
   </tr>

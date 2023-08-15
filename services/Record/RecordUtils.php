@@ -24,48 +24,6 @@ class RecordUtils {
       'n' => true,
       'p' => true
   );
-
-  # Which 700/710/711 subfields do we use for display and search links?
-  private $f_7XX_subfields = [
-    '700' => [
-      'display' => [
-        'a' => true,
-        'b' => true,
-        'c' => true,
-        'd' => true,
-        'e' => true
-      ],
-      'search' => [
-        'a' => true,
-        'b' => true,
-        'c' => true,
-        'd' => true
-      ]
-    ],
-    '710' => [
-      'display' => [
-        'a' => true
-      ],
-      'search' => [
-        'a' => true
-      ]
-    ],
-    '711' => [
-      'display' => [
-        'a' => true,
-        'c' => true,
-        'd' => true,
-        'n' => true
-      ],
-      'search' => [
-        'a' => true,
-        'c' => true,
-        'd' => true,
-        'n' => true
-      ]
-    ]
-  ];
-
   private $ns_google_prefix = array(
       'chi' => 'CHI',
       'coo' => 'CORNELL',
@@ -545,33 +503,6 @@ function items_from_raw_json($json_string) {
       }
     }
     return $data;
-  }
-
-  # Get the 700, 710, and 711 data for record "Related Names" display and search
-  function getAdditionalNames($marcRecord) {
-    $names = array();
-    foreach (['700', '710', '711'] as $field_type) {
-      foreach ($marcRecord->getfields($field_type) as $field) {
-        $display_name = array();
-        $search_name = array();
-        foreach ($field->getSubfields() as $subcode => $subfield) {
-          if (isset($this->f_7XX_subfields[$field_type]['display'][$subcode])) {
-            $display_name[] = $subfield->getData();
-          }
-          if (isset($this->f_7XX_subfields[$field_type]['search'][$subcode])) {
-            $search_name[] = $subfield->getData();
-          }
-        }
-        $display_name_string = implode(' ', $display_name);
-        $display_name_string = preg_replace('/\s+:/', ':', $display_name_string);
-        $display_name_string = preg_replace('/[^\w\d\.\]\)\}]+$/', '', $display_name_string);
-        $search_name_string = implode(' ', $search_name);
-        $search_name_string = preg_replace('/\s+:/', ':', $search_name_string);
-        $search_name_string = preg_replace('/[^\w\d\.\]\)\}]+$/', '', $search_name_string);
-        $names[] = ['display' => $display_name_string, 'search' => $search_name_string];
-      }
-    }
-    return $names;
   }
 }
 

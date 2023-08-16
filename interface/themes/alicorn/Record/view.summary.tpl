@@ -30,7 +30,7 @@
   {if $marcField}
   <tr valign="top">
     <th>{translate text='Main Author'}: </th>
-    <td>{record_author_display marc_field=$marcField inst=$inst}</td>
+    <td>{record_author_display marc_field=$marcField inst=$inst url=$url}</td>
   </tr>
   {/if}
 
@@ -38,7 +38,7 @@
   {if $marcField}
   <tr valign="top">
     <th>{translate text='Corporate Author'}: </th>
-    <td>{record_author_display marc_field=$marcField inst=$inst}</td>
+    <td>{record_author_display marc_field=$marcField inst=$inst url=$url}</td>
   </tr>
   {/if}
 
@@ -46,7 +46,7 @@
   {if $marcField}
   <tr valign="top">
     <th>{translate text='Meeting Name'}: </th>
-    <td>{record_author_display marc_field=$marcField inst=$inst}</td>
+    <td>{record_author_display marc_field=$marcField inst=$inst url=$url}</td>
   </tr>
   {/if}
 
@@ -56,7 +56,7 @@
     <th>{translate text='Related Names'}: </th>
     <td>
       {foreach from=$marcField item=field name=loop}
-        {record_author_display marc_field=$field inst=$inst}<br/>
+        {record_author_display marc_field=$field inst=$inst url=$url}<br/>
       {/foreach}
     </td>
   </tr>

@@ -30,7 +30,7 @@
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='Main Author'}</dt>
       <dd class="g-col-lg-8 g-col-12">
-        {record_author_display marc_field=$marcField inst=$inst}
+        {record_author_display marc_field=$marcField inst=$inst url=$url}
       </dd>
     </div>
   {/if}
@@ -40,7 +40,7 @@
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='Corporate Author'}</dt>
       <dd class="g-col-lg-8 g-col-12">
-        {record_author_display marc_field=$marcField inst=$inst}
+        {record_author_display marc_field=$marcField inst=$inst url=$url}
       </dd>
     </div>
   {/if}
@@ -50,7 +50,7 @@
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='Meeting Name'}</dt>
       <dd class="g-col-lg-8 g-col-12">
-        {record_author_display marc_field=$marcField inst=$inst}
+        {record_author_display marc_field=$marcField inst=$inst url=$url}
       </dd>
     </div>
   {/if}
@@ -61,7 +61,7 @@
       <dt class="g-col-lg-4 g-col-12">{translate text='Related Names'}</dt>
       <dd class="g-col-lg-8 g-col-12">
         {foreach from=$marcField item=field name=loop}
-          {record_author_display marc_field=$field inst=$inst}<br/>
+          {record_author_display marc_field=$field inst=$inst url=$url}<br/>
         {/foreach}
       </dd>
     </div>

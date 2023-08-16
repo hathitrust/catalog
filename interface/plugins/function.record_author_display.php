@@ -8,7 +8,7 @@
  * Purpose:  Displays a single 1XX or 7XX as an anchor in Record display
  * -------------------------------------------------------------
  */
- 
+
 # Which 700/710/711 subfields do we use for display/search/extra links?
 # extra fields are appended to the display value but are not part of the link.
 const F_7XX_SUBFIELDS = array(
@@ -23,8 +23,9 @@ const F_7XX_SUBFIELDS = array(
 const TRAILING_COMMA_REGEX = '/,\s*$/';
 
 function smarty_function_record_author_display($params, &$smarty) {
-  $marc_field = $params['marc_field']; 
-  # "inst" is a URL parameter that gets passed around but is not relevant to the logic.
+  $marc_field = $params['marc_field'];
+  # $url and $inst are template/global variables used here only for URL generation
+  $url = $params['url'];
   $inst = $params['inst'];
   $tag = $marc_field->getTag();
   $display_value = _extract_subfields($marc_field, $tag, 'display');
@@ -37,7 +38,7 @@ function smarty_function_record_author_display($params, &$smarty) {
   }
   return <<<HTML
 <a href="{$url}/Search/Home?lookfor=%22{$search_value}%22&amp;type=author&amp;inst={$inst}">
-  $display_value</a>$extra_value
+  {$display_value}</a>{$extra_value}
 HTML;
 }
 

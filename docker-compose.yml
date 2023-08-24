@@ -60,5 +60,15 @@ services:
     profiles:
       - playwright
 
+  phpunit:
+    build: .
+    restart: never
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: phpunit --coverage-html coverage
+    environment:
+      - XDEBUG_MODE=coverage
+
 volumes:
   node_modules:

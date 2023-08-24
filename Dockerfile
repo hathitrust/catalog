@@ -4,6 +4,7 @@ FROM debian:bullseye
 LABEL org.opencontainers.image.source https://github.com/hathitrust/catalog
 
 RUN apt-get update && apt-get install -y \
+      curl \
       msmtp-mta \
       bsd-mailx \
       php-curl \
@@ -15,6 +16,7 @@ RUN apt-get update && apt-get install -y \
       php-mysql \
       php-mdb2 \
       php-mdb2-driver-mysql \
+      php-xdebug \
       php-xsl \
       php-mbstring \
       pear-channels \
@@ -22,8 +24,8 @@ RUN apt-get update && apt-get install -y \
 
 # Actual stuff installed on bullseye for ht-web-preview
 
-# PHPUnit               1.3.2   stable -- MISSING
-
+RUN curl -O https://phar.phpunit.de/phpunit-9.6.11.phar
+RUN chmod +x phpunit-9.6.11.phar && mv phpunit-9.6.11.phar /usr/local/bin/phpunit
 
 RUN pear channel-update pear.php.net && pear install \
       Auth_SASL \

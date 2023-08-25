@@ -888,7 +888,7 @@ class Solr
   function exactmatcherify($str) {
     $str = strtolower($str);
     $str = trim($str);
-    $str = preg_replace('/[^\p{L}\p{N}\*\?\-]/u', '', $str);
+    $str = preg_replace('/[^\p{L}\p{N}\*\?]/u', '', $str);
     return $str;
   }
 

@@ -12,10 +12,10 @@
 # Which 700/710/711 subfields do we use for display/search/extra links?
 # extra fields are appended to the display value but are not part of the link.
 const F_7XX_SUBFIELDS = array(
-  '100' => ['display' => 'abcd', 'search' => 'abcd'],
+  '100' => ['display' => 'aqbcd', 'search' => 'aqbcd'],
   '110' => ['display' => 'ab', 'search' => 'ab'],
   '111' => ['display' => 'acdn', 'search' => 'acdn'],
-  '700' => ['display' => 'abcd', 'search' => 'abc', 'extra' => 'e'],
+  '700' => ['display' => 'aqbcd', 'search' => 'aqbcd', 'extra' => 'e'],
   '710' => ['display' => 'ab', 'search' => 'ab'],
   '711' => ['display' => 'acdn', 'search' => 'acdn']
 );

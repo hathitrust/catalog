@@ -12,7 +12,7 @@ class SolrTest extends TestCase
   * @covers Solr::exactmatcherify
   Trim whitespace
   Downcase
-  Remove anything not a Unicode letter, Unicide number, * or ?
+  Remove anything not a Unicode letter, Unicode number, * or ?
   */
   public function test_exactmatcherify(): void
   {

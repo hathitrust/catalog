@@ -94,15 +94,15 @@
                  <tr>
                   <td>
                    {if $record_is_tombstone}
-                     This item is no longer available (<a href="//hdl.handle.net/2027/{$ld.handle}" class="rights-{$ld.rights_code}">why not?</a>)
+                     This item is no longer available (<a href="//hdl.handle.net/2027/{$ld.handle}">why not?</a>)
          {elseif ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
-              <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="rights-{$ld.rights_code} fulltext"><i aria-hidden="true" class="fa-solid fa-unlock"></i> <span>Limited (Access Permitted)</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
+              <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-unlock"></i> <span>Limited (Access Permitted)</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
                      {elseif ($ld.is_fullview || $ld.is_NFB)}
-            <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="rights-{$ld.rights_code} fulltext"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> <span>Full view</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
+            <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> <span>Full view</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
 	       {elseif $ld.is_emergency_access}
-	              <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="rights-{$ld.rights_code} etas"><i aria-hidden="true" class="fa-solid fa-unlock"></i> <span>Temporary access</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
+	              <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-unlock"></i> <span>Temporary access</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
           {else}
-            <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="rights-{$ld.rights_code} searchonly"><i aria-hidden="true" class="fa-solid fa-lock"></i> <span>Limited (search only)</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
+            <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-lock"></i> <span>Limited (search only)</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
           {/if}
 
                      </td>

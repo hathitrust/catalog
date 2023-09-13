@@ -74,8 +74,17 @@ class UInterface extends Smarty
             $this->assign('authMethod', 'LDAP');
         }
 
-        $BABEL_ROOT = str_replace('catalog', 'babel', dirname($_SERVER['DOCUMENT_ROOT']));
-        $firebird_manifest_filename = $BABEL_ROOT . '/firebird-common/dist/manifest.json';
+        # Look for firebird manifest first under
+        # $FIREBIRD_HOME/dist/manifest.json (if $FIREBIRD_HOME env var is
+        # defined); otherwise fall back to trying to find it from the server
+        # DOCUMENT_ROOT, otherwise give up
+
+        $BABEL_ROOT = str_replace('catalog', 'babel',
+          dirname($_SERVER['DOCUMENT_ROOT']));
+        $FIREBIRD_HOME = getenv('FIREBIRD_HOME');
+        if(!$FIREBIRD_HOME) { $FIREBIRD_HOME = $BABEL_ROOT . '/firebird-common'; }
+        $firebird_manifest_filename = $FIREBIRD_HOME . '/dist/manifest.json';
+
         if (file_exists(($firebird_manifest_filename))) {
             $this->assign('firebird_manifest', json_decode(file_get_contents($firebird_manifest_filename), true));
         }

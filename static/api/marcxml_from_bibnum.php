@@ -15,6 +15,8 @@ $args = array();
 $args['fl'] = 'fullrecord';
 
 $id = $_REQUEST['id'];
+# Zero-pad the catalog ID
+$id = sprintf("%09d", $id);
 
 $results = $solr->search("id:$id", 0, 1, $args);
 

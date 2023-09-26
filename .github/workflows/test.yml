@@ -1,0 +1,24 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+
+jobs:
+  # Run tests
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out with submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Set up tests
+        run: docker-compose build
+
+      - name: Run PHPUnit tests
+        run: docker-compose run phpunit

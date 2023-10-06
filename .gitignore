@@ -8,3 +8,5 @@ interface/compile
 *.sass-cache*
 .gitmodules
 node_modules/*
+coverage/*
+.phpunit.result.cache

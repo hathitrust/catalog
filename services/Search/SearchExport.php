@@ -19,6 +19,7 @@ require_once "feedcreator/include/feedcreator.class.php";
 require_once 'sys/DBH.php';
 require_once 'sys/AuthSpecs.php';
 require_once 'sys/ActivityLog.php';
+require_once 'sys/JSON.php';
 require_once 'sys/Normalize.php';
 
 class SearchExport {
@@ -165,7 +166,8 @@ class SearchExport {
     header('Content-type: application/json; charset=UTF-8');
     foreach ($this->results['record'] as $rawr) {
       $marc = $this->ru->getMarcRecord($rawr);
-      echo $marc->toJSON();
+      $json = new JSON();
+      echo $json->encode_marc($marc);
       break; # only return one
     }
   }

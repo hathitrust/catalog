@@ -1,9 +1,11 @@
 <html data-analytics-enabled="true">
 <head>
   <title>MARC view: {$title}</title>
-  {literal}
   
-
+  <script>
+  let $$assets = {firebird_manifest};
+  </script>
+  {literal}
   <script type="text/javascript">
   let head = document.head;
   function addScript(options) {
@@ -20,21 +22,21 @@
     document.head.appendChild(linkEl);
   }
 
-  addScript({ href: 'https://kit.fontawesome.com/1c6c3b2b35.js', crossOrigin: 'anonymous' });
-  // addScript({ href: `//localhost:5173/js/main.js`, type: 'module' });
-   
-
   let firebird_config = localStorage.getItem('firebird') || '';
   if ( firebird_config == 'proxy' ) {
     addScript({ href: `//${location.host}/js/main.js`, type: 'module' });
   } else if ( firebird_config.match('localhost') ) {
     addScript({ href: `//${firebird_config}/js/main.js`, type: 'module' });
-  } else {
+  } else if (firebird_config) {
     // connect to netlify
     if ( firebird_config ) { firebird_config += '--'; }
     let hostname = `//${firebird_config}hathitrust-firebird-common.netlify.app`;
     addStylesheet({ href: `${hostname}/assets/main.css` });
     addScript({ href: `${hostname}/assets/main.js`, type: 'module' });
+  } else {
+    // local hosting
+    addStylesheet({ href: $$assets.stylesheet});
+    addScript({ href: $$assets.script, type: 'module'});
   }
 </script>
 <style type="text/css">
@@ -43,8 +45,6 @@
       }
       .even {
         background-color: #eee
-      }
-      .code {
       }
       .tag {
         font-weight: bold;
@@ -60,9 +60,7 @@
         margin-bottom: 5em;
         border-bottom: 1pt solid #444;
         line-height: 125%;
-
       }
-
       .code {
         padding-left: 0.25em;
         font-weight: bold;

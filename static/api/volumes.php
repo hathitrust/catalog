@@ -296,7 +296,7 @@ class QObj
 
         $iinfo['fromRecord'] = $docid;
         $iinfo['htid'] = $htid;
-        $iinfo['itemURL'] = "https://hdl.handle.net/2027/" . $htid;
+        $iinfo['itemURL'] = "https://babel.hathitrust.org/cgi/pt?id=" . $htid;
 
         $rc = isset($ht['rights']) ? $ht['rights'] : 'ic';
 	$rc = is_array($rc) ? $rc[0] : $rc;
@@ -475,7 +475,7 @@ function enumsort($a, $b) {
 //       {
 //         "fromRecord": "000366004",
 //         "htid": "mdp.39015079651611",
-//         "itemURL": "http://hdl.handle.net/2027/mdp.39015079651611",
+//         "itemURL": "http://babel.hathitrust.org/cgi/pt?id=mdp.39015079651611",
 //         "rightscode": "ic",
 //         "lastUpdate": "20091004",
 //         "orig": "University of Michigan",

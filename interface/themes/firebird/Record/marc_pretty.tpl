@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html data-analytics-enabled="true">
 <head>
   <title>MARC view: {$title}</title>

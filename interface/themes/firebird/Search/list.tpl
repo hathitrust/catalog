@@ -10,6 +10,7 @@ FIREBIRD TODOS:
      or assign a variable to handle the conditional:
         if ($sort == '') {currentSortOption="false"} else currentSortOption={$sort}
 *}
+  <hathi-cookie-consent-banner></hathi-cookie-consent-banner>
 <div id="skiplinks" class="visually-hidden-focusable" role="complementary" aria-label="Skip links">
   <ul>
     <li>
@@ -84,7 +85,6 @@ FIREBIRD TODOS:
         </div>
       </section>
     </div>
-
   </main>
 
   {include file="footer.tpl"}

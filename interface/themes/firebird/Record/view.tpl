@@ -1,3 +1,4 @@
+<hathi-cookie-consent-banner></hathi-cookie-consent-banner>
 <div id="skiplinks" class="visually-hidden-focusable" role="complementary" aria-label="Skip links">
   <ul>
     <li>

@@ -132,7 +132,7 @@ if (isset($_REQUEST['donotlog'])) {
 #######################################
 
 if (!$session->is_set('country')) {
-  $geoip = new GeoIP;
+  $geoip = new GeoIP($configArray['GeoIP']['path']);
   $country = $geoip->ip_to_iso($_SERVER['REMOTE_ADDR']);
   $session->set('country', $country);
   if ($country == 'US') {

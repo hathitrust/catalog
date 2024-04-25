@@ -38,6 +38,7 @@ require_once 'sys/mobile_device_detect.php';
 require_once 'services/Search/SearchStructure.php';
 require_once 'sys/SolrConnection.php';
 require_once 'sys/Solr.php';
+require_once 'vendor/geoip/geoip2.phar';
 
 // Set up for autoload
 function sample_autoloader($class) {
@@ -130,12 +131,24 @@ if (isset($_REQUEST['donotlog'])) {
 # Are we USA or non-USA?
 #######################################
 
+use GeoIp2\Database\Reader;
+
 if (!$session->is_set('country')) {
-  $ip  = $_SERVER['REMOTE_ADDR'];
-  $country = geoip_country_code3_by_name($ip);
+  $reader = new Reader('/htapps/babel/geoip/GeoIP2-Country.mmdb');
+  $ip = $_SERVER['REMOTE_ADDR'];
+  # Fake US for testing
+  # $ip = '216.160.83.56';
+  try {
+    $record = $reader->country($ip);
+    # NOTE: this is now a two-character code
+    $country = $record->country->isoCode;
+  } catch (Exception $e) {
+    $country = 'XX';
+  }
+  $reader->close();
   $session->set('country', $country);
 
-  if ($country == 'USA') {
+  if ($country == 'US') {
     $session->set('inUSA', true);
   } else {
     $session->set('inUSA', false);

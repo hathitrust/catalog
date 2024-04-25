@@ -1,5 +1,4 @@
 ---
-version: '3'
 
 services:
   #  traject:
@@ -62,7 +61,6 @@ services:
 
   phpunit:
     build: .
-    restart: never
     volumes:
       - .:/app
     working_dir: /app

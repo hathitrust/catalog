@@ -8,9 +8,6 @@ require_once 'sys/GeoIP.php';
 class GeoIPTest extends TestCase {
   /**
   * @covers GeoIP
-  Trim whitespace
-  Downcase
-  Remove anything not a Unicode letter, Unicode number, * or ?
   */
   public function test_ip_to_iso(): void {
     $configArray = parse_ini_file('conf/config.ini', true);

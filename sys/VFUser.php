@@ -36,7 +36,7 @@ class VFUser
   }
   
   
-  public function singleton()
+  public static function singleton()
   {
       return NULL;
 //    global $configArray;

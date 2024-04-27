@@ -36,7 +36,7 @@ FIREBIRD TODOS:
             Search results
         </h1>
 
-        {if $fixedUnbalancedQuotes}
+        {if $fixedUnbalancedQuotes|default:false}
           <div class="alert alert-info">
             <p>Your query contained ambiguous quotes and was modified by removing the last one.</p>
           </div>
@@ -51,10 +51,11 @@ FIREBIRD TODOS:
               data-prop-total-records='{$recordCount|number_format:null:".":","}'
               data-prop-target='catalog'
               {* force 'Relevance' to appear in dropdown as default *}
-              {if $sort == ''}
+              {if ($sort|default:'') == ''}
                 data-prop-current-sort-option='false'
-              {/if}
+              {else}
                 data-prop-current-sort-option='{$sort}'
+              {/if}
               ></hathi-results-toolbar>
              {/if}
             
@@ -73,11 +74,21 @@ FIREBIRD TODOS:
           {if $numPages gt 1}
             {assign var=pageLinks value=$pager->getLinks()}
             {assign var=pageLinksArray value=$pager->getPageLinksArray()}
+            {if array_key_exists('url', $pageLinks.linkTagsRaw.next)}
+              {assign var=next_url value=$pageLinks.linkTagsRaw.next.url}
+            {else}
+              {assign var=next_url value=''}
+            {/if}
+            {if array_key_exists('url', $pageLinks.linkTagsRaw.prev)}
+              {assign var=prev_url value=$pageLinks.linkTagsRaw.prev.url}
+            {else}
+              {assign var=prev_url value=''}
+            {/if}
            
             <hathi-results-pagination
             data-prop-max-pages='{$numPages}'
-            data-prop-next-href='{$pageLinks.linkTagsRaw.next.url}'
-            data-prop-prev-href='{$pageLinks.linkTagsRaw.prev.url}'
+            data-prop-next-href='{$next_url}'
+            data-prop-prev-href='{$prev_url}'
             data-prop-value = '{$pager->_currentPage}'
             ></hathi-results-pagination>
 

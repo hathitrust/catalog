@@ -383,12 +383,13 @@ class Home extends Action {
           $nextLink = str_replace("%d", $page+1, $rlink) . sprintf('&rec=%d', 1);
           $resultIDs[] = array($nextLink, '', $recordNum, $recordCount);
         }
-        $cookielength = strlen(urlencode(serialize($resultIDs)));
-        if ($cookielength > 4096) {
-          error_log("can't write resultIDs cookie, length is $cookielength");
-         } else {
+        #$cookielength = strlen(urlencode(serialize($resultIDs)));
+
+        #if ($cookielength > 4096) {
+        #  error_log("can't write resultIDs cookie, length is $cookielength");
+        # } else {
 #          $cookieRC = setcookie('resultids', serialize($resultIDs), null, '/');
-        }
+        #}
         if (isset($_REQUEST['rec'])) {
           $newOffset = $_REQUEST['rec'];
           $recPath = $resultIDs[$newOffset][0];

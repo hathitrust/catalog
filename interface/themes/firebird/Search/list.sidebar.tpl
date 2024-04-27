@@ -50,7 +50,7 @@
     </div> <!-- end of current filters accordion -->
     <!-- clear filters -->
     <div class="d-flex flex-column gap-2 mb-3">
-    {if $adv}
+    {if $adv|default:false}
       <a class="btn btn-outline-dark btn-sm clear-all-filters" href="{$adv}">
         <span>Revise this advanced search</span>
       {* </button> *}

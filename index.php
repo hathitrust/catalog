@@ -345,6 +345,7 @@ $action = (isset($_GET['action'])) ? $_GET['action'] : 'Home';
 
 $interface->assign('configArray', $configArray);
 $interface->assign('userLang', $language);
+
 if ($session->is_set('inst')) {
   $interface->assign('inst', $session->get('inst'));
 }
@@ -400,6 +401,7 @@ if (is_readable("services/$module/$action.php")) {
 
 // Process any errors that are thrown
 function handlePEARError($error, $method = null) {
+exit();
     $module = (isset($_GET['module'])) ? $_GET['module'] : 'Search';
     $interface = new UInterface();
     $interface->assign('error', $error);

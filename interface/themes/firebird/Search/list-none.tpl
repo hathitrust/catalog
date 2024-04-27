@@ -23,7 +23,7 @@
 
         <div>
 
-          {if $fixedUnbalancedQuotes}
+          {if $fixedUnbalancedQuotes|default:false}
             <div class="alert alert-info">
               <p>Your query contained ambiguous quotes and was modified by removing the last one.</p>
             </div>

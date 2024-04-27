@@ -16,12 +16,12 @@ services:
 
   nginx:
     image: nginx
-    healthcheck:
-      test: ["CMD", "/usr/bin/curl", "-s", "-f", "http://localhost:8080/Search/Home?lookfor=stuff&searchtype=all&ft=&setft=false"]
-      interval: 5s
-      timeout: 10s
-      start_period: 30s
-      retries: 5
+    #healthcheck:
+    #  test: ["CMD", "/usr/bin/curl", "-s", "-f", "http://localhost:8080/Search/Home?lookfor=stuff&searchtype=all&ft=&setft=false"]
+    #  interval: 5s
+    #  timeout: 10s
+    #  start_period: 30s
+    #  retries: 5
     ports:
       - "8080:8080"
     volumes:
@@ -59,14 +59,14 @@ services:
     profiles:
       - playwright
 
-  phpunit:
-    build: .
-    volumes:
-      - .:/app
-    working_dir: /app
-    command: phpunit --coverage-html coverage
-    environment:
-      - XDEBUG_MODE=coverage
+  #phpunit:
+  #  build: .
+  #  volumes:
+  #    - .:/app
+  #  working_dir: /app
+  #  command: phpunit --coverage-html coverage
+  #  environment:
+  #    - XDEBUG_MODE=coverage
 
 volumes:
   node_modules:

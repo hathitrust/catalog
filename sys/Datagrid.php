@@ -22,7 +22,7 @@ require_once 'Structures/DataGrid.php';
 
 // Datagrid Extension Class
 class DataGrid extends Structures_DataGrid {
-    function DataGrid($limit = null, $page = 1)
+    function __construct($limit = null, $page = 1)
     {
         parent::Structures_DataGrid($limit, $page);
 

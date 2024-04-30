@@ -73,7 +73,7 @@ COPY ./docker/php_pool.conf /etc/php/7.4/fpm/pool.d/www.conf
 #https://github.com/docker-library/php/blob/master/7.4/bullseye/fpm/Dockerfile#L266-L271
 STOPSIGNAL SIGQUIT
 
-WORKDIR /htapps/babel/geoip
+WORKDIR /usr/share/GeoIP
 ADD --chmod=644 https://github.com/maxmind/MaxMind-DB/blob/main/test-data/GeoIP2-Country-Test.mmdb?raw=true GeoIP2-Country.mmdb
 
 EXPOSE 9000

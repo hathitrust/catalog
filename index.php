@@ -38,6 +38,7 @@ require_once 'sys/mobile_device_detect.php';
 require_once 'services/Search/SearchStructure.php';
 require_once 'sys/SolrConnection.php';
 require_once 'sys/Solr.php';
+require_once 'sys/GeoIP.php';
 
 // Set up for autoload
 function sample_autoloader($class) {
@@ -131,11 +132,10 @@ if (isset($_REQUEST['donotlog'])) {
 #######################################
 
 if (!$session->is_set('country')) {
-  $ip  = $_SERVER['REMOTE_ADDR'];
-  $country = geoip_country_code3_by_name($ip);
+  $geoip = new GeoIP($configArray['GeoIP']['path']);
+  $country = $geoip->ip_to_iso($_SERVER['REMOTE_ADDR']);
   $session->set('country', $country);
-
-  if ($country == 'USA') {
+  if ($country == 'US') {
     $session->set('inUSA', true);
   } else {
     $session->set('inUSA', false);

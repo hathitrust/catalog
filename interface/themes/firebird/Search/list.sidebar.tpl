@@ -39,7 +39,7 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
                   <span >{$facet.indexDisplay}: {translate text=$facet.valueDisplay}</span>
                   <a class="btn btn-outline-dark btn-lg" href="/Search/{$action}?{$rurl}">
-                  <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
+                  <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove filter {$facet.indexDisplay}: {translate text=$facet.valueDisplay}</span>
                   </a>
                 </li>
               {/foreach}

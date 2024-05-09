@@ -29,7 +29,7 @@
               
                   <span>{$searchterms}</span>
                     <a class="btn btn-outline-dark btn-lg" href="{$rurl}">
-                    <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove filter {$searchterms}</span>
                     </a>
                   
                 </li>

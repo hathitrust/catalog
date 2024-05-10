@@ -29,7 +29,7 @@
               
                   <span>{$searchterms}</span>
                     <a class="btn btn-outline-dark btn-lg" href="{$rurl}">
-                    <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove filter {$searchterms}</span>
                     </a>
                   
                 </li>
@@ -39,7 +39,7 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center gap-3">
                   <span >{$facet.indexDisplay}: {translate text=$facet.valueDisplay}</span>
                   <a class="btn btn-outline-dark btn-lg" href="/Search/{$action}?{$rurl}">
-                  <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove</span>
+                  <i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Remove filter {$facet.indexDisplay}: {translate text=$facet.valueDisplay}</span>
                   </a>
                 </li>
               {/foreach}
@@ -67,7 +67,7 @@
     {if $allitems_count gt 0}
     <div class="panel accordion-item">
       <h3 class="accordion-header" id="heading-viewability">
-      <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-viewability" aria-controls="collapse-viewability">Item Viewability</button></h3>
+      <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-viewability" aria-expanded="true" aria-controls="collapse-viewability">Item Viewability</button></h3>
       <div id="collapse-viewability" class="accordion-collapse collapse show"  aria-labelledby="heading-viewability">
         <div class="accordion-body">
           <div class="list-group list-group-flush">

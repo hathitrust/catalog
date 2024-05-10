@@ -42,7 +42,8 @@
               </div>
             </xsl:if>
             {assign var=marcField value=$marc->getFields('245')}
-            <h1>
+            {assign var=html_lang value=$ru->getHtmlLang($record)}
+            <h1 lang="{$html_lang}">
               {foreach from=$marcField item=field name=loop}
                 {foreach from=$field->getSubfields() item=subfield key=subcode  name=subloop}
                   {if $subcode >= 'a' and $subcode <= 'z'}
@@ -152,15 +153,16 @@
           {foreach from=$similarRecords item=similar}
           {if is_array($similar.title)}{assign var=similarTitle value=$similar.title.0}
           {else}{assign var=similarTitle value=$similar.title}{/if}
+          {assign var=html_lang value=$ru->getHtmlLang($similar)}
             <div class="d-flex gap-3 p-3 mb-3 mt-3 shadow-sm rounded">
             <div class="container-fluid p-1">
-              <h3 class="record-title h4 mb-3 fw-normal"><a href="{$url}/Record/{$similar.id}">{$similarTitle}</a></h3>
+              <h3 class="record-title h4 mb-3 fw-normal" lang="{$html_lang}"><a href="{$url}/Record/{$similar.id}">{$similarTitle}</a></h3>
               {if $similar.author or $similar.publishDate}
               <dl class="metadata mb-0">
               <div class="grid gap-2">
                 {if $similar.author}
                 <dt class="g-col-lg-3 g-col-12">Author</dt>
-                <dd class="g-col-lg-9 g-col-12">{$similar.author.0}</dd>
+                <dd class="g-col-lg-9 g-col-12" lang="{$html_lang}">{$similar.author.0}</dd>
                 {/if}
                 {if $similar.publishDate}
                 <dt class="g-col-lg-3 g-col-12">Published</dt>

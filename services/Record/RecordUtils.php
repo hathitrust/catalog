@@ -43,6 +43,8 @@ class RecordUtils {
       'wu' => 'WISC'
   );
 
+  private $lang_codes;
+
   // Get all 974s
   function ht_fields($marc) {
     return $marc->getFields('974');
@@ -245,6 +247,7 @@ function items_from_raw_json($json_string) {
 
   function __construct() {
     global $configArray;
+    $this->lang_codes = yaml_parse_file('conf/langCodes.yaml')['lang_codes'];
   }
 
   function getMarcRecord($record) {
@@ -504,6 +507,15 @@ function items_from_raw_json($json_string) {
     }
     return $data;
   }
+
+  function getHtmlLang($record) {
+    $lang = $record['language008'];
+    if(array_key_exists($lang,$this->lang_codes)) {
+      $lang = $this->lang_codes[$lang];
+    }
+    return $lang;
+  }
+
 }
 
 ?>

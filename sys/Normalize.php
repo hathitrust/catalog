@@ -131,8 +131,20 @@ class Normalize
     }
   }
 
-
-
+  static function normalize_issn($val) {
+    // Remove anything not digit or X
+    $val = preg_replace('/[^0-9Xx]/', '', strtolower($val));
+    // Truncate to 8 characters if necessary
+    if (strlen($val) > 8) {
+      $val = substr($val, 0, 8);
+    }
+    // Zero-pad to 8 characters if necessary
+    elseif (strlen($val) < 8) {
+      $val = str_pad($val, 8, '0', STR_PAD_LEFT);
+    }
+    // Hyphenate in the middle
+    return substr_replace($val, '-', 4, 0);
+  }
 }
 
 

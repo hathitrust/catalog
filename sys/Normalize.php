@@ -134,9 +134,10 @@ class Normalize
   static function normalize_issn($val) {
     // Downcase and remove anything not digit or x
     $val = preg_replace('/[^0-9x]/', '', strtolower($val));
-    // Truncate to 8 characters if necessary
+    // Don't try to do anything further with an id over 8 digits -- it might be an ISBN
+    // or some other type of standard number. Solr will return empty results.
     if (strlen($val) > 8) {
-      $val = substr($val, 0, 8);
+      return $val;
     }
     // Zero-pad to 8 characters if necessary
     elseif (strlen($val) < 8) {

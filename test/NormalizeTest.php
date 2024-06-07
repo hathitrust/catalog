@@ -16,7 +16,7 @@ class NormalizeTest extends TestCase
     $this->assertEquals('1234-5678', $norm->normalize_issn('12345678'));
     $this->assertEquals('1234-5678', $norm->normalize_issn('  1234 5678  '));
     $this->assertEquals('1234-5678', $norm->normalize_issn('qwerty  1234!@#$%^&*()_+=5678  uiop'));
-    $this->assertEquals('1234-5678', $norm->normalize_issn('1234567899999'));
+    $this->assertEquals('1234567899999', $norm->normalize_issn('1234567899999'));
     $this->assertEquals('1234-567x', $norm->normalize_issn('1234567X'));
     $this->assertEquals('1234-567x', $norm->normalize_issn('1234567x'));
     $this->assertEquals('0000-0001', $norm->normalize_issn('1'));

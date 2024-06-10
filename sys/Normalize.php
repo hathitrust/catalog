@@ -131,8 +131,21 @@ class Normalize
     }
   }
 
-
-
+  static function normalize_issn($val) {
+    // Downcase and remove anything not digit or x
+    $val = preg_replace('/[^0-9x]/', '', strtolower($val));
+    // Don't try to do anything further with an id over 8 digits -- it might be an ISBN
+    // or some other type of standard number. Solr will return empty results.
+    if (strlen($val) > 8) {
+      return $val;
+    }
+    // Zero-pad to 8 characters if necessary
+    elseif (strlen($val) < 8) {
+      $val = str_pad($val, 8, '0', STR_PAD_LEFT);
+    }
+    // Hyphenate in the middle
+    return substr_replace($val, '-', 4, 0);
+  }
 }
 
 

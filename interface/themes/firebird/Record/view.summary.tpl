@@ -5,7 +5,7 @@
   {if $marcField}
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='New Title'}</dt>
-      <dd class="g-col-lg-8 g-col-12">
+      <dd class="g-col-lg-8 g-col-12" lang="{$html_lang}">
         {foreach from=$marcField item=field name=loop}
           <a href="{$url}/Search/Home?lookfor=%22{$field|getvalue:'s'}{$field|getvalue:'t'}%22&type=title&amp;inst={$inst}">{$field|getvalue:'s'}{$field|getvalue:'t'}</a><br>
         {/foreach}
@@ -17,7 +17,7 @@
   {if $marcField}
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='Previous Title'}</dt>
-      <dd class="g-col-lg-8 g-col-12">
+      <dd class="g-col-lg-8 g-col-12" lang="{$html_lang}">
         {foreach from=$marcField item=field name=loop}
           <a href="{$url}/Search/Home?lookfor=%22{$field|getvalue:'s'}{$field|getvalue:'t'}%22&type=title&amp;inst={$inst}">{$field|getvalue:'s'}{$field|getvalue:'t'}</a><br>
         {/foreach}
@@ -29,7 +29,7 @@
   {if $marcField}
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='Main Author'}</dt>
-      <dd class="g-col-lg-8 g-col-12">
+      <dd class="g-col-lg-8 g-col-12" lang="{$html_lang}">
         {record_author_display marc_field=$marcField inst=$inst url=$url}
       </dd>
     </div>
@@ -39,7 +39,7 @@
   {if $marcField}
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='Corporate Author'}</dt>
-      <dd class="g-col-lg-8 g-col-12">
+      <dd class="g-col-lg-8 g-col-12" lang="{$html_lang}">
         {record_author_display marc_field=$marcField inst=$inst url=$url}
       </dd>
     </div>
@@ -49,7 +49,7 @@
   {if $marcField}
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='Meeting Name'}</dt>
-      <dd class="g-col-lg-8 g-col-12">
+      <dd class="g-col-lg-8 g-col-12" lang="{$html_lang}">
         {record_author_display marc_field=$marcField inst=$inst url=$url}
       </dd>
     </div>
@@ -59,7 +59,7 @@
   {if $marcField}
     <div class="grid">
       <dt class="g-col-lg-4 g-col-12">{translate text='Related Names'}</dt>
-      <dd class="g-col-lg-8 g-col-12">
+      <dd class="g-col-lg-8 g-col-12" lang="{$html_lang}">
         {foreach from=$marcField item=field name=loop}
           {record_author_display marc_field=$field inst=$inst url=$url}<br/>
         {/foreach}
@@ -89,7 +89,7 @@
     <dt class="g-col-lg-4 g-col-12">{translate text='Published'}</dt>
     <dd class="g-col-lg-8 g-col-12">
       {foreach from=$marcField item=field name=loop}
-        {$field|getvalue:'a'} {$field|getvalue:'b'} {$field|getvalue:'c'}<br>
+        <span lang="{$html_lang}">{$field|getvalue:'a'} {$field|getvalue:'b'}</span> {$field|getvalue:'c'}<br>
       {/foreach}
     </dd>
   </div>

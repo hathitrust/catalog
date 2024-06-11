@@ -37,7 +37,7 @@ FIREBIRD TODOS:
 
   <div class="flex-grow-1 d-flex flex-column justify-content-between">
     <div class="container-fluid p-1">
-      <div id="maintitle-{$i}">
+      <div id="maintitle-{$i}" lang="{$record.html_lang}">
         {if is_array($record.title)}
           {foreach from=$record.title item=title}
             <h3 class="record-title">
@@ -50,13 +50,13 @@ FIREBIRD TODOS:
       </div>
       {if $record.title2}
       <blockquote>
-        <p class="results_title2">{$record.title2|truncate:180:"..."|highlight:$lookfor}</p>
+        <p class="results_title2" lang="{$record.html_lang}">{$record.title2|truncate:180:"..."|highlight:$lookfor}</p>
       </blockquote>
       {/if}
 
       {if $record.vtitle}
       <blockquote>
-        <span class="results_title2">{$record.vtitle}</span>
+        <span class="results_title2" lang="{$record.html_lang}">{$record.vtitle}</span>
       </blockquote>
       {/if}
 
@@ -73,10 +73,10 @@ FIREBIRD TODOS:
           <dt class="g-col-lg-4 g-col-12">Author</dt>
           {if is_array($record.author)}
             {foreach from=$record.author item=author}
-            <dd class="g-col-lg-4 g-col-12">{$author|highlight:$lookfor}</dd>
+            <dd class="g-col-lg-4 g-col-12" lang="{$record.html_lang}">{$author|highlight:$lookfor}</dd>
             {/foreach}
           {else}
-            <dd class="g-col-lg-4 g-col-12">{$record.author|highlight:$lookfor}</dd>
+            <dd class="g-col-lg-4 g-col-12" lang="{$record.html_lang}">{$record.author|highlight:$lookfor}</dd>
         </div>
           {/if}
         {/if}

@@ -408,11 +408,10 @@ class Home extends Action {
           $marcRecord = $ru->getMarcRecord($record);
           $result['record'][$num]['marc'] = $marcRecord;
           $result['record'][$num]['title'] = $ru->getFullTitle($marcRecord);
+          $result['record'][$num]['html_lang'] = $ru->getHtmlLang($record);
           $result['record'][$num]['googleLinks'] = implode(",", $ru->getLinkNums($marcRecord));
           $url_list[$record['id']] = $ru->getURLs($marcRecord);
           $id = $record['id'];
-
-
         }
 
 

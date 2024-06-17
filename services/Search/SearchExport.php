@@ -305,7 +305,11 @@ class SearchExport {
             continue;
           }
           if ($tag == 'RECORDURL') {
-            array_push($lines, $line . $configArray['Site']['url'] . '/Record/' . $record['id']);
+            $url = $configArray['Site']['url'];
+            if (substr($url, 0, 2) === '//') {
+              $url = 'https:' . $url;
+            }
+            array_push($lines, $line . $url . '/Record/' . $record['id']);
             continue;
           }
           if ($tag == 'TYPE') {
@@ -327,7 +331,7 @@ class SearchExport {
               if ($ecron) {
                 $htid .= " (" . $ecron->getData() . ")";
               }
-              array_push($lines, $line . "http://hdl.handle.net/2027/$htid");
+              array_push($lines, $line . "https://hdl.handle.net/2027/$htid");
             }
             continue;
           }

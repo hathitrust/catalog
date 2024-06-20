@@ -159,12 +159,12 @@
               <dl class="metadata mb-0">
               <div class="grid gap-2">
                 {if $similar.author}
-                <dt class="g-col-lg-3 g-col-12">Author</dt>
-                <dd class="g-col-lg-9 g-col-12">{$similar.author.0}</dd>
+                <dt class="g-col-lg-4 g-col-12">Author</dt>
+                <dd class="g-col-lg-8 g-col-12">{$similar.author.0}</dd>
                 {/if}
                 {if $similar.publishDate}
-                <dt class="g-col-lg-3 g-col-12">Published</dt>
-                <dd class="g-col-lg-9 g-col-12">{$similar.publishDate.0}</dd>
+                <dt class="g-col-lg-4 g-col-12">Published</dt>
+                <dd class="g-col-lg-8 g-col-12">{$similar.publishDate.0}</dd>
                 {/if}
                 </div>
               </dl>

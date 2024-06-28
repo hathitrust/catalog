@@ -861,7 +861,10 @@ class SearchStructure
             if (isset($this->indexDisplayName[$index])) $index = $this->indexDisplayName[$index];
 
             // $l = $index . ': ' . $fkb[1];
-            $l = $index . ': ' . '<span class="query-term">' . $fkb[1] . '</span>';
+            $l = htmlspecialchars($index)
+              . ': <span class="query-term">'
+              . htmlspecialchars($fkb[1])
+              . '</span>';
 
             if (isset($fkb[2])) { # the boolean operator
                 $l .= ' ' . $fkb[2];

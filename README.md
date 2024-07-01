@@ -3,7 +3,7 @@
 ## Initial Setup
 ```bash
 git clone --recurse-submodules https://github.com/hathitrust/catalog
-docker-compose up
+docker compose up
 ```
 
 This will use a Solr index pre-loaded with a sample set of 2,000 records.
@@ -14,7 +14,7 @@ Wait for everything to come up, then go to http://localhost:8080.
 
 Follow the README from https://github.com/hathitrust/hathitrust_catalog_indexer
 and use the instructions for `traject_external` to add records to the solr you
-just started with docker-compose.
+just started with `docker compose`.
 
 ## Testing
 

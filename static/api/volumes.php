@@ -335,6 +335,7 @@ $q =  join(' OR ', $solrQueryComponents);
 
 if (!preg_match('/\S/', $q)) {
   header('HTTP/1.1 400 Bad Request');
+  $origQuery = htmlspecialchars($origQuery);
   echo "Query '$origQuery' is invalid";
   exit();
 }

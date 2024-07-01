@@ -64,6 +64,9 @@ services:
     volumes:
       - .:/app
     working_dir: /app
+    depends_on:
+      nginx:
+        condition: service_healthy
     command: phpunit --coverage-html coverage
     environment:
       - XDEBUG_MODE=coverage

@@ -6,16 +6,16 @@ This project has a service called `playwright` that can access localhost (nginx)
 
 `Playwright` tests can be run locally with: 
 
-`$ docker-compose up`
+`$ docker compose up`
 
 ... or:
 
-`$ docker-compose run --rm playwright`
+`$ docker compose run --rm playwright`
 
 ... or more interactively:
 
 ```
-$ docker-compose run --rm playwright /bin/bash
+$ docker compose run --rm playwright /bin/bash
 root@b33fb015:/usr/src/app# bash docker_run_playwright_test.sh
 ...
 ```
@@ -38,7 +38,7 @@ To avoid kerfuffle, try to keep your local versions as close to the versions in 
 Run tests with traces on, e.g. while developing:
 
 ```
-$ docker-compose run --rm playwright npx -y playwright test --config=test/fast/playwright.config.ts --trace on
+$ docker compose run --rm playwright npx -y playwright test --config=test/fast/playwright.config.ts --trace on
 $ ...
 $ npx playwright show-trace playwright/test-results/<test_name>/trace.zip
 ```

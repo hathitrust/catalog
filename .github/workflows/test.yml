@@ -18,7 +18,7 @@ jobs:
           submodules: true
 
       - name: Set up tests
-        run: docker-compose build
+        run: docker compose build
 
       - name: Run PHPUnit tests
-        run: docker-compose run phpunit
+        run: docker compose run phpunit

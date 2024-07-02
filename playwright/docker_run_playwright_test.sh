@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This is started when you do e.g.
-# `docker-compose run --rm playwright`
+# `docker compose run --rm playwright`
 
 npm config set update-notifier false
 npm install

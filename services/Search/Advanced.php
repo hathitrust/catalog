@@ -128,9 +128,17 @@ class Advanced extends Home {
         }
         fclose($formathandle);
 
+        // and now the locations!
+        $locationslist = array();
+        $locationshandle = fopen($this->facetDir . '/locations.txt', 'r');
+        while (!feof($locationshandle)) {
+          $locationslist[] = stream_get_line($locationshandle, 1000000, "\n");
+        }
+        fclose($locationshandle);
 
         $interface->assign('formatList', $formatlist);
         $interface->assign('languageList', $languages);
+        $interface->assign('locationsList', $locationslist);
 
         // following is now done in index.php--tlp
         //if (isset($_GET['inst']) and $_GET['inst'] != '') {

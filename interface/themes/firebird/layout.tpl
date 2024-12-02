@@ -25,22 +25,9 @@ let $$assets = {firebird_manifest};
     document.head.appendChild(linkEl);
   }
 
-  let firebird_config = localStorage.getItem('firebird') || '';
-  if ( firebird_config == 'proxy' ) {
-    addScript({ href: `//${location.host}/js/main.js`, type: 'module' });
-  } else if ( firebird_config.match('localhost') ) {
-    addScript({ href: `//${firebird_config}/js/main.js`, type: 'module' });
-  } else if ( firebird_config ) {
-    // connect to netlify
-    if ( firebird_config ) { firebird_config += '--'; }
-    let hostname = `//${firebird_config}hathitrust-firebird-common.netlify.app`;
-    addStylesheet({ href: `${hostname}/assets/main.css` });
-    addScript({ href: `${hostname}/assets/main.js`, type: 'module' });
-  } else {
-    // local hosting
-    addStylesheet({ href: $$assets.stylesheet});
-    addScript({ href: $$assets.script, type: 'module' });
-  }
+  addStylesheet({ href: $$assets.stylesheet});
+  addScript({ href: $$assets.script, type: 'module' });
+ 
 </script>
 <script>
   // in case any of the links and scripts fail

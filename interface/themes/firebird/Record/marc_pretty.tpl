@@ -65,7 +65,7 @@
   {/literal}
   {* {js_link href="/common/alicorn/js/utils.201910.js"} *}
 </head>
-<body>
+<body style="opacity: 0; visibility: none;">
   <h1 class="mb-3">{$title}</h1>
   <table class="table border-top">
     <tr class="leader">

@@ -114,8 +114,8 @@ class Advanced extends Home {
         
         $languages = array(); 
         $langhandle = fopen($this->facetDir . '/language.txt', 'r');
-        while (!feof($langhandle)) {
-            $languages[] = stream_get_line($langhandle, 1000000, "\n");
+        while (($line = stream_get_line($langhandle, 1000000, "\n")) !== false) {
+          $languages[] = $line;
         }
         fclose($langhandle);
 
@@ -123,16 +123,16 @@ class Advanced extends Home {
         // ...And the formats
         $formatlist = array();
         $formathandle = fopen($this->facetDir . '/format.txt', 'r');
-        while (!feof($formathandle)) {
-          $formatlist[] = stream_get_line($formathandle, 1000000, "\n");
+        while (($line = stream_get_line($formathandle, 1000000, "\n")) !== false) {
+          $formatlist[] = $line;
         }
         fclose($formathandle);
 
         // and now the locations!
         $locationslist = array();
         $locationshandle = fopen($this->facetDir . '/locations.txt', 'r');
-        while (!feof($locationshandle)) {
-          $locationslist[] = stream_get_line($locationshandle, 1000000, "\n");
+        while (($line = stream_get_line($locationshandle, 1000000, "\n")) !== false) {
+          $locationslist[] = $line;
         }
         fclose($locationshandle);
 

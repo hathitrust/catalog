@@ -15,6 +15,7 @@
     <hathi-advanced-search-form
       data-prop-language-data="{$languageList|@json_encode|escape}" 
        data-prop-format-data='{$formatList|@json_encode|escape}'
+       data-prop-location-data='{$locationsList|@json_encode|escape}'
     ></hathi-advanced-search-form>
   </main>
   {* <main class="main-container" id="main">

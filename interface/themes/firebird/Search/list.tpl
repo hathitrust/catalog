@@ -24,6 +24,7 @@ FIREBIRD TODOS:
 <div id="root">
   {include file="header.tpl"}
 
+  <hathi-alert-banner></hathi-alert-banner>
   <main class="main-container" id="main">
     {* {include file="search_form.tpl"} *}
 

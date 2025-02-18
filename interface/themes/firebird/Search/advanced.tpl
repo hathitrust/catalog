@@ -11,6 +11,7 @@
   <hathi-website-header
     data-prop-search-state="none"> 
   </hathi-website-header>
+  <hathi-alert-banner></hathi-alert-banner>
   <main class="main-container" id="main">
     <hathi-advanced-search-form
       data-prop-language-data="{$languageList|@json_encode|escape}" 

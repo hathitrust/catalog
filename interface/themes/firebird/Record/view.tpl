@@ -11,6 +11,7 @@
 </div>
 <div id="root" class="catalog-record">
   {include file="header.tpl"}
+  <hathi-alert-banner></hathi-alert-banner>
 
 {if $mergeset}
   {assign var="mhtj" value=$mergeset->combined_ht_json() }

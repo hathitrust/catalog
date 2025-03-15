@@ -218,8 +218,9 @@ class Record extends Action
         
         if (!$interface->is_cached($this->cacheId)) {
             // Find Similar Records
-            $similar = $this->db->getMoreLikeThis($record, $this->id);
-            $interface->assign('similarRecords', $similar['record']);
+          // Disable 2025-03-15 aelkiss to try to stop the (presumed) bots
+          // $similar = $this->db->getMoreLikeThis($record, $this->id);
+          // $interface->assign('similarRecords', $similar['record']);
             // Find Other Editions
             $editions = $this->getEditions();
             if (!PEAR::isError($editions)) {

@@ -142,7 +142,7 @@
         {if $lastsearch}
         <div class="back-to-results">
           <a class="btn btn-secondary" href="{$lastsearch|regex_replace:"/&/":"&amp;"}">
-          <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i> Back to Catalog Search Results
+          <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i> Back to Search Results
           </a>
 
         </div>

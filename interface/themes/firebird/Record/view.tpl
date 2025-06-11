@@ -97,9 +97,9 @@
                   <td>
                    {if $record_is_tombstone}
                      This item is no longer available (<a href="//babel.hathitrust.org/cgi/pt?id={$ld.handle}">why not?</a>)
-         {elseif ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
+         {elseif ( ! $ld.is_fullview && ( $ld.has_activated_role ) ) }
               <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-unlock"></i> <span>Limited (Access Permitted)</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
-                     {elseif ($ld.is_fullview || $ld.is_NFB)}
+                     {elseif ($ld.is_fullview )}
             <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> <span>Full view</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
 	       {elseif $ld.is_emergency_access}
 	              <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-unlock"></i> <span>Temporary access</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>

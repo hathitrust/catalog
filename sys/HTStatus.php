@@ -13,7 +13,6 @@ class HTStatus {
    public $emergency_access = false;
    public $provider_name = "Unauthenticated";
    public $mapped_institution_code = null;
-   public $is_NFB = false;
    public $has_activated_role = false;
 
 
@@ -27,7 +26,6 @@ class HTStatus {
        $this->insitution_name = $c['institution_name'];
        $this->u = $c['u'];
        $this->emergency_access = $this->determine_emergency_access($c);
-       $this->is_NFB = $this->determine_NFB($c);
        $this->has_activated_role = $this->determine_activated_role($c);
        $this->provider_name = $c['providerName'];
        if (isset($c['mapped_institution_code'])) {
@@ -40,19 +38,6 @@ class HTStatus {
 
    function determine_emergency_access($c) {
      return (isset($c['x']) && $c['x'] == 1);
-   }
-
-   function determine_NFB($c) {
-     if (isset($_REQUEST['nfb']) && $_REQUEST['nfb'] == "true") {
-       return true;
-     }
-     $special_access = $c['r'];
-     if (!is_array($special_access)) {
-       return false;
-     }
-
-     return (isset($special_access['enhancedTextUser']) && $special_access['enhancedTextUser'] == 1) ||
-            (isset($special_access['enhancedTextProxy']) && $special_access['enhancedTextProxy'] == 1);
    }
 
    function determine_activated_role($c) {

@@ -95,10 +95,10 @@ FIREBIRD TODOS:
       <div class="list-group list-group-horizontal-sm align-items-center">
         <a href="{$ss->asRecordURL($record.id)}" class="list-group-item list-group-item-action w-sm-50" aria-describedby="maintitle-{$i}"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></i>Catalog Record<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
         {if $dfields|@count eq 1}
-          {if ( ! $ld.is_fullview && ( $ld.is_NFB || $ld.has_activated_role ) ) }
+          {if ( ! $ld.is_fullview && ( $ld.has_activated_role ) ) }
             {* need to figure out if data-activated-role="true" is still in use orrr if it's data-access-role="superuser" like in storybook *}
             <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50 active" aria-describedby="maintitle-{$i}"><i aria-hidden="true" class="fa-solid fa-unlock"></i>Limited (Access Permitted)<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
-          {elseif ($ld.is_fullview || $ld.is_NFB) }
+          {elseif ($ld.is_fullview ) }
             <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50 active" aria-describedby="maintitle-{$i}"><i class="fa-regular fa-file-lines" aria-hidden="true"></i>Full view<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
           {elseif $ld.is_emergency_access}
             <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50" aria-describedby="maintitle-{$i}"><i aria-hidden="true" class="fa-solid fa-unlock"></i>Temporary access<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>

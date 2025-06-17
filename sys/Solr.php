@@ -449,17 +449,13 @@ class Solr
         $val = $this->quoteFilterValue($val);
       }
 
-      # Add fultext filter if
-      #  * ht_availability is set to "Full text"
-      #  * the user is not NFB
+      # Add fultext filter if ht_availability is set to "Full text"
       
       if ($index == "ht_availability" and $oval == 'Full text') {
-        if (!$htstatus->is_NFB) {
-          $ft = $this->fulltext_filter_base();
-          $ft = $this->fulltext_filter_add_jan1_rollover($ft);
-          $ft = $this->fulltext_filter_add_etas($ft);
-          $rv[] = $ft;
-        }
+        $ft = $this->fulltext_filter_base();
+        $ft = $this->fulltext_filter_add_jan1_rollover($ft);
+        $ft = $this->fulltext_filter_add_etas($ft);
+        $rv[] = $ft;
       }
       else { // otherwise, just do it like normal
         $rv[] = implode(':', array($index, $val));
@@ -491,11 +487,6 @@ class Solr
     else {
       return $current_ft_filter;
     }
-  }
-
-  # NFB users have no restrictions, so don't restrict it
-  function fulltext_filter_add_nfb($ft) {
-
   }
 
   function fulltext_filter_add_jan1_rollover($current_ft_filter) {

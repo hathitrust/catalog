@@ -1,18 +1,1 @@
----
-turnOnLogging: false
-DSessionCookie:
-  cookiename: htcatalog
-  expires_in_seconds: 3600
-  path: /
-  domain: hathitrust.org
-
-DSessionDB:
-  host:  mysql-sdr
-  db: vufind
-  username: vufind
-  password: notvillanova
-  table: vfsession  
-
-RedirectAuth:
-  loginURLBase: https://www.lib.umich.edu/vf/vflogin_dbsess.php?returnto=
-  logoutURLBase:    http://www.lib.umich.edu/vf/vflogout_dbsess.php?returnto=
+../../etc/authspecs.yaml

@@ -44,6 +44,7 @@ services:
     hostname: 'catalog-dev'
     volumes:
       - .:/app
+      - ./conf/authspecs-sample.yaml:./conf/authspecs.yaml
     depends_on:
       mysql-sdr: *healthy
       solr-sdr-catalog: *healthy

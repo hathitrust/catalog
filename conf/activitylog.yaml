@@ -2,8 +2,8 @@ style: db
 DBLogging:
     host:  mysql-sdr
     db:   vufind
-    username: vufind
-    password: notvillanova
+    username: UNUSED
+    password: UNUSED
     table: activities
       
 LCMap:             

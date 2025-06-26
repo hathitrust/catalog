@@ -11,3 +11,4 @@ interface/compile
 coverage/*
 .phpunit.result.cache
 **/test-results/*
+firebird-common

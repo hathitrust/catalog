@@ -1,6 +1,5 @@
 <?php
 require_once "sys/DBH.php";
-require_once 'sys/ActivityLog.php';
 
 class DSession
 {
@@ -75,7 +74,6 @@ class DSession
       $expires = time() + $this->cargs['expires_in_seconds'];    
       $this->insertsth->execute(array($this->uuid, $cookiename, $expires, serialize(array())));
       
-      $alog = ActivityLog::singleton();
       $ip = isset($_SERVER['REMOTE_ADDR'])? $_SERVER['REMOTE_ADDR'] : '';
       $referer = isset($_SERVER['HTTP_REFERER'])? $_SERVER['HTTP_REFERER'] : '';
       $url = isset($_SERVER['REQUEST_URI'])? $_SERVER['REQUEST_URI'] : '';
@@ -88,7 +86,6 @@ class DSession
         $action = 'initiate';
       }
       
-      $alog->rawlog($this->uuid, $action, $ip, $url, $referer);      
     } 
         
   } // end of __construct

@@ -32,7 +32,6 @@ require_once 'sys/Translator.php';
 require_once 'sys/VFSession.php';
 require_once 'sys/VFUser.php';
 require_once 'sys/HTStatus.php';
-require_once 'sys/ActivityLog.php';
 require_once 'services/Record/RecordUtils.php';
 require_once 'sys/mobile_device_detect.php';
 require_once 'services/Search/SearchStructure.php';
@@ -77,7 +76,6 @@ if (isset($_GET['skin']) && ($_GET['skin'] == 'alicorn')) {
 }
 
 $session = VFSession::instance();
-$alog = ActivityLog::singleton();
 $user = VFUser::singleton();
 
 # Set up the interface
@@ -90,10 +88,6 @@ $interface->assign('regular_url', isset($configArray['Site']['regular_url']) ?
                                   $configArray['Site']['regular_url'] :
                                   $configArray['Site']['url']);
 
-# Should we log?
-if (isset($_REQUEST['donotlog'])) {
-  ActivityLog::$donotlog = true;
-}
 
 #####################################
 # Are we USA or non-USA?

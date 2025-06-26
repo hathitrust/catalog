@@ -24,7 +24,6 @@ require_once 'HTTP/Request2.php';
 require_once 'services/Search/SearchStructure.php';
 require_once 'services/Record/FilterFormat.php';
 require_once 'lib/LCCallNumberNormalizer.php';
-require_once 'sys/ActivityLog.php';
 require_once "sys/Normalize.php";
 
 /**
@@ -61,13 +60,6 @@ class Solr
   public $host;
 
   public $fields = '*,score';
-
-
-  /**
-   * A place to store log data
-   **/
-
-  public $alogdata = array();
 
 
   /**
@@ -124,20 +116,6 @@ class Solr
 
     $action = $ss->action;
 
-    // Set up logging for later if it's a simple (dismax) search
-    if ($ss->use_dismax && isset($ss->search[0])) {
-      if (isset($ss->originalHash, $ss->originalHash['origin'])) {
-        $this->alogdata['logaction'] = 'externalsearch';
-        $this->alogdata['data3'] = $ss->originalHash['origin'];
-        $this->alogdata['logit'] = true;
-      }
-      else {
-        $this->alogdata['logaction'] = 'simplesearch';
-        $this->alogdata['data3'] = '';
-      }
-      $this->alogdata['data1'] = $ss->search[0][0]; // the index
-      $this->alogdata['data2'] = $ss->search[0][1]; // the terms searched
-    }
 
 
     // Add the pagination
@@ -149,10 +127,6 @@ class Solr
     // Spell checking? Also used as a way to determine we came from simple search for logging
     if ($ss->checkSpelling) {
       $args = array_merge($args, $this->spellcheckComponents($ss));
-    }
-
-    if (isset($ss->originalHash['checkspelling']) && count($ss->activeInbandFilters()) == 0) {
-      $this->alogdata['logit'] = true;
     }
 
 
@@ -947,16 +921,6 @@ class Solr
     $raw = $this->rawSolrSearch($args, $action);
     if (!PEAR::isError($raw)) {
       $processed = $this->_process($raw);
-#          if (isset($this->alogdata['logit']) && $this->alogdata['logit'] && isset($this->alogdata['logaction'])) {
-#            $data4 = $processed['RecordCount'];
-#            $alog = ActivityLog::singleton();
-#            $alog->log($this->alogdata['logaction'],
-#                       $this->alogdata['data1'],
-#                       $this->alogdata['data2'],
-#                       $this->alogdata['data3'],
-#                       $data4
-#                       );
-#          }
 
       return $processed;
     }

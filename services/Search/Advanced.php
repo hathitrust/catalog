@@ -19,7 +19,6 @@
  */
 
 require_once 'services/Search/Home.php';
-require_once 'sys/ActivityLog.php';
 
 class Advanced extends Home {
 
@@ -38,11 +37,6 @@ class Advanced extends Home {
 	    }
         
         $this->setup();
-        
-        //Log it
-        
-        $alog = ActivityLog::singleton();
-        $alog->log('advpage');
         
         //Suppress the basic searchbox
         

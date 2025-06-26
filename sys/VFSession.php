@@ -2,7 +2,6 @@
 
 require_once 'sys/DSession.php';
 require_once 'sys/AuthSpecs.php';
-require_once 'sys/ActivityLog.php';
 
 
 class VFSession extends DSession
@@ -37,7 +36,6 @@ class VFSession extends DSession
     
     if (!isset(self::$instance)) {
       $authspecs = AuthSpecs::singleton($confdir . '/authspecs.yaml');
-      $alog = ActivityLog::singleton("$confdir/activitylog.yaml");
       $cargs = $authspecs['DSessionCookie'];
       $dargs = $authspecs['DSessionDB'];
       $cookiename = $cargs['cookiename'];

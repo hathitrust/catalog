@@ -9,6 +9,7 @@ const { test, expect } = require('@playwright/test');
 test('Facets (non-mobile/fullwidth)', async ({ page, isMobile }) => {
   test.skip(isMobile === true, 'immobile-only test');
   await page.goto('/Search/Home?lookfor=journal');
+  await page.getByRole('button', { name: 'Allow all cookies' }).click();
   // Filter on Latin to get fewer results
   await page.getByRole('button', { name: "Language" }).click();
   await page.getByRole('link', { name: "Latin" }).click();
@@ -31,6 +32,7 @@ test('Facets (non-mobile/fullwidth)', async ({ page, isMobile }) => {
 test('Facets (mobile/width-shrink)', async ({ page }) => {
   page.setViewportSize({ width: 800, height: 1500 });
   await page.goto('/Search/Home?lookfor=journal');
+  await page.getByRole('button', { name: 'Allow all cookies' }).click();
   // Expand filters
   await page.getByRole('button', { name: "Show Search Filters" }).click();
   // Filter on Latin to get fewer results
@@ -60,6 +62,7 @@ test('Facets (mobile/width-shrink)', async ({ page }) => {
 test('Clear facets (non-mobile/fullwidth)', async ({ page, isMobile }) => {
   test.skip(isMobile === true, 'immobile-only test');
   await page.goto('/Search/Home?lookfor=*');
+  await page.getByRole('button', { name: 'Allow all cookies' }).click();
   // No filters to be found
   await expect(page.getByRole('heading', { name: 'Current filters' })).not.toBeVisible();
   // Add language filter from the top options
@@ -82,6 +85,7 @@ test('Clear facets (non-mobile/fullwidth)', async ({ page, isMobile }) => {
 test('Clear facets (mobile/width-shrink)', async ({ page }) => {
   page.setViewportSize({ width: 800, height: 1500 });
   await page.goto('/Search/Home?lookfor=*');
+  await page.getByRole('button', { name: 'Allow all cookies' }).click();
   // No filters to be found
   await expect(page.getByRole('heading', { name: 'Current filters' })).not.toBeVisible();
   // Expand filters

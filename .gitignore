@@ -7,6 +7,9 @@ interface/compile
 /nbproject/private/
 *.sass-cache*
 .gitmodules
-node_modules/*
+**/node_modules/*
 coverage/*
 .phpunit.result.cache
+**/test-results/*
+firebird-common
+*.sw?

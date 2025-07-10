@@ -44,6 +44,9 @@ services:
     hostname: 'catalog-dev'
     volumes:
       - .:/app
+      - ./conf/authspecs-sample.yaml:/app/conf/authspecs.yaml
+    environment:
+      - FIREBIRD_HOME=/app/firebird-common
     depends_on:
       mysql-sdr: *healthy
       solr-sdr-catalog: *healthy
@@ -59,7 +62,7 @@ services:
       test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
 
   playwright:
-    image: mcr.microsoft.com/playwright:v1.34.3-focal
+    image: mcr.microsoft.com/playwright:v1.53.1
     volumes:
       - ./playwright:/usr/src/app
       - node_modules:/usr/src/app/node_modules
@@ -74,12 +77,23 @@ services:
     build: .
     volumes:
       - .:/app
+      - ./conf/authspecs-sample.yaml:/app/conf/authspecs.yaml
     working_dir: /app
     depends_on:
       nginx: *healthy
     command: phpunit --coverage-html coverage
     environment:
       - XDEBUG_MODE=coverage
+
+  firebird:
+    image: node:22-slim
+    profiles:
+      - node
+    volumes:
+      - ./firebird-common:/app/firebird-common
+      - ./.npm:/.npm
+    working_dir: /app/firebird-common/
+    command: ['npm', 'run', 'babel']
 
 volumes:
   node_modules:

@@ -27,6 +27,10 @@ return array (
   array (
     'original_from' => 'University of Connecticut',
   ),
+  'dcu' => 
+  array (
+    'original_from' => 'Catholic University of America',
+  ),
   'deu' => 
   array (
     'original_from' => 'University of Delaware',
@@ -199,6 +203,10 @@ return array (
   array (
     'original_from' => 'The Frick Collection',
   ),
+  'nnu' => 
+  array (
+    'original_from' => 'New York University',
+  ),
   'nrlf' => 
   array (
     'original_from' => 'University of California',
@@ -211,9 +219,17 @@ return array (
   array (
     'original_from' => 'New York Public Library',
   ),
+  'oclw' => 
+  array (
+    'original_from' => 'Case Western Reserve University',
+  ),
   'oks' => 
   array (
     'original_from' => 'Oklahoma State University',
+  ),
+  'oktu' => 
+  array (
+    'original_from' => 'The University Of Tulsa',
   ),
   'osu' => 
   array (
@@ -236,6 +252,10 @@ return array (
     'original_from' => 'University of Pennsylvania',
   ),
   'pur' => 
+  array (
+    'original_from' => 'Purdue University',
+  ),
+  'purd' => 
   array (
     'original_from' => 'Purdue University',
   ),
@@ -326,6 +346,10 @@ return array (
   'ukloku' => 
   array (
     'original_from' => 'Knowledge Unlatched',
+  ),
+  'ukoxu' => 
+  array (
+    'original_from' => 'University of Oxford',
   ),
   'umbus' => 
   array (

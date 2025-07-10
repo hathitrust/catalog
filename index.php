@@ -32,9 +32,7 @@ require_once 'sys/Translator.php';
 require_once 'sys/VFSession.php';
 require_once 'sys/VFUser.php';
 require_once 'sys/HTStatus.php';
-require_once 'sys/ActivityLog.php';
 require_once 'services/Record/RecordUtils.php';
-require_once 'sys/mobile_device_detect.php';
 require_once 'services/Search/SearchStructure.php';
 require_once 'sys/SolrConnection.php';
 require_once 'sys/Solr.php';
@@ -76,40 +74,7 @@ if (isset($_GET['skin']) && ($_GET['skin'] == 'alicorn')) {
   $configArray['Site']['theme'] = 'alicorn';
 }
 
-#######################################
-# Mobile detection
-#######################################
-# IF we're hitting the top page,
-#  AND it's a hathitrust.org
-#  AND there's a mobile site configured
-#  AND we're not already *at* the mobile site
-#  AND it's a mobile device
-# THEN redirect to the mobile site
-
-$sname = $_SERVER["HTTP_HOST"];
-if ( 0 && (strlen($_SERVER['REQUEST_URI']) <=1) &&
-     (preg_match('/\.hathitrust\.org$/', $sname)) &&
-     (isset($configArray['Site']['mobile_machine']))  &&
-     ($sname != $configArray['Site']['mobile_machine']) &&
-     mobile_device_detect()
-   ) {
-     header("Location: //" . $configArray['Site']['mobile_machine'] . "/");
-     exit();
-}
-
-##############################################
-# Use mobile theme and stuff?
-##############################################
-
-
-if (($sname == $configArray['Site']['mobile_machine']) || (isset($_REQUEST['force_mobile']))) {
-  $configArray['Site']['url'] = '//' . $configArray['Site']['mobile_machine'];
-  $configArray['Site']['theme'] = $configArray['Site']['mobile_theme'];
-}
-
-
 $session = VFSession::instance();
-$alog = ActivityLog::singleton();
 $user = VFUser::singleton();
 
 # Set up the interface
@@ -122,10 +87,6 @@ $interface->assign('regular_url', isset($configArray['Site']['regular_url']) ?
                                   $configArray['Site']['regular_url'] :
                                   $configArray['Site']['url']);
 
-# Should we log?
-if (isset($_REQUEST['donotlog'])) {
-  ActivityLog::$donotlog = true;
-}
 
 #####################################
 # Are we USA or non-USA?
@@ -357,24 +318,6 @@ $interface->assign('ru', new RecordUtils());
 
 $interface->assign('unicorn_root', $configArray['Site']['unicorn_root']);
 $interface->assign('handle_prefix', $configArray['Site']['handle_prefix']);
-
-//######################################
-// Authentication
-//######################################
-
-$interface->assign('loginURLBase', $authspecs['RedirectAuth']['loginURLBase'] );
-
-if ($user) {
-  $interface->assign('uniqname', $user->username);
-  if (is_null($user->patron) || !isset($user->patron)) {
-    $interface->assign('username', $user->username);
-  } else {
-    $interface->assign('username', implode(' ', array($user->patron->firstname, $user->patron->lastname)));
-  }
-} else {
-  $interface->assign('loginURL', $authspecs['RedirectAuth']['loginURLBase'] . rawurlencode(curPageURL()));
-}
-
 
 
 //######################################

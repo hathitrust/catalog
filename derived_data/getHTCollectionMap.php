@@ -24,9 +24,10 @@ spl_autoload_register('sample_autoloader');
 # Configuration
 ####################
 
-$host  =  'mysql-sdr';
-$uname =  "vufind";
-$pass  =  "notvillanova";
+$dbconfig = yaml_parse_file("$parent/conf/authspecs.yaml");
+$host  =  $dbconfig['DSessionDB']['host'];
+$uname =  $dbconfig['DSessionDB']['username'];
+$pass  =  $dbconfig['DSessionDB']['password'];
 $db    =  "ht_repository";
 
      try {

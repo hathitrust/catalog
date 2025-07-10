@@ -23,7 +23,6 @@ require_once 'CatalogConnection.php';
 require_once 'Record.php';
 
 require_once 'Mail.php';
-require_once 'sys/ActivityLog.php';
 require_once 'sys/VFUser.php';
 
 class SMS extends Record
@@ -69,7 +68,6 @@ class SMS extends Record
         
         // Log attempt
         
-        $alog = ActivityLog::singleton();
         $user = VFUser::singleton();
         
 
@@ -111,7 +109,6 @@ class SMS extends Record
         }
         
         $phonenumber = $_GET['to'];
-        $alog->log('rectext', $user->username, $phonenumber);
         
 
         $message = $result['title'] . "\n" .

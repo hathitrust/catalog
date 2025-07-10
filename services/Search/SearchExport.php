@@ -18,7 +18,6 @@ require_once "feedcreator/include/feedcreator.class.php";
 
 require_once 'sys/DBH.php';
 require_once 'sys/AuthSpecs.php';
-require_once 'sys/ActivityLog.php';
 require_once 'sys/JSON.php';
 require_once 'sys/Normalize.php';
 
@@ -33,7 +32,6 @@ class SearchExport {
   private $formatMap = 'Hello';
   private $source = 'record';
   private $tempset = false;
-  private $alog;
   private $controltags = array('001' => true, '002' => true, '003' => true, '004' => true, '005' => true, '006' => true,
       '007' => true, '008' => true, '009' => true);
 
@@ -49,7 +47,6 @@ class SearchExport {
     $class = $configArray['Index']['engine'];
 
     $this->db = new $class($configArray['Index']['url']);
-    $this->alog = ActivityLog::singleton();
     $this->session = VFSession::instance();
 
     // We have a couple special cases. if tempset is true, just get the tempset (selected items).
@@ -244,12 +241,6 @@ class SearchExport {
 
     $this->tagSpecs = yaml_parse_file('conf/endnote.yaml');
     $this->_buildFormatMap($this->tagSpecs['typemap']);
-
-    if ($this->tempset) {
-      $this->alog->log('selectedendnote', $tags->numTempItems());
-    } else {
-      $this->alog->log('recendnote', $this->results['record'][0]['id']);
-    }
 
     foreach ($this->results['record'] as $rawr) {
       echo $this->taggedRecord($rawr, $this->tagSpecs['tagprefix'], $this->tagSpecs['tagsuffix']);
@@ -539,7 +530,6 @@ class SearchExport {
       $hasmessage = false;
     }
 
-    $this->alog->log('emailsearch', '', $sameaddress, $hasmessage);
     $this->emailRecords($to, $from, $message);
   }
 
@@ -758,7 +748,6 @@ class SearchExport {
     // $rv = 'sent';
     if (!PEAR::isError($rv)) {
       $user = VFUser::singleton();
-      $this->alog->log('rectext', $pndisplay, $provider, $user->username);
       echo json_encode(array('success' => "SMS sent to $pndisplay at $provider"));
       return;
     } else {

@@ -33,7 +33,6 @@ require_once 'sys/VFSession.php';
 require_once 'sys/VFUser.php';
 require_once 'sys/HTStatus.php';
 require_once 'services/Record/RecordUtils.php';
-require_once 'sys/mobile_device_detect.php';
 require_once 'services/Search/SearchStructure.php';
 require_once 'sys/SolrConnection.php';
 require_once 'sys/Solr.php';

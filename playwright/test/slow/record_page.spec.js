@@ -14,11 +14,13 @@ test('Record page', async ({ page }) => {
   // work, but it doesn't appear to -- both Chrome and Firefox show this role
   // and name; the element role does match in playwright, but the name doesn't
   // appear to. Bug?
-  await expect(page.getByRole('term').filter({ hasText: 'Language(s)'})).toBeVisible();
-  await expect(page.getByRole('term').filter({ hasText: 'Published'})).toBeVisible();
-  await expect(page.getByRole('term').filter({ hasText: 'Edition'})).toBeVisible();
-  await expect(page.getByRole('term').filter({ hasText: 'Physical Description'})).toBeVisible();
-  await expect(page.getByRole('term').filter({ hasText: 'Locate a Print Version'})).toBeVisible();
+
+  let record_section = await page.locator('section');
+  await expect(record_section.getByRole('term').filter({ hasText: 'Language(s)'})).toBeVisible();
+  await expect(record_section.getByRole('term').filter({ hasText: 'Published'})).toBeVisible();
+  await expect(record_section.getByRole('term').filter({ hasText: 'Edition'})).toBeVisible();
+  await expect(record_section.getByRole('term').filter({ hasText: 'Physical Description'})).toBeVisible();
+  await expect(record_section.getByRole('term').filter({ hasText: 'Locate a Print Version'})).toBeVisible();
   // currently disabled
   //  await expect(page.getByRole('heading', { name: 'Similar Items' })).toBeVisible();
 });

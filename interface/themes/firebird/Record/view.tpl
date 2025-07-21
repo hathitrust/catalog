@@ -148,9 +148,6 @@
         </div>
         {/if}
 
-<!-- Disable 2025-03-15 to try to stop the bots -->
-
-<!--
         <h2 class="fs-3 mt-3" id="similar-items">Similar Items</h2>
         <div class="similar-items">
           {foreach from=$similarRecords item=similar}
@@ -178,7 +175,6 @@
           {/foreach}
         </div>
       </div>
--->
       {/if}
 
 

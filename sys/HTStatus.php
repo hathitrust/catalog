@@ -25,6 +25,7 @@ class HTStatus {
        $this->affiliation = $c['affiliation'];
        $this->insitution_name = $c['institution_name'];
        $this->u = $c['u'];
+			 $this->r = $c['r'];
        $this->emergency_access = $this->determine_emergency_access($c);
        $this->has_activated_role = $this->determine_activated_role($c);
        $this->provider_name = $c['providerName'];

@@ -428,7 +428,7 @@ class Solr
       if ($index == "ht_availability" and $oval == 'Full text') {
         $ft = $this->fulltext_filter_base();
         $ft = $this->fulltext_filter_add_jan1_rollover($ft);
-        $ft = $this->fulltext_filter_add_etas($ft);
+        $ft = $this->fulltext_filter_add_etas_or_resource_sharing($ft);
         $rv[] = $ft;
       }
       else { // otherwise, just do it like normal
@@ -448,7 +448,7 @@ class Solr
     return "ht_availability:$ft";
   }
 
-  function fulltext_filter_add_etas($current_ft_filter) {
+  function fulltext_filter_add_etas_or_resource_sharing($current_ft_filter) {
     global $htstatus;
     if ($htstatus->emergency_access || (isset($htstatus->r) && $htstatus->r['resourceSharing'])) {
       $inst_code = $this->quoteFilterValue($htstatus->institution_code);

@@ -1,32 +1,19 @@
-{*
-FIREBIRD TODOS:
-  1. when more than one option for viewing book, the "(view record to see multiple volumes)" text is not styled like storybook
-    a. I had issues wit the layout every time I tried to move the span outside of the list-group
-  2. I need to test out the limited/temporary access options but didn't want to mock HT.login or whatever, so I'll come back to this
-
-*}
 {assign var="i" value=0}
 {foreach from=$recordSet item=record name="recordLoop"}
   {assign var="htjson" value=$ru->items_from_json($record)}
   {assign var="ht_vals_from_json" value=$ru->ht_link_data_from_json($htjson[0])}
   {assign var=ld value=$ht_vals_from_json}
   {assign var="i" value=$i+1}
-  
-  
+
   {if is_array($record.title)}
     {assign var="first_title" value=$record.title[0]}
   {else}
     {assign var="first_title" value=$record.title}
   {/if}
 
- {* {$ld|@var_dump} 
- {$limitedSearchOnly|@var_dump}  *}
-  {* {$record.id|@var_dump}  *}
 <article class="record d-flex gap-3 p-3 mb-3 mt-3 shadow-sm">
   {* {$ld.handle|@var_dump}
   {$record.title|@var_dump} *}
- 
-  {* {$ld|@var_dump} *}
   <div class="cover d-none d-md-block" data-hdl="{$ld.handle}">
     {if $ld.handle}
     <img loading="lazy" class="bookCover border p-1 flex-grow-0 flex-shrink-0" aria-hidden="true" alt="" src="{$unicorn_root}/cgi/imgsrv/cover?id={$ld.handle};width=250" />
@@ -82,9 +69,8 @@ FIREBIRD TODOS:
         {/if}
       </dl>
     </div>
-    {* need to come back and figure this out *}
-
     {assign var="dfields" value=$ru->displayable_ht_fields($record.marc)}
+   {* {$dfields|@var_dump}  *}
     {if false && $dfields|@count gt 1}
       <p class="fs-7 text-secondary mb-1">
         Use the Catalog Record to view multiple volumes
@@ -95,8 +81,9 @@ FIREBIRD TODOS:
       <div class="list-group list-group-horizontal-sm align-items-center">
         <a href="{$ss->asRecordURL($record.id)}" class="list-group-item list-group-item-action w-sm-50" aria-describedby="maintitle-{$i}"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></i>Catalog Record<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
         {if $dfields|@count eq 1}
-          {if ( ! $ld.is_fullview && ( $ld.has_activated_role ) ) }
-            {* need to figure out if data-activated-role="true" is still in use orrr if it's data-access-role="superuser" like in storybook *}
+          {if ( $ld.is_resource_sharing ) }
+            <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50 active" aria-describedby="maintitle-{$i}"><i aria-hidden="true" class="fa-solid fa-lock-open"></i>Registered Access<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
+          {elseif ( $ld.role_name !== 'resourceSharing' && ! $ld.is_fullview && ( $ld.has_activated_role ) ) }
             <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50 active" aria-describedby="maintitle-{$i}"><i aria-hidden="true" class="fa-solid fa-unlock"></i>Limited (Access Permitted)<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
           {elseif ($ld.is_fullview ) }
             <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50 active" aria-describedby="maintitle-{$i}"><i class="fa-regular fa-file-lines" aria-hidden="true"></i>Full view<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>

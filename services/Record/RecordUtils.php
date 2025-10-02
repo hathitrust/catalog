@@ -107,7 +107,6 @@ function items_from_raw_json($json_string) {
   usort($items, array($this, 'enumsort'));
   return $items;
 }
-  
 
   // Return an array of the form:
   // {
@@ -139,9 +138,11 @@ function items_from_raw_json($json_string) {
                                  (!$rv['is_fullview'] &&
 				 (!$open_to_no_one) &&
 				 $this->is_held_by_user_institution($heldby));
+    $rv['is_resource_sharing'] = $htstatus->r ? $htstatus->r['resourceSharing'] && (!$rv['is_fullview'] && (!$open_to_no_one) && $this->is_held_by_user_institution($heldby)) : false;
     $rv['has_activated_role'] = $htstatus->has_activated_role &&
                                      (!$rv['is_fullview'] &&
 				 (!$open_to_no_one));
+		$rv['role_name'] = $htstatus->has_activated_role ? array_keys($htstatus->r)[0] : NULL;
 
     return $rv;
   }
@@ -195,7 +196,6 @@ function items_from_raw_json($json_string) {
 	$todays_date >= $copyright_active_date
 	) {
       return true;
-      
     } else if (is_array($rcode)) { // ditch the newly_open marker
       $index = array_search("newly_open", $rcode);
       if ($index) {
@@ -203,7 +203,6 @@ function items_from_raw_json($json_string) {
       }
       $rcode = $rcode[0];
     }
-        
 
     // Public domain? return true
     if (preg_match('/^(cc|pd)/', $rcode) || preg_match('/world/', $rcode)) {
@@ -216,7 +215,6 @@ function items_from_raw_json($json_string) {
     }
 
     // ...or it's ICUS and we're *outside* the USA
-    
     if ($rcode == 'icus' && $inUSA  == false) {
       $fv = true;
     }
@@ -240,7 +238,7 @@ function items_from_raw_json($json_string) {
       }
     }
     return false;
-  }  
+  }
 
   function __construct() {
     global $configArray;

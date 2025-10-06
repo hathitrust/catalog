@@ -1,6 +1,5 @@
 <?php
 /**
- * Copyright (C) ...er...probably the Univeristy of Michgian Trustees. Should check on that
  * 
  * A simple subclass of Home.php that allows a little more customization about what goes out 
  * the door. Designed to be a more flexible replacement for AJAX.php.

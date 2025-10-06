@@ -450,7 +450,7 @@ class Solr
 
   function fulltext_filter_add_etas_or_resource_sharing($current_ft_filter) {
     global $htstatus;
-    if ($htstatus->emergency_access || (isset($htstatus->r) && $htstatus->r['resourceSharing'])) {
+    if ($htstatus->emergency_access || (isset($htstatus->r['resourceSharing']) && $htstatus->r['resourceSharing'])) {
       $inst_code = $this->quoteFilterValue($htstatus->institution_code);
       if (isset($htstatus->mapped_institution_code)) {
         $mic = $this->quoteFilterValue($htstatus->mapped_institution_code);

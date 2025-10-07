@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Copyright (C) ...er...probably the Univeristy of Michgian Trustees. Should check on that
- *
- *
- */
 require_once 'services/Search/SearchStructure.php';
 
 require_once 'services/Record/FilterFormat.php';

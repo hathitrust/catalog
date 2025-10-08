@@ -99,7 +99,7 @@
                      This item is no longer available (<a href="//babel.hathitrust.org/cgi/pt?id={$ld.handle}">why not?</a>)
                      {elseif ( $ld.is_resource_sharing )}
               <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-lock-open"></i> <span>Registered Access</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
-         {elseif ( ! $ld.is_fullview && ( $ld.has_activated_role ) ) }
+         {elseif ( ! $ld.is_fullview && ( $ld.has_activated_role && $ld.role_name !== 'resourceSharing' ) ) }
               <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-unlock"></i> <span>Limited (Access Permitted)</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
                      {elseif ($ld.is_fullview )}
             <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> <span>Full view</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>

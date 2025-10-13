@@ -67,7 +67,7 @@ class SearchStructure
         'callnumber' => "Call Number",
         'format' => "Original Format",
         'htsource' => "Original Location",
-        'isn' => "ISBN/ISSN",
+        'isn' => "ISBN, ISSN, OCLC, etc.",
     );
 
 

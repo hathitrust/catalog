@@ -342,7 +342,7 @@ class AJAX extends Action {
         $result = $db->search($_POST['query'], $filter, null, 0, null,
                                array('limit' => $limit,
                                      'field' => array_keys($fields)),
-                               null, 'score', HTTP_REQUEST_METHOD_GET);
+                               null, 'score', HTTP_REQUEST2::METHOD_GET);
                                
         $options = array('parseAttributes' => true);
         $unxml = new XML_Unserializer($options);

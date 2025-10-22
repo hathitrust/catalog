@@ -27,7 +27,7 @@ RUN curl -O https://phar.phpunit.de/phpunit-9.6.11.phar
 RUN chmod +x phpunit-9.6.11.phar && mv phpunit-9.6.11.phar /usr/local/bin/phpunit
 
 RUN pear channel-update pear.php.net && pear install \
-      Auth_SASL \
+      Auth_SASL2 \
       DB \
       DB_DataObject \
       File_CSV \

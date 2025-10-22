@@ -38,7 +38,6 @@ RUN pear channel-update pear.php.net && pear install \
       Mail \
       Net_SMTP \
       Pager \
-      PhpDocumentor \
       PHP_Compat \
       Structures_LinkedList-beta
 

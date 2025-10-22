@@ -32,7 +32,6 @@ RUN pear channel-update pear.php.net && pear install \
       DB_DataObject \
       File_CSV \
       File_MARC \
-      HTTP_Request \
       HTTP_Request2 \
       HTTP_Session2-beta \
       Log \

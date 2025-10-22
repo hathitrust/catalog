@@ -312,7 +312,7 @@ class Zebra {
      * @return  string                  The response from the XServer
      * @access  private
      */	
-    function _call($method = HTTP_REQUEST_METHOD_GET, $action, $params = null,
+    function _call($method = HTTP_REQUEST2::METHOD_GET, $action, $params = null,
                    $process = true)
 	{
         if ($params) {

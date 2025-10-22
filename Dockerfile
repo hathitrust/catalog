@@ -37,11 +37,9 @@ RUN pear channel-update pear.php.net && pear install \
       Log \
       Mail \
       Net_SMTP \
-      Net_URL_Mapper-beta \
       Pager \
       PhpDocumentor \
       PHP_Compat \
-      Structures_DataGrid-beta \
       Structures_LinkedList-beta \
       XML_Parser \
       XML_Beautifier \

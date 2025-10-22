@@ -40,10 +40,7 @@ RUN pear channel-update pear.php.net && pear install \
       Pager \
       PhpDocumentor \
       PHP_Compat \
-      Structures_LinkedList-beta \
-      XML_Parser \
-      XML_Beautifier \
-      XML_Serializer-beta
+      Structures_LinkedList-beta
 
 RUN apt-get install -y wget && wget -q -O /usr/share/keyrings/hathitrust-archive-keyring.gpg https://hathitrust.github.io/debian/hathitrust-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/hathitrust-archive-keyring.gpg] https://hathitrust.github.io/debian/ bullseye main" > /etc/apt/sources.list.d/hathitrust.list

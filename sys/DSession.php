@@ -15,7 +15,7 @@ class DSession
   public $isnew = true;
   public $data = array();
 
-  protected static function singleton($cookiename, $cookieargs = false, $dargs=false) 
+  protected function singleton($cookiename, $cookieargs = false, $dargs=false) 
   {
     if (!isset(self::$instance)) {
       if (isset($dargs['dbh'])) {

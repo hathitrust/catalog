@@ -25,7 +25,7 @@ class VFSession extends DSession
 // Create a new method, 'instance', out of current 'session', and use it to grab the config and then
 // call the DSession#singleton method.
   
-  static function instance($confdir = false)
+  function instance($confdir = false)
   {
     if (!$confdir) {
       preg_match('/(.*)\/sys.*/', __FILE__, $match);

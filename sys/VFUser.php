@@ -30,7 +30,7 @@ class VFUser
   }
   
   
-  public static function singleton()
+  public function singleton()
   {
       return NULL;
   }

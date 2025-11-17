@@ -23,7 +23,7 @@ require_once 'Smarty/Smarty.class.php';
 // Smarty Extension class
 class UInterface extends Smarty
 {
-    function __construct()
+    function UInterface()
     {
         global $configArray;
         $local = $configArray['Site']['local'];

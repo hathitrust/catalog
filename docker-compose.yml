@@ -28,9 +28,6 @@ services:
 
   nginx:
     image: nginx
-    healthcheck:
-      <<: *healthcheck-defaults
-      test: ["CMD", "/usr/bin/curl", "-s", "-f", "http://localhost:8080/Search/Home?lookfor=stuff&searchtype=all&ft=&setft=false"]
     ports:
       - "8080:8080"
     volumes:

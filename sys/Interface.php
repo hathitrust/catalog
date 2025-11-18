@@ -43,7 +43,7 @@ class UInterface extends SmartyBC
 
         $this->compile_dir   = $comp;
         $this->cache_dir     = "$local/interface/cache";
-        $this->plugins_dir   = array('plugins', "$local/interface/plugins");
+        $this->plugins_dir   = array('/usr/share/php/smarty3/plugins', "$local/interface/plugins");
         $this->caching       = false;
         $this->debug         = true;
         $this->compile_check = true;

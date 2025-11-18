@@ -25,6 +25,7 @@ class UInterface extends SmartyBC
 {
     function __construct()
     {
+        parent::__construct();
         global $configArray;
         $local = $configArray['Site']['local'];
         $theme = $configArray['Site']['theme'];

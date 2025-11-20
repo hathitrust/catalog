@@ -48,7 +48,7 @@
                 {foreach from=$field->getSubfields() item=subfield key=subcode  name=subloop}
                   {if $subcode >= 'a' and $subcode <= 'z'}
                   <span>{$subfield->getData()}</span>
-                  {if ! $smarty.foreach.last}<br />{/if}
+                  {if ! $subfield@last}<br />{/if}
                   {/if}
                 {/foreach}
               {/foreach}

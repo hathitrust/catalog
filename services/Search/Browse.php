@@ -19,6 +19,7 @@
  */
 
 require_once 'Action.php';
+require_once 'XML/Unserializer.php';
 
 class Browse extends Action {
     

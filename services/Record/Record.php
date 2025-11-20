@@ -28,6 +28,7 @@ require_once 'sys/MergedItemSet.php';
 require_once 'services/Record/FilterFormat.php';
 require_once 'sys/VFSession.php';
 require_once 'services/Record/RecordUtils.php';
+require_once 'XML/Unserializer.php';
 
 
 class Record extends Action

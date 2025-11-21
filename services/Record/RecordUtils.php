@@ -76,8 +76,8 @@ static function sortstringFromEnumcron($str) {
 
 
 function enumsort($a, $b) {
-  $sa = $this->sortstringFromEnumcron($a['enumcron']);
-  $sb = $this->sortstringFromEnumcron($b['enumcron']);
+  $sa = $this->sortstringFromEnumcron($a['enumcron'] ?? '');
+  $sb = $this->sortstringFromEnumcron($b['enumcron'] ?? '');
   if ($sa == $sb) {
       return 0;
   }
@@ -129,7 +129,7 @@ function items_from_raw_json($json_string) {
     $rv['handle'] = $e['htid'];
     $collection = $e['collection_code'];
     $rv['original_from'] = $HT_COLLECTIONS[$collection]['original_from'];
-    $rv['enumchron'] = $e['enumcron'];
+    $rv['enumchron'] = $e['enumcron'] ?? '';
     $rv['is_fullview'] = $this->is_fullview($rv['rights_code']);
     $rv['is_tombstone'] = $rv['rights_code'] == 'nobody';
 

@@ -30,7 +30,7 @@
     <div class="twocol mt-1">
 
       <section class="twocol-main" id="section" data-record-count="{$recordCount}">
-        <article class="record d-flex flex-column gap-3 p-3 mb-3 mt-3" data-hdl="{$hdl.handle}">
+        <article class="record d-flex flex-column gap-3 p-3 mb-3 mt-3" data-hdl="{$ld.handle}">
           <div class="article-heading d-flex gap-3">
 
             <div class="cover d-none d-md-block">

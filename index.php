@@ -278,6 +278,8 @@ $ss = new SearchStructure();
 if (count($ss->search) == 1) {
     $interface->assign('lookfor', $ss->search[0][1]);
     $interface->assign('type', $ss->search[0][0]);
+} else {
+    $interface->assign('lookfor', '');
 }
 
 

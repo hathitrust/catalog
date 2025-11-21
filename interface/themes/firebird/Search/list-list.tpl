@@ -28,42 +28,42 @@
         {if is_array($record.title)}
           {foreach from=$record.title item=title}
             <h3 class="record-title">
-              <span class="title">{$title|truncate:180:"..."|highlight:$lookfor|default:'Title not available'}</span>
+              <span class="title">{$title|truncate:180:"..."|default:'Title not available'}</span>
             </h3>
           {/foreach}
         {else}
-          <h3 class="record-title">{$record.title|truncate:180:"..."|highlight:$lookfor|default:'Title not available'}</h3>
+          <h3 class="record-title">{$record.title|truncate:180:"..."|default:'Title not available'}</h3>
         {/if}
       </div>
-      {if $record.title2}
+      {if array_key_exists('title2', $record)}
       <blockquote>
-        <p class="results_title2">{$record.title2|truncate:180:"..."|highlight:$lookfor}</p>
+        <p class="results_title2">{$record.title2|truncate:180:"..."}</p>
       </blockquote>
       {/if}
 
-      {if $record.vtitle}
+      {if array_key_exists('vtitle', $record)}
       <blockquote>
         <span class="results_title2">{$record.vtitle}</span>
       </blockquote>
       {/if}
 
       <dl class="metadata">
-        {if $record.publishDate}
+        {if array_key_exists('publishDate', $record)}
         <div class="grid">
         <dt class="g-col-lg-4 g-col-12">{translate text='Published'}</dt>
         <dd class="g-col-lg-4 g-col-12">{$record.publishDate.0}</dd>
         </div>
         {/if}
 
-        {if $record.author}
+        {if array_key_exists('author', $record)}
         <div class="grid">
           <dt class="g-col-lg-4 g-col-12">Author</dt>
           {if is_array($record.author)}
             {foreach from=$record.author item=author}
-            <dd class="g-col-lg-4 g-col-12">{$author|highlight:$lookfor}</dd>
+            <dd class="g-col-lg-4 g-col-12">{$author}</dd>
             {/foreach}
           {else}
-            <dd class="g-col-lg-4 g-col-12">{$record.author|highlight:$lookfor}</dd>
+            <dd class="g-col-lg-4 g-col-12">{$record.author}</dd>
         </div>
           {/if}
         {/if}

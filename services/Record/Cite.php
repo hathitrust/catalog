@@ -57,7 +57,7 @@ class Cite extends Record {
 
     $authorList = isset($this->record['mainauthor']) ?
             $this->record['mainauthor'] :
-            isset($this->record['author']) ? $this->record['author'] : array();
+            (isset($this->record['author']) ? $this->record['author'] : array());
 
     // Create Author List for APA style
     if (!empty($authorList)) {

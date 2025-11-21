@@ -13,7 +13,7 @@
   {include file="header.tpl"}
   <hathi-alert-banner></hathi-alert-banner>
 
-{if $mergeset}
+{if isset($mergeset) and $mergeset}
   {assign var="mhtj" value=$mergeset->combined_ht_json() }
   {assign var="htjson" value=$mhtj}  
 {else}
@@ -29,8 +29,8 @@
     {* <div class="container container-medium flex-container flex-container-expanded container-boxed"> *}
     <div class="twocol mt-1">
 
-      <section class="twocol-main" id="section" data-record-count="{$recordCount}">
-        <article class="record d-flex flex-column gap-3 p-3 mb-3 mt-3" data-hdl="{$hdl.handle}">
+      <section class="twocol-main" id="section" data-record-count="{$recordCount|default:"0"}">
+        <article class="record d-flex flex-column gap-3 p-3 mb-3 mt-3" data-hdl="{$ld.handle}">
           <div class="article-heading d-flex gap-3">
 
             <div class="cover d-none d-md-block">
@@ -52,7 +52,7 @@
                   {/if}
                 {/foreach}
               {/foreach}
-              {if $record.vtitle}
+              {if array_key_exists('vtitle', $record)}
                <br /><span>{$record.vtitle}</span>
               {/if}
             </h1>
@@ -92,10 +92,10 @@
             <tbody>
               {foreach from=$htjson item=e}
                 {assign var=ld value=$ru->ht_link_data_from_json($e)}
-                {if $record_is_tombstone || !($ld.is_tombstone)}
+                {if (isset($record_is_tombstone) and $record_is_tombstone) || !($ld.is_tombstone)}
                  <tr>
                   <td>
-                   {if $record_is_tombstone}
+                   {if (isset($record_is_tombstone) and $record_is_tombstone) }
                      This item is no longer available (<a href="//babel.hathitrust.org/cgi/pt?id={$ld.handle}">why not?</a>)
                      {elseif ( $ld.is_resource_sharing )}
               <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-lock-open"></i> <span>Registered Access</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
@@ -158,14 +158,14 @@
             <div class="d-flex gap-3 p-3 mb-3 mt-3 shadow-sm rounded">
             <div class="container-fluid p-1">
               <h3 class="record-title h4 mb-3 fw-normal"><a href="{$url}/Record/{$similar.id}">{$similarTitle}</a></h3>
-              {if $similar.author or $similar.publishDate}
+              {if array_key_exists('author', $similar) or array_key_exists('publishDate', $similar)}
               <dl class="metadata mb-0">
               <div class="grid gap-2">
-                {if $similar.author}
+                {if array_key_exists('author', $similar)}
                 <dt class="g-col-lg-4 g-col-12">Author</dt>
                 <dd class="g-col-lg-8 g-col-12">{$similar.author.0}</dd>
                 {/if}
-                {if $similar.publishDate}
+                {if array_key_exists('publishDate', $similar)}
                 <dt class="g-col-lg-4 g-col-12">Published</dt>
                 <dd class="g-col-lg-8 g-col-12">{$similar.publishDate.0}</dd>
                 {/if}

@@ -12,7 +12,7 @@
           <div style="display: flex">
             <div class="control control-q1">
               <label for="q1-input" class="offscreen">Search full-text index</label>
-              <input id="q1-input" name="q1" type="text" class="search-input-text" placeholder="Search words about or within the items" required="required" pattern="^(?!\s*$).+" value="{$lookfor|escape:'html'}">
+              <input id="q1-input" name="q1" type="text" class="search-input-text" placeholder="Search words about or within the items" required="required" pattern="^(?!\s*$).+" value="{$lookfor|default:''|escape:'html'}">
             </div>
             <div class="control control-searchtype">
               <label for="search-input-select" class="offscreen">Search Field List</label>

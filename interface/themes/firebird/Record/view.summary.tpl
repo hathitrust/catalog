@@ -67,10 +67,6 @@
     </div>
   {/if}
 
-  <!-- <tr valign="top">
-    <th>{translate text='Format'}: </th>
-    <td><span class="{$recordFormat}">{$recordFormat}</span></td>
-  </tr> -->
   {assign var=lang value=$recordLanguage}
   {if $recordLanguage}
   <div class="grid">
@@ -286,19 +282,20 @@
   <div class="grid">
     <dt class="g-col-lg-4 g-col-12">{translate text='Locate a Print Version'}</dt>
     <dd class="g-col-lg-8 g-col-12">
-          {if is_array($record.oclc)}
-<!-- title array -->
-            {foreach from=$record.oclc item=title name=loop}
-              {if $title@iteration lt 3}
-              <a href="http://www.worldcat.org/oclc/{$title}" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Find in a Library" data-tracking-label="{$title}">Find in a library</a><br>
-              {/if}
-            {/foreach}
-          {else}
-<!-- title non-array -->
-            {if $record.oclc}
-             <a href="http://www.worldcat.org/oclc/{$record.oclc}" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Find in a Library" data-tracking-label="{$record.oclc}">Find in a library</a>
-            {else} Find in a library service is not available from this catalog. <a href="http://www.worldcat.org/" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Search Worldcat" data-tracking-label="worldcat" target="_blank">Search Worldcat</a>
+          {if array_key_exists('oclc', $record)}
+            {if is_array($record.oclc)}
+  <!-- title array -->
+              {foreach from=$record.oclc item=title name=loop}
+                {if $title@iteration lt 3}
+                <a href="http://www.worldcat.org/oclc/{$title}" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Find in a Library" data-tracking-label="{$title}">Find in a library</a><br>
+                {/if}
+              {/foreach}
+            {else}
+  <!-- title non-array -->
+               <a href="http://www.worldcat.org/oclc/{$record.oclc}" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Find in a Library" data-tracking-label="{$record.oclc}">Find in a library</a>
             {/if}
+          {else}
+            Find in a library service is not available from this catalog. <a href="http://www.worldcat.org/" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Search Worldcat" data-tracking-label="worldcat" target="_blank">Search Worldcat</a>
           {/if}
     </dd>
   </div>

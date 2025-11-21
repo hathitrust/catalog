@@ -130,6 +130,8 @@ class Home extends Action {
         if (count($this->ss->search) == 1) {
             $interface->assign('lookfor', $this->ss->search[0][1]);
             $interface->assign('type', $this->ss->search[0][0]);
+        } else {
+            $interface->assign('lookfor', '');
         }
 
         // The action

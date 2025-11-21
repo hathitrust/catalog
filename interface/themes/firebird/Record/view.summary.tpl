@@ -67,10 +67,6 @@
     </div>
   {/if}
 
-  <!-- <tr valign="top">
-    <th>{translate text='Format'}: </th>
-    <td><span class="{$recordFormat}">{$recordFormat}</span></td>
-  </tr> -->
   {assign var=lang value=$recordLanguage}
   {if $recordLanguage}
   <div class="grid">

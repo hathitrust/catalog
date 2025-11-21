@@ -43,8 +43,8 @@ class UInterface extends SmartyBC
 
         $this->compile_dir   = $comp;
         $this->cache_dir     = "$local/interface/cache";
-        // Add custom plugin directories
-        $this->addPluginsDir('/usr/share/php/smarty3/plugins', "$local/interface/plugins");
+        // Add custom plugin directory
+        $this->addPluginsDir("$local/interface/plugins");
         $this->caching       = false;
         $this->debugging         = true;
         $this->compile_check = true;
@@ -52,8 +52,8 @@ class UInterface extends SmartyBC
         unset($local);
 
         // Register custom functions (Smarty 3 method)
-        $this->registerPlugin('function', 'translate', [$this, 'translate']);
-        $this->registerPlugin('function', 'char', [$this, 'char']);
+        $this->registerPlugin('function', 'translate', 'translate');
+        $this->registerPlugin('function', 'char', 'char');
 
         $this->assign('site', $configArray['Site']);
         $this->assign('path', $configArray['Site']['path']);

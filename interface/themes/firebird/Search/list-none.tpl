@@ -23,7 +23,7 @@
 
         <div>
 
-          {if $fixedUnbalancedQuotes}
+          {if isset($fixedUnbalancedQuotes) and $fixedUnbalancedQuotes}
             <div class="alert alert-info">
               <p>Your query contained ambiguous quotes and was modified by removing the last one.</p>
             </div>

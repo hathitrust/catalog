@@ -13,7 +13,7 @@
   {include file="header.tpl"}
   <hathi-alert-banner></hathi-alert-banner>
 
-{if $mergeset}
+{if isset($mergeset) and $mergeset}
   {assign var="mhtj" value=$mergeset->combined_ht_json() }
   {assign var="htjson" value=$mhtj}  
 {else}
@@ -92,10 +92,10 @@
             <tbody>
               {foreach from=$htjson item=e}
                 {assign var=ld value=$ru->ht_link_data_from_json($e)}
-                {if $record_is_tombstone || !($ld.is_tombstone)}
+                {if (isset($record_is_tombstone) and $record_is_tombstone) || !($ld.is_tombstone)}
                  <tr>
                   <td>
-                   {if $record_is_tombstone}
+                   {if (isset($record_is_tombstone) and $record_is_tombstone) }
                      This item is no longer available (<a href="//babel.hathitrust.org/cgi/pt?id={$ld.handle}">why not?</a>)
                      {elseif ( $ld.is_resource_sharing )}
               <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-lock-open"></i> <span>Registered Access</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>

@@ -39,7 +39,7 @@ let $$assets = {firebird_manifest};
 {/literal}
 
 
-  {if $id}
+  {if isset($id) and $id}
   <link rel="canonical" href="/Record/{$id|escape:"url"}">
   <link rel="alternate" type="application/marc" href="/Record/{$id|escape:"url"}.mrc" >
   <link rel="alternate" type="application/marc+xml" href="/Record/{$id|escape:"url"}.xml" >

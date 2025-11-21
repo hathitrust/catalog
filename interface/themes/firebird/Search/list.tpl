@@ -37,7 +37,7 @@ FIREBIRD TODOS:
             Search results
         </h1>
 
-        {if $fixedUnbalancedQuotes}
+        {if isset($fixedUnbalancedQuotes) and $fixedUnbalancedQuotes}
           <div class="alert alert-info">
             <p>Your query contained ambiguous quotes and was modified by removing the last one.</p>
           </div>
@@ -46,16 +46,18 @@ FIREBIRD TODOS:
         <div class="results-container">
           <div class="results-summary-container">
              {if $recordCount}
+                <!-- TODO: ask Caryl if the logic for data-prop-current-sort-option is correct -->
             <hathi-results-toolbar
               data-prop-first-record-number='{$recordStart}'
               data-prop-last-record-number='{$recordEnd}'
               data-prop-total-records='{$recordCount|number_format:null:".":","}'
               data-prop-target='catalog'
               {* force 'Relevance' to appear in dropdown as default *}
-              {if $sort == ''}
+              {if ! isset($sort) or $sort == ''}
                 data-prop-current-sort-option='false'
-              {/if}
+              {else}
                 data-prop-current-sort-option='{$sort}'
+              {/if}
               ></hathi-results-toolbar>
              {/if}
             

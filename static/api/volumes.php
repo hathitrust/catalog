@@ -16,11 +16,6 @@ require_once 'sys/SolrConnection.php';
 require_once 'services/Record/RecordUtils.php';
 require_once 'sys/Normalize.php';
 
-// Set up for autoload
-function sample_autoloader($class) {
-  require str_replace('_', '/', $class) . '.php';}
-spl_autoload_register('sample_autoloader');
-
 # $solr = new Apache_Solr_Service('solr-sdr-catalog', '9033', '/catalog');
 
 # Get configArray
@@ -407,7 +402,7 @@ if ($_REQUEST['type'] == 'json') {
 }
 
 if ($_REQUEST['type'] == 'oclcscrape') {
-  require_once 'Smarty/Smarty.class.php';
+  require_once 'smarty3/Smarty.class.php';  // Smarty 3 path
   $interface = new Smarty();
   $interface->compile_dir = '../../interface/compile';
   $interface->template_dir = 'templates';

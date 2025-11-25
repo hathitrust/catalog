@@ -18,13 +18,14 @@
  *
  */
 
-require_once 'Smarty/Smarty.class.php';
+require_once 'smarty3/SmartyBC.class.php';
 
 // Smarty Extension class
-class UInterface extends Smarty
+class UInterface extends SmartyBC
 {
     function __construct()
     {
+        parent::__construct();
         global $configArray;
         $local = $configArray['Site']['local'];
         $theme = $configArray['Site']['theme'];
@@ -42,15 +43,17 @@ class UInterface extends Smarty
 
         $this->compile_dir   = $comp;
         $this->cache_dir     = "$local/interface/cache";
-        $this->plugins_dir   = array('plugins', "$local/interface/plugins");
+        // Add custom plugin directory
+        $this->addPluginsDir("$local/interface/plugins");
         $this->caching       = false;
-        $this->debug         = true;
+        $this->debugging         = true;
         $this->compile_check = true;
 
         unset($local);
 
-        $this->register_function('translate', 'translate');
-        $this->register_function('char', 'char');
+        // Register custom functions (Smarty 3 method)
+        $this->registerPlugin('function', 'translate', 'translate');
+        $this->registerPlugin('function', 'char', 'char');
 
         $this->assign('site', $configArray['Site']);
         $this->assign('path', $configArray['Site']['path']);

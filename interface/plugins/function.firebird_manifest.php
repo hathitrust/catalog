@@ -10,7 +10,7 @@
  */
 function smarty_function_firebird_manifest($params, &$smarty)
 {
-  $manifest = $smarty->get_template_vars('firebird_manifest');
+  $manifest = $smarty->getTemplateVars('firebird_manifest');  // Smarty 3 method
 
   if ( $manifest ) {
     $output['stylesheet'] = '/common/firebird/dist/' . $manifest['index.css']['file'];

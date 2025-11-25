@@ -6,9 +6,10 @@
     beStrictAboutOutputDuringTests="true"
     beStrictAboutTodoAnnotatedTests="true"
     verbose="true">
-  <coverage processUncoveredFiles="false">
+  <coverage processUncoveredFiles="false" pathCoverage="true">
     <include>
       <directory suffix=".php">sys</directory>
+      <directory suffix=".php">services/Record</directory>
       <directory suffix=".php">services/Search</directory>
     </include>
   </coverage>

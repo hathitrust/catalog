@@ -9,6 +9,7 @@ class HTStatus {
    public $display_name = "Guest";
    public $affiliation = "Unaffiliated";
    public $institution_name = "Unaffiliated";
+   public $r = "";
    public $u = "";
    public $emergency_access = false;
    public $provider_name = "Unauthenticated";

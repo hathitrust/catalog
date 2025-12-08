@@ -134,12 +134,16 @@ function items_from_raw_json($json_string) {
     $rv['is_tombstone'] = $rv['rights_code'] == 'nobody';
 
     $heldby = $e['heldby'];
+
+    $always_open_or_closed = $rv['is_fullview'] || $this->is_open_to_no_one($rv['rights_code']);
+
     $open_to_no_one = $this->is_open_to_no_one($rv['rights_code']);
     $rv['is_emergency_access'] = $htstatus->emergency_access &&
-                                 (!$rv['is_fullview'] &&
-				 (!$open_to_no_one) &&
-				 $this->is_held_by_user_institution($heldby));
-    $rv['is_resource_sharing'] = $htstatus->r ? $htstatus->r['resourceSharing'] && (!$rv['is_fullview'] && (!$open_to_no_one) && $this->is_held_by_user_institution($heldby)) : false;
+       (!$always_open_or_closed) &&
+				 ($this->is_held_by_user_institution($heldby));
+
+    $rv['is_resource_sharing'] = !$always_open_or_closed && $this->is_resource_sharing($heldby);
+    
     $rv['has_activated_role'] = $htstatus->has_activated_role &&
                                      (!$rv['is_fullview'] &&
 				 (!$open_to_no_one));
@@ -153,6 +157,15 @@ function items_from_raw_json($json_string) {
 
     return in_array($htstatus->institution_code, $print_holdings)  ||
            in_array($htstatus->mapped_institution_code, $print_holdings) ;
+  }
+
+  function is_resource_sharing($heldby) {
+    global $htstatus;
+
+    return $htstatus->r
+      && array_key_exists('resourceSharing',$htstatus->r)
+      && $htstatus->r['resourceSharing']
+      && $this->is_held_by_user_institution($heldby);
   }
 
 

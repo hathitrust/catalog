@@ -30,7 +30,7 @@
     </select>
     <div class="advanced-input-container">
       <label for="field-search-text-input-{$index}" class="offscreen">Search Term {$index}</label>
-      <input id="field-search-text-input-{$index}" placeholder="Search Term {$index}" type="text" value="{$lookfor}" name="lookfor[]" />
+      <input id="field-search-text-input-{$index}" placeholder="Search Term {$index}" type="text" value="{$lookfor|default:''}" name="lookfor[]" />
     </div>
   </div>
 </fieldset>

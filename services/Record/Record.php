@@ -29,7 +29,6 @@ require_once 'services/Record/FilterFormat.php';
 require_once 'sys/VFSession.php';
 require_once 'services/Record/RecordUtils.php';
 
-
 class Record extends Action
 {
     public $id;
@@ -267,129 +266,11 @@ class Record extends Action
     
     function getEditions()
     {
-        if ($this->isbn) {
-	  //            return $this->getXISBN($this->isbn);
-        } else if (isset($this->record['issn'])) {
-	  //            return $this->getXISSN($this->record['issn'][0]);
-        }
-        
-        return null;
+      // previously used worldcat APIs to try to get ISBNs and ISSNs, not used
+      // in HT catalog
+      return null;
     }
     
-    private function getXISBN($isbn)
-    {
-        global $configArray;
-    
-        // Build URL
-        $url = 'http://xisbn.worldcat.org/webservices/xid/isbn/' . $isbn .
-               '?method=getEditions&format=csv';
-        if (isset($configArray['WorldCat']['id'])) {
-            $url .= '&ai=' . $configArray['WorldCat']['id'];
-        }
-
-        // Print Debug code
-        if ($configArray['System']['debug']) {
-            echo "<pre>XISBN: $url</pre>";
-        }
-
-        // Fetch results
-        $fp = fopen($url, "r");
-        $query = '';
-        while (($data = fgetcsv($fp, 1000, ",")) !== FALSE) {
-            if ($query != '') {
-                $query .= ' OR isbn:' . $data[0];
-            } else {
-                $query = 'isbn:' . $data[0];
-            }
-        }
-        
-        if ($query) {
-            // Filter out current record
-            $query .= ' NOT id:' . $this->id;        
-            $args = array();
-            $args[] = array('q', $query);
-            $args[] = array('limit', 5);
-            
-            $result = $this->db->solrSearch($args, 'select'); 
-            if (!PEAR::isError($result)) {
-                if (isset($result['record'])) {
-                    if (isset($result['record']['id'])) {
-                        $result['record'] = array($result['record']);
-                    }
-                    return $result['record'];
-                } else {
-                    return null;
-                }
-            } else {
-                return $result;
-            }
-        } else {
-            return null;
-        }
-    }
-
-    private function getXISSN($issn)
-    {
-        global $configArray;
-    
-        // Build URL
-        $url = 'http://xissn.worldcat.org/webservices/xid/issn/' . urlencode($issn) .
-               //'?method=getEditions&format=csv';
-               '?method=getEditions&format=xml';
-        if (isset($configArray['WorldCat']['id'])) {
-            $url .= '&ai=' . $configArray['WorldCat']['id'];
-        }
-
-        // Print Debug code
-        if ($configArray['System']['debug']) {
-            echo "<pre>XISSN: $url</pre>";
-        }
-
-        // Fetch results
-        $query = '';
-        $data = file_get_contents($url);
-        $unxml = new XML_Unserializer();
-        $unxml->unserialize($data);
-        $data = $unxml->getUnserializedData($data);
-        if (isset($data['group']['issn'])) {
-            if (is_array($data['group']['issn'])) {
-                foreach ($data['group']['issn'] as $issn) {
-                    if ($query != '') {
-                        $query .= ' OR issn:' . $issn;
-                    } else {
-                        $query = 'issn:' . $issn;
-                    }
-                }
-            } else {
-                $query = 'issn:' . $data['group']['issn'];
-            }
-        }
-        
-        if ($query) {
-            // Filter out current record
-            $query .= ' NOT id:' . $this->id;        
-            $args = array();
-            $args[] = array('q', $query);
-            $args[] = array('limit', 5);
-            $result = $this->db->solrSearch($args, 'select'); 
-        
-            if (!PEAR::isError($result)) {
-                if (isset($result['record'])) {
-                    if (isset($result['record']['id'])) {
-                        $result['record'] = array($result['record']);
-                    }
-                    return $result['record'];
-                } else {
-                    return null;
-                }
-            } else {
-                return $result;
-            }
-        } else {
-            return null;
-        }
-    }
-
     function getLinkNums($record) {
       // ISBN 
       $links = array();

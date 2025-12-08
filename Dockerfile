@@ -19,7 +19,8 @@ RUN apt-get update && apt-get install -y \
       php-xsl \
       php-mbstring \
       pear-channels \
-      php-yaml
+      php-yaml \
+      smarty3
 
 # Actual stuff installed on bullseye for ht-web-preview
 
@@ -37,11 +38,6 @@ RUN pear channel-update pear.php.net && pear install \
       Pager \
       PHP_Compat \
       Structures_LinkedList-beta
-
-RUN apt-get install -y wget && wget -q -O /usr/share/keyrings/hathitrust-archive-keyring.gpg https://hathitrust.github.io/debian/hathitrust-archive-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/hathitrust-archive-keyring.gpg] https://hathitrust.github.io/debian/ bullseye main" > /etc/apt/sources.list.d/hathitrust.list
-
-RUN apt-get update && apt-get install php-smarty
 
 # Default PHP config:
 #  -> class { 'php::apache_config':

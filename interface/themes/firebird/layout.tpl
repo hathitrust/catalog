@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="{$userLang}" xml:lang="{$userLang}" data-analytics-code="UA-954893-23" data-analytics-enabled="true" data-use="search" data-app="catalog">
-<!-- Machine is {$machine} -->
+<html lang="{$userLang|default:"en"}" xml:lang="{$userLang|default:"en"}" data-analytics-code="UA-954893-23" data-analytics-enabled="true" data-use="search" data-app="catalog">
+<!-- Machine is {$machine|default:"(unknown)"} -->
 <head>
-  <title>{$pageTitle|truncate:64:"..."} | HathiTrust Digital Library</title>
+  <title>{$pageTitle|truncate:64:"..."|default:"Catalog"} | HathiTrust Digital Library</title>
   <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">
 
 <script>
@@ -39,7 +39,7 @@ let $$assets = {firebird_manifest};
 {/literal}
 
 
-  {if $id}
+  {if isset($id) and $id}
   <link rel="canonical" href="/Record/{$id|escape:"url"}">
   <link rel="alternate" type="application/marc" href="/Record/{$id|escape:"url"}.mrc" >
   <link rel="alternate" type="application/marc+xml" href="/Record/{$id|escape:"url"}.xml" >
@@ -49,7 +49,7 @@ let $$assets = {firebird_manifest};
   {/if}
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-  <meta name="title" content="{$pageTitle|escape}" />
+  <meta name="title" content="{$pageTitle|escape|default:"Catalog"}" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 </head>

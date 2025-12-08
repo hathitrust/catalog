@@ -38,11 +38,8 @@ require_once 'sys/SolrConnection.php';
 require_once 'sys/Solr.php';
 require_once 'sys/GeoIP.php';
 
-// Set up for autoload
-function sample_autoloader($class) {
-  require str_replace('_', '/', $class) . '.php';
-}
-spl_autoload_register('sample_autoloader');
+// Autoloader removed - all dependencies now explicitly required
+// This eliminates the conflict with Smarty 3's internal autoloader
 
 // Sets global error handler for PEAR errors
 PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, 'handlePEARError');

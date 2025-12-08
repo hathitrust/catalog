@@ -67,17 +67,13 @@
     </div>
   {/if}
 
-  <!-- <tr valign="top">
-    <th>{translate text='Format'}: </th>
-    <td><span class="{$recordFormat}">{$recordFormat}</span></td>
-  </tr> -->
   {assign var=lang value=$recordLanguage}
   {if $recordLanguage}
   <div class="grid">
     <dt class="g-col-lg-4 g-col-12">{translate text='Language(s)'}</dt>
     <dd class="g-col-lg-8 g-col-12">
       {foreach from=$lang item=field name=loop}
-        {if $smarty.foreach.loop.first}{$field}{else}; {$field}{/if}
+        {if $field@first}{$field}{else}; {$field}{/if}
       {/foreach}
    </dd>
   </div>
@@ -229,10 +225,10 @@
     <dt class="g-col-lg-4 g-col-12">{translate text='Original Format'}: </dt>
     <dd class="g-col-lg-8 g-col-12">
       {foreach from=$marcField item=field name=loop}
-       {if $smarty.foreach.loop.iteration eq 1}
-       {if $field|getvalue:'b' neq 'Electronic Resource'}{$field|getvalue:'b'}{/if}
-       {elseif $smarty.foreach.loop.iteration gt 1}
-       {if $field|getvalue:'b' neq 'Electronic Resource'}<br>{$field|getvalue:'b'}{/if}
+       {if $field@iteration eq 1}
+         {if $field|getvalue:'b' neq 'Electronic Resource'}{$field|getvalue:'b'}{/if}
+       {elseif $field@iteration gt 1}
+         {if $field|getvalue:'b' neq 'Electronic Resource'}<br>{$field|getvalue:'b'}{/if}
        {/if}
       {/foreach}
     </dd>
@@ -242,7 +238,7 @@
   {assign var=852Field value=$marc->getFields('852')}
   {if isset($852Field)}
     {foreach from=$852Field item=field name=loop}
-      {if $smarty.foreach.loop.iteration lt 2}
+      {if $field@iteration lt 2}
         {if $field|getvalue:'a' eq 'MiU'}
           {if $field|getvalue:'h'}
             <div class="grid">
@@ -255,7 +251,7 @@
       {else}
         {assign var=050Field value=$marc->getFields('050')}
         {foreach from=$050Field item=field name=loop}
-          {if $smarty.foreach.loop.iteration lt 2}
+          {if $field@iteration lt 2}
             {if $field|getvalue:'a'}
               <div class="grid">
               <dt class="g-col-lg-4 g-col-12">{translate text='Original Classification Number'}</dt>
@@ -286,19 +282,20 @@
   <div class="grid">
     <dt class="g-col-lg-4 g-col-12">{translate text='Locate a Print Version'}</dt>
     <dd class="g-col-lg-8 g-col-12">
-          {if is_array($record.oclc)}
-<!-- title array -->
-            {foreach from=$record.oclc item=title loop=1 name=loop}
-              {if $smarty.foreach.loop.iteration lt 3}
-              <a href="http://www.worldcat.org/oclc/{$title}" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Find in a Library" data-tracking-label="{$title}">Find in a library</a><br>
-              {/if}
-            {/foreach}
-          {else}
-<!-- title non-array -->
-            {if $record.oclc}
-             <a href="http://www.worldcat.org/oclc/{$record.oclc}" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Find in a Library" data-tracking-label="{$record.oclc}">Find in a library</a>
-            {else} Find in a library service is not available from this catalog. <a href="http://www.worldcat.org/" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Search Worldcat" data-tracking-label="worldcat" target="_blank">Search Worldcat</a>
+          {if array_key_exists('oclc', $record)}
+            {if is_array($record.oclc)}
+  <!-- title array -->
+              {foreach from=$record.oclc item=title name=loop}
+                {if $title@iteration lt 3}
+                <a href="http://www.worldcat.org/oclc/{$title}" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Find in a Library" data-tracking-label="{$title}">Find in a library</a><br>
+                {/if}
+              {/foreach}
+            {else}
+  <!-- title non-array -->
+               <a href="http://www.worldcat.org/oclc/{$record.oclc}" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Find in a Library" data-tracking-label="{$record.oclc}">Find in a library</a>
             {/if}
+          {else}
+            Find in a library service is not available from this catalog. <a href="http://www.worldcat.org/" data-toggle="tracking" data-tracking-category="outLinks" data-tracking-action="Catalog Search Worldcat" data-tracking-label="worldcat" target="_blank">Search Worldcat</a>
           {/if}
     </dd>
   </div>

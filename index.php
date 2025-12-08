@@ -27,10 +27,8 @@ ini_set('date.timezone', 'America/Detroit');
 require_once 'PEAR.php';
 
 require_once 'sys/Interface.php';
-require_once 'sys/User.php';
 require_once 'sys/Translator.php';
 require_once 'sys/VFSession.php';
-require_once 'sys/VFUser.php';
 require_once 'sys/HTStatus.php';
 require_once 'services/Record/RecordUtils.php';
 require_once 'services/Search/SearchStructure.php';
@@ -68,7 +66,6 @@ if (isset($configArray[$hn], $configArray[$hn]['extraFilters'])) {
 }
 
 $session = VFSession::instance();
-$user = VFUser::singleton();
 
 # Set up the interface
 
@@ -305,7 +302,6 @@ if ($session->is_set('inst')) {
 $interface->assign('path', $configArray['Site']['url']);
 $interface->assign('module', $module);
 $interface->assign('action', $action);
-$interface->assign('user', $user);
 $interface->assign('uuid', $session->uuid);
 $interface->assign('ru', new RecordUtils());
 

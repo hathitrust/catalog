@@ -64,7 +64,7 @@
   {/if} <!-- end current facets conditional -->
 
   <div class="accordion mb-3">
-    {if $allitems_count gt 0}
+    {if isset($allitems_count) && $allitems_count gt 0}
     <div class="panel accordion-item">
       <h3 class="accordion-header" id="heading-viewability">
       <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-viewability" aria-expanded="true" aria-controls="collapse-viewability">Item Viewability</button></h3>
@@ -72,12 +72,12 @@
         <div class="accordion-body">
           <div class="list-group list-group-flush">
             <a href="{$allitems_url}" class="list-group-item d-flex justify-content-between align-items-center {if !$is_fullview}active{/if}" aria-current="{if !$is_fullview}true{else}false{/if}">All Items 
-              {if $allitems_count gt 0}
+              {if isset($allitems_count) && $allitems_count gt 0}
               <span class="badge bg-dark rounded-pill">{$allitems_count|number_format:null:".":","}</span>
               {/if}
               </a>
             <a href="{$fullview_url}" class="list-group-item d-flex justify-content-between align-items-center {if $is_fullview}active{/if}" aria-current="{if $is_fullview}true{else}false{/if}">Full View 
-              {if $fullview_count gt 0}
+              {if isset($fullview_count) && $fullview_count gt 0}
               <span class="badge bg-dark rounded-pill">{$fullview_count|number_format:null:".":","}</span>
               {/if}
               </a>
@@ -89,6 +89,7 @@
   </div>
 
   <div class="accordion" id="accordion-filters">
+	{if isset($indexes) && $indexes}
   {foreach from=$indexes item=cluster}
   {if $cluster eq 'ht_availability'} 
   {else}
@@ -124,5 +125,6 @@
   {/if}
   
   {/foreach}
+{/if}
   </div>
 </div>

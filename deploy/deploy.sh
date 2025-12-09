@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERVERS="nas-macc nas-ictc"
+SERVERS="macc-ht-web-133.umdl.umich.edu ictc-ht-web-206.umdl.umich.edu"
 DEPLOYROOT="/htapps/catalog/releases"
 SYMLINKDIR="/htapps/catalog/web"
 

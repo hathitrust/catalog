@@ -12,7 +12,7 @@
   <h2 class="filters-heading fs-3 mt-3">Filter your search</h2>
 
   <!-- current filters accordion -->
-  {if (isset($currentFacets) and $currentFacets) or ( $searchterms and ($lookfor|default:'' ne '*') ) }
+  {if (isset($currentFacets) and $currentFacets) or ( isset($searchterms) and $searchterms and ($lookfor|default:'' ne '*') ) }
     <div class="accordion mb-1">
       <div class="panel accordion-item">
         <h3 class="accordion-header" id="heading-current">

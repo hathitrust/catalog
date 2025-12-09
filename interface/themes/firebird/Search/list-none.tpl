@@ -30,7 +30,7 @@
           {/if}
 
           <div class="alert alert-info alert-block">
-            {if $error_message}
+            {if $error_message|default:''}
                <strong>There was a problem talking to the catalog.</strong>
               {$error_message}
             {else}
@@ -40,7 +40,7 @@
           
          
 
-            {if $newPhrase}
+            {if $newPhrase|default:''}
             <div class="alert alert-block alert-info">
               <p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action|escape:"url"}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p>
             </div>

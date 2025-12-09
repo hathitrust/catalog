@@ -3,7 +3,7 @@
 <!-- Machine is {$machine|default:"(unknown)"} -->
 <head>
   <title>{$pageTitle|truncate:64:"..."|default:"Catalog"} | HathiTrust Digital Library</title>
-  <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe">
+  <!-- <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe"> -->
 
 <script>
 let $$assets = {firebird_manifest};

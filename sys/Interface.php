@@ -46,7 +46,7 @@ class UInterface extends SmartyBC
         // Add custom plugin directory
         $this->addPluginsDir("$local/interface/plugins");
         $this->caching       = false;
-        $this->debugging         = true;
+        $this->debugging         = false;
         $this->compile_check = true;
 
         unset($local);

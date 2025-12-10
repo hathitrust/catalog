@@ -352,12 +352,7 @@ function items_from_raw_json($json_string) {
   function getURLs($marcRecord) {
     global $configArray;
     global $session;
-    //global $user;
-    //$inst = $session->get('inst');
-    //$proxy = $configArray['EZproxy']['host']; // default
-    //if (isset($user) and isset($user->patron)
-    //        and ($user->patron->campus == 'UMFL') or ($inst == 'flint'))
-    //  $proxy = $configArray['EZproxy']['flint'];
+
     $urls = array();
     foreach ($marcRecord->getfields('856') as $field) {
       $url = array("link" => '', "description" => '', "note" => '', "status" => 'Available Online');

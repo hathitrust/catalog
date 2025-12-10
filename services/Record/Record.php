@@ -202,6 +202,7 @@ class Record extends Action
             }  
           }
           $recordNum = $currentResults[$recIndex][2];
+          // TODO: Should we defined an initial value for total record count? Sometimes not set. I fixed in the smarty template for now.
           $recordCount = $currentResults[$recIndex][3];
           if (isset($currentResults[$recIndex-1][0]))
             $interface->assign('previous', $currentResults[$recIndex-1][0]);

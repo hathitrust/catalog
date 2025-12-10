@@ -50,7 +50,7 @@
             <h2 class="fs-3">Suggestions</h2>
             <ul class="bullets">
               <li>Revise your search term</li>
-              {if $check_ft_checkbox}
+              {if $check_ft_checkbox|default:''}
               <li>Filter by <strong>All Items</strong></li>
               {/if}
               <li>Remove some filters</li>

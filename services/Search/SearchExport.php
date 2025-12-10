@@ -107,10 +107,6 @@ class SearchExport {
     }
   }
 
-  function rss() {
-    $this->atom();
-  }
-
   function mrc() {
     return $this->marcfirst();
   }
@@ -480,78 +476,6 @@ class SearchExport {
     header('Location: ' . $url);
   }
 
-
-  /**
-   * Produce an Atom feed
-   *
-   * */
-  function atom() {
-    global $configArray;
-
-
-    $feed = new UniversalFeedCreator();
-    $feed->useCached(false);
-    $feed->title = implode(' / ', $this->ss->searchtermsForDisplay());
-    $feed->description = implode(", ", $this->ss->facetsForDisplay());
-    $feed->link = $configArray['Site']['url'] . '/Search/Home?' . $this->ss->asURL();
-    $feed->syndicationURL = $configArray['Site']['url'] . '/Search/Home?' . $this->ss->asURL() . '&method=atom';
-//          $holdings = $this->rutils->getStatuses($this->results);
-
-
-    foreach ($this->results['record'] as $r) {
-      $desc = array();
-      $marc = $this->ru->getMarcRecord($r);
-      $entry = new FeedItem();
-      $titles = $this->ru->getLongTitles($marc);
-      $entry->title = array_shift($titles);
-      $entry->link = $configArray['Site']['url'] . '/Record/' . $r['id'];
-      $entry->descriptionHtmlSyndicated = true;
-
-      $desc = $titles;
-      if (isset($r['author'])) {
-        if (!is_array($r['author'])) {
-          $r['author'] = array($r['author']);
-        }
-        $entry->author = $r['author'][0];
-        $entry->authorURL = $configArray['Site']['url'] . '/Search/Home?type=realauth&lookfor=' . rawurlencode($entry->author);
-        $entry->description .= 'by ';
-        $authors = array();
-        foreach ($r['author'] as $auth) {
-          $url = $configArray['Site']['url'] . '/Search/Home?type=realauth&lookfor=' . rawurlencode($auth);
-          $authors[] = "<a href=\"$url\">$auth</a>";
-        }
-
-        // Add the authors
-        if (count($authors) > 0) {
-          $desc[] = 'by ' . implode(', ', $authors);
-        }
-      } else {
-        $entry->author = "<No author>";
-      }
-
-      // Add the pubdate
-      if (isset($r['publishDate'])) {
-        $desc[] = 'Publication date: ' . $r['publishDate'][0];
-      }
-
-
-//              foreach ($holdings[$r['id']] as $h) {
-//                $loc = $h['location'] . ': ';
-//                $loc .= isset($h['callnumber'])? $h['callnumber'] . ' ' : '';
-//                $loc .= isset($h['status'])? '(' . $h['status'] . ')' : '';
-//                if (isset($configArray['Switches']['onlyHathiHoldings']) && $configArray['Switches']['onlyHathiHoldings']) {
-//		  if (!preg_match('/HathiTrust/', $loc)) {
-//		    continue;
-//		  }
-//            $desc[] = $loc;
-//        }
-//    }
-      $entry->description = implode("\n<br/>", $desc);
-      $feed->addItem($entry);
-    }
-
-    $feed->outputFeed("ATOM1.0");
-  }
 
   function marcjson() {
     $marc = $this->ru->getMarcRecord($this->results['record'][0]);

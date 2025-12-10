@@ -352,6 +352,7 @@ function items_from_raw_json($json_string) {
   function getURLs($marcRecord) {
     global $configArray;
     global $session;
+
     $urls = array();
     foreach ($marcRecord->getfields('856') as $field) {
       $url = array("link" => '', "description" => '', "note" => '', "status" => 'Available Online');

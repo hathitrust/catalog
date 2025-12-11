@@ -187,12 +187,6 @@ class Record extends Action
             }
         }
 
-        // Define CoINs Identifier
-        $interface->assign('coinsID', $configArray['COinS']['identifier']);
-        
-        // Set Proxy URL
-        $interface->assign('proxy', $configArray['EZproxy']['host']);
-
         // get lc subjects and other subjects
         $lc_subjects = array();
         $other_subjects = array();

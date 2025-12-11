@@ -106,8 +106,6 @@ class Home extends Action {
         //    SET UP BASIC DISPLAY VARIABLES
         //******************************************************
 
-        $interface->assign('proxy', $configArray['EZproxy']['host']);
-
         // The sort option, if set
 
         if (isset($this->ss->sort)) {
@@ -380,23 +378,7 @@ class Home extends Action {
         }
 
 
-
         $interface->assign('recordSet', $result['record']);
-#        $interface->assign('resultHoldings', $ru->getStatuses($result));
-
-        //******************************************************
-        //  COINS
-        //******************************************************
-        $interface->assign('coinsID', $configArray['COinS']['identifier']);
-
-        //******************************************************
-        //   SCORE
-        //******************************************************
-
-        // Want to put the scores in the output? Gods, but I hate having to do 'isset' all the time
-        if (isset($configArray['Site']['showscores']) && $configArray['Site']['showscores']) {
-            $interface->assign('showscores', true);
-        }
 
         //******************************************************
         //   DISPLAY

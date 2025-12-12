@@ -23,6 +23,18 @@ class SolrTest extends TestCase
     $this->assertEquals('*?', $solr->exactmatcherify('!@#$%^&*()-=_+,.<>/?'));
     $this->assertEquals('日本', $solr->exactmatcherify('日本'));
   }
+
+  /**
+    * @covers Solr::quoteFilterValue
+  */
+  public function test_quoteFilterValue_escapes_internal_quotes(): void
+   {
+      $solr = new Solr('', '');
+
+      // Test normal value
+      $result = $solr->quoteFilterValue('Smith, John');
+      $this->assertEquals('"Smith, John"', $result);
+   }
 }
 
 ?>

@@ -43,22 +43,6 @@ class HTStatus {
    function determine_activated_role($c) {
      return isset($c['u']) ? $c['u'] : FALSE;
    }
-
-   function fakefill($instcode) {
-     $this->institution_code = $instcode;
-     $this->auth_type = "Fake/debug";
-     $this->affiliation = "Fake/member";
-     $this->instituion_name = "$instcode (fake)";
-     $this->emergency_access = true;
-     $this->provider_name = "Debug";
-   }
-
-   function fakefill_mapped($mapped_code) {
-     $this->fakefill($mapped_code);
-     $this->institution_code = "INVALID";
-     $this->mapped_institution_code = $mapped_code;
-   }
-
 }
 
 

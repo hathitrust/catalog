@@ -26,7 +26,7 @@ class Subjects extends Record
     {
         global $interface;
         
-        if (!$interface->is_cached($this->cacheId)) {
+        if (!$interface->isCached($this->cacheId)) {
             $interface->setPageTitle('Subjects: ' . $this->record['title'][0]);
 
             $interface->assign('subTemplate', 'view-subjects.tpl');

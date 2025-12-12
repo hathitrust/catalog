@@ -26,7 +26,7 @@ class Details extends Record
     {
         global $interface;
 
-        if (!$interface->is_cached($this->cacheId)) {
+        if (!$interface->isCached($this->cacheId)) {
             $interface->setPageTitle('MARC View: ' . $this->record['title'][0]);
 
             $interface->assign('subTemplate', 'view-marc.tpl');

@@ -360,9 +360,6 @@ function items_from_raw_json($json_string) {
         $url_link = $field->getSubfield('u')->getData();
       else
         continue;
-      // check for proxy in url
-      if (preg_match('/proxy/', $url_link) == 0)
-        $url_link = $proxy . "/login?url=" . $url_link;
       $url['link'] = $url_link;
       if ($field->getSubfield('3')) {
         $url['description'] = $field->getSubfield('3')->getData();

@@ -6,7 +6,6 @@ require_once 'services/Record/FilterFormat.php';
 require_once 'services/Record/RecordUtils.php';
 
 require_once 'sys/VFSession.php';
-require_once 'sys/VFUser.php';
 
 require_once 'sys/DBH.php';
 require_once 'sys/AuthSpecs.php';

@@ -27,7 +27,6 @@ require_once 'services/Record/FilterFormat.php';
 require_once 'services/Search/SearchStructure.php';
 
 require_once 'sys/VFSession.php';
-require_once 'sys/VFUser.php';
 
 require_once 'File/MARC.php';
 

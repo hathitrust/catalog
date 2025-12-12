@@ -19,7 +19,6 @@
  **/
 
 require_once 'sys/VFSession.php';
-require_once 'sys/VFUser.php';
 
 class SearchStructure
 {

@@ -66,6 +66,7 @@ class SolrConnection
     return json_decode($raw, true);
   }
 
+  // TODO: Detete it - Nothing uses it
   public function send_for_obj($args = []) {
     $raw = $this->_send($args);
     return json_decode($raw, false);

@@ -34,6 +34,14 @@ class SolrTest extends TestCase
       // Test normal value
       $result = $solr->quoteFilterValue('Smith, John');
       $this->assertEquals('"Smith, John"', $result);
+
+      // Test value with quotes
+      $result = $solr->quoteFilterValue('"Kao gu yu wen wu" bian ji bu');
+      $this->assertEquals('"\\"Kao gu yu wen wu\\" bian ji bu"', $result);
+
+      // Test date range (should not be quoted)
+      $result = $solr->quoteFilterValue('[1900 TO 2000]');
+      $this->assertEquals('[1900 TO 2000]', $result);
    }
 }
 

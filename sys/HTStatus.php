@@ -8,7 +8,6 @@ class HTStatus {
    public $auth_type  = "NONE";
    public $display_name = "Guest";
    public $affiliation = "Unaffiliated";
-   public $institution_name = "Unaffiliated";
    public $r = "";
    public $u = "";
    public $emergency_access = false;
@@ -24,7 +23,6 @@ class HTStatus {
        $this->auth_type = $c['auth_type'];
        $this->display_name = $c['displayName'];
        $this->affiliation = $c['affiliation'];
-       $this->insitution_name = $c['institution_name'];
        $this->u = $c['u'];
 			 $this->r = $c['r'];
        $this->emergency_access = $this->determine_emergency_access($c);
@@ -45,22 +43,6 @@ class HTStatus {
    function determine_activated_role($c) {
      return isset($c['u']) ? $c['u'] : FALSE;
    }
-
-   function fakefill($instcode) {
-     $this->institution_code = $instcode;
-     $this->auth_type = "Fake/debug";
-     $this->affiliation = "Fake/member";
-     $this->instituion_name = "$instcode (fake)";
-     $this->emergency_access = true;
-     $this->provider_name = "Debug";
-   }
-
-   function fakefill_mapped($mapped_code) {
-     $this->fakefill($mapped_code);
-     $this->institution_code = "INVALID";
-     $this->mapped_institution_code = $mapped_code;
-   }
-
 }
 
 

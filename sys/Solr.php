@@ -378,7 +378,11 @@ class Solr
       return $v;
     }
     else {
-      return '"' . $v . '"';
+      // Escape internal quotes before wrapping
+      // input: He said "hello, the output: He said \"hello
+      $escaped = str_replace('"', '\\"', $v);
+      // String ready to Solr "He said \"hello"
+      return '"' . $escaped . '"';
     }
   }
 

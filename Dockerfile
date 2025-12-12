@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.3-labs
-FROM debian:bullseye
+FROM debian:bookworm
 # TODO use PHP image (but then need to build extensions)
 LABEL org.opencontainers.image.source https://github.com/hathitrust/catalog
 
@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
       php-mysql \
       php-mdb2 \
       php-mdb2-driver-mysql \
+      php-raphf \
       php-xdebug \
       php-xsl \
       php-mbstring \
@@ -53,8 +54,8 @@ RUN pear channel-update pear.php.net && pear install \
 #    },
 #  }
 
-RUN mkdir /run/php
-COPY ./docker/php_pool.conf /etc/php/7.4/fpm/pool.d/www.conf
+# RUN mkdir /run/php
+COPY ./docker/php_pool.conf /etc/php/8.4/fpm/pool.d/www.conf
 
 #https://github.com/docker-library/php/blob/master/7.4/bullseye/fpm/Dockerfile#L266-L271
 STOPSIGNAL SIGQUIT

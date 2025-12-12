@@ -378,7 +378,9 @@ class Solr
       return $v;
     }
     else {
-      return '"' . $v . '"';
+      // Escape internal quotes before wrapping
+      $scaped = str_replace('"', '\\"', $v);
+      return '"' . $scaped . '"';
     }
   }
 

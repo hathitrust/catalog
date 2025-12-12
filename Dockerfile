@@ -27,16 +27,9 @@ RUN curl -O https://phar.phpunit.de/phpunit-9.6.11.phar
 RUN chmod +x phpunit-9.6.11.phar && mv phpunit-9.6.11.phar /usr/local/bin/phpunit
 
 RUN pear channel-update pear.php.net && pear install \
-      DB \
-      DB_DataObject \
-      File_CSV \
       File_MARC \
       HTTP_Request2 \
-      HTTP_Session2-beta \
-      Log \
-      Pager \
-      PHP_Compat \
-      Structures_LinkedList-beta
+      Pager
 
 # Default PHP config:
 #  -> class { 'php::apache_config':

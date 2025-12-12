@@ -171,45 +171,6 @@ class Record extends Action
             }
         }
 
-        //$interface->assign('inst', 'all');		// make sure inst is set
-        // Retrieve User Search History in order to get last serach
-        //if (isset($_COOKIE['search'])) {
-        //    $sHistory = unserialize($_COOKIE['search']);
-        //    $lastSearch = $sHistory[count($sHistory) - 1];
-        //    $lastSearch = preg_replace('/module=Search&action=Home&/', '', $lastSearch);
-        //    $interface->assign('lastsearch', $lastSearch);
-        //    // get inst from last search
-        //    foreach (explode('&', $lastSearch) as $param) {
-        //      list($p, $v) = explode('=', $param);
-        //      if ($p == 'inst') { 
-        //        $interface->assign('inst', $v);
-        //        break;
-        //      }
-        //   }
-        //}
-
-        // Retrieve result id list, build next and previous record links
-        if (isset($_COOKIE['resultids'])) {
-          $previous = '';
-          $next = '';
-          $currentResults = unserialize($_COOKIE['resultids']);
-          $recIndex = 0;
-          foreach ($currentResults as $index => $result) {
-            $id = $result[1];
-            if ($id == $this->id) {
-              $recIndex = $index;
-              break;
-            }  
-          }
-          $recordNum = $currentResults[$recIndex][2];
-          $recordCount = $currentResults[$recIndex][3];
-          if (isset($currentResults[$recIndex-1][0]))
-            $interface->assign('previous', $currentResults[$recIndex-1][0]);
-          if (isset($currentResults[$recIndex+1][0])) 
-            $interface->assign('next', $currentResults[$recIndex+1][0]);
-          $interface->assign('current', "Showing record $recordNum of $recordCount");
-        }
-
         // Retrieve tags associated with the record
         $limit = 5;
         
@@ -225,12 +186,6 @@ class Record extends Action
                 $interface->assign('editions', $editions);
             }
         }
-
-        // Define CoINs Identifier
-        $interface->assign('coinsID', $configArray['COinS']['identifier']);
-        
-        // Set Proxy URL
-        $interface->assign('proxy', $configArray['EZproxy']['host']);
 
         // get lc subjects and other subjects
         $lc_subjects = array();

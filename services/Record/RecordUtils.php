@@ -354,10 +354,6 @@ function items_from_raw_json($json_string) {
     global $session;
     global $user;
     $inst = $session->get('inst');
-    $proxy = $configArray['EZproxy']['host']; // default
-    if (isset($user) and isset($user->patron)
-            and ($user->patron->campus == 'UMFL') or ($inst == 'flint'))
-      $proxy = $configArray['EZproxy']['flint'];
     $urls = array();
     foreach ($marcRecord->getfields('856') as $field) {
       $url = array("link" => '', "description" => '', "note" => '', "status" => 'Available Online');
@@ -365,9 +361,6 @@ function items_from_raw_json($json_string) {
         $url_link = $field->getSubfield('u')->getData();
       else
         continue;
-      // check for proxy in url
-      if (preg_match('/proxy/', $url_link) == 0)
-        $url_link = $proxy . "/login?url=" . $url_link;
       $url['link'] = $url_link;
       if ($field->getSubfield('3')) {
         $url['description'] = $field->getSubfield('3')->getData();

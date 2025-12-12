@@ -106,8 +106,6 @@ class Home extends Action {
         //    SET UP BASIC DISPLAY VARIABLES
         //******************************************************
 
-        $interface->assign('proxy', $configArray['EZproxy']['host']);
-
         // The sort option, if set
 
         if (isset($this->ss->sort)) {
@@ -362,42 +360,6 @@ class Home extends Action {
 
 
         //******************************************************
-        //    SAVE CURRENT RESULT IDs FOR NEXT/PREV BUTTONS
-        //******************************************************
-
-        // Get records ids in array to use for results cookie used for record paging
-        $resultIDs = array();
-        $recordNum = $recordStart;
-        if ($page != 1) {
-          //$prevLink = str_replace("%d", $page-1, $link) . sprintf('&rec=%d', $recordNum-1);
-          $prevLink = str_replace("%d", $page-1, $rlink) . sprintf('&rec=%d', $limit);
-          $resultIDs[] = array($prevLink, '', $recordNum-1, $recordCount);
-        }
-        foreach ($result['record'] as $record) {
-          $id = $record['id'];
-          $resultIDs[] = array("/Record/" . $id, $id, $recordNum, $recordCount);
-          $recordNum++;
-        }
-        if ($recordEnd < $recordCount) {
-          //$nextLink = str_replace("%d", $page+1, $link) . sprintf('&rec=%d', $recordNum);
-          $nextLink = str_replace("%d", $page+1, $rlink) . sprintf('&rec=%d', 1);
-          $resultIDs[] = array($nextLink, '', $recordNum, $recordCount);
-        }
-        $cookielength = strlen(urlencode(serialize($resultIDs)));
-        if ($cookielength > 4096) {
-          error_log("can't write resultIDs cookie, length is $cookielength");
-         } else {
-#          $cookieRC = setcookie('resultids', serialize($resultIDs), null, '/');
-        }
-        if (isset($_REQUEST['rec'])) {
-          $newOffset = $_REQUEST['rec'];
-          $recPath = $resultIDs[$newOffset][0];
-          header("Location: {$configArray['Site']['path']}{$recPath}");
-          exit();
-        }
-
-
-        //******************************************************
         //   GET HOLDINGS DATA AND TAGGED INFO
         //******************************************************
 
@@ -416,23 +378,7 @@ class Home extends Action {
         }
 
 
-
         $interface->assign('recordSet', $result['record']);
-#        $interface->assign('resultHoldings', $ru->getStatuses($result));
-
-        //******************************************************
-        //  COINS
-        //******************************************************
-        $interface->assign('coinsID', $configArray['COinS']['identifier']);
-
-        //******************************************************
-        //   SCORE
-        //******************************************************
-
-        // Want to put the scores in the output? Gods, but I hate having to do 'isset' all the time
-        if (isset($configArray['Site']['showscores']) && $configArray['Site']['showscores']) {
-            $interface->assign('showscores', true);
-        }
 
         //******************************************************
         //   DISPLAY

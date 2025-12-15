@@ -69,3 +69,16 @@ test('Record page has Summary but not Content Advice', async ({ page }) => {
   await expect(page.getByRole('term').filter({ hasText: 'Summary' })).toBeVisible();
   await expect(page.getByRole('term').filter({ hasText: 'Content Advice' })).not.toBeVisible();
 });
+
+test('.endnote download has the expected content', async ({ request, page }) => {
+  const downloadResponse = await request.get(`/Record/${summary_cid}.endnote`);
+  const downloadHeaders = downloadResponse.headers();
+  const downloadBody = await downloadResponse.text();
+
+  expect(downloadResponse.status()).toEqual(200);
+  expect(downloadHeaders['content-disposition']).toMatch('attachment; filename=references.enw');
+  expect(downloadHeaders['content-type']).toEqual('application/x-endnote-refer; charset=UTF-8');
+  // Match the %0 and %U fields
+  expect(downloadBody).toMatch('%0 Book, Whole');
+  expect(downloadBody).toMatch(`Record/${summary_cid}`);
+});

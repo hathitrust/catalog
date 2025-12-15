@@ -40,7 +40,7 @@
 #    * ID (the bibnum)
 #    * RECORDURL (a full URL linking to this record in the OPAC)
 
-tagprefix: %
+tagprefix: "%"
 tagsuffix: " "
 
 fieldmap:
@@ -76,7 +76,7 @@ fieldmap:
   - I:
       - [260.., b]
       - [264.., b]
-  - @:
+  - "@":
       - [020.., a]
       - [022.., a]
       - [974~~, u]

@@ -14,7 +14,7 @@
 
       <section class="section-container" id="section" data-record-count="{$recordCount}">
         <h1>
-            The catalog record could not found.
+            The catalog record could not be found.
         </h1>
 
         <p>

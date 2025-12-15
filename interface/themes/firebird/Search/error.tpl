@@ -14,7 +14,7 @@
 
       {include file="Search/list.sidebar.tpl"}
 
-      <section class="twocol-main" id="section" data-record-count="{$recordCount}">
+      <section class="twocol-main" id="section" data-record-count="{$recordCount|default:0}">
         <div class="mainplain w-auto position-relative">
         <h1>
             Search Results
@@ -27,14 +27,14 @@
 
           <div class="results-container-inner">
 
-            {if $newPhrase}
+            {if isset($newPhrase) and $newPhrase}
             <div class="alert alert-block alert-info"><p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action|escape:"url"}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p></div>
             {/if}
 
             <h2 class="fs-3">Suggestions</h2>
             <ul class="bullets">
               <li>Revise your search term</li>
-              {if $check_ft_checkbox}
+              {if isset($check_ft_checkbox) and $check_ft_checkbox}
               <li>Filter by <strong>All Items</strong></li>
               {/if}
               <li>Remove some filters</li>

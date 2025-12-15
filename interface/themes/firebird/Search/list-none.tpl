@@ -40,7 +40,7 @@
           
          
 
-            {if $newPhrase|default:''}
+            {if isset($newPhrase) and $newPhrase != ''}
             <div class="alert alert-block alert-info">
               <p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action|escape:"url"}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p>
             </div>

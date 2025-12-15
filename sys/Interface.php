@@ -18,10 +18,10 @@
  *
  */
 
-require_once 'smarty3/SmartyBC.class.php';
+require_once 'smarty3/Smarty.class.php';
 
 // Smarty Extension class
-class UInterface extends SmartyBC
+class UInterface extends Smarty
 {
     function __construct()
     {

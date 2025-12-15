@@ -14,7 +14,7 @@
 
       {include file="Search/list.sidebar.tpl"}
 
-      <section class="twocol-main" id="section" data-record-count="{$recordCount}">
+      <section class="twocol-main" id="section" data-record-count="{$recordCount|default:0}">
         {* <h1 class="listcs-intro" style="margin-left: 0; font-weight: normal; margin-bottom: 1rem"> *}
         <div class="mainplain w-auto position-relative">
         <h1>
@@ -40,7 +40,7 @@
           
          
 
-            {if $newPhrase|default:''}
+            {if isset($newPhrase) and $newPhrase != ''}
             <div class="alert alert-block alert-info">
               <p class="correction">{translate text='Did you mean'} <a href="{$url}/Search/{$action|escape:"url"}?lookfor={$newPhrase|escape:"url"}&amp;type={$type}{$filterListStr}">{$newPhrase}</a>?</p>
             </div>

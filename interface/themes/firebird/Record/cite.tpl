@@ -4,7 +4,7 @@
 <div class="mt-3">
 <h2>APA Citation</h2>
 <p class="record-citation">
-{if $apaAuthorList}{$apaAuthorList}{/if}
+{if isset($apaAuthorList) and $apaAuthorList}{$apaAuthorList}{/if}
 
 {assign var=marcField value=$marc->getField('26[04]', true)}
 {if $marcField && $marcField|getvalue:'c'}
@@ -30,7 +30,7 @@
 
 <h2>MLA Citation</h2>
 <p class="record-citation">
-{if $mlaAuthorList}{$mlaAuthorList}.{/if}
+{if isset($mlaAuthorList) and $mlaAuthorList}{$mlaAuthorList}.{/if}
 
 <span style="text-decoration: underline;">{$mlatitle}</span>
 {assign var=marcField value=$marc->getFields('250')}

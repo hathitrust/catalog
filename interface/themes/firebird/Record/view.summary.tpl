@@ -67,12 +67,11 @@
     </div>
   {/if}
 
-  {assign var=lang value=$recordLanguage}
-  {if $recordLanguage}
+  {if isset($recordLanguage) && $recordLanguage}
   <div class="grid">
     <dt class="g-col-lg-4 g-col-12">{translate text='Language(s)'}</dt>
     <dd class="g-col-lg-8 g-col-12">
-      {foreach from=$lang item=field name=loop}
+      {foreach from=$recordLanguage item=field name=loop}
         {if $field@first}{$field}{else}; {$field}{/if}
       {/foreach}
    </dd>
@@ -147,7 +146,7 @@
   </div>
   {/if}
 
-  {if $content_advice}
+  {if isset($content_advice) && $content_advice}
   <div class="grid">
     <dt class="g-col-lg-4 g-col-12">{translate text='Content Advice'}</dt>
     <dd class="g-col-lg-8 g-col-12">
@@ -158,7 +157,7 @@
   </div>
   {/if}
 
-  {if $summary}
+  {if isset($summary) && $summary}
   <div class="grid">
     <dt class="g-col-lg-4 g-col-12">{translate text='Summary'}</dt>
     <dd class="g-col-lg-8 g-col-12">
@@ -181,7 +180,7 @@
   </div>
   {/if}
 
-  {if $mdl}
+  {if isset($mdl) && $mdl}
     <!-- mdl -->
     {assign var=marcField value=$marc->getFields('540')}
     {if $marcField}

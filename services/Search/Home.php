@@ -287,6 +287,9 @@ class Home extends Action {
         //******************************************************
 
 
+        // TODO: Should we define an initial value for total record count?
+        // Sometimes not set (i.e. if there was no search). Set by default to 0
+        // in the smarty template
         $recordCount =  $result['RecordCount'];
         $recordStart = (($page-1)*$limit)+1;
 

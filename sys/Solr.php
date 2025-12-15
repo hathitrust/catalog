@@ -230,7 +230,8 @@ class Solr
       $values = $body['facet_counts']['facet_fields'][$field];
       $rv['values'][$field] = array();
 
-      // skip the hidden ones
+      // Filter out facet values that match the hidden pattern defined on config.ini.
+      // e.g. skip hlbgeneral = "hlb_both:^U\.S\. National and" to hide "U.S. National..." facets
       foreach ($values as $valcnt) {
         if (isset($hide, $hide[$field])) {
           foreach ($hide[$field] as $regexp) {
@@ -277,6 +278,7 @@ class Solr
     $type = $tvb[0];
     $value = $tvb[1];
 
+    // If search is empty/whitespace-only, default to *:* (match-all)
     if (!preg_match('/\S/', $value)) {
       $value = '*:*';
     }
@@ -356,8 +358,8 @@ class Solr
       }
       $query .= "id:(" . implode(' OR ', $ss->extraIDs()) . ')';
     }
-
     $ids = $this->tagIDs($ss);
+    // Check if the query has content, otherwise use *:* to match all
     if (preg_match('/\S/', $query)) {
       $searchComponents[] = array('q', $query);
     }
@@ -370,7 +372,7 @@ class Solr
 
 
   /** Quote a filter value, skipping it if it starts with a '[' (and hence is assumed
-   * to be a range)
+   * to be a range). Detect date range
    **/
 
   function quoteFilterValue($v) {
@@ -668,6 +670,9 @@ class Solr
           }
 
           if ($val == 'stdnum') {
+            // Extract standard number from asis input
+            // Strips leading 0s. Captures digits, dashes, dots: 978-0-123-45678-9
+            // e.g.  0000978-0-12-345678-9 → 978-0-12-345678-9
             if (preg_match('/^\s*0*([\d\-\.]+[xX]?).*$/', $values['asis'], $match)) {
               $stdnum = $match[1];
 //              $stdnum = preg_replace('/[\.\-]/', '', $stdnum);
@@ -692,7 +697,7 @@ class Solr
 
 
   /**
-   * Turn solr output into a record structure (which shouuld probably be its own class...)
+   * Turn solr output into a record structure (which should probably be its own class...)
    *
    * @param string $result The XML returned by solr
    * @param string $xslfile The path of the XSL file to use to convert the data
@@ -704,6 +709,7 @@ class Solr
     global $configArray;
 
     if (is_string($result) && preg_match('/^<html/', $result)) {
+      // Detect if Solr returns an error page
       if (preg_match('/ParseException/', $result)) {
         $errorMsg = "Error+in+search+syntax";
       }

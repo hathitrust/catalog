@@ -466,7 +466,6 @@ class Solr
       
       if ($index == "ht_availability" and $oval == 'Full text') {
         $ft = $this->fulltext_filter_base();
-        $ft = $this->fulltext_filter_add_jan1_rollover($ft);
         $ft = $this->fulltext_filter_add_etas_or_resource_sharing($ft);
         $rv[] = $ft;
       }
@@ -502,26 +501,6 @@ class Solr
       return $current_ft_filter;
     }
   }
-
-  function fulltext_filter_add_jan1_rollover($current_ft_filter) {
-    // Hack into place a change of the full-text only facet
-    // for the temporary newly_open rightscode value
-    // but only on or after the date from config.ini
-
-    global $configArray;
-
-    $todays_date = intval(date("YmdH"));
-    $copyright_active_date = intval($configArray['IntoCopyright']['date']);
-
-    if ($todays_date >= $copyright_active_date) {
-      $newly_open = $this->quoteFilterValue('newly_open');
-      return "($current_ft_filter OR ht_rightscode:$newly_open)";
-    }
-    else {
-      return $current_ft_filter;
-    }
-  }
-
 
   /**
    * tagIDs($ss)

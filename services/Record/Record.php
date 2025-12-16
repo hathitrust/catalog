@@ -20,8 +20,6 @@
  
 require_once 'Action.php';
 
-require_once 'File/MARCFLAT.php';
-
 require_once 'sys/Language.php';
 require_once 'sys/MergedItemSet.php';
 
@@ -176,7 +174,7 @@ class Record extends Action
         
         $this->cacheId = 'Record|' . $this->id . '|' . get_class($this);
         
-        if (!$interface->is_cached($this->cacheId)) {
+        if (!$interface->isCached($this->cacheId)) {
             // Find Similar Records
             $similar = $this->db->getMoreLikeThis($record, $this->id);
             $interface->assign('similarRecords', $similar['record']);

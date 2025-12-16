@@ -4,6 +4,7 @@
 <div class="mt-3">
 <h2>APA Citation</h2>
 <p class="record-citation">
+
 {if isset($apaAuthorList) and $apaAuthorList}{$apaAuthorList}{/if}
 
 {assign var=marcField value=$marc->getField('26[04]', true)}

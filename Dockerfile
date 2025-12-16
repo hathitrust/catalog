@@ -12,12 +12,12 @@ RUN apt-get update && apt-get install -y \
       php-gd \
       php-http \
       php-ldap \
+      php-mbstring \
       php-mysql \
       php-pear \
       php-raphf \
       php-xdebug \
-      php-xsl \
-      php-mbstring \
+      php-xml \
       php-yaml \
       smarty3
 

@@ -178,8 +178,10 @@ class RecordUtilsTest extends TestCase
       // skip the rest of the CC 4.0 rights...
       ['pd-pvt',    false,   false],
       ['supp',      false,   false],
-      // Degenerate case
-      ['???',       false,   false]
+      // Oddball cases
+      ['???',                false,   false],
+      [['newly_open', 'pd'], true,    true],
+      [['pd', 'ic'],         true,    true]
     ];
     foreach ($examples as $example) {
       $this->assertEquals($example[1], $utils->is_fullview($example[0], true));

@@ -198,6 +198,13 @@ function items_from_raw_json($json_string) {
     // Assume false
     $fv = false;
 
+    if (is_array($rcode)) {
+      // Remove any "newly_open"s that could still be lurking around
+      $rcode = array_diff($rcode, ['newly_open']);
+      // This could fail if the rights code is somehow just ['newly_open'],
+      // which probably merits a 500 error.
+      $rcode = reset($rcode);
+    }
 
     // Public domain? return true
     if (preg_match('/^(cc|pd)/', $rcode) || preg_match('/world/', $rcode)) {

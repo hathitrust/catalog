@@ -12,3 +12,50 @@ test('XML with truncated CID', async ({ page }) => {
   const response = await page.goto(`/Record/${test_truncated_cid}.xml`);
   await expect(response.ok()).toBeTruthy();
 });
+
+// API JSON resonses are of the form
+// {records: {cid: {...}, items: [...]}
+
+test('Bib API catalog record brief', async ({ page }) => {
+  const response = await page.goto(`/api/volumes/brief/recordnumber/${test_cid}.json`);
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain('application/json');
+  const body = await response.json();
+  expect(body.records).toHaveProperty(test_cid);
+  // No marc-xml property
+  expect(body.records[test_cid]).not.toHaveProperty("marc-xml");
+  expect(body.items.length).toBeGreaterThan(0);
+});
+
+test('Bib API catalog record full', async ({ page }) => {
+  const response = await page.goto(`/api/volumes/full/recordnumber/${test_cid}.json`);
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain('application/json');
+  const body = await response.json();
+  expect(body.records).toHaveProperty(test_cid);
+  // Has marc-xml property
+  expect(body.records[test_cid]).toHaveProperty("marc-xml");
+  expect(body.items.length).toBeGreaterThan(0);
+});
+
+test('Bib API HTID brief', async ({ page }) => {
+  const response = await page.goto(`/api/volumes/brief/htid/${test_htid}.json`);
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain('application/json');
+  const body = await response.json();
+  expect(body.records).toHaveProperty(test_cid);
+  // No marc-xml property
+  expect(body.records[test_cid]).not.toHaveProperty("marc-xml");
+  expect(body.items.length).toBeGreaterThan(0);
+});
+
+test('Bib API HTID full', async ({ page }) => {
+  const response = await page.goto(`/api/volumes/full/htid/${test_htid}.json`);
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain('application/json');
+  const body = await response.json();
+  expect(body.records).toHaveProperty(test_cid);
+  // Has marc-xml property
+  expect(body.records[test_cid]).toHaveProperty("marc-xml");
+  expect(body.items.length).toBeGreaterThan(0);
+});

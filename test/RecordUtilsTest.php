@@ -157,31 +157,31 @@ class RecordUtilsTest extends TestCase
   public function test_is_fullview(): void {
     $utils = new RecordUtils();
     $examples = [
-      // Rights     fv us?   fv non-us?
-      ['pd',        true,    true],
-      ['ic',        false,   false],
-      ['op',        false,   false],
-      ['orph',      false,   false],
-      ['und',       false,   false],
+      // Rights      fv us?   fv non-us?
+      ['pd',         true,    true],
+      ['ic',         false,   false],
+      ['op',         false,   false],
+      ['orph',       false,   false],
+      ['und',        false,   false],
       // umall is obsolete, test is included to demonstrate behavior
-      ['umall',     false,   false],
-      ['ic-world',  true,    true],
-      ['nobody',    false,   false],
-      ['pdus',      true,    false],
-      ['cc-by-3.0', true,    true],
+      ['umall',      false,   false],
+      ['ic-world',   true,    true],
+      ['nobody',     false,   false],
+      ['pdus',       true,    false],
+      ['cc-by-3.0',  true,    true],
       // skip the rest of the CC 3.0 rights...
-      ['orphcand',  false,   false],
-      ['cc-zero',   true,    true],
-      ['und-world', true,    true],
-      ['icus',      false,   true],
-      ['cc-by-4.0', true,    true],
+      ['orphcand',   false,   false],
+      ['cc-zero',    true,    true],
+      ['und-world',  true,    true],
+      ['icus',       false,   true],
+      ['cc-by-4.0',  true,    true],
       // skip the rest of the CC 4.0 rights...
-      ['pd-pvt',    false,   false],
-      ['supp',      false,   false],
-      // Oddball cases
-      ['???',                false,   false],
-      [['newly_open', 'pd'], true,    true],
-      [['pd', 'ic'],         true,    true]
+      ['pd-pvt',     false,   false],
+      ['supp',       false,   false],
+      // Edge cases
+      ['???',        false,   false],
+      [[],           false,   false],
+      [['pd', 'ic'], true,    true]
     ];
     foreach ($examples as $example) {
       $this->assertEquals($example[1], $utils->is_fullview($example[0], true));

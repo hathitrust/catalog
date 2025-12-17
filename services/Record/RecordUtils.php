@@ -199,11 +199,8 @@ function items_from_raw_json($json_string) {
     $fv = false;
 
     if (is_array($rcode)) {
-      // Remove any "newly_open"s that could still be lurking around
-      $rcode = array_diff($rcode, ['newly_open']);
-      // This could fail if the rights code is somehow just ['newly_open'],
-      // which probably merits a 500 error.
-      $rcode = reset($rcode);
+      // Empty array? Just use default empty string.
+      $rcode = empty($rcode) ? '' : reset($rcode);
     }
 
     // Public domain? return true

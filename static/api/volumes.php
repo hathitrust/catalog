@@ -81,7 +81,14 @@ $commonargs = array(
   'rows' => 200
 );
 
-if ($_REQUEST['brevity'] == 'full') {
+// Set brevity to the default value of "brief" as brevity is not always
+// provided by the rewrite rules in .htaccess
+$brevity = 'brief';
+if (isset($_REQUEST['brevity']) && $_REQUEST['brevity'] == 'full') {
+  $brevity = 'full';
+}
+
+if ($brevity == 'full') {
   $commonargs['fl']  = $commonargs['fl']  . ',fullrecord';
 }
 
@@ -104,6 +111,7 @@ $validField = array(
 class QObj
 {
   public $string;
+  public $brevity;
   private $_id;
   public $tspecs = array(); # Transformed specs
   public $qspecs = array(); # Query specs for solr
@@ -111,11 +119,12 @@ class QObj
   
   
   
-  function __construct($str) {
+  function __construct($str, $brevity) {
     global $validField;
     global $fieldmap;
     
     $this->string = $str;
+    $this->brevity = $brevity;
     
     $specs = explode(';', $str);
     foreach ($specs as $spec) {
@@ -266,7 +275,7 @@ class QObj
           $rinfo[$index . 's'] = array();
         }
       }
-      if ($_REQUEST['brevity'] == 'full') {
+      if ($this->brevity == 'full') {
         $rinfo['marc-xml'] = $doc['fullrecord'];
       }
       $records[$docid] = $rinfo;
@@ -317,7 +326,7 @@ $solrQueryComponents = array();
 
 
 foreach ($qstrings as $qstring) {
-  $nqo = new QObj($qstring);
+  $nqo = new QObj($qstring, $brevity);
   $solrQueryComponents = array_merge($solrQueryComponents, $nqo->qspecs);
   $qobjs[$qstring] = $nqo;
 }

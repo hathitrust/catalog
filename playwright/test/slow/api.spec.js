@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 const test_cid = '002312286'; // "Kōkogaku zasshi" arbitrarily chosen
-const test_cid2 = '100673017'; // "Kōkogaku zasshi" arbitrarily chosen
+const test_cid2 = '100673017'; // "Tests of a portable wood chipper..." also arbitrarily chosen
 const test_truncated_cid = '2312286'; // Truncated version
 const test_htid = 'mdp.39015048895836'; // One of the htids on test_cid
 const test_htid2 = 'umn.31951d03005375z'; // Another htid, this one corresponding test_cid2

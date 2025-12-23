@@ -341,6 +341,11 @@ function handlePEARError($error, $method = null) {
     $interface->assign('error', $error);
     $interface->assign('module', $module);
     header('HTTP/1.1 404 Not Found');
+    // If the module was Bib API ("api") but the rewrite rules could not parse the URL
+    // then we could provide a developer error string in JSON form. For now, bail out.
+    if ($module == 'api') {
+      exit();
+    }
     $interface->setTemplate('error.tpl');
     $interface->display('layout.tpl');
 

@@ -8,10 +8,10 @@ set_include_path(get_include_path() . ':../..');
 
 // This may not be possible without a 404 from the current rewrite rules.
 if (!isset($_REQUEST['q']) || !preg_match('/\S/', $_REQUEST['q'])) {
-	header("HTTP/1.0 400 Malformed");
-	header('Content-type: application/json; charset=UTF-8');
+  header("HTTP/1.0 400 Malformed");
+  header('Content-type: application/json; charset=UTF-8');
   echo json_encode(['message' => 'missing or empty query']);
-	exit();
+  exit();
 }
 
 require_once 'PEAR.php';
@@ -140,7 +140,7 @@ class QObj
 
       if ($field == 'id') {
         $this->_id = $fv[1];
-	continue;
+        continue;
       }
       if (!isset($fv[1])) {
         continue;
@@ -307,7 +307,7 @@ class QObj
         $iinfo['itemURL'] = "https://babel.hathitrust.org/cgi/pt?id=" . $htid;
 
         $rc = isset($ht['rights']) ? $ht['rights'] : 'ic';
-	$rc = is_array($rc) ? $rc[0] : $rc;
+        $rc = is_array($rc) ? $rc[0] : $rc;
         $iinfo['rightsCode'] = $rc;
         $iinfo['lastUpdate'] = $ht['ingest'];
         $iinfo['enumcron'] = (isset($ht['enumcron']) && preg_match('/\S/', $ht['enumcron']))? $ht['enumcron'] : false;

@@ -396,6 +396,10 @@ if (isset($_REQUEST['single']) && $_REQUEST['single']) {
 
 if ($_REQUEST['type'] == 'json') {
   if (isset($allmatches['records']) && count($allmatches['records']) == 0) {
+    header('Content-type: application/json; charset=UTF-8');
+    // This is a hack to get the correct JSON representation of the empty `records` hash.
+    // Empty records can still show up serialized as "[]" in multi-record results.
+    // but this takes care of the simplest case.
     echo  "{\n \"records\": {}, \"items\": []\n}";
     exit;
   } else {

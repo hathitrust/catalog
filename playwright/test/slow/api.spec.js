@@ -148,12 +148,27 @@ test('Bib API b/t/Q qf? 400', async ({ page }) => {
 // Empty results
 test('Bib API b/qf/qv.t qv? 200', async ({ page }) => {
   const response = await page.goto('/api/volumes/brief/htid/blah.json');
+  const body = await response.json();
   expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain('application/json');
+  // Single-record results have a `records` hash because volumes.php
+  // returns JSON crafted to correctly represent it as `{}`.
+  // Multi-record results do not have the opportunity to do so, so they show up with
+  // the `records` as `[]`, see below.
+  expect(body.records).toStrictEqual({});
+  expect(body.items).toStrictEqual([]);
 });
 
 test('Bib API b/t/Q qv? 200', async ({ page }) => {
   const response = await page.goto('/api/volumes/brief/json/htid:blah');
+  const body = await response.json();
   expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain('application/json');
+  // Multi-records are keyed from outside, if you will, so the records are in an array
+  // instead of a hash (compare and contrast the preceding example).
+  // This may be considered buggy behavior.
+  expect(body['htid:blah'].records).toStrictEqual([]);
+  expect(body['htid:blah'].items).toStrictEqual([]);
 });
 
 // Endpoint variants with implied brevity "brief"

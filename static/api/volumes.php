@@ -5,8 +5,12 @@ set_include_path(get_include_path() . ':../..');
 // Bail immediately if there's no query
 
 // print_r($_REQUEST);
+
+// This may not be possible without a 404 from the current rewrite rules.
 if (!isset($_REQUEST['q']) || !preg_match('/\S/', $_REQUEST['q'])) {
 	header("HTTP/1.0 400 Malformed");
+	header('Content-type: application/json; charset=UTF-8');
+  echo json_encode(['message' => 'missing or empty query']);
 	exit();
 }
 
@@ -340,7 +344,8 @@ $q =  join(' OR ', $solrQueryComponents);
 if (!preg_match('/\S/', $q)) {
   header('HTTP/1.1 400 Bad Request');
   $origQuery = htmlspecialchars($origQuery);
-  echo "Query '$origQuery' is invalid";
+  header('Content-type: application/json; charset=UTF-8');
+  echo json_encode(['message' => "query '$origQuery' is invalid"]);
   exit();
 }
 
@@ -405,7 +410,7 @@ if ($_REQUEST['type'] == 'json') {
   } else {
     $json = json_encode($allmatches);
     if (isset($_REQUEST['callback'])) {
-      header('Content-type: application/javascript; charset=UTF-8');  
+      header('Content-type: application/javascript; charset=UTF-8');
       echo $_REQUEST['callback'] . "( $json)";
     } else {
       header('Content-type: application/json; charset=UTF-8');

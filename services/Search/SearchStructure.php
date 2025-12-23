@@ -85,6 +85,10 @@ class SearchStructure
         $c = __CLASS__;
         $obj = new $c(true);
         $obj->_fillFromHash($hash);
+        
+        echo "\n";
+        print_r($obj);
+        echo "\n";
         return $obj;
     }
 

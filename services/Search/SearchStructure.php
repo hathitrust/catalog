@@ -85,6 +85,10 @@ class SearchStructure
         $c = __CLASS__;
         $obj = new $c(true);
         $obj->_fillFromHash($hash);
+        
+        echo "\n";
+        print_r($obj);
+        echo "\n";
         return $obj;
     }
 
@@ -909,6 +913,9 @@ class SearchStructure
             }
             return "Between $start and $end";
         } else {
+            // Remove square brackets and double quote from facet display.
+            // Dec 2025 Note: this is just a UI string, so this replacement should be unnecessary.
+            // return $v;
             return preg_replace('/[\[\]\"]/', '', $v);
         }
 

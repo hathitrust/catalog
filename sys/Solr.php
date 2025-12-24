@@ -104,7 +104,11 @@ class Solr
       $limit = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : $configArray['Site']['itemsPerPage'];
     }
 
-
+    error_log("SearchStructure: " . print_r($ss) . "\n");
+    echo "\n";
+    print_r($ss);
+    echo "\n";
+    
     // The initial query
     if ($ss->use_dismax) {
       $ss->action = 'edismax';
@@ -230,7 +234,8 @@ class Solr
       $values = $body['facet_counts']['facet_fields'][$field];
       $rv['values'][$field] = array();
 
-      // skip the hidden ones
+      // Filter out facet values that match the hidden pattern defined on config.ini.
+      // e.g. skip hlbgeneral = "hlb_both:^U\.S\. National and" to hide "U.S. National..." facets
       foreach ($values as $valcnt) {
         if (isset($hide, $hide[$field])) {
           foreach ($hide[$field] as $regexp) {
@@ -277,6 +282,7 @@ class Solr
     $type = $tvb[0];
     $value = $tvb[1];
 
+    // If search is empty/whitespace-only, default to *:* (match-all)
     if (!preg_match('/\S/', $value)) {
       $value = '*:*';
     }
@@ -287,7 +293,11 @@ class Solr
 
     if (!isset($allspecs[$type])) {
       $args =  $this->searchArguments($ss);
-      // print_r($args);
+      
+      echo "\n";
+      print_r($args);
+      echo "\n";
+
       return $args;
     }
 
@@ -356,8 +366,8 @@ class Solr
       }
       $query .= "id:(" . implode(' OR ', $ss->extraIDs()) . ')';
     }
-
     $ids = $this->tagIDs($ss);
+    // Check if the query has content, otherwise use *:* to match all
     if (preg_match('/\S/', $query)) {
       $searchComponents[] = array('q', $query);
     }
@@ -370,7 +380,7 @@ class Solr
 
 
   /** Quote a filter value, skipping it if it starts with a '[' (and hence is assumed
-   * to be a range)
+   * to be a range). Detect date range
    **/
 
   function quoteFilterValue($v) {
@@ -378,7 +388,11 @@ class Solr
       return $v;
     }
     else {
-      return '"' . $v . '"';
+      // Escape internal quotes before wrapping
+      // input: He said "hello, the output: He said \"hello
+      $escaped = str_replace('"', '\\"', $v);
+      // String ready to Solr "He said \"hello"
+      return '"' . $escaped . '"';
     }
   }
 
@@ -664,6 +678,9 @@ class Solr
           }
 
           if ($val == 'stdnum') {
+            // Extract standard number from asis input
+            // Strips leading 0s. Captures digits, dashes, dots: 978-0-123-45678-9
+            // e.g.  0000978-0-12-345678-9 → 978-0-12-345678-9
             if (preg_match('/^\s*0*([\d\-\.]+[xX]?).*$/', $values['asis'], $match)) {
               $stdnum = $match[1];
 //              $stdnum = preg_replace('/[\.\-]/', '', $stdnum);
@@ -688,7 +705,7 @@ class Solr
 
 
   /**
-   * Turn solr output into a record structure (which shouuld probably be its own class...)
+   * Turn solr output into a record structure (which should probably be its own class...)
    *
    * @param string $result The XML returned by solr
    * @param string $xslfile The path of the XSL file to use to convert the data
@@ -700,6 +717,7 @@ class Solr
     global $configArray;
 
     if (is_string($result) && preg_match('/^<html/', $result)) {
+      // Detect if Solr returns an error page
       if (preg_match('/ParseException/', $result)) {
         $errorMsg = "Error+in+search+syntax";
       }
@@ -956,6 +974,8 @@ class Solr
         return $action;
       }
     }
+    // Ensure a non-NULL return from non-edismax cases
+    return $action;
   }
 
   // Do we just want the IDs? Spit 'em out!
@@ -1011,6 +1031,9 @@ class Solr
       $this->print_out_list_of_ids($args);
       die();
     }
+
+    error_log("Solr action used: " . $action);
+    echo "Solr action used: " . $action;
 
     # Finally, we can deal with the normal case
     return $this->solr_connection->send();
@@ -1112,7 +1135,7 @@ class Solr
     return str_replace(array('(', ')','[', ']', '!', '&', ':', ';', '-', '/', '"'), '', $str);
   }
   
-
+  // TODO: Check this function for correctness
   function lucene_escape($str) {
     $pattern = '/(\+|-|&&|\|\||!|\(|\)|\{|}|\[|]|\^|"|~|\*|\?|:|\\\)/';
     $replace = '\\\$1';
@@ -1168,7 +1191,7 @@ class Solr
     $query .= ') NOT id:(' . $id . ')';
 
     $ss = new SearchStructure(true); // create a "blank" ss with just the filter queries
-
+    
     $args = array_merge(array(array('q', $query)), $this->filterComponents($ss));
     return $this->solrSearch($args);
   }

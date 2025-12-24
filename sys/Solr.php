@@ -104,7 +104,11 @@ class Solr
       $limit = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : $configArray['Site']['itemsPerPage'];
     }
 
-
+    error_log("SearchStructure: " . print_r($ss) . "\n");
+    echo "\n";
+    print_r($ss);
+    echo "\n";
+    
     // The initial query
     if ($ss->use_dismax) {
       $ss->action = 'edismax';
@@ -289,7 +293,11 @@ class Solr
 
     if (!isset($allspecs[$type])) {
       $args =  $this->searchArguments($ss);
-      // print_r($args);
+      
+      echo "\n";
+      print_r($args);
+      echo "\n";
+
       return $args;
     }
 
@@ -966,6 +974,8 @@ class Solr
         return $action;
       }
     }
+    // Ensure a non-NULL return from non-edismax cases
+    return $action;
   }
 
   // Do we just want the IDs? Spit 'em out!
@@ -1021,6 +1031,9 @@ class Solr
       $this->print_out_list_of_ids($args);
       die();
     }
+
+    error_log("Solr action used: " . $action);
+    echo "Solr action used: " . $action;
 
     # Finally, we can deal with the normal case
     return $this->solr_connection->send();
@@ -1122,7 +1135,7 @@ class Solr
     return str_replace(array('(', ')','[', ']', '!', '&', ':', ';', '-', '/', '"'), '', $str);
   }
   
-
+  // TODO: Check this function for correctness
   function lucene_escape($str) {
     $pattern = '/(\+|-|&&|\|\||!|\(|\)|\{|}|\[|]|\^|"|~|\*|\?|:|\\\)/';
     $replace = '\\\$1';
@@ -1178,7 +1191,7 @@ class Solr
     $query .= ') NOT id:(' . $id . ')';
 
     $ss = new SearchStructure(true); // create a "blank" ss with just the filter queries
-
+    
     $args = array_merge(array(array('q', $query)), $this->filterComponents($ss));
     return $this->solrSearch($args);
   }

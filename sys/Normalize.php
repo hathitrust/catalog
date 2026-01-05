@@ -47,9 +47,7 @@ class Normalize
     } else {
       $str = preg_replace('/^[\s0\-\.]*([\d\.\-]+x?).*$/', '$1', $str);
     }
-    $just_digits =  preg_replace('/[\-\.]/', '', $str);
-
-
+    return preg_replace('/[\-\.]/', '', $str);
   }
 
   // <fieldType name="exactmatcher" class="solr.TextField" omitNorms="true">

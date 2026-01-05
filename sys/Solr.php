@@ -280,6 +280,10 @@ class Solr
     // Should just be on "lookfor" and "type"
     $tvb = isset($ss->search[0]) ? $ss->search[0] : array('all', '*:*');
     $type = $tvb[0];
+    print_r('**************type****************');
+    print_r($type);
+    print_r('******************************');
+    // $value is the search string
     $value = $tvb[1];
 
     // If search is empty/whitespace-only, default to *:* (match-all)
@@ -290,14 +294,11 @@ class Solr
     $allspecs = yaml_parse_file('conf/dismaxsearchspecs.yaml');
 
     // If the type isn't set, back up to normal arguments
+    // Lianet's notes: $type is extracted from conf/dismaxsearchspecs.yaml so the function always return the args in searchArguments
 
     if (!isset($allspecs[$type])) {
       $args =  $this->searchArguments($ss);
-      
-      echo "\n";
-      print_r($args);
-      echo "\n";
-
+      print_r('***************I am here***************');
       return $args;
     }
 
@@ -318,6 +319,12 @@ class Solr
     $rv[] = array('q', $value);
     $rv[] = array('qt', 'edismax');
     $rv[] = array('mm', $this->mm($spec, $ss));
+
+    echo "\n";
+    print_r('******************************');
+    print_r($rv);
+    print_r('******************************');
+    echo "\n";
 
     return array_merge($rv, $this->filterComponents($ss), $this->sortComponents($ss));
   }
@@ -344,9 +351,14 @@ class Solr
 
     $searchComponents = array();
 
+    // Lianet's notes: conf/searchspecs is the config used to build the Solr query.
     $specs = yaml_parse_file('conf/searchspecs.yaml');
     $query = '';
 
+    print_r('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+    print_r($ss->search);
+    print_r($tvb[1]);
+    print_r('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
     foreach ($ss->search as $tvb) { // Type, Value (keywords), Boolen AND or OR
       $type = $tvb[0];
       $values = $this->build_and_or_onephrase($tvb[1]);
@@ -692,6 +704,7 @@ class Solr
         if (!isset($values[$val]) || ($values[$val] == "")) {
           continue;
         }
+        // Lianet's notes: Escape the value for safe embedding in field:value syntax
         $sstring = $field . ':(' . $values[$val] . ')';
         if (isset($weight) && $weight > 0) {
           $sstring .= '^' . $weight;
@@ -821,6 +834,8 @@ class Solr
    * @return  string                Fixed input
    * @access  public
    */
+
+  // Lianet's notes: Verify if this function could be used to validate the Solr query
   public function validateInput($input) {
     // Ensure wildcards are not at beginning of input
     if ((substr($input, 0, 1) == '*') ||
@@ -887,7 +902,7 @@ class Solr
    * @return  array   $values     Includes 'and', 'or', and 'onephrase' elements
    * @access  public
    */
-
+  // Lianet's notes: Check if is necessary to remove illegal characters
   public function build_and_or_onephrase($lookfor = null) {
     $values = array();
 

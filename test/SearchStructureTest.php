@@ -60,7 +60,7 @@ class SearchStructureTest extends TestCase
     // (titleProper:(*)^8000 OR titleProper:("\")^1200 OR titleProper:(\)^120 OR title_topProper:("\")^600 OR title_topProper:(\)^60 OR title_restProper:("\")^400 OR title_restProper:(\)^40 OR series:("\")^500 OR series:(\)^50 OR series2:("\")^500 OR series2:(\)^50 OR title:(\)^30 OR title_top:(\)^20 OR title_rest:(\)^1))
     $args = $solr->dismaxSearchArguments($ss);
     // args[0][0] is q
-    fwrite(STDOUT, "Solr args: " . print_r($args[0][0], true) . "\n");
+    fwrite(STDOUT, "Solr args field: " . print_r($args[0][0], true) . "\n");
     fwrite(STDOUT, "*******************************: \n");
     // args[0][1] is the query string
     fwrite(STDOUT, "Solr args: " . print_r($args[0][1], true) . "\n");
@@ -75,18 +75,20 @@ class SearchStructureTest extends TestCase
     fwrite(STDOUT, "4. Hex dump of Solr query: " . bin2hex($afterSolr) . "\n");
 
   }
-
+   // TODO Ask Moses how to add covers to Home.php?????
   /**
    * Testing that serialization to and from cookie preserves backslashes correctly
-   * @covers Home::cookie serialization
+   * @covers \services\Search\Home\search
    * @runInSeparateProcess
    */
   public function test_cookie_serialization_escaping(): void
   {
-   
+    // $original contains one character, PHP source code uses escaping to represent it.
+    // After parsing the runtime value is \
     $original = "\\"; 
     
     // Simulate what happens with cookie
+    // serialization shows 'a:1:{s:7:"lookfor";s:1:"\";}'
     $serialized = serialize(['lookfor' => $original]);
     $unserialized = unserialize($serialized);
     

@@ -1076,7 +1076,11 @@ class Solr
   function getRecord($id) {
     // The default action
     $query = "id:$id OR old_ids:$id";
-    $result = $this->solrSearch(array(array('q', $query)));
+    // Don't get deleted record stubs -- these are present in solr to support
+    // reporting on deleted records via OAI
+    $filter_query = "NOT deleted:true";
+    $result = $this->solrSearch(array(array('q', $query), array('fq',$filter_query)));
+//    $result = $this->solrSearch(array(array('q', $query)));
     if (!PEAR::isError($result) && isset($result['record'][0])) {
       $rec =  $result['record'][0];
       $returned_id = $rec['id'];

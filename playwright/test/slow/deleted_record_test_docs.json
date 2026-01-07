@@ -1,0 +1,89 @@
+[
+  {
+    "id": "011398992",
+    "deleted": true,
+    "time_of_index": "2025-10-11T07:46:23.766Z"
+  },
+  {
+    "id": "9999",
+    "deleted": true,
+    "time_of_index": "2025-10-11T07:46:23.766Z"
+  },
+  {
+    "id": "103192851",
+    "old_ids": [
+      "011398992"
+    ],
+    "fullrecord": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><collection xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.loc.gov/MARC21/slim\" xsi:schemaLocation=\"http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd\"><record><leader>00388nam a2200109 i 4500</leader><controlfield tag=\"001\">103192851</controlfield><controlfield tag=\"003\">MiAaHDL</controlfield><controlfield tag=\"005\">20241016000000.0</controlfield><controlfield tag=\"006\">m        d        </controlfield><controlfield tag=\"007\">cr bn ---auaua</controlfield><controlfield tag=\"008\">200603s2013####xx######r#####000#0#eng#d</controlfield><datafield tag=\"035\" ind1=\" \" ind2=\" \"><subfield code=\"a\">sdr-uiuc.9999160693405899</subfield></datafield><datafield tag=\"245\" ind1=\"0\" ind2=\"0\"><subfield code=\"a\">Host bibliographic record for boundwith item barcode 30112101926464</subfield></datafield><datafield tag=\"538\" ind1=\" \" ind2=\" \"><subfield code=\"a\">Mode of access: Internet.</subfield></datafield><datafield tag=\"774\" ind1=\"1\" ind2=\" \"><subfield code=\"t\">BLS report.</subfield><subfield code=\"w\">99308918812205899</subfield></datafield><datafield tag=\"774\" ind1=\"1\" ind2=\" \"><subfield code=\"t\">Wage chronology: Carolina Coach Co., 1947-63.</subfield><subfield code=\"w\">99621771612205899</subfield></datafield><datafield tag=\"CID\" ind1=\" \" ind2=\" \"><subfield code=\"a\">103192851</subfield></datafield><datafield tag=\"DAT\" ind1=\"0\" ind2=\" \"><subfield code=\"a\">20200701032601.0</subfield><subfield code=\"b\">20241016000000.0</subfield></datafield><datafield tag=\"DAT\" ind1=\"1\" ind2=\" \"><subfield code=\"a\">20241016140516.0</subfield><subfield code=\"b\">2025-10-29T20:00:50Z</subfield></datafield><datafield tag=\"DAT\" ind1=\"2\" ind2=\" \"><subfield code=\"a\">2025-01-01T18:30:02Z</subfield><subfield code=\"b\">2025-10-29T20:00:03Z</subfield></datafield><datafield tag=\"CAT\" ind1=\" \" ind2=\" \"><subfield code=\"a\">SDR-UIUC</subfield><subfield code=\"c\">uiuc</subfield><subfield code=\"d\">ALMA</subfield><subfield code=\"l\">prepare.pl-004-008</subfield></datafield><datafield tag=\"FMT\" ind1=\" \" ind2=\" \"><subfield code=\"a\">BK</subfield></datafield><datafield tag=\"HOL\" ind1=\" \" ind2=\" \"><subfield code=\"0\">sdr-uiuc.9999160693405899</subfield><subfield code=\"a\">uiug</subfield><subfield code=\"b\">SDR</subfield><subfield code=\"c\">UIUC</subfield><subfield code=\"p\">uiug.30112101926464</subfield><subfield code=\"s\">UIU</subfield><subfield code=\"z\">no.259</subfield><subfield code=\"1\">9999160693405899</subfield></datafield><datafield tag=\"974\" ind1=\" \" ind2=\" \"><subfield code=\"b\">UIU</subfield><subfield code=\"c\">UIUC</subfield><subfield code=\"d\">20251029</subfield><subfield code=\"s\">google</subfield><subfield code=\"u\">uiug.30112101926464</subfield><subfield code=\"z\">no.259</subfield><subfield code=\"y\">2013</subfield><subfield code=\"r\">pdus</subfield><subfield code=\"q\">gfv</subfield></datafield></record></collection>",
+    "format": [
+      "Book"
+    ],
+    "sdrnum": [
+      "sdr-uiuc.9999160693405899"
+    ],
+    "title": [
+      "Host bibliographic record for boundwith item barcode 30112101926464"
+    ],
+    "title_a": [
+      "Host bibliographic record for boundwith item barcode 30112101926464"
+    ],
+    "title_ab": [
+      "Host bibliographic record for boundwith item barcode 30112101926464"
+    ],
+    "title_top": [
+      "Host bibliographic record for boundwith item barcode 30112101926464"
+    ],
+    "title_display": "Host bibliographic record for boundwith item barcode 30112101926464",
+    "titleSort": "Host bibliographic record for boundwith item barcode 30112101926464",
+    "title_sortkey": "host bibliographic record for boundwith item barcode 30112101926464",
+    "countryOfPubStr": [
+      "No place, unknown, or undetermined"
+    ],
+    "publishDate": [
+      "2013"
+    ],
+    "publishDateRange": [
+      "2013",
+      "2010-2019"
+    ],
+    "display_date": "2013",
+    "language": [
+      "English"
+    ],
+    "language008": "eng",
+    "ht_availability": [
+      "Full text"
+    ],
+    "ht_availability_intl": [
+      "Search only"
+    ],
+    "ht_count": 1,
+    "ht_id": [
+      "uiug.30112101926464"
+    ],
+    "ht_id_display": [
+      "uiug.30112101926464|20251029|no.259|2013|2010-2019|||Host bibliographic record for boundwith item barcode 30112101926464, no.259"
+    ],
+    "ht_id_update": [
+      20251029
+    ],
+    "ht_rightscode": [
+      "pdus"
+    ],
+    "htsource": [
+      "University of Illinois at Urbana-Champaign"
+    ],
+    "ht_json": "[{\"htid\":\"uiug.30112101926464\",\"newly_open\":null,\"ingest\":\"20251029\",\"rights\":[\"pdus\",null],\"heldby\":[\"illinois\"],\"collection_code\":\"uiuc\",\"enumcron\":\"no.259\",\"enum_pubdate\":\"2013\",\"enum_pubdate_range\":\"2010-2019\",\"dig_source\":\"google\"}]",
+    "ht_searchonly": false,
+    "ht_searchonly_intl": true,
+    "language008_full": "English",
+    "print_holdings": [
+      "illinois"
+    ],
+    "deleted": false,
+    "time_of_index": "2026-01-01T18:44:56.327Z",
+    "country_of_pub_facet": [
+      "No place, unknown, or undetermined"
+    ]
+  }
+]

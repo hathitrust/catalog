@@ -107,3 +107,23 @@ test('Clear facets (mobile/width-shrink)', async ({ page }) => {
   // Still no filters
   await expect(page.getByRole('heading', { name: 'Current filters' })).not.toBeVisible();
 });
+
+// Advanced Search adv=1 flag persistence
+test('Advanced Search adv=1 is retained when selecting a facet', async ({ page, isMobile }) => {
+  test.skip(isMobile === true, 'immobile-only test');
+  await page.goto('/Search/Home?adv=1&lookfor=journal');
+  await page.getByRole('button', { name: 'Allow all cookies' }).click();
+  // Filter on Latin
+  await page.getByRole('button', { name: "Language" }).click();
+  await page.getByRole('link', { name: "Latin" }).click();
+  // adv=1 is still in the URL
+  await expect(page).toHaveURL(/adv=1/);
+  // "Revise this advanced search" button is present
+  await expect(page.getByRole('link', { name: 'Revise this advanced search' })).toBeVisible();
+  // Remove the facet we just added
+  await page.getByRole('link', { name: 'Remove filter Language: Latin' }).click();
+  // adv=1 is still in the URL
+  await expect(page).toHaveURL(/adv=1/);
+  // "Revise this advanced search" button is still present
+  await expect(page.getByRole('link', { name: 'Revise this advanced search' })).toBeVisible();
+});

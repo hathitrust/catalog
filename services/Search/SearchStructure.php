@@ -235,6 +235,9 @@ class SearchStructure
                 $this->use_dismax = false;
             }
         }
+
+        // Set adv= URL param when query originated with Advanced Search
+        $this->adv = isset($hash['adv']) ? $hash['adv'] : null;
         $this->search = $ss;
     }
 
@@ -934,15 +937,25 @@ class SearchStructure
         foreach ($this->activeInbandFilters() as $kv) {
             $valueDisplay = is_array($kv[1]) ? implode(' OR ', array_map(array($this, 'displayStrip'), $kv[1])) : $this->displayStrip($kv[1]);
             $logargs = implode('|', array('removefacet', $kv[0], $valueDisplay, ''));
+            $removal_url = $this->asURLMinusFilter($kv[0], $kv[1], array_merge($extra));
+            if (isset($this->adv)) {
+              echo("SET!!");
+            }
+            if (isset($this->adv) && $this->adv == '1') {
+              echo("SET AND 1!!");
+              $removal_url .= "&adv=1";
+            }
+            $removal_url .= "&shwoozle=1";
             $rv[] = array(
                 'index' => $kv[0],
                 'value' => $kv[1],
                 'valueDisplay' => $valueDisplay,
                 'indexDisplay' => $this->facetDisplayName($kv[0]),
-                'removalURL' => $this->asURLMinusFilter($kv[0], $kv[1], array_merge($extra)),
+                'removalURL' => $removal_url,
                 'logargs' => $logargs
             );
         }
+        //echo var_dump($rv);
         return $rv;
     }
 

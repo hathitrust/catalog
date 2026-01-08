@@ -39,6 +39,10 @@ class SolrTest extends TestCase
       $result = $solr->quoteFilterValue('"Kao gu yu wen wu" bian ji bu');
       $this->assertEquals('"\\"Kao gu yu wen wu\\" bian ji bu"', $result);
 
+      // Test value with backslash
+      $result = $solr->quoteFilterValue('\Kao gu yu wen wu bian ji bu');
+      $this->assertEquals('"\\\\Kao gu yu wen wu bian ji bu"', $result);
+
       // Test date range (should not be quoted)
       $result = $solr->quoteFilterValue('[1900 TO 2000]');
       $this->assertEquals('[1900 TO 2000]', $result);

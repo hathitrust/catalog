@@ -133,12 +133,12 @@ class Solr
       $args = array_merge($args, $this->spellcheckComponents($ss));
     }
 
-
     if ($raw) {
       return $this->rawSolrSearch($args, $action);
     }
 
     // Otherwise...
+    print_r('22222222222222222222222222222222 ');
     $rv = $this->solrSearch($args, $action);
     return $rv;
   }
@@ -355,11 +355,7 @@ class Solr
     $specs = yaml_parse_file('conf/searchspecs.yaml');
     $query = '';
 
-    print_r('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-    print_r($ss->search);
-    print_r($tvb[1]);
-    print_r('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-    foreach ($ss->search as $tvb) { // Type, Value (keywords), Boolen AND or OR
+    foreach ($ss->search as $tvb) { // Type, Value (keywords), Boolean AND or OR
       $type = $tvb[0];
       $values = $this->build_and_or_onephrase($tvb[1]);
       $bool = isset($tvb[2]) ? $tvb[2] : false;
@@ -788,6 +784,7 @@ class Solr
    * @return  array               Tokenized array
    * @access  public
    */
+  // TODO: refactor tokenizer to a single-pass parser instead of regex
   public function tokenizeInput($input) {
     // Tokenize on spaces and quotes
     //preg_match_all('/"[^"]*"|[^ ]+/', $input, $words);
@@ -896,18 +893,43 @@ class Solr
    *
    * Given a lookfor string, clean it up, tokenize it, and
    * return a structure that includes AND, OR, and Phrase
-   * queries.
+   * queries. lookfor could be single or multi-word
    *
    * @param string $lookfor User's search string
    * @return  array   $values     Includes 'and', 'or', and 'onephrase' elements
    * @access  public
    */
   // Lianet's notes: Check if is necessary to remove illegal characters
+  // TODO: Refactoring this function to avoid the different output
   public function build_and_or_onephrase($lookfor = null) {
     $values = array();
 
+    // Removing this characters if the string only contains any of these characters - len == 1
+    // If there are words and characters, escaped them
+    // Delete all these characters destroy the user intent without noticing the user. I'll block meaningless
+    // single-characters explicitly
     $illegal = array('.', '{', '}', '/', '!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
-    $lookfor = trim(str_replace($illegal, '', $lookfor));
+    // $lookfor = trim(str_replace($illegal, '', $lookfor));
+
+    // Reject the input if is exactly one character and if the character is ~ or /
+    // ~ alone is invalid Lucene syntax causing parsing error
+    // \ escape alone is syntactically incorrect and causes 500 errors because Lucene expects to escape something
+    //if (mb_strlen(trim($lookfor)) === 1 && preg_match('/^[~\\\\]$/', $lookfor)) {
+    //    return false;
+    //}
+
+    // 1. Normalize + trim
+    $lookfor = trim($lookfor);
+
+    // 2. Strip garbage-only input
+    if ($lookfor !== '' && !preg_match('/[\p{L}\p{N}]/u', $lookfor)) {
+        $lookfor = trim(str_replace($illegal, '', $lookfor));
+    }
+
+    // 3. Reject invalid single-char input
+    if (mb_strlen($lookfor) === 1 && preg_match('/^[~\\\\]$/', $lookfor)) {
+        return false;
+    }
 
     // Replace fancy quotes
     $lookfor = str_replace(array('“', '”'), '"', $lookfor);
@@ -930,7 +952,6 @@ class Solr
 
     // Tokenize Input
     $tokenized = $this->tokenizeInput($lookfor);
-
     $values['onephrase'] = '"' . preg_replace('/"/', '', implode(' ', $tokenized)) . '"';
     $values['and'] = implode(' AND ', $tokenized);
     $values['or'] = implode(' OR ', $tokenized);
@@ -938,6 +959,7 @@ class Solr
     $values['compressed'] = preg_replace('/\s/', '', $lookfor);
     $values['exactmatcher'] = $this->exactmatcherify($lookfor);
     $values['emstartswith'] = $values['exactmatcher'] . '*';
+
     return $values;
   }
 
@@ -951,7 +973,7 @@ class Solr
    **/
 
   function solrSearch($args, $action = 'standard') {
-    $raw = $this->rawSolrSearch($args, $action);
+    $raw = $this->rawSolrSearch($args, $action); // This is the Solr output
     if (!PEAR::isError($raw)) {
       $processed = $this->_process($raw);
 
@@ -1040,6 +1062,9 @@ class Solr
     }
 
     $this->solr_connection->add($args);
+
+    print_r('======================');
+    print_r($args);
 
     # Just want a list of IDs? Produce it and die
     if (isset($_REQUEST['htid_list'])) {
@@ -1160,6 +1185,41 @@ class Solr
     $replace = '\\\$1';
     return preg_replace($pattern, $replace, $str);
   }
+
+  /**
+ * Strict escape for filter query values and explicit field:value fragments.
+ *
+ * Use for all fq values and any time you construct field:value with user data.
+ * This function:
+ * - Normalizes Unicode to NFC form
+ * - Removes control characters
+ * - Escapes backslash FIRST (critical ordering)
+ * - Escapes multi-char tokens (&&, ||)
+ * - Escapes all Lucene special characters: + - ! ( ) { } [ ] ^ " ~ * ? : /
+ *
+ * @param string $s Raw user input or value to escape
+ * @return string Safely escaped value for use in Solr fq or field:value
+ */
+function lucene_escape_fq(string $s): string {
+    // Normalize Unicode to composed form (NFC)
+    if (function_exists('normalizer_normalize')) {
+        $s = normalizer_normalize($s, Normalizer::FORM_C) ?: $s;
+    }
+
+    // Remove control characters (0x00-0x1F, 0x7F)
+    $s = preg_replace('/[\x00-\x1F\x7F]/u', '', $s);
+
+    // CRITICAL: Escape backslash FIRST to avoid double-escaping
+    $s = str_replace('\\', '\\\\', $s);
+
+    // Escape Lucene special characters character-by-character
+    $specials = ['+', '-', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '/', '&', '|'];
+    foreach ($specials as $c) {
+        $s = str_replace($c, '\\' . $c, $s);
+    }
+
+    return $s;
+}
 
   function getMoreLikeThis($record, $id, $max = 5) {
     global $configArray;

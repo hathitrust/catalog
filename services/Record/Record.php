@@ -158,6 +158,7 @@ class Record extends Action
         $interface->assign('summary', $summaryData['summary']);
         $links = $ru->getLinkNums($this->marcRecord); 
         $interface->assign('googleLinks', implode(",", $links));
+        $interface->assign('record_is_tombstone', $ru->record_is_tombstone($record));
 
 
 

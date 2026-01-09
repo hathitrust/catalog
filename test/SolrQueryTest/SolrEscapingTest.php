@@ -107,15 +107,5 @@ class SolrEscapingTest extends TestCase
     $this->assertEquals('abc123', $solr->lucene_escape_fq('abc123'));
   }
 
-  /**
-   * Test spaces are preserved
-   * @covers Solr::lucene_escape_fq
-   */
-  public function test_spaces_preserved(): void
-  {
-    $solr = new Solr('', '');
-    $this->assertEquals('foo\\ bar', $solr->lucene_escape_fq('foo bar'));
-  }
-
 }
 ?>

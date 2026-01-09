@@ -84,10 +84,7 @@ class SearchStructure
         $c = __CLASS__;
         $obj = new $c(true);
         $obj->_fillFromHash($hash);
-        
-        echo "\n";
-        print_r($obj);
-        echo "\n";
+
         return $obj;
     }
 
@@ -234,8 +231,7 @@ class SearchStructure
         } elseif (count($ss) == 1) {
 
             $index = $ss[0][0];
-            print_r('^^^^^^^^^^^');
-            print_r($index);
+
             if (isset($this->force_standard[$index]) && $this->force_standard[$index]) {
                 $this->use_dismax = false;
             }

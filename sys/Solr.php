@@ -274,7 +274,8 @@ class Solr
    * @param SearchStructure $ss A fille-in search structure
    * @return array An array of (key,value) duples for sending to Solr
    **/
-
+  // TODO: Remove this function that is never used because the field type is not defined in conf/dismaxsearchspecs.yaml
+  // TODO: Check by function used by this that could be removed too.
   function dismaxSearchArguments($ss) {
     $rv = array();
     // Should just be on "lookfor" and "type"
@@ -298,7 +299,6 @@ class Solr
 
     if (!isset($allspecs[$type])) {
       $args =  $this->searchArguments($ss);
-      print_r('***************I am here***************');
       return $args;
     }
 
@@ -319,12 +319,6 @@ class Solr
     $rv[] = array('q', $value);
     $rv[] = array('qt', 'edismax');
     $rv[] = array('mm', $this->mm($spec, $ss));
-
-    echo "\n";
-    print_r('******************************');
-    print_r($rv);
-    print_r('******************************');
-    echo "\n";
 
     return array_merge($rv, $this->filterComponents($ss), $this->sortComponents($ss));
   }
@@ -398,9 +392,9 @@ class Solr
     else {
       // Escape internal quotes before wrapping
       // input: He said "hello, the output: He said \"hello
-      $escaped = str_replace('"', '\\"', $v);
+      // $escaped = str_replace('"', '\\"', $v);
       // String ready to Solr "He said \"hello"
-      return '"' . $escaped . '"';
+      return '"' . $this->lucene_escape_fq($v) . '"';
     }
   }
 
@@ -701,7 +695,11 @@ class Solr
           continue;
         }
         // Lianet's notes: Escape the value for safe embedding in field:value syntax
-        $sstring = $field . ':(' . $values[$val] . ')';
+
+        $escaped_value = $this->lucene_escape_literal($values[$val]);
+        $sstring = $field . ':(' . $escaped_value . ')';
+
+        // $sstring = $field . ':(' . $values[$val] . ')';
         if (isset($weight) && $weight > 0) {
           $sstring .= '^' . $weight;
         }
@@ -788,6 +786,9 @@ class Solr
   public function tokenizeInput($input) {
     // Tokenize on spaces and quotes
     //preg_match_all('/"[^"]*"|[^ ]+/', $input, $words);
+    // /"[^"]*"[~[0-9]+]* --> to capture fuzzy searches like "hello world"~5 - matches a double-quoted string followed by ~ and a number
+    // "[^"]*" --> to capture exact phrases like "hello world" - matches a double-quoted string
+    // [^ ]+ --> to capture single words like hello - matches sequences of non-space characters
     preg_match_all('/"[^"]*"[~[0-9]+]*|"[^"]*"|[^ ]+/', $input, $words);
     $words = $words[0];
 
@@ -822,10 +823,134 @@ class Solr
     return $fixedwords;
   }
 
+  public function remove_wildcards_add_beginning($input) {
+    // Ensure wildcards are not at beginning of input
+    // Performance guard, not a security guard. Prevent expensive queries (*table, ?table)
+    return substr($input, 1);
+    }
+
+  public function remove_unbalanced_parentheses($input) {
+    // Ensure all parens match - parentheses balancing
+    // Prevents Solr parser errors. Deletes all parentheses instead of fixing structure
+    return str_replace(array('(', ')'), '', $input);
+    }
+
+  public function remove_invalid_caret_usage($input) {
+    // Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
+    // Regular expression does not support ^1.5
+    return str_replace('^', '', $input);
+  }
+
+  /**
+  * If input matches the pattern: "phrase"*,
+  * return phrase* (quotes removed, wildcard preserved).
+  * Otherwise return null.
+  */
+  public function unwrapQuotedWildcard(string $input): ?string {
+    // Match: optional whitespace + "..." + * + optional whitespace
+    // ^\s* --> leading whitespace
+    // " --> opening quote
+    // ([^"]+) --> capture group for any characters except quotes (the phrase)
+    // " --> closing quote
+    // \* --> literal asterisk
+    // \s*$ --> trailing whitespace
+    if (preg_match('/^\s*"([^"]+)"\*\s*$/u', $input, $matches)) {
+        return $matches[1] . '*';
+    }
+
+    return null;
+  }
+
   /**
    * Input Validater
    *
-   * Cleanes the input based on the Lucene Syntax rules.
+   * Validate the input based on the Lucene Syntax rules.
+   *
+   * @param string $input User's input string
+   * @return  string  array{valid: bool, error?: string}
+   * @access  public
+   */
+
+  // Lianet's notes: Verify if this function could be used to validate the Solr query
+  public function validateInput($input) {
+
+    print_r('*****************validateInput input****************');
+    print_r($input);
+    // 1. Normalize + trim
+    $trimmed = trim($input);
+
+    // 2. Empty input
+    if ($trimmed === '') {
+     return ['valid' => false, 'error' => 'Empty query'];
+    }
+
+    // 3. Strip garbage-only input ~~//^&$
+    if ($trimmed !== '' && !preg_match('/[\p{L}\p{N}]/u', $trimmed)) {
+        return ['valid' => false, 'error' => 'Invalid garbage-only query'];
+    }
+
+    // 4. Reject meaningless single-character input
+    if (mb_strlen($trimmed) === 1 && preg_match('/^[~\\\\]$/', $trimmed)) {
+      return ['valid' => false, 'error' => 'Invalid single-character query'];
+    }
+
+    // 5. No leading wildcard
+    // Ensure wildcards are not at beginning of input
+    // Performance guard, not a security guard. Prevent expensive queries (*table, ?table)
+    if ($trimmed[0] === '*' || $trimmed[0] === '?') {
+      return ['valid' => false, 'error' => 'Leading wildcard not allowed'];
+    }
+
+    // 6. Balanced parentheses
+    // Ensure all parens match - parentheses balancing
+    // Prevents Solr parser errors. Deletes all parentheses instead of fixing structure
+    if (substr_count($trimmed, '(') !== substr_count($trimmed, ')')) {
+      return ['valid' => false, 'error' => 'Unbalanced parentheses'];
+    }
+    // 7. Valid boost syntax (^number or ^number.number)
+    // Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
+    // Regular expression does not support ^1.5
+    if (preg_match('/\^/', $trimmed)) {
+     // Any caret must be followed by a valid numeric boost
+     if (!preg_match('/\^[0-9]+(\.[0-9]+)?/', $trimmed)) {
+      return ['valid' => false, 'error' => 'Invalid boost syntax'];
+     }
+    }
+
+ return ['valid' => true];
+
+
+    // Ensure wildcards are not at beginning of input
+    // Performance guard, not a security guard. Prevent expensive queries (*table, ?table)
+    if ((substr($input, 0, 1) == '*') ||
+      (substr($input, 0, 1) == '?')) {
+      return substr($input, 1);
+    }
+
+    // Ensure all parens match - parentheses balancing
+    // Prevents Solr parser errors. Deletes all parentheses instead of fixing structure
+    $start = preg_match_all('/\(/', $input, $tmp);
+    $end = preg_match_all('/\)/', $input, $tmp);
+    if ($start != $end) {
+      return str_replace(array('(', ')'), '', $input);
+    }
+
+    // Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
+    // Regular expression does not support ^1.5
+    $cnt = preg_match_all('/\^/', $input, $tmp);
+    $matches = preg_match_all('/.+\^[0-9]/', $input, $tmp);
+
+    if (($cnt) && ($cnt !== $matches)) {
+      return str_replace('^', '', $input);
+    }
+
+    return $input;
+  }
+
+  /**
+   * Input Validater
+   *
+   * Validate the input based on the Lucene Syntax rules.
    *
    * @param string $input User's input string
    * @return  string                Fixed input
@@ -833,21 +958,24 @@ class Solr
    */
 
   // Lianet's notes: Verify if this function could be used to validate the Solr query
-  public function validateInput($input) {
+  public function validateInputOLD($input) {
     // Ensure wildcards are not at beginning of input
+    // Performance guard, not a security guard. Prevent expensive queries (*table, ?table)
     if ((substr($input, 0, 1) == '*') ||
       (substr($input, 0, 1) == '?')) {
       return substr($input, 1);
     }
 
-    // Ensure all parens match
+    // Ensure all parens match - parentheses balancing
+    // Prevents Solr parser errors. Deletes all parentheses instead of fixing structure
     $start = preg_match_all('/\(/', $input, $tmp);
     $end = preg_match_all('/\)/', $input, $tmp);
     if ($start != $end) {
       return str_replace(array('(', ')'), '', $input);
     }
 
-    // Ensure ^ is used properly
+    // Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
+    // Regular expression does not support ^1.5
     $cnt = preg_match_all('/\^/', $input, $tmp);
     $matches = preg_match_all('/.+\^[0-9]/', $input, $tmp);
 
@@ -904,54 +1032,52 @@ class Solr
   public function build_and_or_onephrase($lookfor = null) {
     $values = array();
 
-    // Removing this characters if the string only contains any of these characters - len == 1
-    // If there are words and characters, escaped them
-    // Delete all these characters destroy the user intent without noticing the user. I'll block meaningless
-    // single-characters explicitly
-    $illegal = array('.', '{', '}', '/', '!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
-    // $lookfor = trim(str_replace($illegal, '', $lookfor));
+    $validation = $this->validateInput($lookfor);
+    if (!$validation['valid']) {
+        // Considering the logic of updating the user input query as the application is doing now
 
-    // Reject the input if is exactly one character and if the character is ~ or /
-    // ~ alone is invalid Lucene syntax causing parsing error
-    // \ escape alone is syntactically incorrect and causes 500 errors because Lucene expects to escape something
-    //if (mb_strlen(trim($lookfor)) === 1 && preg_match('/^[~\\\\]$/', $lookfor)) {
-    //    return false;
-    //}
+        switch ($validation['error']) {
+            case 'Empty query':
+                return false;
+            case 'Invalid garbage-only query':
+                return false;
+            case 'Invalid single-character query':
+                return false;
+            case 'Leading wildcard not allowed':
+                $lookfor = $this->remove_wildcards_add_beginning($lookfor);
+                break;
+            case 'Unbalanced parentheses':
+                $lookfor = $this->remove_unbalanced_parentheses($lookfor);
+                break;
+            case 'Invalid boost syntax':
+                $lookfor = $this->remove_invalid_caret_usage($lookfor);
+                break;
+        }
 
-    // 1. Normalize + trim
-    $lookfor = trim($lookfor);
-
-    // 2. Strip garbage-only input
-    if ($lookfor !== '' && !preg_match('/[\p{L}\p{N}]/u', $lookfor)) {
-        $lookfor = trim(str_replace($illegal, '', $lookfor));
-    }
-
-    // 3. Reject invalid single-char input
-    if (mb_strlen($lookfor) === 1 && preg_match('/^[~\\\\]$/', $lookfor)) {
-        return false;
     }
 
     // Replace fancy quotes
     $lookfor = str_replace(array('“', '”'), '"', $lookfor);
 
     // If it looks like "..."*, pull out the quotes
-
-    if (preg_match('/^\s*"(.*)"\*\s*$/', $lookfor, $match)) {
-      $em = $match[1];
-      $lookfor = $em . '*';
-      // $em = $this->exactmatcherify($em) . '*';
-      // return array('exactmatcher' => $em, 'emstartswith' => $em, 'asis' => $lookfor);
-    }
+    $unwrapped = $this->unwrapQuotedWildcard($lookfor);
+    if ($unwrapped !== null) {
+        $lookfor = $unwrapped;
+}
 
     // Validate input
-    $lookfor = $this->validateInput($lookfor);
+    //$lookfor = $this->validateInput($lookfor);
 
-    if (!preg_match('/\S/', $lookfor)) {
-      return false;
-    }
+    //if (!preg_match('/\S/', $lookfor)) {
+    //  return false;
+    //}
 
     // Tokenize Input
     $tokenized = $this->tokenizeInput($lookfor);
+
+    //Lianet's note: Escape here!!!!!!!
+
+
     $values['onephrase'] = '"' . preg_replace('/"/', '', implode(' ', $tokenized)) . '"';
     $values['and'] = implode(' AND ', $tokenized);
     $values['or'] = implode(' OR ', $tokenized);
@@ -1180,27 +1306,28 @@ class Solr
   }
   
   // TODO: Check this function for correctness
-  function lucene_escape($str) {
+   function lucene_escape($str) {
     $pattern = '/(\+|-|&&|\|\||!|\(|\)|\{|}|\[|]|\^|"|~|\*|\?|:|\\\)/';
     $replace = '\\\$1';
     return preg_replace($pattern, $replace, $str);
   }
 
+
   /**
- * Strict escape for filter query values and explicit field:value fragments.
- *
- * Use for all fq values and any time you construct field:value with user data.
- * This function:
- * - Normalizes Unicode to NFC form
- * - Removes control characters
- * - Escapes backslash FIRST (critical ordering)
- * - Escapes multi-char tokens (&&, ||)
- * - Escapes all Lucene special characters: + - ! ( ) { } [ ] ^ " ~ * ? : /
- *
- * @param string $s Raw user input or value to escape
- * @return string Safely escaped value for use in Solr fq or field:value
- */
-function lucene_escape_fq(string $s): string {
+   * Strict escape for filter query values and explicit field:value fragments.
+
+   * Use for all fq values and any time you construct field:value with user data.
+   * This function:
+   * - Normalizes Unicode to NFC form
+   * - Removes control characters
+   * - Escapes backslash FIRST (critical ordering)
+   * - Escapes multi-char tokens (&&, ||)
+   * - Escapes all Lucene special characters: + - ! ( ) { } [ ] ^ " ~ * ? : /
+   *
+   * @param string $s Raw user input or value to escape
+   * @return string Safely escaped value for use in Solr fq or field:value
+   */
+   public function lucene_escape_fq(string $s): string {
     // Normalize Unicode to composed form (NFC)
     if (function_exists('normalizer_normalize')) {
         $s = normalizer_normalize($s, Normalizer::FORM_C) ?: $s;
@@ -1209,17 +1336,39 @@ function lucene_escape_fq(string $s): string {
     // Remove control characters (0x00-0x1F, 0x7F)
     $s = preg_replace('/[\x00-\x1F\x7F]/u', '', $s);
 
-    // CRITICAL: Escape backslash FIRST to avoid double-escaping
+    // Escape backslash FIRST to avoid double-escaping
     $s = str_replace('\\', '\\\\', $s);
 
     // Escape Lucene special characters character-by-character
-    $specials = ['+', '-', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '/', '&', '|'];
+    // $specials = ['+', '-', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '/', '&', '|'];
+    // foreach ($specials as $c) {
+    //     $s = str_replace($c, '\\' . $c, $s);
+    // }
+
+    // Use regex to catch all specials, including spaces, in one go
+    // The characters are: + - && || ! ( ) { } [ ] ^ " ~ * ? : /
+    // Note: && and || are handled as single chars & and | here
+    $pattern = '/([\+\-\!\(\)\{\}\[\]\^\"\~\*\?\:\/\&\|])/';
+
+    return preg_replace($pattern, '\\\\$1', $s);
+   }
+    // Less strict escape for general query string values
+    // '~', '*', '?',
+  function lucene_escape_literal(string $s): string {
+    // Escape backslash first
+    $s = str_replace('\\', '\\\\', $s);
+
+    $specials = [
+        '+', '-', '!', '(', ')', '{', '}', '[', ']',
+        '^', '"', ':', '/', '&', '|'
+    ];
+
     foreach ($specials as $c) {
         $s = str_replace($c, '\\' . $c, $s);
     }
 
     return $s;
-}
+  }
 
   function getMoreLikeThis($record, $id, $max = 5) {
     global $configArray;

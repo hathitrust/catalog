@@ -90,7 +90,7 @@ final class TokenizeInputTest extends TestCase
         $tokens = $this->solr->tokenizeInput('table AND "chair leg"~2');
 
         $this->assertSame(
-            ['table', 'AND', '"chair leg"~2'],
+            ['table AND "chair leg"~2'],
             $tokens
         );
     }

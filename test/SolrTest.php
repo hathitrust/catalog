@@ -47,6 +47,20 @@ class SolrTest extends TestCase
       $result = $solr->quoteFilterValue('[1900 TO 2000]');
       $this->assertEquals('[1900 TO 2000]', $result);
    }
+
+  /**
+    * @covers Solr::quoteFilterValue
+  */
+  public function testUnwrapQuotedWildcard(): void
+   {
+    $solr = new Solr('', '');
+
+    $this->assertSame('table*', $solr->unwrapQuotedWildcard('"table"*'));
+    $this->assertSame('machine learning*', $solr->unwrapQuotedWildcard('"machine learning"*'));
+    $this->assertNull($solr->unwrapQuotedWildcard('"table"'));
+    $this->assertNull($solr->unwrapQuotedWildcard('table*'));
+    $this->assertNull($solr->unwrapQuotedWildcard('"*"'));
+ }
 }
 
 ?>

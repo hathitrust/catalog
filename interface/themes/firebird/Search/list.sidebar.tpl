@@ -71,12 +71,12 @@
       <div id="collapse-viewability" class="accordion-collapse collapse show"  aria-labelledby="heading-viewability">
         <div class="accordion-body">
           <div class="list-group list-group-flush">
-            <a href="{$allitems_url}" class="list-group-item d-flex justify-content-between align-items-center {if !$is_fullview}active{/if}" aria-current="{if !$is_fullview}true{else}false{/if}">All Items 
+            <a href="{$allitems_url|default:''}" class="list-group-item d-flex justify-content-between align-items-center {if !$is_fullview}active{/if}" aria-current="{if !$is_fullview}true{else}false{/if}">All Items 
               {if isset($allitems_count) && $allitems_count gt 0}
               <span class="badge bg-dark rounded-pill">{$allitems_count|number_format:null:".":","}</span>
               {/if}
               </a>
-            <a href="{$fullview_url}" class="list-group-item d-flex justify-content-between align-items-center {if $is_fullview}active{/if}" aria-current="{if $is_fullview}true{else}false{/if}">Full View 
+            <a href="{$fullview_url|default:''}" class="list-group-item d-flex justify-content-between align-items-center {if $is_fullview}active{/if}" aria-current="{if $is_fullview}true{else}false{/if}">Full View 
               {if isset($fullview_count) && $fullview_count gt 0}
               <span class="badge bg-dark rounded-pill">{$fullview_count|number_format:null:".":","}</span>
               {/if}

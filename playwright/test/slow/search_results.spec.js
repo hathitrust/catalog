@@ -9,6 +9,28 @@ test('Failed search', async ({ page }) => {
   expect(count).toEqual(0);
 });
 
+// Searching for a phrase where there's limited-view item(s) but no full-view
+// items. Note there isn't a corresponding mobile test -- if the links are there
+// at all, the browser viewport isn't going to change that.
+test('Zero full-view items but has limited-view items (non-mobile/fullwidth)', async ({ page, isMobile }) => {
+  test.skip(isMobile === true, 'immobile-only test');
+
+  await page.goto('/Search/Home?lookfor=Ermolaeva&ft=ft');
+  await expect(page.getByText('No results matched your search.')).toBeVisible();
+
+  const all_items_link = page.getByRole('link', { name: 'All Items' });
+  const all_items_href = await all_items_link.getAttribute('href');
+  await expect(all_items_link).toBeVisible;
+  await expect(all_items_href).toMatch(/lookfor.*&ft=$/)
+
+  const full_view_link = page.getByRole('link', { name: 'Full View' });
+  const full_view_href = await full_view_link.getAttribute('href');
+  await expect(full_view_link).toBeVisible;
+  await expect(full_view_href).toMatch(/lookfor.*&ft=ft$/)
+
+
+});
+
 // Check up to 20 results and make sure:
 //   - Cover image is present in non-mobile scenarios
 //   - Title, published date, and author are present

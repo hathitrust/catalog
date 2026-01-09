@@ -191,6 +191,7 @@ class Home extends Action {
           }
         }
         catch(Exception $e) {
+          // bail out
           $interface->assign('error_message', $e->getMessage());
           $solr_err = true;
         }
@@ -207,20 +208,39 @@ class Home extends Action {
           $interface->assign('newPhrase', $result['SpellcheckSuggestion']);
         }
 
+        //*****************************************************
+        // Record Count / URLs for full view vs. all items
+        //*****************************************************
+
+        $interface->assign('ss', $this->ss);
+
+        if ($this->ss->ftonly && !$solr_err) {
+          $interface->assign('fullview_count', $result['RecordCount']);
+          $interface->assign('fullview_url', $this->ss->asFullURL());
+
+          // temporarily change this->ss to get the url and count for the allitems tab
+          $this->ss->setFTOnly(false);
+          $allitems_results = $this->newprocessSearch(1, 0);
+          $interface->assign('allitems_count', $allitems_results['RecordCount']);
+          $interface->assign('allitems_url', $this->ss->asFullURL());
+          $this->ss->setFTOnly(true);
+
+        } else if (!$solr_err) {
+          $interface->assign('allitems_count', $result['RecordCount']);
+          $interface->assign('allitems_url', $this->ss->asFullURL());
+
+          $this->ss->setFTOnly(true);
+          $fullview_results = $this->newprocessSearch(1, 0);
+          $interface->assign('fullview_count', $fullview_results['RecordCount']);
+          $interface->assign('fullview_url', $this->ss->asFullURL());
+          $this->ss->setFTOnly(false);
+
+        }
+
         //******************************************************
         //     NO RESULTS? Just return
         //******************************************************
-
         if (count($result['record']) == 0) {
-            $interface->assign('ss', $this->ss);
-
-            if ($this->ss->ftonly && !$solr_err) {
-              $this->ss->setFTOnly(false);
-              $allitems_results = $this->newprocessSearch(1, 0);
-              $interface->assign('allitems_count', $allitems_results['RecordCount']);
-              $interface->assign('allitems_url', $this->ss->asFullURL());
-              $this->ss->setFTOnly(true);
-            }
 
             $interface->setTemplate('list-none.tpl');
             $interface->display('layout.tpl');
@@ -249,34 +269,6 @@ class Home extends Action {
         $interface->assign('subpage', 'Search/list-list.tpl');
         $interface->setTemplate('list.tpl');
         $interface->assign('atom', 1);
-        $interface->assign('ss', $this->ss);
-
-        //*****************************************************
-        // Record Count / URLs for this tab and other tab (Project UNICORN)
-        //*****************************************************
-
-        if ($this->ss->ftonly) {
-          $interface->assign('fullview_count', $result['RecordCount']);
-          $interface->assign('fullview_url', $this->ss->asFullURL());
-
-          // temporarily munch this->ss to get the url and count for the allitems tab
-          $this->ss->setFTOnly(false);
-          $allitems_results = $this->newprocessSearch(1, 0);
-          $interface->assign('allitems_count', $allitems_results['RecordCount']);
-          $interface->assign('allitems_url', $this->ss->asFullURL());
-          $this->ss->setFTOnly(true);
-
-        } else {
-          $interface->assign('allitems_count', $result['RecordCount']);
-          $interface->assign('allitems_url', $this->ss->asFullURL());
-
-          $this->ss->setFTOnly(true);
-          $fullview_results = $this->newprocessSearch(1, 0);
-          $interface->assign('fullview_count', $fullview_results['RecordCount']);
-          $interface->assign('fullview_url', $this->ss->asFullURL());
-          $this->ss->setFTOnly(false);
-
-        }
 
 
 

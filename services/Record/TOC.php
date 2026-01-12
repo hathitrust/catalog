@@ -26,7 +26,7 @@ class TOC extends Record
     {
         global $interface;
 
-        if (!$interface->is_cached($this->cacheId)) {
+        if (!$interface->isCached($this->cacheId)) {
             $interface->setPageTitle('Table of Contents: ' . $this->record['title'][0]);
 
             $interface->assign('subTemplate', 'view-toc.tpl');

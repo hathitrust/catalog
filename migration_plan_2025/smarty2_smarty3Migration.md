@@ -1082,8 +1082,7 @@ grep -rn "dateadd" interface/themes/firebird/
 #### Commit Both Plugin Fixes:
 
 ```bash
-git add interface/plugins/function.firebird_manifest.php \
-        interface/plugins/modifier.dateadd.php
+git add interface/plugins/function.firebird_manifest.php 
 
 git commit -m "Update custom Smarty plugins for Smarty 3 and PHP 8.1+
 

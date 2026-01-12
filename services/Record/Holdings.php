@@ -28,7 +28,7 @@ class Holdings extends Record
     {
         global $interface;
         global $configArray;
-        global $user;
+        //global $user;
 
         // Do not cache holdings page
         $interface->caching = 0;

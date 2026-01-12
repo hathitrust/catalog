@@ -27,10 +27,8 @@ ini_set('date.timezone', 'America/Detroit');
 require_once 'PEAR.php';
 
 require_once 'sys/Interface.php';
-require_once 'sys/User.php';
 require_once 'sys/Translator.php';
 require_once 'sys/VFSession.php';
-require_once 'sys/VFUser.php';
 require_once 'sys/HTStatus.php';
 require_once 'services/Record/RecordUtils.php';
 require_once 'services/Search/SearchStructure.php';
@@ -68,7 +66,6 @@ if (isset($configArray[$hn], $configArray[$hn]['extraFilters'])) {
 }
 
 $session = VFSession::instance();
-$user = VFUser::singleton();
 
 # Set up the interface
 
@@ -112,13 +109,6 @@ if (isset($_REQUEST['intl'])) {
 //###############################
 
 $htstatus = new HTStatus();
-if (isset($_REQUEST['etas'])) {
-  $htstatus->fakefill($_REQUEST['etas']);
-}
-if (isset($_REQUEST['metas'])) {
-  $htstatus->fakefill_mapped($_REQUEST['metas']);
-}
-
 
 
 // if ($_SERVER['REMOTE_ADDR'] == '141.211.43.192') {
@@ -305,7 +295,6 @@ if ($session->is_set('inst')) {
 $interface->assign('path', $configArray['Site']['url']);
 $interface->assign('module', $module);
 $interface->assign('action', $action);
-$interface->assign('user', $user);
 $interface->assign('uuid', $session->uuid);
 $interface->assign('ru', new RecordUtils());
 
@@ -353,17 +342,6 @@ function handlePEARError($error, $method = null) {
         echo '[' . $trace['line'] . '] ' . $trace['file'] . '<br>';
     }
     exit();
-}
-
-function curPageURL() {
- $pageURL = 'https';
- $pageURL .= "://";
- if ($_SERVER["SERVER_PORT"] != "80") {
-  $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
- } else {
-  $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
- }
- return $pageURL;
 }
 
 

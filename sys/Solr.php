@@ -823,21 +823,45 @@ class Solr
     return $fixedwords;
   }
 
-  public function remove_wildcards_add_beginning($input) {
-    // Ensure wildcards are not at beginning of input
-    // Performance guard, not a security guard. Prevent expensive queries (*table, ?table)
+
+  /**
+  * Remove leading wildcards from input
+  * Ensure wildcards are not at beginning of input
+  * Before using this function you should check if there is Use this wildcards to remove, otherwise it
+  * will remove always the first character
+  * Performance guard, not a security guard. Prevent expensive queries (*table, ?table)
+
+  * @param string $input User's input string
+  * @return  string               Input string without leading wildcards
+  * @access  public
+  */
+  public function remove_first_character($input) {
     return substr($input, 1);
     }
 
-  public function remove_unbalanced_parentheses($input) {
-    // Ensure all parens match - parentheses balancing
-    // Prevents Solr parser errors. Deletes all parentheses instead of fixing structure
+  /**
+  * Remove parentheses from input
+  * Use this function if you want to remove parentheses from input
+  * It is used if there is unbalanced parentheses in the input
+  * Prevents Solr parser errors. Deletes all parentheses instead of fixing structure
+
+  * @param string $input User's input string
+    * @return  string               Input string without parentheses
+    * @access  public
+  */
+  public function remove_parentheses($input) {
     return str_replace(array('(', ')'), '', $input);
     }
 
+  /**
+    * Remove invalid caret (^) usage from input
+    * Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
+    * Use this function if there is invalid caret usage in the input
+    * @param string $input User's input string
+    * @return  string               Input string without invalid caret usage
+    * @access  public
+  */
   public function remove_invalid_caret_usage($input) {
-    // Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
-    // Regular expression does not support ^1.5
     return str_replace('^', '', $input);
   }
 
@@ -845,6 +869,10 @@ class Solr
   * If input matches the pattern: "phrase"*,
   * return phrase* (quotes removed, wildcard preserved).
   * Otherwise return null.
+
+    * @param string $input User's input string
+    * @return  string|null          Unwrapped quoted wildcard or null
+    * @access  public
   */
   public function unwrapQuotedWildcard(string $input): ?string {
     // Match: optional whitespace + "..." + * + optional whitespace
@@ -865,17 +893,20 @@ class Solr
    * Input Validater
    *
    * Validate the input based on the Lucene Syntax rules.
-   *
+   * This function is efective if:
+   * It is used before building the query
+   * It runs before escaping
+   * It rejects invalid syntax instead of trying to fix it
+   * Escaping is done after validation
    * @param string $input User's input string
    * @return  string  array{valid: bool, error?: string}
    * @access  public
    */
-
+  // TODO: Add the rule: Reject fuzzy operators like "~2"
   // Lianet's notes: Verify if this function could be used to validate the Solr query
   public function validateInput($input) {
 
-    print_r('*****************validateInput input****************');
-    print_r($input);
+
     // 1. Normalize + trim
     $trimmed = trim($input);
 
@@ -1044,10 +1075,10 @@ class Solr
             case 'Invalid single-character query':
                 return false;
             case 'Leading wildcard not allowed':
-                $lookfor = $this->remove_wildcards_add_beginning($lookfor);
+                $lookfor = $this->remove_first_character($lookfor);
                 break;
             case 'Unbalanced parentheses':
-                $lookfor = $this->remove_unbalanced_parentheses($lookfor);
+                $lookfor = $this->remove_parentheses($lookfor);
                 break;
             case 'Invalid boost syntax':
                 $lookfor = $this->remove_invalid_caret_usage($lookfor);

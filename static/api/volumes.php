@@ -5,9 +5,13 @@ set_include_path(get_include_path() . ':../..');
 // Bail immediately if there's no query
 
 // print_r($_REQUEST);
+
+// This may not be possible without a 404 from the current rewrite rules.
 if (!isset($_REQUEST['q']) || !preg_match('/\S/', $_REQUEST['q'])) {
-	header("HTTP/1.0 400 Malformed");
-	exit();
+  header("HTTP/1.0 400 Malformed");
+  header('Content-type: application/json; charset=UTF-8');
+  echo json_encode(['message' => 'missing or empty query']);
+  exit();
 }
 
 require_once 'PEAR.php';
@@ -81,7 +85,14 @@ $commonargs = array(
   'rows' => 200
 );
 
-if ($_REQUEST['brevity'] == 'full') {
+// Set brevity to the default value of "brief" as brevity is not always
+// provided by the rewrite rules in .htaccess
+$brevity = 'brief';
+if (isset($_REQUEST['brevity']) && $_REQUEST['brevity'] == 'full') {
+  $brevity = 'full';
+}
+
+if ($brevity == 'full') {
   $commonargs['fl']  = $commonargs['fl']  . ',fullrecord';
 }
 
@@ -104,6 +115,7 @@ $validField = array(
 class QObj
 {
   public $string;
+  public $brevity;
   private $_id;
   public $tspecs = array(); # Transformed specs
   public $qspecs = array(); # Query specs for solr
@@ -111,11 +123,12 @@ class QObj
   
   
   
-  function __construct($str) {
+  function __construct($str, $brevity) {
     global $validField;
     global $fieldmap;
     
     $this->string = $str;
+    $this->brevity = $brevity;
     
     $specs = explode(';', $str);
     foreach ($specs as $spec) {
@@ -127,7 +140,7 @@ class QObj
 
       if ($field == 'id') {
         $this->_id = $fv[1];
-	continue;
+        continue;
       }
       if (!isset($fv[1])) {
         continue;
@@ -266,7 +279,7 @@ class QObj
           $rinfo[$index . 's'] = array();
         }
       }
-      if ($_REQUEST['brevity'] == 'full') {
+      if ($this->brevity == 'full') {
         $rinfo['marc-xml'] = $doc['fullrecord'];
       }
       $records[$docid] = $rinfo;
@@ -294,7 +307,7 @@ class QObj
         $iinfo['itemURL'] = "https://babel.hathitrust.org/cgi/pt?id=" . $htid;
 
         $rc = isset($ht['rights']) ? $ht['rights'] : 'ic';
-	$rc = is_array($rc) ? $rc[0] : $rc;
+        $rc = is_array($rc) ? $rc[0] : $rc;
         $iinfo['rightsCode'] = $rc;
         $iinfo['lastUpdate'] = $ht['ingest'];
         $iinfo['enumcron'] = (isset($ht['enumcron']) && preg_match('/\S/', $ht['enumcron']))? $ht['enumcron'] : false;
@@ -317,7 +330,7 @@ $solrQueryComponents = array();
 
 
 foreach ($qstrings as $qstring) {
-  $nqo = new QObj($qstring);
+  $nqo = new QObj($qstring, $brevity);
   $solrQueryComponents = array_merge($solrQueryComponents, $nqo->qspecs);
   $qobjs[$qstring] = $nqo;
 }
@@ -331,7 +344,8 @@ $q =  join(' OR ', $solrQueryComponents);
 if (!preg_match('/\S/', $q)) {
   header('HTTP/1.1 400 Bad Request');
   $origQuery = htmlspecialchars($origQuery);
-  echo "Query '$origQuery' is invalid";
+  header('Content-type: application/json; charset=UTF-8');
+  echo json_encode(['message' => "query '$origQuery' is invalid"]);
   exit();
 }
 
@@ -387,12 +401,16 @@ if (isset($_REQUEST['single']) && $_REQUEST['single']) {
 
 if ($_REQUEST['type'] == 'json') {
   if (isset($allmatches['records']) && count($allmatches['records']) == 0) {
+    header('Content-type: application/json; charset=UTF-8');
+    // This is a hack to get the correct JSON representation of the empty `records` hash.
+    // Empty records can still show up serialized as "[]" in multi-record results.
+    // but this takes care of the simplest case.
     echo  "{\n \"records\": {}, \"items\": []\n}";
     exit;
   } else {
     $json = json_encode($allmatches);
     if (isset($_REQUEST['callback'])) {
-      header('Content-type: application/javascript; charset=UTF-8');  
+      header('Content-type: application/javascript; charset=UTF-8');
       echo $_REQUEST['callback'] . "( $json)";
     } else {
       header('Content-type: application/json; charset=UTF-8');

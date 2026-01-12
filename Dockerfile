@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.3-labs
-FROM debian:bullseye
+FROM debian:trixie
 # TODO use PHP image (but then need to build extensions)
 LABEL org.opencontainers.image.source https://github.com/hathitrust/catalog
 
@@ -12,13 +12,12 @@ RUN apt-get update && apt-get install -y \
       php-gd \
       php-http \
       php-ldap \
-      php-mysql \
-      php-mdb2 \
-      php-mdb2-driver-mysql \
-      php-xdebug \
-      php-xsl \
       php-mbstring \
-      pear-channels \
+      php-mysql \
+      php-pear \
+      php-raphf \
+      php-xdebug \
+      php-xml \
       php-yaml \
       smarty3
 
@@ -28,16 +27,9 @@ RUN curl -O https://phar.phpunit.de/phpunit-9.6.11.phar
 RUN chmod +x phpunit-9.6.11.phar && mv phpunit-9.6.11.phar /usr/local/bin/phpunit
 
 RUN pear channel-update pear.php.net && pear install \
-      DB \
-      DB_DataObject \
-      File_CSV \
       File_MARC \
       HTTP_Request2 \
-      HTTP_Session2-beta \
-      Log \
-      Pager \
-      PHP_Compat \
-      Structures_LinkedList-beta
+      Pager
 
 # Default PHP config:
 #  -> class { 'php::apache_config':
@@ -53,8 +45,8 @@ RUN pear channel-update pear.php.net && pear install \
 #    },
 #  }
 
-RUN mkdir /run/php
-COPY ./docker/php_pool.conf /etc/php/7.4/fpm/pool.d/www.conf
+# RUN mkdir /run/php
+COPY ./docker/php_pool.conf /etc/php/8.4/fpm/pool.d/www.conf
 
 #https://github.com/docker-library/php/blob/master/7.4/bullseye/fpm/Dockerfile#L266-L271
 STOPSIGNAL SIGQUIT

@@ -127,3 +127,22 @@ test('Advanced Search adv=1 is retained when selecting a facet', async ({ page, 
   // "Revise this advanced search" button is still present
   await expect(page.getByRole('link', { name: 'Revise this advanced search' })).toBeVisible();
 });
+
+test('Advanced Search adv=1 is retained when selecting viewability facets', async ({ page, isMobile }) => {
+  test.skip(isMobile === true, 'immobile-only test');
+  await page.goto('/Search/Home?adv=1&setft=true&ft=ft&lookfor[]=turner&type[]=author');
+  //await page.getByRole('button', { name: 'Allow all cookies' }).click();
+  // Initial page of results is Full View
+  // Filter on All Items
+  await page.getByRole('link', { name: "All Items" }).click();
+  // adv=1 is still in the URL
+  await expect(page).toHaveURL(/adv=1/);
+  // "Revise this advanced search" button is still present
+  await expect(page.getByRole('link', { name: 'Revise this advanced search' })).toBeVisible();
+  // Filter on Full View
+  await page.getByRole('link', { name: "Full View" }).click();
+  // adv=1 is still in the URL
+  await expect(page).toHaveURL(/adv=1/);
+  // "Revise this advanced search" button is still present
+  await expect(page.getByRole('link', { name: 'Revise this advanced search' })).toBeVisible();
+});

@@ -416,10 +416,6 @@ class Home extends Action {
                 $logargs = "addfacet|$index|" . $vc[0] . "|$i";
                 $url = $this->ss->asURLPlusFilter($index, $vc[0]);
                 $url = preg_replace('/&page=\d+/', '', $url);
-                # Make sure selecting a facet keeps "Revise This Advanced Search" button.
-                if (isset($_REQUEST['adv']) && $_REQUEST['adv'] == '1') {
-                  $url .= "&adv=1";
-                }
                 $counts[$index][] = array('cluster' => $index,
                                              'value' => $vc[0],
                                              'count' => $vc[1],

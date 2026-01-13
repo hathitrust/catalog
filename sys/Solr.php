@@ -953,29 +953,29 @@ class Solr
 
     // Ensure wildcards are not at beginning of input
     // Performance guard, not a security guard. Prevent expensive queries (*table, ?table)
-    if ((substr($input, 0, 1) == '*') ||
-      (substr($input, 0, 1) == '?')) {
-      return substr($input, 1);
-    }
+    //if ((substr($input, 0, 1) == '*') ||
+    //  (substr($input, 0, 1) == '?')) {
+    //  return substr($input, 1);
+    //}
 
     // Ensure all parens match - parentheses balancing
     // Prevents Solr parser errors. Deletes all parentheses instead of fixing structure
-    $start = preg_match_all('/\(/', $input, $tmp);
-    $end = preg_match_all('/\)/', $input, $tmp);
-    if ($start != $end) {
-      return str_replace(array('(', ')'), '', $input);
-    }
+    //$start = preg_match_all('/\(/', $input, $tmp);
+    //$end = preg_match_all('/\)/', $input, $tmp);
+    //if ($start != $end) {
+    //  return str_replace(array('(', ')'), '', $input);
+    //}
 
     // Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
     // Regular expression does not support ^1.5
-    $cnt = preg_match_all('/\^/', $input, $tmp);
-    $matches = preg_match_all('/.+\^[0-9]/', $input, $tmp);
+    //$cnt = preg_match_all('/\^/', $input, $tmp);
+    //$matches = preg_match_all('/.+\^[0-9]/', $input, $tmp);
 
-    if (($cnt) && ($cnt !== $matches)) {
-      return str_replace('^', '', $input);
-    }
+    //if (($cnt) && ($cnt !== $matches)) {
+    //  return str_replace('^', '', $input);
+    //}
 
-    return $input;
+    //return $input;
   }
 
   /**

@@ -378,7 +378,11 @@ class Solr
       return $v;
     }
     else {
-      return '"' . $v . '"';
+      // Escape internal quotes before wrapping
+      // input: He said "hello, the output: He said \"hello
+      // $escaped = str_replace('"', '\\"', $v);
+      // String ready to Solr "He said \"hello"
+      return '"' . $this->lucene_escape_fq($v) . '"';
     }
   }
 
@@ -675,7 +679,9 @@ class Solr
         if (!isset($values[$val]) || ($values[$val] == "")) {
           continue;
         }
-        $sstring = $field . ':(' . $values[$val] . ')';
+        $escaped_value = $this->lucene_escape_literal($values[$val]);
+        $sstring = $field . ':(' . $escaped_value . ')';
+        // $sstring = $field . ':(' . $values[$val] . ')';
         if (isset($weight) && $weight > 0) {
           $sstring .= '^' . $weight;
         }
@@ -873,8 +879,11 @@ class Solr
   public function build_and_or_onephrase($lookfor = null) {
     $values = array();
 
+    // Remove illegal characters
     $illegal = array('.', '{', '}', '/', '!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
     $lookfor = trim(str_replace($illegal, '', $lookfor));
+
+    // Remove
 
     // Replace fancy quotes
     $lookfor = str_replace(array('“', '”'), '"', $lookfor);
@@ -891,7 +900,8 @@ class Solr
     // Validate input
     $lookfor = $this->validateInput($lookfor);
 
-    if (!preg_match('/\S/', $lookfor)) {
+    //if (!preg_match('/\S/', $lookfor) &&) {
+    if (mb_strlen($lookfor) === 1 && preg_match('/^[~\\\\]$/', $lookfor)) {
       return false;
     }
 
@@ -1121,6 +1131,63 @@ class Solr
     $pattern = '/(\+|-|&&|\|\||!|\(|\)|\{|}|\[|]|\^|"|~|\*|\?|:|\\\)/';
     $replace = '\\\$1';
     return preg_replace($pattern, $replace, $str);
+  }
+
+  /**
+   * Strict escape for filter query values and explicit field:value fragments.
+
+   * Use for all fq values and any time you construct field:value with user data.
+   * This function:
+   * - Normalizes Unicode to NFC form
+   * - Removes control characters
+   * - Escapes backslash FIRST (critical ordering)
+   * - Escapes multi-char tokens (&&, ||)
+   * - Escapes all Lucene special characters: + - ! ( ) { } [ ] ^ " ~ * ? : /
+   *
+   * @param string $s Raw user input or value to escape
+   * @return string Safely escaped value for use in Solr fq or field:value
+   */
+   public function lucene_escape_fq(string $s): string {
+    // Normalize Unicode to composed form (NFC)
+    if (function_exists('normalizer_normalize')) {
+        $s = normalizer_normalize($s, Normalizer::FORM_C) ?: $s;
+    }
+
+    // Remove control characters (0x00-0x1F, 0x7F)
+    $s = preg_replace('/[\x00-\x1F\x7F]/u', '', $s);
+
+    // Escape backslash FIRST to avoid double-escaping
+    $s = str_replace('\\', '\\\\', $s);
+
+    // Escape Lucene special characters character-by-character
+    // $specials = ['+', '-', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '/', '&', '|'];
+    // foreach ($specials as $c) {
+    //     $s = str_replace($c, '\\' . $c, $s);
+    // }
+
+    // Use regex to catch all specials, including spaces, in one go
+    // The characters are: + - && || ! ( ) { } [ ] ^ " ~ * ? : /
+    // Note: && and || are handled as single chars & and | here
+    $pattern = '/([\+\-\!\(\)\{\}\[\]\^\"\~\*\?\:\/\&\|])/';
+
+    return preg_replace($pattern, '\\\\$1', $s);
+   }
+    // Less strict escape for general query string values
+    // '~', '*', '?',
+  function lucene_escape_literal(string $s): string {
+    // Escape backslash first
+    $s = str_replace('\\', '\\\\', $s);
+
+    $specials = [
+        '+', '-', '!', '(', ')', '{', '}', '[', ']',
+        '^', '"', ':', '/', '&', '|'
+    ];
+
+    foreach ($specials as $c) {
+        $s = str_replace($c, '\\' . $c, $s);
+    }
+
+    return $s;
   }
 
   function getMoreLikeThis($record, $id, $max = 5) {

@@ -4,7 +4,7 @@
   * Figure out the Record ID from an HTID and do a redirect
 **/
 
-require_once 'PEAR.php';
+//require_once 'PEAR.php';
 require_once 'Apache/Solr/Service.php';
 require_once 'sys/SolrConnection.php';
 

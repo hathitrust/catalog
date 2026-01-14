@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-require_once 'File/MARCXML.php';
+#require_once 'File/MARCXML.php';
+require __DIR__ . '/../vendor/autoload.php';
 require_once 'sys/JSON.php';
 
 const MARC_XML_SKELETON = <<<END_XML

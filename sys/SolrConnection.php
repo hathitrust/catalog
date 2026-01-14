@@ -1,6 +1,7 @@
 <?php
 
-require_once 'HTTP/Request2.php';
+#require_once 'HTTP/Request2.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 class SolrConnection
 {

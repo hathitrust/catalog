@@ -80,7 +80,8 @@ services:
       - ./conf/authspecs-sample.yaml:/app/conf/authspecs.yaml
     working_dir: /app
     depends_on:
-      nginx: *healthy
+      mysql-sdr: *healthy
+      solr-sdr-catalog: *healthy
     command: phpunit --coverage-html coverage
     environment:
       - XDEBUG_MODE=coverage

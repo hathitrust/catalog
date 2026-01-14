@@ -107,5 +107,57 @@ class SolrEscapingTest extends TestCase
     $this->assertEquals('abc123', $solr->lucene_escape_fq('abc123'));
   }
 
+  /**
+    * Helper function to test phrase + fuzzy escaping
+    * @covers Solr::escapePhrase
+  */
+  public function testPhraseWithFuzzyIsPreserved(): void
+  {
+
+    $solr = new Solr('', '');
+
+    $this->assertEquals(
+        '"machine learning"~3',
+        $solr->escapePhrase('machine learning"~3')
+    );
+  }
+
+  /**
+    * Helper function to test boolean operators within phrases preserved
+    * @covers Solr::escapeBoolean
+  */
+  public function testBooleanEscaping(): void
+  {
+    $solr = new Solr('', '');
+    $this->assertEquals(
+        'dramatic AND literature',
+        $solr->escapeBoolean('dramatic AND literature')
+    );
+  }
+
+  /**
+  * Helper function to test prefix preserved, not escaped away
+    * @covers Solr::escapePrefix
+  */
+  public function testPrefixQuery() {
+
+    $solr = new Solr('', '');
+    $this->assertEquals(
+        'machine*',
+        $solr->escapePrefix('machine*')
+    );
+  }
+
+  /**
+  * Helper function to test prefix preserved, not escaped away
+    * @covers Solr::escapeTerm
+  */
+  public function testFieldInjectionBlocked() {
+
+    $solr = new Solr('', '');
+    $escaped = $solr->escapeTerm('title:evil');
+    $this->assertEquals('title\\:evil', $escaped);
+  }
+
 }
 ?>

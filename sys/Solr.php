@@ -352,6 +352,8 @@ class Solr
     foreach ($ss->search as $tvb) { // Type, Value (keywords), Boolean AND or OR
       $type = $tvb[0];
       $values = $this->build_and_or_onephrase($tvb[1]);
+      print_r('**************values****************');
+      print_r($values);
       $bool = isset($tvb[2]) ? $tvb[2] : false;
       if (isset($specs[$type]) && $values) {
         $comp = '(' . $this->__buildQueryString($specs[$type], $values) . ')';
@@ -631,6 +633,83 @@ class Solr
     return $url_base . '?' . implode('&', $params);
   }
 
+  /**
+  * Helper function to escape all Lucene literal special characters.
+  * Lucene's Standard Query Parser special characters are:
+  * + - && || ! ( ) { } [ ] ^ " ~ * ? : \ /
+  * Escape Lucene special characters for a literal term (NO operators)
+  */
+  private function escapeLuceneLiteral(string $s): string {
+    // Escape backslash first
+    $s = str_replace('\\', '\\\\', $s);
+
+    // Lucene special chars
+    $pattern = '/([+\-!(){}\[\]^"~*?:\/])/';
+    return preg_replace($pattern, '\\\\$1', $s);
+  }
+
+  /**
+  * exactmatcher, stdnum, normalize tokens.
+  * No quotes, no operators, just alphanumerics, *, ?
+  */
+  public function escapeTerm(string $term): string {
+    return $this->escapeLuceneLiteral($term);
+  }
+
+  /**
+    * Escape a phrase for Lucene phrase search. Use for: "machine learning" or "machine learning"~3
+    * Preserves phrase, allows valid fuzzy and prevents injection inside quotes
+  */
+  public function escapePhrase(string $phrase): string {
+    // Detect optional fuzzy suffix
+    if (preg_match('/^(.*)"~(\d+)$/u', $phrase, $m)) {
+        $inner = $m[1];
+        $distance = $m[2];
+        return '"' . $this->escapeLuceneLiteral($inner) . '"~' . $distance;
+    }
+
+    return '"' . $this->escapeLuceneLiteral($phrase) . '"';
+  }
+
+  /**
+    * Escape a boolean expression for Lucene boolean search. Use for: term1 AND term2 OR "phrase here"
+    * Use for: dramatic AND literature
+    * Operators AND, OR are preserved, everything else is escaped as literal (Terms). No accidental field injection
+  */
+  public function escapeBoolean(string $expr): string {
+    $parts = preg_split('/\s+(AND|OR)\s+/i', $expr, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+    $out = [];
+    foreach ($parts as $p) {
+        if (strcasecmp($p, 'AND') === 0 || strcasecmp($p, 'OR') === 0) {
+            $out[] = strtoupper($p);
+        } else {
+            $out[] = $this->escapeLuceneLiteral($p);
+        }
+    }
+    return implode(' ', $out);
+  }
+
+ /**
+ * Escape a prefix query for Lucene prefix search. Use for: prefix*
+ * Prevents *table
+ * Preserves prefix semantics
+ * @throws InvalidArgumentException if leading wildcard is used or if not a prefix query
+ * @return string The escaped prefix query
+ */
+ public function escapePrefix(string $prefix): string {
+    //if ($prefix[0] === '*' || $prefix[0] === '?') {
+    //    throw new InvalidArgumentException('Leading wildcard not allowed');
+    //}
+
+    //if (!str_ends_with($prefix, '*')) {
+    //    throw new InvalidArgumentException('Not a prefix query');
+    //}
+
+    $base = substr($prefix, 0, -1);
+    return $this->escapeLuceneLiteral($base) . '*';
+ }
+
 
   /**
    * __buildQueryString -- internal method to build query string from search parameters
@@ -647,7 +726,7 @@ class Solr
   private function __buildQueryString($structure, $values, $joiner = "OR") {
     $clauses = array();
     foreach ($structure as $field => $clausearray) {
-      // is_numeric($field) is true iff we've got an un-hashed array, used for grouping
+      // is_numeric($field) is true if we've got an un-hashed array, used for grouping
       if (is_numeric($field)) {
         // get the op (AND or OR) and weight from the first item
         $opweight = array_shift($clausearray);
@@ -696,9 +775,33 @@ class Solr
         }
         // Lianet's notes: Escape the value for safe embedding in field:value syntax
 
-        $escaped_value = $this->lucene_escape_literal($values[$val]);
-        $sstring = $field . ':(' . $escaped_value . ')';
+        //$escaped_value = $this->lucene_escape_literal($values[$val]);
+        //$sstring = $field . ':(' . $escaped_value . ')';
 
+        switch ($val) {
+            case 'onephrase':
+                // "\"dramatic literature, comprehending critical\""
+                $escaped_value = $this->escapePhrase($values[$val]);
+                break;
+
+            case 'and':
+            case 'or':
+                // and -- dramatic AND literature, AND comprehending AND critical
+                // or -- dramatic OR literature, OR comprehending OR critical
+                $escaped_value = $this->escapeBoolean($values[$val]);
+                break;
+
+            case 'emstartswith':
+                // dramaticliteraturecomprehendingcritical*
+                $escaped_value = $this->escapePrefix($values[$val]);
+                break;
+
+            default:
+                // exactmatcher - dramaticliteraturecomprehendingcritical
+                $escaped_value = $this->escapeTerm($values[$val]);
+        }
+
+        $sstring = $field . ':(' . $escaped_value . ')';
         // $sstring = $field . ':(' . $values[$val] . ')';
         if (isset($weight) && $weight > 0) {
           $sstring .= '^' . $weight;
@@ -1063,14 +1166,12 @@ class Solr
   public function build_and_or_onephrase($lookfor = null) {
     $values = array();
 
-    $illegal = array('.', '{', '}', '/', '!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
-    $lookfor = trim(str_replace($illegal, '', $lookfor));
+    //$illegal = array('.', '{', '}', '/', '!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
+    //$lookfor = trim(str_replace($illegal, '', $lookfor));
 
     // Replace fancy quotes
     $lookfor = str_replace(array('“', '”'), '"', $lookfor);
 
-    // Replace fancy quotes
-    $lookfor = str_replace(array('“', '”'), '"', $lookfor);
 
     // If it looks like "..."*, pull out the quotes
     $unwrapped = $this->unwrapQuotedWildcard($lookfor);
@@ -1112,12 +1213,19 @@ class Solr
     // Tokenize Input
     $tokenized = $this->tokenizeInput($lookfor);
 
+    // Phrase search - "dramatic literature, comprehending critical"
     $values['onephrase'] = '"' . preg_replace('/"/', '', implode(' ', $tokenized)) . '"';
+    // AND search - dramatic AND literature, AND comprehending AND critical
     $values['and'] = implode(' AND ', $tokenized);
+    // OR search - dramatic OR literature, OR comprehending OR critical
     $values['or'] = implode(' OR ', $tokenized);
+    // As-is search - dramatic literature, comprehending critical
     $values['asis'] = $lookfor;
+    // Compressed search - dramaticliterature,comprehendingcritical
     $values['compressed'] = preg_replace('/\s/', '', $lookfor);
+    // Exactmatcher search - dramaticliteraturecomprehendingcritical
     $values['exactmatcher'] = $this->exactmatcherify($lookfor);
+    // Exactmatcher startswith search - dramaticliteraturecomprehendingcritical*
     $values['emstartswith'] = $values['exactmatcher'] . '*';
 
     return $values;
@@ -1373,12 +1481,6 @@ class Solr
     // Escape backslash FIRST to avoid double-escaping
     $s = str_replace('\\', '\\\\', $s);
 
-    // Escape Lucene special characters character-by-character
-    // $specials = ['+', '-', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '/', '&', '|'];
-    // foreach ($specials as $c) {
-    //     $s = str_replace($c, '\\' . $c, $s);
-    // }
-
     // Use regex to catch all specials, including spaces, in one go
     // The characters are: + - && || ! ( ) { } [ ] ^ " ~ * ? : /
     // Note: && and || are handled as single chars & and | here
@@ -1386,23 +1488,6 @@ class Solr
 
     return preg_replace($pattern, '\\\\$1', $s);
    }
-    // Less strict escape for general query string values
-    // '~', '*', '?',
-  function lucene_escape_literal(string $s): string {
-    // Escape backslash first
-    $s = str_replace('\\', '\\\\', $s);
-
-    $specials = [
-        '+', '-', '!', '(', ')', '{', '}', '[', ']',
-        '^', '"', ':', '/', '&', '|'
-    ];
-
-    foreach ($specials as $c) {
-        $s = str_replace($c, '\\' . $c, $s);
-    }
-
-    return $s;
-  }
 
   function getMoreLikeThis($record, $id, $max = 5) {
     global $configArray;

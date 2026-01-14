@@ -1063,6 +1063,21 @@ class Solr
   public function build_and_or_onephrase($lookfor = null) {
     $values = array();
 
+    $illegal = array('.', '{', '}', '/', '!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
+    $lookfor = trim(str_replace($illegal, '', $lookfor));
+
+    // Replace fancy quotes
+    $lookfor = str_replace(array('“', '”'), '"', $lookfor);
+
+    // Replace fancy quotes
+    $lookfor = str_replace(array('“', '”'), '"', $lookfor);
+
+    // If it looks like "..."*, pull out the quotes
+    $unwrapped = $this->unwrapQuotedWildcard($lookfor);
+    if ($unwrapped !== null) {
+        $lookfor = $unwrapped;
+    }
+
     $validation = $this->validateInput($lookfor);
     if (!$validation['valid']) {
         // Considering the logic of updating the user input query as the application is doing now
@@ -1087,27 +1102,15 @@ class Solr
 
     }
 
-    // Replace fancy quotes
-    $lookfor = str_replace(array('“', '”'), '"', $lookfor);
-
-    // If it looks like "..."*, pull out the quotes
-    $unwrapped = $this->unwrapQuotedWildcard($lookfor);
-    if ($unwrapped !== null) {
-        $lookfor = $unwrapped;
-}
-
     // Validate input
     //$lookfor = $this->validateInput($lookfor);
 
-    //if (!preg_match('/\S/', $lookfor)) {
-    //  return false;
-    //}
+    if (!preg_match('/\S/', $lookfor)) {
+      return false;
+    }
 
     // Tokenize Input
     $tokenized = $this->tokenizeInput($lookfor);
-
-    //Lianet's note: Escape here!!!!!!!
-
 
     $values['onephrase'] = '"' . preg_replace('/"/', '', implode(' ', $tokenized)) . '"';
     $values['and'] = implode(' AND ', $tokenized);

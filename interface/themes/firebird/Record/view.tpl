@@ -29,7 +29,7 @@
     {* <div class="container container-medium flex-container flex-container-expanded container-boxed"> *}
     <div class="twocol mt-1">
 
-      <section class="twocol-main" id="section" data-record-count="{$recordCount|default:"0"}">
+      <section class="twocol-main" id="section">
         <article class="record d-flex flex-column gap-3 p-3 mb-3 mt-3" data-hdl="{$ld.handle}">
           <div class="article-heading d-flex gap-3">
 

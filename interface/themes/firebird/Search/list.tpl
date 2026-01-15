@@ -32,7 +32,7 @@ FIREBIRD TODOS:
 
       {include file="Search/list.sidebar.tpl"}
 
-      <section class="twocol-main" id="section" data-record-count="{$recordCount}">
+      <section class="twocol-main" id="section" data-record-count="{$recordCount|default:0}">
         <h1 class="listcs-intro">
             Search results
         </h1>

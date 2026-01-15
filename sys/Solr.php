@@ -957,6 +957,29 @@ class Solr
     }
 
   /**
+  * Remove wrapping double quotes from a string, if present.
+  *
+  * Examples:
+  *  - '"table"'        → table
+  *  - ' "table" '      → table
+  *  - '"table name"'   → table name
+  *  - 'table "name"'   → table "name"   (unchanged)
+  *  - '"table"name"'  → "table"name"   (unchanged)
+  *
+  * @param string $s
+  * @return string
+  */
+  public function remove_quotes(string $s): string {
+   $s = trim($s);
+
+   if (mb_strlen($s) >= 2 && $s[0] === '"' && substr($s, -1) === '"') {
+    return substr($s, 1, -1);
+   }
+
+   return $s;
+  }
+
+  /**
     * Remove invalid caret (^) usage from input
     * Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
     * Use this function if there is invalid caret usage in the input
@@ -995,21 +1018,32 @@ class Solr
   /**
    * Input Validater
    *
-   * Validate the input based on the Lucene Syntax rules.
-   * This function is efective if:
+   * Validate the user input for Solr queries.
+   * This function is effective if:
    * It is used before building the query
    * It runs before escaping
    * It rejects invalid syntax instead of trying to fix it
    * Escaping is done after validation
-   * @param string $input User's input string
-   * @return  string  array{valid: bool, error?: string}
+   * This validator:
+   * - Rejects empty input or garbage-only input
+   * - Rejects meaningless single-character input (~, \)
+   * - Rejects leading wildcards (*, ?)
+    * - Validates balanced parentheses and quotes
+    * - Validates boost syntax (^number)
+    * - Validates fuzzy operators (~N)
+    * - Validates fielded queries (field:value)
+    * - Rejects empty boolean groups
+    *
+    * @param string $input Raw user input
+    * @return array{valid: bool, error?: string} Validation result
    * @access  public
    */
   // TODO: Add the rule: Reject fuzzy operators like "~2"
   // Lianet's notes: Verify if this function could be used to validate the Solr query
   public function validateInput($input) {
 
-
+    print_r('Estoy en validateInput');
+    print_r($input);
     // 1. Normalize + trim
     $trimmed = trim($input);
 
@@ -1018,12 +1052,12 @@ class Solr
      return ['valid' => false, 'error' => 'Empty query'];
     }
 
-    // 3. Strip garbage-only input ~~//^&$
+    // 3. Strip garbage-only input ~~//^&$ (no letters or numbers)
     if ($trimmed !== '' && !preg_match('/[\p{L}\p{N}]/u', $trimmed)) {
         return ['valid' => false, 'error' => 'Invalid garbage-only query'];
     }
 
-    // 4. Reject meaningless single-character input
+    // 4. Reject meaningless single-character input (~ or \)
     if (mb_strlen($trimmed) === 1 && preg_match('/^[~\\\\]$/', $trimmed)) {
       return ['valid' => false, 'error' => 'Invalid single-character query'];
     }
@@ -1041,44 +1075,101 @@ class Solr
     if (substr_count($trimmed, '(') !== substr_count($trimmed, ')')) {
       return ['valid' => false, 'error' => 'Unbalanced parentheses'];
     }
-    // 7. Valid boost syntax (^number or ^number.number)
+    // 7. Balanced quotes
+    if (substr_count($trimmed, '"') % 2 !== 0) {
+        return ['valid' => false, 'error' => 'Unbalanced quotes'];
+    }
+
+    // 8. Valid boost syntax (^number or ^number.number)
     // Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
-    // Regular expression does not support ^1.5
-    if (preg_match('/\^/', $trimmed)) {
-     // Any caret must be followed by a valid numeric boost
-     if (!preg_match('/\^[0-9]+(\.[0-9]+)?/', $trimmed)) {
-      return ['valid' => false, 'error' => 'Invalid boost syntax'];
-     }
+    // Rejects invalid boosts (^, ^abc)
+    if (preg_match_all('/\^([^\s]+)/', $trimmed, $matches)) {
+        foreach ($matches[1] as $boost) {
+            if (!preg_match('/^[0-9]+(\.[0-9]+)?$/', $boost)) {
+                return ['valid' => false, 'error' => 'Invalid boost syntax'];
+            }
+        }
+    }
+
+    // 9. Reject multiple boosts on the same term (table^2^3)
+    if (preg_match('/\^[0-9]+(\.[0-9]+)?\s*\^/', $trimmed)) {
+     return ['valid' => false, 'error' => 'Multiple boosts on same term'];
+    }
+
+    // 10. Reject dangling boost operator like table^
+    if (preg_match('/\^\s*(\)|$)/', $trimmed)) {
+        return ['valid' => false, 'error' => 'Dangling boost operator'];
+    }
+
+    // ---------------------
+    // 11. Fuzzy operator validation
+    // ---------------------
+
+    // Rules:
+    // - ~ must be followed by a non-negative integer
+    // - ~ cannot be doubled (~~)
+    // - ~ must not be followed by letters
+    // - ~ must not appear inside field: without a term
+    // - standalone ~2 IS allowed (syntactically valid Lucene)
+
+    // 11.1 Reject repeated fuzzy operators like table~~2
+    if (preg_match('/~~+/', $trimmed)) {
+        return ['valid' => false, 'error' => 'Repeated fuzzy operator'];
+    }
+
+    // 11.2 Reject fuzzy operators with non-numeric distance (table~abc, "foo"~x)
+    if (preg_match('/~(?!\d+\b)/', $trimmed)) {
+        return ['valid' => false, 'error' => 'Invalid fuzzy syntax'];
+    }
+
+    // 11.3 Reject fielded fuzzy with no term: title:~2
+    if (preg_match('/\b[\w\-]+:\s*~\d+\b/', $trimmed)) {
+        return ['valid' => false, 'error' => 'Fuzzy operator without term'];
+    }
+
+    // ---------------------
+    // 12. Field validation
+    // ---------------------
+
+    // 12.1 Reject empty field groups like title:( )
+    if (preg_match('/\b[\w\-]+:\(\s*\)/', $trimmed)) {
+     return ['valid' => false, 'error' => 'Empty field group'];
+    }
+
+    // 12.2 Reject empty field values like title:
+    if (preg_match('/\b[\w\-]+:\s*(\)|$)/', $trimmed)) {
+     return ['valid' => false, 'error' => 'Empty field value'];
+    }
+
+    // 12.3. Fielded query validation (field:value)
+    // Rejects malformed field queries (title:, :table, title::table)
+    if (preg_match_all('/(\b[\w\-]+):/', $trimmed, $fields)) {
+        foreach ($fields[1] as $field) {
+            // Reject empty field names (shouldn't happen due to regex)
+            if ($field === '') {
+                return ['valid' => false, 'error' => 'Empty field name'];
+            }
+        }
+    }
+
+    // 13. Reject dangling colons
+    if (preg_match('/(^|[^\\w]):|::/', $trimmed)) {
+        return ['valid' => false, 'error' => 'Malformed field:value syntax'];
+    }
+
+    // 14. Reject empty boolean groups inside parentheses
+    // Rejects empty boolean groups ((AND), (OR NOT))
+    if (preg_match('/\((\s*(AND|OR|NOT)\s*)+\)/i', $trimmed)) {
+        return ['valid' => false, 'error' => 'Empty boolean group'];
+    }
+
+    // 15. Reject fielded queries ending with boolean operators
+    if (preg_match('/\b[\w\-]+:\([^)]*(AND|OR|NOT)\s*\)/i', $trimmed)) {
+     return ['valid' => false, 'error' => 'Incomplete boolean expression in field'];
     }
 
  return ['valid' => true];
 
-
-    // Ensure wildcards are not at beginning of input
-    // Performance guard, not a security guard. Prevent expensive queries (*table, ?table)
-    //if ((substr($input, 0, 1) == '*') ||
-    //  (substr($input, 0, 1) == '?')) {
-    //  return substr($input, 1);
-    //}
-
-    // Ensure all parens match - parentheses balancing
-    // Prevents Solr parser errors. Deletes all parentheses instead of fixing structure
-    //$start = preg_match_all('/\(/', $input, $tmp);
-    //$end = preg_match_all('/\)/', $input, $tmp);
-    //if ($start != $end) {
-    //  return str_replace(array('(', ')'), '', $input);
-    //}
-
-    // Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
-    // Regular expression does not support ^1.5
-    //$cnt = preg_match_all('/\^/', $input, $tmp);
-    //$matches = preg_match_all('/.+\^[0-9]/', $input, $tmp);
-
-    //if (($cnt) && ($cnt !== $matches)) {
-    //  return str_replace('^', '', $input);
-    //}
-
-    //return $input;
   }
 
   /**
@@ -1166,9 +1257,10 @@ class Solr
   public function build_and_or_onephrase($lookfor = null) {
     $values = array();
 
-    //$illegal = array('.', '{', '}', '/', '!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
-    //$lookfor = trim(str_replace($illegal, '', $lookfor));
+    $illegal = array('.', '{', '}', '/', '!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
+    $lookfor = trim(str_replace($illegal, '', $lookfor));
 
+    print_r($lookfor);
     // Replace fancy quotes
     $lookfor = str_replace(array('“', '”'), '"', $lookfor);
 
@@ -1180,6 +1272,9 @@ class Solr
     }
 
     $validation = $this->validateInput($lookfor);
+
+    print_r($validation);
+
     if (!$validation['valid']) {
         // Considering the logic of updating the user input query as the application is doing now
 
@@ -1190,15 +1285,40 @@ class Solr
                 return false;
             case 'Invalid single-character query':
                 return false;
+            //case 'Standalone operator not allowed':
+            //    return false;
             case 'Leading wildcard not allowed':
                 $lookfor = $this->remove_first_character($lookfor);
                 break;
             case 'Unbalanced parentheses':
                 $lookfor = $this->remove_parentheses($lookfor);
                 break;
+            case 'Unbalanced quotes':
+                $lookfor = $this->remove_quotes($lookfor);
+                break;
             case 'Invalid boost syntax':
                 $lookfor = $this->remove_invalid_caret_usage($lookfor);
                 break;
+            case 'Multiple boosts on same term':
+                $lookfor = $this->remove_invalid_caret_usage($lookfor);
+                break;
+            case 'Dangling boost operator':
+                $lookfor = $this->remove_invalid_caret_usage($lookfor);
+                break;
+            case 'Repeated fuzzy operator':
+                return false;
+            case 'Invalid fuzzy syntax':
+                return false;
+            case 'Fuzzy operator without term':
+                return false;
+            case 'Empty field group':
+                return false;
+            case 'Empty field value':
+                return false;
+            case 'Empty field name':
+                return false;
+
+
         }
 
     }

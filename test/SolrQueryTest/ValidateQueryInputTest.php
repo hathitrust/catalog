@@ -250,8 +250,7 @@ final class ValidateQueryInputTest extends TestCase
             'title:"data science"',
             'table~2',
             'table~0.5',
-            '"data science"~2',
-            'table~',
+            '"data science"~2'
         ];
 
         foreach ($validInputs as $input) {
@@ -265,27 +264,26 @@ final class ValidateQueryInputTest extends TestCase
     /**
     * @covers Solr::validateInput
     */
-    // TODO: Fix fuzzy term validation to reject invalid fuzzy terms
-    /**
-    *public function testRejectsInvalidFuzzyTerms(): void
-    *{
-    *    $invalid = [
-    *        '~2',
-    *        'table~~2',
-    *        'table~abc',
-    *        'table~2~',
-    *        '"table"~abc',
-    *    ];
+    public function testRejectsInvalidFuzzyTerms(): void
+    {
+        $invalid = [
+            'table~~2',
+            'table~abc',
+            'table~2~',
+            '"table"~abc',
+            'table^2^3',
+            'table~'
+        ];
 
-    *    foreach ($invalid as $input) {
-    *        $result = $this->solr->validateInput($input);
-    *        $this->assertFalse(
-    *            $result['valid'],
-    *            "Expected invalid fuzzy query: {$input}"
-    *        );
-    *    }
-    *}
-    */
+        foreach ($invalid as $input) {
+            $result = $this->solr->validateInput($input);
+            $this->assertFalse(
+                $result['valid'],
+                "Invalid fuzzy syntax not allowed: {$input}"
+            );
+        }
+    }
+
     /* ============================================================
     * Fielded query validation (field:value)
     * ============================================================
@@ -317,34 +315,32 @@ final class ValidateQueryInputTest extends TestCase
     /**
     * @covers Solr::validateInput
     */
-    // TODO: Improve fielded query validation to catch more errors
-    /**
-    *public function testRejectsInvalidFieldedQueries(): void
-    *{
-    *    $invalid = [
-    *        'title:',
-    *        ':table',
-    *        'title::table',
-    *        'title:table^',
-    *        'title:table^abc',
-    *        'title:~2',
-    *        'title:(table',
-    *        'title:table)',
-    *        'title:"table',
-    *        'title:"table"~',
-    *        'title:table~abc',
-    *        'title:(table AND)'
-    *    ];
+    public function testRejectsInvalidFieldedQueries(): void
+    {
+        $invalid = [
+            'title:',
+            ':table',
+            'title::table',
+            'title:table^',
+            'title:table^abc',
+            'title:~2',
+            'title:(table',
+            'title:table)',
+            'title:"table',
+            'title:"table"~',
+            'title:table~abc',
+            'title:(table AND)'
+        ];
 
-    *    foreach ($invalid as $input) {
-    *        $result = $this->solr->validateInput($input);
-    *        $this->assertFalse(
-    *            $result['valid'],
-    *            "Expected invalid fielded query: {$input}"
-    *        );
-    *    }
-    *}
-    */
+        foreach ($invalid as $input) {
+            $result = $this->solr->validateInput($input);
+            $this->assertFalse(
+                $result['valid'],
+                "Expected invalid fielded query: {$input}"
+            );
+        }
+    }
+
 
 
 }

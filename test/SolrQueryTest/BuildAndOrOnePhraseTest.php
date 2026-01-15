@@ -37,7 +37,7 @@ class BuildAndOrOnePhraseTest extends TestCase
     }
 
     /**
-    * @covers Solr::validateInput
+    * @covers Solr::build_and_or_onephrase
     */
     public function testUnbalanceFuncyQuote(): void
     {
@@ -111,5 +111,6 @@ class BuildAndOrOnePhraseTest extends TestCase
         $this->assertEquals('"table*"', $result['onephrase']);
         $this->assertEquals('table*', $result['asis']);
     }
+
 }
 ?>

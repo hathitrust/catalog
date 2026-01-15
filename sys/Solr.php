@@ -1550,7 +1550,7 @@ class Solr
     return str_replace(array('(', ')','[', ']', '!', '&', ':', ';', '-', '/', '"'), '', $str);
   }
   
-  // TODO: Check this function for correctness
+  // TODO: Delete this function
    function lucene_escape($str) {
     $pattern = '/(\+|-|&&|\|\||!|\(|\)|\{|}|\[|]|\^|"|~|\*|\?|:|\\\)/';
     $replace = '\\\$1';
@@ -1603,26 +1603,26 @@ class Solr
       return null;
     }
 
-    $query = '(title:("' . $this->lucene_escape($this->mltesc($record['title'][0])) . '")^75';
+    $query = '(title:("' . $this->lucene_escape_fq($this->mltesc($record['title'][0])) . '")^75';
     if (isset($record['shorttitle'])) {
-      $query .= ' OR title:("' . $this->lucene_escape($this->mltesc($record['title'][0])) . '")^100';
+      $query .= ' OR title:("' . $this->lucene_escape_fq($this->mltesc($record['title'][0])) . '")^100';
     }
 
     if (isset($record['fulltopic'])) {
       foreach ($record['fulltopic'] as $topic) {
-        $query .= ' OR fulltopic:("' . $this->lucene_escape($this->mltesc($topic)) . '")^300';
+        $query .= ' OR fulltopic:("' . $this->lucene_escape_fq($this->mltesc($topic)) . '")^300';
       }
     }
 
     if (isset($record['language'])) {
       foreach ($record['language'] as $language) {
-        $query .= ' OR language:("' . $this->lucene_escape($this->mltesc($language)) . '")^30';
+        $query .= ' OR language:("' . $this->lucene_escape_fq($this->mltesc($language)) . '")^30';
       }
     }
 
     if (isset($record['author'])) {
       foreach ($record['author'] as $author) {
-        $query .= ' OR author:("' . $this->lucene_escape($this->mltesc($author)) . '")^75';
+        $query .= ' OR author:("' . $this->lucene_escape_fq($this->mltesc($author)) . '")^75';
       }
 
     }

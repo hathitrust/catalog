@@ -104,11 +104,7 @@ class Solr
       $limit = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : $configArray['Site']['itemsPerPage'];
     }
 
-    error_log("SearchStructure: " . print_r($ss) . "\n");
-    echo "\n";
-    print_r($ss);
-    echo "\n";
-    
+
     // The initial query
     if ($ss->use_dismax) {
       $ss->action = 'edismax';
@@ -132,13 +128,12 @@ class Solr
     if ($ss->checkSpelling) {
       $args = array_merge($args, $this->spellcheckComponents($ss));
     }
-
+    // $raw is always false, so rawSolrSearch is never used
     if ($raw) {
       return $this->rawSolrSearch($args, $action);
     }
 
     // Otherwise...
-    print_r('22222222222222222222222222222222 ');
     $rv = $this->solrSearch($args, $action);
     return $rv;
   }
@@ -281,9 +276,6 @@ class Solr
     // Should just be on "lookfor" and "type"
     $tvb = isset($ss->search[0]) ? $ss->search[0] : array('all', '*:*');
     $type = $tvb[0];
-    print_r('**************type****************');
-    print_r($type);
-    print_r('******************************');
     // $value is the search string
     $value = $tvb[1];
 
@@ -1042,8 +1034,6 @@ class Solr
   // Lianet's notes: Verify if this function could be used to validate the Solr query
   public function validateInput($input) {
 
-    print_r('Estoy en validateInput');
-    print_r($input);
     // 1. Normalize + trim
     $trimmed = trim($input);
 
@@ -1260,7 +1250,7 @@ class Solr
     $illegal = array('.', '{', '}', '/', '!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
     $lookfor = trim(str_replace($illegal, '', $lookfor));
 
-    print_r($lookfor);
+
     // Replace fancy quotes
     $lookfor = str_replace(array('“', '”'), '"', $lookfor);
 
@@ -1272,8 +1262,6 @@ class Solr
     }
 
     $validation = $this->validateInput($lookfor);
-
-    print_r($validation);
 
     if (!$validation['valid']) {
         // Considering the logic of updating the user input query as the application is doing now

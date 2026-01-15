@@ -1027,6 +1027,7 @@ class SearchStructure
 
 
     // Take from http://www.toao.net/48-replacing-smart-quotes-and-em-dashes-in-mysql
+    // TODO: That function is never used
     function convert_smart_quotes($text)
     {
         // First, replace UTF-8 characters.

@@ -344,8 +344,7 @@ class Solr
     foreach ($ss->search as $tvb) { // Type, Value (keywords), Boolean AND or OR
       $type = $tvb[0];
       $values = $this->build_and_or_onephrase($tvb[1]);
-      print_r('**************values****************');
-      print_r($values);
+
       $bool = isset($tvb[2]) ? $tvb[2] : false;
       if (isset($specs[$type]) && $values) {
         $comp = '(' . $this->__buildQueryString($specs[$type], $values) . ')';
@@ -1306,7 +1305,6 @@ class Solr
             case 'Empty field name':
                 return false;
 
-
         }
 
     }
@@ -1438,9 +1436,6 @@ class Solr
     }
 
     $this->solr_connection->add($args);
-
-    print_r('======================');
-    print_r($args);
 
     # Just want a list of IDs? Produce it and die
     if (isset($_REQUEST['htid_list'])) {

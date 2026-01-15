@@ -12,7 +12,7 @@
 
     <div class="container container-medium flex-container flex-container-expanded container-boxed" style="margin-top: 1.75rem; margin-bottom: 1.75rem">
 
-      <section class="section-container" id="section" data-record-count="{$recordCount}">
+      <section class="section-container" id="section" data-record-count="{$recordCount|default:0}">
         <h1>
             The catalog record could not be found.
         </h1>

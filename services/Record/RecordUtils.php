@@ -131,7 +131,7 @@ function items_from_raw_json($json_string) {
     $rv['original_from'] = $HT_COLLECTIONS[$collection]['original_from'];
     $rv['enumchron'] = $e['enumcron'] ?? '';
     $rv['is_fullview'] = $this->is_fullview($rv['rights_code']);
-    $rv['is_tombstone'] = $rv['rights_code'] == 'nobody';
+    $rv['is_tombstone'] = $this->is_tombstone($rv['rights_code']);
 
     $heldby = $e['heldby'];
 
@@ -168,11 +168,10 @@ function items_from_raw_json($json_string) {
       && $this->is_held_by_user_institution($heldby);
   }
 
-
   function record_is_tombstone($rec) {
     $htjson = json_decode($rec['ht_json'], true);
     foreach ($htjson as $item) {
-      if ($item['rights'] != 'nobody') {
+      if (!$this->is_tombstone($item['rights'])) {
         return false;
       }
     }
@@ -237,6 +236,17 @@ function items_from_raw_json($json_string) {
     return $fv;
   }
 
+  function is_tombstone($rcodes) {
+    if (!is_array($rcodes)) {
+      $rcodes = array($rcodes);
+    }
+    foreach ($rcodes as $rcode) {
+      if (preg_match('/nobody/', $rcode)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   function is_open_to_no_one($rcodes) {
     if (!is_array($rcodes)) {
@@ -244,11 +254,11 @@ function items_from_raw_json($json_string) {
     }
     foreach ($rcodes as $rcode) {
       if (
-          (preg_match('/pd-pvt/', $rcode)) ||
-          (preg_match('/nobody/', $rcode)) ||
-          (preg_match('/supp/', $rcode))
-	 ) {
-	 return true;
+        (preg_match('/pd-pvt/', $rcode)) ||
+        (preg_match('/nobody/', $rcode)) ||
+        (preg_match('/supp/', $rcode))
+      ) {
+        return true;
       }
     }
     return false;

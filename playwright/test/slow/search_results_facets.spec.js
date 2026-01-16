@@ -146,3 +146,19 @@ test('Advanced Search adv=1 is retained when selecting viewability facets', asyn
   // "Revise this advanced search" button is still present
   await expect(page.getByRole('link', { name: 'Revise this advanced search' })).toBeVisible();
 });
+
+test('Advanced Search adv=1 is removed when removing advanced search terms', async ({ page, isMobile }) => {
+  test.skip(isMobile === true, 'immobile-only test');
+  await page.goto('/Search/Home?adv=1&setft=true&ft=ft&lookfor[]=jones&type[]=author');
+  //await page.getByRole('button', { name: 'Allow all cookies' }).click();
+  // Add another filter so there's still a filter in the list after we remove the advanced one.
+  // This is so we can double check adv=1 is gone by looking for the "Revise..." button.
+  await page.getByRole('button', { name: "Language" }).click();
+  await page.getByRole('link', { name: "English" }).click();
+  // Remove the author filter
+  await page.getByRole('link', { name: 'Remove filter Author: jones' }).click();
+  // adv=1 is no longer in the URL
+  await expect(page).not.toHaveURL(/adv=1/);
+  // "Revise this advanced search" button is no longer present
+  await expect(page.locator('span:has-text("Revise this advanced search")')).toHaveCount(0);
+});

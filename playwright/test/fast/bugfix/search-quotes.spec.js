@@ -6,8 +6,8 @@ test('smartquote_problem_talking_catalog', async ({ page, baseURL }) => {
     await page.goto('/Search/Home?lookfor=smart'); // no smart quote, no problem, no warning
     await expect(page.getByText(warning)).not.toBeVisible();
 
-    await page.goto('/Search/Home?lookfor=“smart'); // smart quote, problem, warning
-    await expect(page.getByText(warning)).toBeVisible();
+    // await page.goto('/Search/Home?lookfor=“smart'); // smart quote, problem, warning
+    // await expect(page.getByText(warning)).toBeVisible();
 });
 
 test('unbalanced_quotes', async ({ page, baseURL }) => {

@@ -128,8 +128,7 @@ class Solr
     if ($ss->checkSpelling) {
       $args = array_merge($args, $this->spellcheckComponents($ss));
     }
-
-
+    // $raw is always false, so rawSolrSearch is never used
     if ($raw) {
       return $this->rawSolrSearch($args, $action);
     }
@@ -230,7 +229,8 @@ class Solr
       $values = $body['facet_counts']['facet_fields'][$field];
       $rv['values'][$field] = array();
 
-      // skip the hidden ones
+      // Filter out facet values that match the hidden pattern defined on config.ini.
+      // e.g. skip hlbgeneral = "hlb_both:^U\.S\. National and" to hide "U.S. National..." facets
       foreach ($values as $valcnt) {
         if (isset($hide, $hide[$field])) {
           foreach ($hide[$field] as $regexp) {
@@ -269,14 +269,17 @@ class Solr
    * @param SearchStructure $ss A fille-in search structure
    * @return array An array of (key,value) duples for sending to Solr
    **/
-
+  // TODO: Remove this function that is never used because the field type is not defined in conf/dismaxsearchspecs.yaml
+  // TODO: Check by function used by this that could be removed too.
   function dismaxSearchArguments($ss) {
     $rv = array();
     // Should just be on "lookfor" and "type"
     $tvb = isset($ss->search[0]) ? $ss->search[0] : array('all', '*:*');
     $type = $tvb[0];
+    // $value is the search string
     $value = $tvb[1];
 
+    // If search is empty/whitespace-only, default to *:* (match-all)
     if (!preg_match('/\S/', $value)) {
       $value = '*:*';
     }
@@ -284,10 +287,10 @@ class Solr
     $allspecs = yaml_parse_file('conf/dismaxsearchspecs.yaml');
 
     // If the type isn't set, back up to normal arguments
+    // Lianet's notes: $type is extracted from conf/dismaxsearchspecs.yaml so the function always return the args in searchArguments
 
     if (!isset($allspecs[$type])) {
       $args =  $this->searchArguments($ss);
-      // print_r($args);
       return $args;
     }
 
@@ -334,12 +337,14 @@ class Solr
 
     $searchComponents = array();
 
+    // Lianet's notes: conf/searchspecs is the config used to build the Solr query.
     $specs = yaml_parse_file('conf/searchspecs.yaml');
     $query = '';
 
-    foreach ($ss->search as $tvb) { // Type, Value (keywords), Boolen AND or OR
+    foreach ($ss->search as $tvb) { // Type, Value (keywords), Boolean AND or OR
       $type = $tvb[0];
       $values = $this->build_and_or_onephrase($tvb[1]);
+
       $bool = isset($tvb[2]) ? $tvb[2] : false;
       if (isset($specs[$type]) && $values) {
         $comp = '(' . $this->__buildQueryString($specs[$type], $values) . ')';
@@ -356,8 +361,8 @@ class Solr
       }
       $query .= "id:(" . implode(' OR ', $ss->extraIDs()) . ')';
     }
-
     $ids = $this->tagIDs($ss);
+    // Check if the query has content, otherwise use *:* to match all
     if (preg_match('/\S/', $query)) {
       $searchComponents[] = array('q', $query);
     }
@@ -370,7 +375,7 @@ class Solr
 
 
   /** Quote a filter value, skipping it if it starts with a '[' (and hence is assumed
-   * to be a range)
+   * to be a range). Detect date range
    **/
 
   function quoteFilterValue($v) {
@@ -378,7 +383,11 @@ class Solr
       return $v;
     }
     else {
-      return '"' . $v . '"';
+      // Escape internal quotes before wrapping
+      // input: He said "hello, the output: He said \"hello
+      // $escaped = str_replace('"', '\\"', $v);
+      // String ready to Solr "He said \"hello"
+      return '"' . $this->lucene_escape_fq($v) . '"';
     }
   }
 
@@ -615,6 +624,83 @@ class Solr
     return $url_base . '?' . implode('&', $params);
   }
 
+  /**
+  * Helper function to escape all Lucene literal special characters.
+  * Lucene's Standard Query Parser special characters are:
+  * + - && || ! ( ) { } [ ] ^ " ~ * ? : \ /
+  * Escape Lucene special characters for a literal term (NO operators)
+  */
+  private function escapeLuceneLiteral(string $s): string {
+    // Escape backslash first
+    $s = str_replace('\\', '\\\\', $s);
+
+    // Lucene special chars
+    $pattern = '/([+\-!(){}\[\]^"~*?:\/])/';
+    return preg_replace($pattern, '\\\\$1', $s);
+  }
+
+  /**
+  * exactmatcher, stdnum, normalize tokens.
+  * No quotes, no operators, just alphanumerics, *, ?
+  */
+  public function escapeTerm(string $term): string {
+    return $this->escapeLuceneLiteral($term);
+  }
+
+  /**
+    * Escape a phrase for Lucene phrase search. Use for: "machine learning" or "machine learning"~3
+    * Preserves phrase, allows valid fuzzy and prevents injection inside quotes
+  */
+  public function escapePhrase(string $phrase): string {
+    // Detect optional fuzzy suffix
+    if (preg_match('/^(.*)"~(\d+)$/u', $phrase, $m)) {
+        $inner = $m[1];
+        $distance = $m[2];
+        return '"' . $this->escapeLuceneLiteral($inner) . '"~' . $distance;
+    }
+
+    return '"' . $this->escapeLuceneLiteral($phrase) . '"';
+  }
+
+  /**
+    * Escape a boolean expression for Lucene boolean search. Use for: term1 AND term2 OR "phrase here"
+    * Use for: dramatic AND literature
+    * Operators AND, OR are preserved, everything else is escaped as literal (Terms). No accidental field injection
+  */
+  public function escapeBoolean(string $expr): string {
+    $parts = preg_split('/\s+(AND|OR)\s+/i', $expr, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+    $out = [];
+    foreach ($parts as $p) {
+        if (strcasecmp($p, 'AND') === 0 || strcasecmp($p, 'OR') === 0) {
+            $out[] = strtoupper($p);
+        } else {
+            $out[] = $this->escapeLuceneLiteral($p);
+        }
+    }
+    return implode(' ', $out);
+  }
+
+ /**
+ * Escape a prefix query for Lucene prefix search. Use for: prefix*
+ * Prevents *table
+ * Preserves prefix semantics
+ * @throws InvalidArgumentException if leading wildcard is used or if not a prefix query
+ * @return string The escaped prefix query
+ */
+ public function escapePrefix(string $prefix): string {
+    //if ($prefix[0] === '*' || $prefix[0] === '?') {
+    //    throw new InvalidArgumentException('Leading wildcard not allowed');
+    //}
+
+    //if (!str_ends_with($prefix, '*')) {
+    //    throw new InvalidArgumentException('Not a prefix query');
+    //}
+
+    $base = substr($prefix, 0, -1);
+    return $this->escapeLuceneLiteral($base) . '*';
+ }
+
 
   /**
    * __buildQueryString -- internal method to build query string from search parameters
@@ -631,7 +717,7 @@ class Solr
   private function __buildQueryString($structure, $values, $joiner = "OR") {
     $clauses = array();
     foreach ($structure as $field => $clausearray) {
-      // is_numeric($field) is true iff we've got an un-hashed array, used for grouping
+      // is_numeric($field) is true if we've got an un-hashed array, used for grouping
       if (is_numeric($field)) {
         // get the op (AND or OR) and weight from the first item
         $opweight = array_shift($clausearray);
@@ -664,6 +750,9 @@ class Solr
           }
 
           if ($val == 'stdnum') {
+            // Extract standard number from asis input
+            // Strips leading 0s. Captures digits, dashes, dots: 978-0-123-45678-9
+            // e.g.  0000978-0-12-345678-9 → 978-0-12-345678-9
             if (preg_match('/^\s*0*([\d\-\.]+[xX]?).*$/', $values['asis'], $match)) {
               $stdnum = $match[1];
 //              $stdnum = preg_replace('/[\.\-]/', '', $stdnum);
@@ -675,7 +764,36 @@ class Solr
         if (!isset($values[$val]) || ($values[$val] == "")) {
           continue;
         }
-        $sstring = $field . ':(' . $values[$val] . ')';
+        // Lianet's notes: Escape the value for safe embedding in field:value syntax
+
+        //$escaped_value = $this->lucene_escape_literal($values[$val]);
+        //$sstring = $field . ':(' . $escaped_value . ')';
+
+        switch ($val) {
+            case 'onephrase':
+                // "\"dramatic literature, comprehending critical\""
+                $escaped_value = $this->escapePhrase($values[$val]);
+                break;
+
+            case 'and':
+            case 'or':
+                // and -- dramatic AND literature, AND comprehending AND critical
+                // or -- dramatic OR literature, OR comprehending OR critical
+                $escaped_value = $this->escapeBoolean($values[$val]);
+                break;
+
+            case 'emstartswith':
+                // dramaticliteraturecomprehendingcritical*
+                $escaped_value = $this->escapePrefix($values[$val]);
+                break;
+
+            default:
+                // exactmatcher - dramaticliteraturecomprehendingcritical
+                $escaped_value = $this->escapeTerm($values[$val]);
+        }
+
+        $sstring = $field . ':(' . $escaped_value . ')';
+        // $sstring = $field . ':(' . $values[$val] . ')';
         if (isset($weight) && $weight > 0) {
           $sstring .= '^' . $weight;
         }
@@ -688,7 +806,7 @@ class Solr
 
 
   /**
-   * Turn solr output into a record structure (which shouuld probably be its own class...)
+   * Turn solr output into a record structure (which should probably be its own class...)
    *
    * @param string $result The XML returned by solr
    * @param string $xslfile The path of the XSL file to use to convert the data
@@ -700,6 +818,7 @@ class Solr
     global $configArray;
 
     if (is_string($result) && preg_match('/^<html/', $result)) {
+      // Detect if Solr returns an error page
       if (preg_match('/ParseException/', $result)) {
         $errorMsg = "Error+in+search+syntax";
       }
@@ -757,9 +876,13 @@ class Solr
    * @return  array               Tokenized array
    * @access  public
    */
+  // TODO: refactor tokenizer to a single-pass parser instead of regex
   public function tokenizeInput($input) {
     // Tokenize on spaces and quotes
     //preg_match_all('/"[^"]*"|[^ ]+/', $input, $words);
+    // /"[^"]*"[~[0-9]+]* --> to capture fuzzy searches like "hello world"~5 - matches a double-quoted string followed by ~ and a number
+    // "[^"]*" --> to capture exact phrases like "hello world" - matches a double-quoted string
+    // [^ ]+ --> to capture single words like hello - matches sequences of non-space characters
     preg_match_all('/"[^"]*"[~[0-9]+]*|"[^"]*"|[^ ]+/', $input, $words);
     $words = $words[0];
 
@@ -794,30 +917,279 @@ class Solr
     return $fixedwords;
   }
 
+
+  /**
+  * Remove leading wildcards from input
+  * Ensure wildcards are not at beginning of input
+  * Before using this function you should check if there is Use this wildcards to remove, otherwise it
+  * will remove always the first character
+  * Performance guard, not a security guard. Prevent expensive queries (*table, ?table)
+
+  * @param string $input User's input string
+  * @return  string               Input string without leading wildcards
+  * @access  public
+  */
+  public function remove_first_character($input) {
+    return substr($input, 1);
+    }
+
+  /**
+  * Remove parentheses from input
+  * Use this function if you want to remove parentheses from input
+  * It is used if there is unbalanced parentheses in the input
+  * Prevents Solr parser errors. Deletes all parentheses instead of fixing structure
+
+  * @param string $input User's input string
+    * @return  string               Input string without parentheses
+    * @access  public
+  */
+  public function remove_parentheses($input) {
+    return str_replace(array('(', ')'), '', $input);
+    }
+
+  /**
+  * Remove wrapping double quotes from a string, if present.
+  *
+  * Examples:
+  *  - '"table"'        → table
+  *  - ' "table" '      → table
+  *  - '"table name"'   → table name
+  *  - 'table "name"'   → table "name"   (unchanged)
+  *  - '"table"name"'  → "table"name"   (unchanged)
+  *
+  * @param string $s
+  * @return string
+  */
+  public function remove_quotes(string $s): string {
+   $s = trim($s);
+
+   if (mb_strlen($s) >= 2 && $s[0] === '"' && substr($s, -1) === '"') {
+    return substr($s, 1, -1);
+   }
+
+   return $s;
+  }
+
+  /**
+    * Remove invalid caret (^) usage from input
+    * Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
+    * Use this function if there is invalid caret usage in the input
+    * @param string $input User's input string
+    * @return  string               Input string without invalid caret usage
+    * @access  public
+  */
+  public function remove_invalid_caret_usage($input) {
+    return str_replace('^', '', $input);
+  }
+
+  /**
+  * If input matches the pattern: "phrase"*,
+  * return phrase* (quotes removed, wildcard preserved).
+  * Otherwise return null.
+
+    * @param string $input User's input string
+    * @return  string|null          Unwrapped quoted wildcard or null
+    * @access  public
+  */
+  public function unwrapQuotedWildcard(string $input): ?string {
+    // Match: optional whitespace + "..." + * + optional whitespace
+    // ^\s* --> leading whitespace
+    // " --> opening quote
+    // ([^"]+) --> capture group for any characters except quotes (the phrase)
+    // " --> closing quote
+    // \* --> literal asterisk
+    // \s*$ --> trailing whitespace
+    if (preg_match('/^\s*"([^"]+)"\*\s*$/u', $input, $matches)) {
+        return $matches[1] . '*';
+    }
+
+    return null;
+  }
+
   /**
    * Input Validater
    *
-   * Cleanes the input based on the Lucene Syntax rules.
+   * Validate the user input for Solr queries.
+   * This function is effective if:
+   * It is used before building the query
+   * It runs before escaping
+   * It rejects invalid syntax instead of trying to fix it
+   * Escaping is done after validation
+   * This validator:
+   * - Rejects empty input or garbage-only input
+   * - Rejects meaningless single-character input (~, \)
+   * - Rejects leading wildcards (*, ?)
+    * - Validates balanced parentheses and quotes
+    * - Validates boost syntax (^number)
+    * - Validates fuzzy operators (~N)
+    * - Validates fielded queries (field:value)
+    * - Rejects empty boolean groups
+    *
+    * @param string $input Raw user input
+    * @return array{valid: bool, error?: string} Validation result
+   * @access  public
+   */
+  // TODO: Add the rule: Reject fuzzy operators like "~2"
+  // Lianet's notes: Verify if this function could be used to validate the Solr query
+  public function validateInput($input) {
+
+    // 1. Normalize + trim
+    $trimmed = trim($input);
+
+    // 2. Empty input
+    if ($trimmed === '') {
+     return ['valid' => false, 'error' => 'Empty query'];
+    }
+
+    // 3. Strip garbage-only input ~~//^&$ (no letters or numbers)
+    if ($trimmed !== '' && !preg_match('/[\p{L}\p{N}]/u', $trimmed)) {
+        return ['valid' => false, 'error' => 'Invalid garbage-only query'];
+    }
+
+    // 4. Reject meaningless single-character input (~ or \)
+    if (mb_strlen($trimmed) === 1 && preg_match('/^[~\\\\]$/', $trimmed)) {
+      return ['valid' => false, 'error' => 'Invalid single-character query'];
+    }
+
+    // 5. No leading wildcard
+    // Ensure wildcards are not at beginning of input
+    // Performance guard, not a security guard. Prevent expensive queries (*table, ?table)
+    if ($trimmed[0] === '*' || $trimmed[0] === '?') {
+      return ['valid' => false, 'error' => 'Leading wildcard not allowed'];
+    }
+
+    // 6. Balanced parentheses
+    // Ensure all parens match - parentheses balancing
+    // Prevents Solr parser errors. Deletes all parentheses instead of fixing structure
+    if (substr_count($trimmed, '(') !== substr_count($trimmed, ')')) {
+      return ['valid' => false, 'error' => 'Unbalanced parentheses'];
+    }
+    // 7. Balanced quotes
+    if (substr_count($trimmed, '"') % 2 !== 0) {
+        return ['valid' => false, 'error' => 'Unbalanced quotes'];
+    }
+
+    // 8. Valid boost syntax (^number or ^number.number)
+    // Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
+    // Rejects invalid boosts (^, ^abc)
+    if (preg_match_all('/\^([^\s]+)/', $trimmed, $matches)) {
+        foreach ($matches[1] as $boost) {
+            if (!preg_match('/^[0-9]+(\.[0-9]+)?$/', $boost)) {
+                return ['valid' => false, 'error' => 'Invalid boost syntax'];
+            }
+        }
+    }
+
+    // 9. Reject multiple boosts on the same term (table^2^3)
+    if (preg_match('/\^[0-9]+(\.[0-9]+)?\s*\^/', $trimmed)) {
+     return ['valid' => false, 'error' => 'Multiple boosts on same term'];
+    }
+
+    // 10. Reject dangling boost operator like table^
+    if (preg_match('/\^\s*(\)|$)/', $trimmed)) {
+        return ['valid' => false, 'error' => 'Dangling boost operator'];
+    }
+
+    // ---------------------
+    // 11. Fuzzy operator validation
+    // ---------------------
+
+    // Rules:
+    // - ~ must be followed by a non-negative integer
+    // - ~ cannot be doubled (~~)
+    // - ~ must not be followed by letters
+    // - ~ must not appear inside field: without a term
+    // - standalone ~2 IS allowed (syntactically valid Lucene)
+
+    // 11.1 Reject repeated fuzzy operators like table~~2
+    if (preg_match('/~~+/', $trimmed)) {
+        return ['valid' => false, 'error' => 'Repeated fuzzy operator'];
+    }
+
+    // 11.2 Reject fuzzy operators with non-numeric distance (table~abc, "foo"~x)
+    if (preg_match('/~(?!\d+\b)/', $trimmed)) {
+        return ['valid' => false, 'error' => 'Invalid fuzzy syntax'];
+    }
+
+    // 11.3 Reject fielded fuzzy with no term: title:~2
+    if (preg_match('/\b[\w\-]+:\s*~\d+\b/', $trimmed)) {
+        return ['valid' => false, 'error' => 'Fuzzy operator without term'];
+    }
+
+    // ---------------------
+    // 12. Field validation
+    // ---------------------
+
+    // 12.1 Reject empty field groups like title:( )
+    if (preg_match('/\b[\w\-]+:\(\s*\)/', $trimmed)) {
+     return ['valid' => false, 'error' => 'Empty field group'];
+    }
+
+    // 12.2 Reject empty field values like title:
+    if (preg_match('/\b[\w\-]+:\s*(\)|$)/', $trimmed)) {
+     return ['valid' => false, 'error' => 'Empty field value'];
+    }
+
+    // 12.3. Fielded query validation (field:value)
+    // Rejects malformed field queries (title:, :table, title::table)
+    if (preg_match_all('/(\b[\w\-]+):/', $trimmed, $fields)) {
+        foreach ($fields[1] as $field) {
+            // Reject empty field names (shouldn't happen due to regex)
+            if ($field === '') {
+                return ['valid' => false, 'error' => 'Empty field name'];
+            }
+        }
+    }
+
+    // 13. Reject dangling colons
+    if (preg_match('/(^|[^\\w]):|::/', $trimmed)) {
+        return ['valid' => false, 'error' => 'Malformed field:value syntax'];
+    }
+
+    // 14. Reject empty boolean groups inside parentheses
+    // Rejects empty boolean groups ((AND), (OR NOT))
+    if (preg_match('/\((\s*(AND|OR|NOT)\s*)+\)/i', $trimmed)) {
+        return ['valid' => false, 'error' => 'Empty boolean group'];
+    }
+
+    // 15. Reject fielded queries ending with boolean operators
+    if (preg_match('/\b[\w\-]+:\([^)]*(AND|OR|NOT)\s*\)/i', $trimmed)) {
+     return ['valid' => false, 'error' => 'Incomplete boolean expression in field'];
+    }
+
+ return ['valid' => true];
+
+  }
+
+  /**
+   * Input Validater
+   *
+   * Validate the input based on the Lucene Syntax rules.
    *
    * @param string $input User's input string
    * @return  string                Fixed input
    * @access  public
    */
-  public function validateInput($input) {
+
+  // Lianet's notes: Verify if this function could be used to validate the Solr query
+  public function validateInputOLD($input) {
     // Ensure wildcards are not at beginning of input
+    // Performance guard, not a security guard. Prevent expensive queries (*table, ?table)
     if ((substr($input, 0, 1) == '*') ||
       (substr($input, 0, 1) == '?')) {
       return substr($input, 1);
     }
 
-    // Ensure all parens match
+    // Ensure all parens match - parentheses balancing
+    // Prevents Solr parser errors. Deletes all parentheses instead of fixing structure
     $start = preg_match_all('/\(/', $input, $tmp);
     $end = preg_match_all('/\)/', $input, $tmp);
     if ($start != $end) {
       return str_replace(array('(', ')'), '', $input);
     }
 
-    // Ensure ^ is used properly
+    // Ensure ^ is used properly - Prevent invalid syntax as table^, table^abc
+    // Regular expression does not support ^1.5
     $cnt = preg_match_all('/\^/', $input, $tmp);
     $matches = preg_match_all('/.+\^[0-9]/', $input, $tmp);
 
@@ -863,33 +1235,82 @@ class Solr
    *
    * Given a lookfor string, clean it up, tokenize it, and
    * return a structure that includes AND, OR, and Phrase
-   * queries.
+   * queries. lookfor could be single or multi-word
    *
    * @param string $lookfor User's search string
    * @return  array   $values     Includes 'and', 'or', and 'onephrase' elements
    * @access  public
    */
-
+  // Lianet's notes: Check if is necessary to remove illegal characters
+  // TODO: Refactoring this function to avoid the different output
   public function build_and_or_onephrase($lookfor = null) {
     $values = array();
 
     $illegal = array('.', '{', '}', '/', '!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
     $lookfor = trim(str_replace($illegal, '', $lookfor));
 
+
     // Replace fancy quotes
     $lookfor = str_replace(array('“', '”'), '"', $lookfor);
 
-    // If it looks like "..."*, pull out the quotes
 
-    if (preg_match('/^\s*"(.*)"\*\s*$/', $lookfor, $match)) {
-      $em = $match[1];
-      $lookfor = $em . '*';
-      // $em = $this->exactmatcherify($em) . '*';
-      // return array('exactmatcher' => $em, 'emstartswith' => $em, 'asis' => $lookfor);
+    // If it looks like "..."*, pull out the quotes
+    $unwrapped = $this->unwrapQuotedWildcard($lookfor);
+    if ($unwrapped !== null) {
+        $lookfor = $unwrapped;
+    }
+
+    $validation = $this->validateInput($lookfor);
+
+    if (!$validation['valid']) {
+        // Considering the logic of updating the user input query as the application is doing now
+
+        switch ($validation['error']) {
+            case 'Empty query':
+                return false;
+            case 'Invalid garbage-only query':
+                return false;
+            case 'Invalid single-character query':
+                return false;
+            //case 'Standalone operator not allowed':
+            //    return false;
+            case 'Leading wildcard not allowed':
+                $lookfor = $this->remove_first_character($lookfor);
+                break;
+            case 'Unbalanced parentheses':
+                $lookfor = $this->remove_parentheses($lookfor);
+                break;
+            case 'Unbalanced quotes':
+                $lookfor = $this->remove_quotes($lookfor);
+                break;
+            case 'Invalid boost syntax':
+                $lookfor = $this->remove_invalid_caret_usage($lookfor);
+                break;
+            case 'Multiple boosts on same term':
+                $lookfor = $this->remove_invalid_caret_usage($lookfor);
+                break;
+            case 'Dangling boost operator':
+                $lookfor = $this->remove_invalid_caret_usage($lookfor);
+                break;
+            case 'Repeated fuzzy operator':
+                return false;
+            case 'Invalid fuzzy syntax':
+                return false;
+            case 'Fuzzy operator without term':
+                return false;
+            case 'Empty field group':
+                return false;
+            case 'Empty field value':
+                return false;
+            case 'Empty field name':
+                return false;
+
+        }
+
     }
 
     // Validate input
-    $lookfor = $this->validateInput($lookfor);
+    //$lookfor = $this->validateInput($lookfor);
 
     if (!preg_match('/\S/', $lookfor)) {
       return false;
@@ -898,13 +1319,21 @@ class Solr
     // Tokenize Input
     $tokenized = $this->tokenizeInput($lookfor);
 
+    // Phrase search - "dramatic literature, comprehending critical"
     $values['onephrase'] = '"' . preg_replace('/"/', '', implode(' ', $tokenized)) . '"';
+    // AND search - dramatic AND literature, AND comprehending AND critical
     $values['and'] = implode(' AND ', $tokenized);
+    // OR search - dramatic OR literature, OR comprehending OR critical
     $values['or'] = implode(' OR ', $tokenized);
+    // As-is search - dramatic literature, comprehending critical
     $values['asis'] = $lookfor;
+    // Compressed search - dramaticliterature,comprehendingcritical
     $values['compressed'] = preg_replace('/\s/', '', $lookfor);
+    // Exactmatcher search - dramaticliteraturecomprehendingcritical
     $values['exactmatcher'] = $this->exactmatcherify($lookfor);
+    // Exactmatcher startswith search - dramaticliteraturecomprehendingcritical*
     $values['emstartswith'] = $values['exactmatcher'] . '*';
+
     return $values;
   }
 
@@ -918,7 +1347,7 @@ class Solr
    **/
 
   function solrSearch($args, $action = 'standard') {
-    $raw = $this->rawSolrSearch($args, $action);
+    $raw = $this->rawSolrSearch($args, $action); // This is the Solr output
     if (!PEAR::isError($raw)) {
       $processed = $this->_process($raw);
 
@@ -956,6 +1385,8 @@ class Solr
         return $action;
       }
     }
+    // Ensure a non-NULL return from non-edismax cases
+    return $action;
   }
 
   // Do we just want the IDs? Spit 'em out!
@@ -1011,6 +1442,9 @@ class Solr
       $this->print_out_list_of_ids($args);
       die();
     }
+
+    error_log("Solr action used: " . $action);
+    echo "Solr action used: " . $action;
 
     # Finally, we can deal with the normal case
     return $this->solr_connection->send();
@@ -1116,12 +1550,47 @@ class Solr
     return str_replace(array('(', ')','[', ']', '!', '&', ':', ';', '-', '/', '"'), '', $str);
   }
   
-
-  function lucene_escape($str) {
+  // TODO: Delete this function
+   function lucene_escape($str) {
     $pattern = '/(\+|-|&&|\|\||!|\(|\)|\{|}|\[|]|\^|"|~|\*|\?|:|\\\)/';
     $replace = '\\\$1';
     return preg_replace($pattern, $replace, $str);
   }
+
+
+  /**
+   * Strict escape for filter query values and explicit field:value fragments.
+
+   * Use for all fq values and any time you construct field:value with user data.
+   * This function:
+   * - Normalizes Unicode to NFC form
+   * - Removes control characters
+   * - Escapes backslash FIRST (critical ordering)
+   * - Escapes multi-char tokens (&&, ||)
+   * - Escapes all Lucene special characters: + - ! ( ) { } [ ] ^ " ~ * ? : /
+   *
+   * @param string $s Raw user input or value to escape
+   * @return string Safely escaped value for use in Solr fq or field:value
+   */
+   public function lucene_escape_fq(string $s): string {
+    // Normalize Unicode to composed form (NFC)
+    if (function_exists('normalizer_normalize')) {
+        $s = normalizer_normalize($s, Normalizer::FORM_C) ?: $s;
+    }
+
+    // Remove control characters (0x00-0x1F, 0x7F)
+    $s = preg_replace('/[\x00-\x1F\x7F]/u', '', $s);
+
+    // Escape backslash FIRST to avoid double-escaping
+    $s = str_replace('\\', '\\\\', $s);
+
+    // Use regex to catch all specials, including spaces, in one go
+    // The characters are: + - && || ! ( ) { } [ ] ^ " ~ * ? : /
+    // Note: && and || are handled as single chars & and | here
+    $pattern = '/([\+\-\!\(\)\{\}\[\]\^\"\~\*\?\:\/\&\|])/';
+
+    return preg_replace($pattern, '\\\\$1', $s);
+   }
 
   function getMoreLikeThis($record, $id, $max = 5) {
     global $configArray;
@@ -1134,26 +1603,26 @@ class Solr
       return null;
     }
 
-    $query = '(title:("' . $this->lucene_escape($this->mltesc($record['title'][0])) . '")^75';
+    $query = '(title:("' . $this->lucene_escape_fq($this->mltesc($record['title'][0])) . '")^75';
     if (isset($record['shorttitle'])) {
-      $query .= ' OR title:("' . $this->lucene_escape($this->mltesc($record['title'][0])) . '")^100';
+      $query .= ' OR title:("' . $this->lucene_escape_fq($this->mltesc($record['title'][0])) . '")^100';
     }
 
     if (isset($record['fulltopic'])) {
       foreach ($record['fulltopic'] as $topic) {
-        $query .= ' OR fulltopic:("' . $this->lucene_escape($this->mltesc($topic)) . '")^300';
+        $query .= ' OR fulltopic:("' . $this->lucene_escape_fq($this->mltesc($topic)) . '")^300';
       }
     }
 
     if (isset($record['language'])) {
       foreach ($record['language'] as $language) {
-        $query .= ' OR language:("' . $this->lucene_escape($this->mltesc($language)) . '")^30';
+        $query .= ' OR language:("' . $this->lucene_escape_fq($this->mltesc($language)) . '")^30';
       }
     }
 
     if (isset($record['author'])) {
       foreach ($record['author'] as $author) {
-        $query .= ' OR author:("' . $this->lucene_escape($this->mltesc($author)) . '")^75';
+        $query .= ' OR author:("' . $this->lucene_escape_fq($this->mltesc($author)) . '")^75';
       }
 
     }
@@ -1172,7 +1641,7 @@ class Solr
     $query .= ') NOT id:(' . $id . ')';
 
     $ss = new SearchStructure(true); // create a "blank" ss with just the filter queries
-
+    
     $args = array_merge(array(array('q', $query)), $this->filterComponents($ss));
     return $this->solrSearch($args);
   }

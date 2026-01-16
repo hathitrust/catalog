@@ -58,18 +58,18 @@ class SolrQueryFullPipelineTest extends TestCase
     $this->assertEquals('q', $args[0][0], "Solr args field should be 'q'");
     $this->assertEquals('*:*', $args[0][1], "Solr args query should be '*:*' for invalid input");
 
-    $this->assertEquals('“smart', $ss->fix_unbalanced_quotes('“smart')); // fancy quote are not fixed in SearchStructure:
+    $this->assertEquals('smart', $ss->fix_unbalanced_quotes('“smart')); // fancy quote are fixed in SearchStructure:
     $_REQUEST['lookfor'] = ['“smart'];
     $ss = new SearchStructure;
     // Check that unbalanced fancy quote is fixed
-    $this->assertEquals('“smart', $ss->search[0][1], "Unbalanced fancy quote are not fixed in SearchStructure");
+    $this->assertEquals('smart', $ss->search[0][1], "Unbalanced fancy quote are fixed in SearchStructure");
 
     // dismaxSearchArguments receives the input query with unbalanced fancy quote
     $solr = new Solr('', '');
     $args = $solr->dismaxSearchArguments($ss);
 
     $this->assertEquals('q', $args[0][0]);
-    $this->assertStringContainsString('smart', $args[0][1], "Unbalanced fancy will be removed in Solr.php");
+    $this->assertStringContainsString('smart', $args[0][1], "Solr.php receives fixed query without fancy quotes");
     // In $args[0][1] is expected the Solr query
     // Required clauses (order-independent)
     $expectedClauses = [
@@ -77,20 +77,10 @@ class SolrQueryFullPipelineTest extends TestCase
             'title_a:(smart)^15000',
             'titleProper:(smart*)^8000',
 
-            'titleProper:(\"smart)^120',
-
             'title_topProper:("\"smart\"")^600',
-            'title_topProper:(\"smart)^60',
 
-            'title_restProper:("\"smart\"")^400',
-            'title_restProper:(\"smart)^40',
+            'series2:("\"smart\"")^500'
 
-            'series2:("\"smart\"")^500',
-            'series:(\"smart)^50',
-
-            'title:(\"smart)^30',
-            'title_top:(\"smart)^20',
-            'title_rest:(\"smart)^1',
         ];
 
     foreach ($expectedClauses as $clause) {

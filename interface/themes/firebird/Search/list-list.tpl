@@ -59,11 +59,9 @@
         <div class="grid">
           <dt class="g-col-lg-4 g-col-12">Author</dt>
           {if is_array($record.author)}
-            {foreach from=$record.author item=author}
-            <dd class="g-col-lg-4 g-col-12">{$author}</dd>
-            {/foreach}
+            <dd class="g-col-lg-8 g-col-12">{$record.author[0]}</dd>
           {else}
-            <dd class="g-col-lg-4 g-col-12">{$record.author}</dd>
+            <dd class="g-col-lg-8 g-col-12">{$record.author}</dd>
         </div>
           {/if}
         {/if}

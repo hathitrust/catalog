@@ -751,6 +751,8 @@ class SearchStructure
         return $url;
     }
 
+    // This is only used as the target of the "remove filter" X button in the search results sidebar.
+    // Accordingly, although we keep the facets, this implies getting rid of the advanced search flag.
     function asWildcardURL($module = 'Home', $extra = array(), $includePageComponents = true)
     {
         $searchURLComponents = array();
@@ -764,7 +766,6 @@ class SearchStructure
                     $this->tagURLComponents(),
                     ($includePageComponents ? $this->pageURLComponents() : array()),
                     $this->actionURLComponents(),
-                    $this->advancedSearchURLComponents(),
                     $extra)));
     }
 

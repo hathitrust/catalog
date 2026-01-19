@@ -24,7 +24,8 @@ ini_set('date.timezone', 'America/Detroit');
 /** CORE APPLICATION CONTOLLER **/
 
 // Require System Libraries
-require_once 'PEAR.php';
+//require_once 'PEAR.php';
+require __DIR__ . '/vendor/autoload.php';
 
 require_once 'sys/Interface.php';
 require_once 'sys/Translator.php';

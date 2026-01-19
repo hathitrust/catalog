@@ -14,7 +14,6 @@ RUN apt-get update && apt-get install -y \
       php-ldap \
       php-mbstring \
       php-mysql \
-      php-pear \
       php-raphf \
       php-xdebug \
       php-xml \
@@ -25,7 +24,9 @@ RUN apt-get update && apt-get install -y \
 # Actual stuff installed on bullseye for ht-web-preview
 
 # FIXME: phpunit 12.x should be used if possible
-RUN composer install
+WORKDIR /app
+COPY composer.* .
+RUN composer update
 
 # Default PHP config:
 #  -> class { 'php::apache_config':

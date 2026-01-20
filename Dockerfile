@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
 # FIXME: phpunit 12.x should be used if possible
 WORKDIR /app
 COPY composer.* .
-RUN composer update
+RUN composer install
 
 # Default PHP config:
 #  -> class { 'php::apache_config':

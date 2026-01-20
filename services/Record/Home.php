@@ -45,13 +45,6 @@ class Home extends Record
         $h = new Holdings();
 	$h->launch();
     }
-    try {
-    $phar = new Phar('/app/vendor/geoip/geoip2.phar');
-    echo $phar->getVersion();
-} catch (PharException $e) {
-    // Handle error, e.g. archive not found or invalid
-    echo $e->getMessage();
-}
 }
 
 ?>

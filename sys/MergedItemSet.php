@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PEAR.php';
+require_once 'vendor/autoload.php';
 #require_once 'Apache/Solr/Service.php';
 require_once 'sys/SolrConnection.php';
 

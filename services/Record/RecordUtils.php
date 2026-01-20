@@ -1,7 +1,6 @@
 <?php
 
-#require_once 'File/MARCXML.php';
-require __DIR__ . '/../../vendor/autoload.php';
+require_once 'vendor/autoload.php';
 require_once 'sys/VFSession.php';
 
 class RecordUtils {

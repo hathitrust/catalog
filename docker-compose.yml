@@ -82,7 +82,7 @@ services:
     depends_on:
       mysql-sdr: *healthy
       solr-sdr-catalog: *healthy
-    command: phpunit --coverage-html coverage
+    command: vendor/bin/phpunit --coverage-html coverage
     environment:
       - XDEBUG_MODE=coverage
 

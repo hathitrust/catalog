@@ -1,6 +1,7 @@
 <?php
 
-require_once 'vendor/geoip/geoip2.phar';
+require_once 'vendor/autoload.php';
+
 use GeoIp2\Database\Reader;
 
 class GeoIP {

@@ -23,11 +23,6 @@ RUN apt-get update && apt-get install -y \
 
 # Actual stuff installed on bullseye for ht-web-preview
 
-# FIXME: phpunit 12.x should be used if possible
-WORKDIR /app
-COPY composer.* .
-RUN composer install
-
 # Default PHP config:
 #  -> class { 'php::apache_config':
 #

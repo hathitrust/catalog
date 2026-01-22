@@ -1,9 +1,11 @@
   <hathi-cookie-consent-banner></hathi-cookie-consent-banner>
-<ul id="skiplinks" class="visually-hidden-focusable" role="complementary" aria-label="Skip links">
-  <li>
-    <a href="#section">Skip to main</a>
-  </li>
-</ul>
+  <div id="skiplinks" class="visually-hidden-focusable" role="complementary" aria-label="Skip links">
+    <ul>
+      <li>
+        <a href="#section">Skip to main content</a>
+      </li>
+    </ul>
+  </div>
 <div id="root">
   {include file="header.tpl"}
 

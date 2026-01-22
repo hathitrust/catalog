@@ -138,6 +138,7 @@ class QObj
 #      }
       $field = trimlower($fv[0]);
 
+      // This user-supplied ID can be anything, it is not sent to Solr.
       if ($field == 'id') {
         $this->_id = $fv[1];
         continue;
@@ -151,7 +152,6 @@ class QObj
 
       $val = trimlower($fv[1]);
 
-      // 
       // echo "Q is " . $_REQUEST['q'];
       // echo "Looking for $field = $val\n";
 
@@ -160,14 +160,16 @@ class QObj
         continue;
       }
       $fixedval = $validField[$field]($val); // weird call-variable-value-as-name-of-function
-     
-      // Escape the colons
-      
-      
-#      $fixedval = preg_replace('/:/', '\:', $fixedval);
-      $fixedval = $this->lucene_escape($fixedval);
-      $qfield = isset($fieldmap[$field])? $fieldmap[$field] : $field;
+      // If our filter left nothing, do not try to send -- Solr is expecting a tern.
+      if (!preg_match('/\S/', $fixedval)) {
+        continue;
+      }
 
+      // Remove any lurking spaces
+      $fixedval = preg_replace('/\s+/', '', $fixedval);
+      $fixedval = $this->lucene_escape($fixedval);
+
+      $qfield = isset($fieldmap[$field])? $fieldmap[$field] : $field;
 
       $this->qspecs[] = "$qfield:$fixedval";
       if ($qfield == 'lccn') {

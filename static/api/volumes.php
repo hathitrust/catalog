@@ -160,7 +160,7 @@ class QObj
         continue;
       }
       $fixedval = $validField[$field]($val); // weird call-variable-value-as-name-of-function
-      // If our filter left nothing, do not try to send -- Solr is expecting a tern.
+      // If our filter left nothing, do not try to send -- Solr is expecting a term.
       if (!preg_match('/\S/', $fixedval)) {
         continue;
       }

@@ -36,11 +36,11 @@
   RewriteRule   ^api/volumes/oclc/([0-9]+)[.]html$ index.php?fromoclc=1&module=Record&action=Home&mergesearch=id:1;oclc:$1 [QSA,L]
   
   # API
-  RewriteRule   ^api/volumes/(.*)/(json|html|inlinehtml)/(.*)$  static/api/volumes.php?q=$3&type=$2&brevity=$1 [QSA,L]
-  RewriteRule   ^api/volumes/(full|brief)/([^/]+)/(.+)[.](json|html|oclcscrape) static/api/volumes.php?q=$2:$3&type=$4&single=1&brevity=$1 [QSA,L]
+  RewriteRule   ^api/volumes/(.*)/(json|html|inlinehtml)/(.*)$  static/api/volumes.php?q=$3&type=$2&brevity=$1 [B,QSA,L]
+  RewriteRule   ^api/volumes/(full|brief)/([^/]+)/(.+)[.](json|html|oclcscrape) static/api/volumes.php?q=$2:$3&type=$4&single=1&brevity=$1 [B,QSA,L]
   
-  RewriteRule   ^api/volumes/(json|html|inlinehtml)/(.*)$  static/api/volumes.php?q=$2&type=$1 [QSA,L]
-  RewriteRule   ^api/volumes/(recordid|sysid|oclc|htid|issn|isbn|lccn|umid)/(.*)[.](.*)$ static/api/volumes.php?q=$1:$2&type=$3&single=1 [QSA,L]
+  RewriteRule   ^api/volumes/(json|html|inlinehtml)/(.*)$  static/api/volumes.php?q=$2&type=$1 [B,QSA,L]
+  RewriteRule   ^api/volumes/(recordid|sysid|oclc|htid|issn|isbn|lccn|umid)/(.*)[.](.*)$ static/api/volumes.php?q=$1:$2&type=$3&single=1 [B,QSA,L]
      
   
   

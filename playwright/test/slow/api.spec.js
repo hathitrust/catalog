@@ -186,3 +186,24 @@ test('Bib API qf/qv.t htid', async ({ page }) => {
   const body = await response.json();
   expect(body.items.length).toBeGreaterThan(0);
 });
+
+// =========== Input filtering
+test('Bib API with spaces in HTID', async ({ page }) => {
+  const spacey_test_htid = 'mdp.3901 50488  95836';
+  const response = await page.goto(`/api/volumes/brief/htid/${spacey_test_htid}.json`);
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain('application/json');
+  const body = await response.json();
+  expect(body.records).toHaveProperty(test_cid);
+  expect(body.items.length).toBeGreaterThan(0);
+});
+
+test('Bib API with spaces in recordnumber', async ({ page }) => {
+  const spacey_test_cid = '0023 12286';
+  const response = await page.goto(`/api/volumes/brief/recordnumber/${spacey_test_cid}.json`);
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain('application/json');
+  const body = await response.json();
+  expect(body.records).toHaveProperty(test_cid);
+  expect(body.items.length).toBeGreaterThan(0);
+});

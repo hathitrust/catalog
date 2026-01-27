@@ -183,7 +183,6 @@ function items_from_raw_json($json_string) {
 
   function is_fullview($rcode, $inUSA = null) {
 
-    global $configArray;
     if (!isset($inUSA)) {
       $session = VFSession::instance();
       $inUSA = $session->get('inUSA');
@@ -198,23 +197,9 @@ function items_from_raw_json($json_string) {
     // Assume false
     $fv = false;
 
-    // Newly into copyright? Return true if after the right date
-    // The munged facet is in Solr.php -- don't forget
-    // to deal with that, too.
-
-    $todays_date = intval(date("YmdH"));
-    $copyright_active_date = intval($configArray['IntoCopyright']['date']);
-    if (is_array($rcode) &&
-        array_search("newly_open", $rcode) &&
-	$todays_date >= $copyright_active_date
-	) {
-      return true;
-    } else if (is_array($rcode)) { // ditch the newly_open marker
-      $index = array_search("newly_open", $rcode);
-      if ($index) {
-        unset($rcode[$index]);
-      }
-      $rcode = $rcode[0];
+    if (is_array($rcode)) {
+      // Empty array? Just use default empty string.
+      $rcode = empty($rcode) ? '' : reset($rcode);
     }
 
     // Public domain? return true

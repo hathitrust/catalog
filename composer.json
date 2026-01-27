@@ -1,6 +1,6 @@
 {
   "require": {
-    "geoip2/geoip2": "3.3.*",
+    "geoip2/geoip2": "2.13.*",
     "pear/pear-core-minimal": "1.10.*",
     "pear/file_marc": "1.4.*",
     "pear/http_request2": "2.7.*",

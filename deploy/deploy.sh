@@ -98,8 +98,18 @@ DATE=`date '+%Y%m%d%H%M'`
 DEPLOYDIR="${DEPLOYROOT}/${DATE}_${TAG}"
 echo "DEPLOYDIR is $DEPLOYDIR"
 
+DEPLOY_TARBALL="/tmp/catalog_${DATE}_${TAG}.tar"
+echo "DEPLOY_TARBALL is $DEPLOY_TARBALL"
+
+# This assumes deploy.sh is being run from the root of the git repo.
+# Should we add a test for the existence of `vendor/` and bail out if not found?
+function make_archive() {
+  git archive --format=tar $1 > $DEPLOY_TARBALL
+  tar -rf $DEPLOY_TARBALL vendor
+}
+
 function deploy() {
-  git archive --format=tar $1 | ssh $2 "mkdir -p $DEPLOYDIR && cd $DEPLOYDIR &&  tar xf -"
+  cat $DEPLOY_TARBALL | ssh $2 "mkdir -p $DEPLOYDIR && cd $DEPLOYDIR &&  tar xf -"
   ssh -T $2 <<EOF
   chmod g+rwx $DEPLOYDIR/derived_data
   chmod g+s $DEPLOYDIR/derived_data
@@ -113,10 +123,12 @@ function deploy() {
 EOF
 }
 
-
+make_archive $TAG
 
 for server in $SERVERS; do 
   echo "Deploying to $server"
   deploy $TAG $server ;
 done
 
+echo "Removing $DEPLOY_TARBALL"
+rm $DEPLOY_TARBALL

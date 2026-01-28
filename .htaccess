@@ -45,8 +45,6 @@
   
   
   RewriteRule   ^robots.txt$              static/robots.txt                     [L]
-  RewriteRule   ^F                        static/rewrite.php                    [L]
-  RewriteRule   ^cgi-bin/(.+)$            static/rewrite.php                    [L]  
   
   # Hold
   RewriteRule   ^(Record)/([^/]+)/(Hold)/(.+)$   index.php?module=$1&id=$2&action=$3&barcode=$4   [QSA,L]
@@ -63,6 +61,8 @@
   
   
   RewriteRule   ^([^/]+)/(.+)$            index.php?module=$1&action=$2         [QSA,L]
+
+  ErrorDocument 404 /index.php?module=Error&action=Error404
 </IfModule>
 
 # Disable Magic Quotes
@@ -72,6 +72,6 @@ php_value magic_quotes_gpc false
 AddType application/x-httpd-php .css
 
 ## Uncomment these lines if you wish to show all errors on the screen.
-php_value display_errors 1
-php_value error_reporting 2047
+# php_value display_errors 1
+# php_value error_reporting 2047
 

@@ -92,6 +92,14 @@ else
   fi
 fi
 
+# Run composer and make sure the vendor directory can be found.
+# This script could do extra work to find the repo root and thus the vendor
+# directory, but it's added complexity we don't need right now.
+composer --quiet install
+if [[ ! -d "vendor" ]]; then
+  echo "Vendor directory not found. Aborting."
+  exit
+fi
 
 # Set the deploy directory
 DATE=`date '+%Y%m%d%H%M'`

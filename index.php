@@ -327,6 +327,7 @@ function handlePEARError($error, $method = null) {
     $module = (isset($_GET['module'])) ? $_GET['module'] : 'error';
 
     if ($module == 'api') {
+      header('HTTP/1.1 404 Not Found');
       exit();
     }
 

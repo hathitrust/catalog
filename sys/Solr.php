@@ -127,7 +127,6 @@ class Solr
       $args = array_merge($args, $this->spellcheckComponents($ss));
     }
 
-    error_log("Action before simplesearch: " . $action);
     // print_r("----- Solr query ------: " . json_encode($args, JSON_UNESCAPED_UNICODE));
 
     // $raw is always false, so rawSolrSearch is never used
@@ -138,7 +137,6 @@ class Solr
     // Otherwise...
     $rv = $this->solrSearch($args, $action);
 
-    error_log("Action used in simplesearch: " . $action);
     return $rv;
   }
 
@@ -393,11 +391,6 @@ class Solr
     else {
       $searchComponents[] = array('q', '*:*');
     }
-    //if (isset($values)) {
-    //    error_log("Solr Search Semantic Structure --- : " . json_encode($values, JSON_UNESCAPED_UNICODE));
-    //}
-
-    // error_log("Search components --- : " . json_encode($searchComponents, JSON_UNESCAPED_UNICODE));
     return $searchComponents;
   }
 
@@ -993,9 +986,6 @@ class Solr
       $fixedwords[] = $word;
     }
 
-    // return $newWords;
-
-    // error_log("Tokenize Results: " . json_encode($fixedwords, JSON_UNESCAPED_UNICODE));
     return $fixedwords;
   }
 
@@ -1536,7 +1526,6 @@ class Solr
       die();
     }
 
-    error_log("Solr action used: " . $action);
 
     # Finally, we can deal with the normal case
     return $this->solr_connection->send();

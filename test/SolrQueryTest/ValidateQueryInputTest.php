@@ -288,7 +288,9 @@ final class ValidateQueryInputTest extends TestCase
     * Fielded query validation (field:value)
     * ============================================================
     */
-
+    * This test is to check if the query input is valid.
+    * The Catalog search does not support this field syntax queries
+    * but as this query input is valid, we accept it. In general, the result of this query is empty or unexpected
     /**
     * @covers Solr::validateInput
     */
@@ -313,6 +315,10 @@ final class ValidateQueryInputTest extends TestCase
     }
 
     /**
+    * This test is to check if the query input is valid.
+    * The Catalog search does not support this field syntax queries
+    * When the query input is invalid a set of heuristics are apply to transform
+    * the invalid query into a valid one.
     * @covers Solr::validateInput
     */
     public function testRejectsInvalidFieldedQueries(): void

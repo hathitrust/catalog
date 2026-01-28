@@ -1,7 +1,7 @@
 <?php
 
 set_include_path(get_include_path() . ':../..');
-require_once 'PEAR.php';
+require_once 'vendor/autoload.php';
 require_once 'Apache/Solr/Service.php';
 
 // Set up for autoload

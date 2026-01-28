@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Pager/Sliding.php';
+require_once 'vendor/autoload.php';
 
 class Pager_LoggingPager extends Pager_Sliding
 {

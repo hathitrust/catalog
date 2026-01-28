@@ -12,4 +12,5 @@ coverage/*
 .phpunit.result.cache
 **/test-results/*
 firebird-common
+vendor
 *.sw?

@@ -1,0 +1,9 @@
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+.npm
+.phpunit.result.cache
+coverage
+vendor

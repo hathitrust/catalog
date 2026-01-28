@@ -9,6 +9,9 @@ x-healthcheck-defaults: &healthcheck-defaults
   start_period: 10s
   retries: 5
 
+x-condition-completed: &completed
+  condition: service_completed_successfully
+
 services:
   #  traject:
   #    image: hathitrust-catalog-indexer
@@ -48,6 +51,7 @@ services:
     environment:
       - FIREBIRD_HOME=/app/firebird-common
     depends_on:
+      composer: *completed
       mysql-sdr: *healthy
       solr-sdr-catalog: *healthy
 
@@ -73,6 +77,13 @@ services:
     profiles:
       - playwright
 
+  composer:
+    build: .
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: composer install
+
   phpunit:
     build: .
     volumes:
@@ -80,8 +91,10 @@ services:
       - ./conf/authspecs-sample.yaml:/app/conf/authspecs.yaml
     working_dir: /app
     depends_on:
-      nginx: *healthy
-    command: phpunit --coverage-html coverage
+      composer: *completed
+      mysql-sdr: *healthy
+      solr-sdr-catalog: *healthy
+    command: vendor/bin/phpunit --coverage-html coverage
     environment:
       - XDEBUG_MODE=coverage
 

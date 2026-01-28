@@ -5,31 +5,16 @@ LABEL org.opencontainers.image.source https://github.com/hathitrust/catalog
 
 RUN apt-get update && apt-get install -y \
       curl \
-      msmtp-mta \
-      bsd-mailx \
-      php-curl \
       php-fpm \
-      php-gd \
       php-http \
-      php-ldap \
-      php-mbstring \
       php-mysql \
-      php-pear \
-      php-raphf \
       php-xdebug \
       php-xml \
       php-yaml \
-      smarty3
+      smarty3 \
+      composer
 
 # Actual stuff installed on bullseye for ht-web-preview
-
-RUN curl -O https://phar.phpunit.de/phpunit-9.6.11.phar
-RUN chmod +x phpunit-9.6.11.phar && mv phpunit-9.6.11.phar /usr/local/bin/phpunit
-
-RUN pear channel-update pear.php.net && pear install \
-      File_MARC \
-      HTTP_Request2 \
-      Pager
 
 # Default PHP config:
 #  -> class { 'php::apache_config':

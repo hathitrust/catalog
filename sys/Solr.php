@@ -20,7 +20,7 @@
 
 // require_once 'XML/Unserializer.php';
 // require_once 'XML/Serializer.php';
-require_once 'HTTP/Request2.php';
+require_once 'vendor/autoload.php';
 require_once 'services/Search/SearchStructure.php';
 require_once 'services/Record/FilterFormat.php';
 require_once 'lib/LCCallNumberNormalizer.php';

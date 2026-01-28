@@ -8,6 +8,7 @@ require_once 'sys/HTStatus.php';
 
 
 $HT_COLLECTIONS =  eval(file_get_contents('__DIR__/../derived_data/ht_collections.php'));
+global $htstatus;
 $htstatus = new HTStatus();
 $htstatus->institution_code = 'umich';
 

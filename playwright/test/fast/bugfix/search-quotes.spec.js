@@ -1,15 +1,5 @@
 import { test, expect } from '@playwright/test';
 
-test('smartquote_problem_talking_catalog', async ({ page, baseURL }) => {
-    const warning = 'There was a problem talking to the catalog.'
-    
-    await page.goto('/Search/Home?lookfor=smart'); // no smart quote, no problem, no warning
-    await expect(page.getByText(warning)).not.toBeVisible();
-
-    await page.goto('/Search/Home?lookfor=“smart'); // smart quote, problem, warning
-    await expect(page.getByText(warning)).toBeVisible();
-});
-
 test('unbalanced_quotes', async ({ page, baseURL }) => {
     /* 
        If an odd number of quotes are given in the search string, we remove the last one
@@ -34,5 +24,10 @@ test('unbalanced_quotes', async ({ page, baseURL }) => {
     await page.goto('/Search/Home?lookfor="norfolk""');      // 3 quotes, unbalanced:
     await expect(page.getByText(warning)).toBeVisible();     // expect warn
     await expect(page.getByText(chaucer)).toBeVisible();     // results visible
-    // etc
+
+    // Unbalanced funcy quotes
+    await page.goto('/Search/Home?lookfor=“norfolk');        // 1 funcy quote, unbalanced:
+    await expect(page.getByText(warning)).toBeVisible();     // expect warn
+    await expect(page.getByText(chaucer)).toBeVisible();     // results visible
+
 });

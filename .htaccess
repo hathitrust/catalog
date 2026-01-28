@@ -45,8 +45,6 @@
   
   
   RewriteRule   ^robots.txt$              static/robots.txt                     [L]
-  RewriteRule   ^F                        static/rewrite.php                    [L]
-  RewriteRule   ^cgi-bin/(.+)$            static/rewrite.php                    [L]  
   
   # Hold
   RewriteRule   ^(Record)/([^/]+)/(Hold)/(.+)$   index.php?module=$1&id=$2&action=$3&barcode=$4   [QSA,L]

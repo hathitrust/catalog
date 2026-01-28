@@ -61,6 +61,8 @@
   
   
   RewriteRule   ^([^/]+)/(.+)$            index.php?module=$1&action=$2         [QSA,L]
+
+  ErrorDocument 404 /index.php?module=Error&action=Error404
 </IfModule>
 
 # Disable Magic Quotes

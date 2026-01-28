@@ -44,7 +44,7 @@ class Record extends Action
     public $cacheId;
 
     public $db;
-    
+
     public $inTemp = false;
     public $inSubset = false;
     public $isFavorite = false;

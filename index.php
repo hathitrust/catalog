@@ -100,7 +100,6 @@ if (isset($_REQUEST['intl'])) {
   }
 }
 
-
 //################################
 //     HTStatus
 //
@@ -311,10 +310,10 @@ if (is_readable("services/$module/$action.php")) {
         $service = new $action();
         $service->launch();
     } else {
-        PEAR::raiseError(new PEAR_Error('Unknown Action'));
+        PEAR::raiseError(new PEAR_Error("Not found"));
     }
 } else {
-    PEAR::raiseError(new PEAR_Error("Cannot Load Action: module=$module, action=$action"));
+    PEAR::raiseError(new PEAR_Error("Not found"));
 }
 
 
@@ -324,22 +323,17 @@ if (is_readable("services/$module/$action.php")) {
 
 // Process any errors that are thrown
 function handlePEARError($error, $method = null) {
-    $module = (isset($_GET['module'])) ? $_GET['module'] : 'Search';
-    $interface = new UInterface();
-    $interface->assign('error', $error);
-    $interface->assign('module', $module);
-    header('HTTP/1.1 404 Not Found');
-    // If the module was Bib API ("api") but the rewrite rules could not parse the URL
-    // then we could provide a developer error string in JSON form. For now, bail out.
+    $module = (isset($_GET['module'])) ? $_GET['module'] : 'error';
+
     if ($module == 'api') {
+      header('HTTP/1.1 404 Not Found');
       exit();
     }
-    $interface->setTemplate('error.tpl');
-    $interface->display('layout.tpl');
 
-    foreach ($error->backtrace as $trace) {
-        echo '[' . $trace['line'] . '] ' . $trace['file'] . '<br>';
-    }
+    require_once "services/Error/Error404.php";
+    $service = new Error404();
+    $service->launch();
+
     exit();
 }
 

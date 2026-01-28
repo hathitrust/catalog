@@ -1,9 +1,11 @@
 <hathi-cookie-consent-banner></hathi-cookie-consent-banner>
-<ul id="skiplinks" class="visually-hidden-focusable" role="complementary" aria-label="Skip links">
-  <li>
-    <a href="#section">Skip to main</a>
-  </li>
-</ul>
+<div id="skiplinks" class="visually-hidden-focusable" role="complementary" aria-label="Skip links">
+  <ul>
+    <li>
+      <a href="#section">Skip to main content</a>
+    </li>
+  </ul>
+</div>
 <div id="root">
   {include file="header.tpl"}
 
@@ -11,7 +13,7 @@
 
    <div class="container error-wrapper">
           
-          <section class="d-flex flex-column">
+          <section id="section" class="d-flex flex-column">
             <div class="d-flex flex-column message-wrapper">
               <div class="d-flex flex-column-reverse gap-2">
                 <h1>Catalog record not found</h1>

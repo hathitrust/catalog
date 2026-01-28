@@ -287,7 +287,6 @@ final class ValidateQueryInputTest extends TestCase
     /* ============================================================
     * Fielded query validation (field:value)
     * ============================================================
-    */
     * This test is to check if the query input is valid.
     * The Catalog search does not support this field syntax queries
     * but as this query input is valid, we accept it. In general, the result of this query is empty or unexpected

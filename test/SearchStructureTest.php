@@ -25,7 +25,14 @@ class SearchStructureTest extends TestCase
     $_REQUEST['lookfor'] = ['<b>'];
     $ss = new SearchStructure;
     $this->assertEquals(['All Fields: <span class="query-term">&lt;b&gt;</span>'], $ss->searchtermsForDisplay());
-  }
+
+    # Check the function fix_unbalanced_quotes
+    $this->assertEquals('norfolk', $ss->fix_unbalanced_quotes('norfolk')); // 0 quotes, balanced:
+    $this->assertEquals('norfolk', $ss->fix_unbalanced_quotes('"norfolk')); // 1 quote, unbalanced:
+    $this->assertEquals('"norfolk"', $ss->fix_unbalanced_quotes('"norfolk"')); // 2 quotes, balanced:
+    $this->assertEquals('"norfolk"', $ss->fix_unbalanced_quotes('"norfolk""')); // 3 quotes, unbalanced:
+
+   }
 }
 
 ?>

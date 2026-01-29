@@ -80,6 +80,7 @@ class Home extends Action {
           }
           $this->search();
         } else {
+
             // Otherwie, display the home page
             $interface->setPageTitle('Search Home');
 	          $interface->assign('isTheHomePage', true);

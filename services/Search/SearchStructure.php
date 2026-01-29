@@ -84,6 +84,7 @@ class SearchStructure
         $c = __CLASS__;
         $obj = new $c(true);
         $obj->_fillFromHash($hash);
+
         return $obj;
     }
 
@@ -230,6 +231,7 @@ class SearchStructure
         } elseif (count($ss) == 1) {
 
             $index = $ss[0][0];
+
             if (isset($this->force_standard[$index]) && $this->force_standard[$index]) {
                 $this->use_dismax = false;
             }
@@ -925,6 +927,9 @@ class SearchStructure
             }
             return "Between $start and $end";
         } else {
+            // Remove square brackets and double quote from facet display.
+            // Dec 2025 Note: this is just a UI string, so this replacement should be unnecessary.
+            // return $v;
             return preg_replace('/[\[\]\"]/', '', $v);
         }
 
@@ -1023,6 +1028,7 @@ class SearchStructure
 
 
     // Take from http://www.toao.net/48-replacing-smart-quotes-and-em-dashes-in-mysql
+    // TODO: That function is never used
     function convert_smart_quotes($text)
     {
         // First, replace UTF-8 characters.
@@ -1038,14 +1044,37 @@ class SearchStructure
         return $text;
     }
 
+    /**
+    * Normalize Unicode quotes to ASCII equivalents.
+    */
+    private function normalizeQuotes(string $str): string
+    {
+       $map = [
+        // Double quotes
+        '“' => '"', '”' => '"', '„' => '"', '‟' => '"',
+
+        // Single quotes
+        '‘' => "'", '’' => "'", '‚' => "'", '‛' => "'",
+       ];
+
+    return strtr($str, $map);
+   }
+
     # Detects an odd number of double quotes and removes the last one.
     function fix_unbalanced_quotes($str)
     {
+      // Normalize smart / Unicode quotes first
+      $str = $this->normalizeQuotes($str);
+
+      //Count ASCII double quotes
       if (substr_count($str, '"', 0) % 2 != 0) {
-        $pos = strrpos($str, "\"", -1);
-        # So we can inform the user
-        $this->fixedUnbalancedQuotes = true;
-        $str = substr_replace($str, '', $pos, 1);
+        # Find the last occurrence of a quote and remove it
+        $pos = strrpos($str, '"');
+        if ($pos !== false) {
+            # So we can inform the user
+            $this->fixedUnbalancedQuotes = true;
+            $str = substr_replace($str, '', $pos, 1);
+        }
       }
       return $str;
     }

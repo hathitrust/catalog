@@ -16,11 +16,11 @@
           <section id="section" class="d-flex flex-column">
             <div class="d-flex flex-column message-wrapper">
               <div class="d-flex flex-column-reverse gap-2">
-                <h1>Catalog record not found</h1>
+                <h1>Page not found</h1>
                 <h2 class="text-uppercase error-code">Error: 404</h2>
               </div>
 
-                <p class="error-message">Sorry, we can't find the record you're looking for.</p>
+                <p class="error-message">Sorry, we can't find the page you're looking for.</p>
               </div>
 
               <div class="d-flex flex-column gap-3 help-links">

@@ -14,8 +14,8 @@ if (!isset($_REQUEST['q']) || !preg_match('/\S/', $_REQUEST['q'])) {
   exit();
 }
 
-require_once 'PEAR.php';
 # require_once 'Apache/Solr/Service.php';
+require_once 'vendor/autoload.php';
 require_once 'sys/SolrConnection.php';
 require_once 'services/Record/RecordUtils.php';
 require_once 'sys/Normalize.php';

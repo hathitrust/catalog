@@ -20,6 +20,7 @@
 
 require_once 'Action.php';
 
+require_once 'vendor/autoload.php';
 require_once 'sys/LoggingPager.php';
 require_once 'Pager/Pager.php';
 require_once 'services/Record/FilterFormat.php';

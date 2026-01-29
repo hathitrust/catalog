@@ -4,7 +4,7 @@
   * Figure out the Record ID from an HTID and do a redirect
 **/
 
-require_once 'PEAR.php';
+require_once 'vendor/autoload.php';
 require_once 'Apache/Solr/Service.php';
 require_once 'sys/SolrConnection.php';
 
@@ -29,7 +29,7 @@ class HTID
       header('HTTP/1.0 404 Not Found');
       header('Content-type: text/html; charset=UTF-8');
       echo "<h1>Not found</h1>";
-      echo "'$id' is not a valid record identifier.";
+      echo "'$htid' is not a valid record identifier.";
       exit;
     }
 
@@ -41,7 +41,7 @@ class HTID
     }
     
       
-    header("Location: /Record/$id", true, '301 Moved Permanently');
+    header("Location: /Record/$id", true, 301);
     
 
   }  

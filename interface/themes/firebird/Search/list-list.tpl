@@ -35,27 +35,27 @@
           <h3 class="record-title">{$record.title|truncate:180:"..."|default:'Title not available'}</h3>
         {/if}
       </div>
-      {if array_key_exists('title2', $record)}
+      {if isset($record.title2)}
       <blockquote>
         <p class="results_title2">{$record.title2|truncate:180:"..."}</p>
       </blockquote>
       {/if}
 
-      {if array_key_exists('vtitle', $record)}
+      {if isset($record.vtitle)}
       <blockquote>
         <span class="results_title2">{$record.vtitle}</span>
       </blockquote>
       {/if}
 
       <dl class="metadata">
-        {if array_key_exists('publishDate', $record)}
+        {if isset($record.publishDate)}
         <div class="grid">
         <dt class="g-col-lg-4 g-col-12">{translate text='Published'}</dt>
         <dd class="g-col-lg-4 g-col-12">{$record.publishDate.0}</dd>
         </div>
         {/if}
 
-        {if array_key_exists('author', $record)}
+        {if isset($record.author)}
         <div class="grid">
           <dt class="g-col-lg-4 g-col-12">Author</dt>
           {if is_array($record.author)}

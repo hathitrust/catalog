@@ -18,9 +18,12 @@
  *
  */
 
-require_once 'smarty3/Smarty.class.php';
+#  Smarty 4.5.5 uses classmap autoload with bare Smarty class
+require_once 'vendor/autoload.php';
 
-// Smarty Extension class
+# use Smarty\Smarty;
+
+# Smarty Extension class
 class UInterface extends Smarty
 {
     function __construct()
@@ -30,24 +33,25 @@ class UInterface extends Smarty
         $local = $configArray['Site']['local'];
         $theme = $configArray['Site']['theme'];
 
+        $this->setTemplateDir("$local/interface/themes/$theme");
 
-        $this->template_dir  = "$local/interface/themes/$theme";
-
-	# Set up the space for compiled files
+	    # Set up the space for compiled files
         $comp = "$local/interface/compile/$theme";
 
+        # The compile dir and cache dir need to be writable for the user running the PHP script.
         if (!is_dir($comp)) {
           mkdir($comp, 0777);
           chmod($comp, 0777);
         }
 
-        $this->compile_dir   = $comp;
-        $this->cache_dir     = "$local/interface/cache";
-        // Add custom plugin directory
+        $this->setCompileDir($comp);
+        $this->setCacheDir("$local/interface/cache");
+        # Add custom plugin directory
         $this->addPluginsDir("$local/interface/plugins");
-        $this->caching       = false;
-        $this->debugging         = false;
-        $this->compile_check = true;
+        $this->setCaching(Smarty::CACHING_OFF);
+        $this->setDebugging(false);
+        $this->setCompileCheck(Smarty::COMPILECHECK_ON);
+
 
         unset($local);
 

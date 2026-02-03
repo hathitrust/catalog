@@ -422,10 +422,10 @@ if ($_REQUEST['type'] == 'json') {
 }
 
 if ($_REQUEST['type'] == 'oclcscrape') {
-  require_once 'smarty3/Smarty.class.php';  // Smarty 3 path
+
   $interface = new Smarty();
-  $interface->compile_dir = '../../interface/compile';
-  $interface->template_dir = 'templates';
+  $interface->setCompileDir('../../interface/compile');
+  $interface->setTemplateDir('templates');
   $interface->assign('data', $allmatches);
 
   # Get the first doc

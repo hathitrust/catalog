@@ -281,7 +281,7 @@
   <div class="grid">
     <dt class="g-col-lg-4 g-col-12">{translate text='Locate a Print Version'}</dt>
     <dd class="g-col-lg-8 g-col-12">
-          {if array_key_exists('oclc', $record)}
+          {if isset($record.oclc)}
             {if is_array($record.oclc)}
   <!-- title array -->
               {foreach from=$record.oclc item=title name=loop}

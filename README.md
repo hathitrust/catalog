@@ -25,6 +25,16 @@ and can be done locally with:
 docker compose run --rm playwright
 ```
 
+## How to run the playwright tests updating Firebird before
+
+```bash
+git clone git@github.com:hathitrust/firebird-common.git
+docker compose run firebird npm i
+docker compose run firebird 
+docker compose build
+docker compose run --rm playwright
+```
+
 ## What Works
 
 See all records with http://localhost:8080/Search/Home

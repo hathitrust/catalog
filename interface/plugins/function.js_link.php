@@ -8,7 +8,7 @@
  * Purpose:  outputs a random magic answer
  * -------------------------------------------------------------
  */
-function smarty_function_js_link($params, &$smarty)
+function smarty_function_js_link($params, $template)
 {
   $base_filename = preg_replace('#^/([^/]+)/#', '/${1}/web/', $params['href']);
   $root = dirname($_SERVER['DOCUMENT_ROOT']);

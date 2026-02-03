@@ -8,9 +8,9 @@
  * Purpose:  outputs a random magic answer
  * -------------------------------------------------------------
  */
-function smarty_function_firebird_manifest($params, &$smarty)
+function smarty_function_firebird_manifest($params, $template)
 {
-  $manifest = $smarty->getTemplateVars('firebird_manifest');  // Smarty 3 method
+  $manifest = $template->getTemplateVars('firebird_manifest');  // Smarty 4 method
 
   if ( $manifest ) {
     $output['stylesheet'] = '/common/firebird/dist/' . $manifest['index.css']['file'];

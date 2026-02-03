@@ -22,7 +22,7 @@ const F_7XX_SUBFIELDS = array(
 
 const TRAILING_COMMA_REGEX = '/,\s*$/';
 
-function smarty_function_record_author_display($params, &$smarty) {
+function smarty_function_record_author_display($params, $template) {
   $marc_field = $params['marc_field'];
   # $url and $inst are template/global variables used here only for URL generation
   $url = $params['url'];

@@ -46,7 +46,7 @@ Example: `nature, and history`
 2. Tokenization & Normalization
 
 **Input**: `nature, and history`
-**Tokens**: `["nature,", "and", "history"]`
+**Tokens**: `["nature,", "history"]`
 
     - Allowed:
         - Splitting into tokens
@@ -55,6 +55,12 @@ Example: `nature, and history`
         - Escaping tokens
         - Detecting boolean meaning
         - Adding quotes
+
+Lowercase boolean words are stopwords; uppercase boolean operators are syntax. 
+
+* Tokenizer removes lowercase boolean words; e.g `Poetry and nature` -> `["Poetry", "nature"]`
+* Uppercase boolean operators are syntax so thet are preserved. `Poetry AND nature` -> `["Poetry AND nature"]`
+* Tokenizer vener touch quoted phrases. `"nature and history"` -> `["nature and history"]`
 
 3. Semantic Expansion (NO ESCAPING)
 

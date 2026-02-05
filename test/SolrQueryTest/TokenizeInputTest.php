@@ -120,5 +120,18 @@ final class TokenizeInputTest extends TestCase
             $tokens
         );
     }
+
+    /**
+    * @covers Solr::tokenizeInput
+    */
+    public function testTokenizerRemovesLowercaseBooleanWords():
+    {
+        $tokens = $this->solr->tokenizeInput('poetry and nature');
+
+        $this->assertSame(
+            ['poetry', 'nature'],
+            $tokens
+        );
+    }
 }
 ?>

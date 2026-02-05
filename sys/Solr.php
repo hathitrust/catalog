@@ -61,6 +61,8 @@ class Solr
 
   public $fields = '*,score';
 
+  private const BOOLEAN_STOPWORDS = [ 'and', 'or', 'not'];
+
 
   /**
    * Constructor
@@ -127,7 +129,7 @@ class Solr
       $args = array_merge($args, $this->spellcheckComponents($ss));
     }
 
-    // print_r("----- Solr query ------: " . json_encode($args, JSON_UNESCAPED_UNICODE));
+    print_r("----- Solr query ------: " . json_encode($args, JSON_UNESCAPED_UNICODE));
 
     // $raw is always false, so rawSolrSearch is never used
     if ($raw) {
@@ -342,10 +344,12 @@ class Solr
     // Lianet's notes: conf/searchspecs is the config used to build the Solr query.
     // the specs looks like {"callnoletters":{"callnoletters":[["emstartswith",1]]}, ...}
     $specs = yaml_parse_file('conf/searchspecs.yaml');
+    print_r('==================conf/searchspecs.yaml======================');
+    print_r("searchspecs.yaml ------>>>>>>>>>: " . json_encode($specs, JSON_UNESCAPED_UNICODE));
     $query = '';
 
     foreach ($ss->search as $tvb) { // Type, Value (keywords), Boolean AND or OR
-
+      print_r("type / values >>>>>>>>>: " . json_encode($tvb, JSON_UNESCAPED_UNICODE));
       // $tvb looks like: ['title', 'nature, and history', 'AND']
       $type = $tvb[0];
 
@@ -368,6 +372,7 @@ class Solr
       // Other components are extracted from the specs file
       // e.g.
       if (isset($specs[$type]) && $values) {
+        print_r("See type >>>>>>>>>: " . json_encode($type, JSON_UNESCAPED_UNICODE));
         // $comp looks like: "(issn:(DS753\\ H827) OR isbn:(DS753\\ H827) OR lccn:(\"DS753 H827\") OR lccn:(DS753\\ H827) OR ctrlnum:(ds753h827) OR rptnum:(\"DS753 H827\") OR rptnum:(DS753\\ H827) OR rptnum:(ds753h827) OR oclc_search:(\"DS753 H827\") OR oclc_search:(ds753h827) OR sdrnum:(\"DS753 H827\") OR sdrnum:(ds753h827) OR ht_id:(\"DS753 H827\") OR ht_id:(ds753h827) OR ht_id:(DS753\\ H827) OR id:(\"DS753 H827\"))"
         $comp = '(' . $this->__buildQueryString($specs[$type], $values) . ')';
         if ($bool) {
@@ -375,6 +380,7 @@ class Solr
         }
         $query .= $comp;
       }
+        print_r("Query >>>>>>>>>: " . json_encode($query, JSON_UNESCAPED_UNICODE));
     }
 
     if (!$ss->noExtraIDs()) {
@@ -391,6 +397,7 @@ class Solr
     else {
       $searchComponents[] = array('q', '*:*');
     }
+    print_r("Search components >>>>>>>>>: " . json_encode($searchComponents, JSON_UNESCAPED_UNICODE));
     return $searchComponents;
   }
 
@@ -675,9 +682,9 @@ class Solr
      * A term is a single word.
      * All characters that have a special meaning in a Solr query are escaped.
      * It must never introduce quotes or phrases.
-    * Lucene's Standard Query Parser special characters are:
-    * + - && || ! ( ) { } [ ] ^ " ~ * ? : \ /
-    * Escape Lucene special characters for a literal term (NO operators)
+     * Lucene's Standard Query Parser special characters are:
+     * + - && || ! ( ) { } [ ] ^ " ~ * ? : \ /
+     * Escape Lucene special characters for a literal term (NO operators)
      *
      * @see https://solr.apache.org/guide/the-standard-query-parser.html#escaping-special-characters
      *
@@ -726,25 +733,51 @@ class Solr
     }
 
   /**
-    * Escape a boolean expression for Lucene boolean search. Use for: term1 AND term2 OR "phrase here"
-    * Use for: dramatic AND literature
-    * Operators AND, OR are preserved, everything else is escaped as literal (Terms). No accidental field injection
+     * Escape a boolean expression for Lucene boolean search. Use for: term1 AND term2 OR "phrase here"
+     * Use for: dramatic AND literature
+     * Operators AND, OR are preserved, everything else is escaped as literal (Terms). No accidental field injection
   */
-  public function escapeBoolean(string $expr): string {
-    // Split using AND, OR as delimiters (case-insensitive)
+  public function escapeBoolean(string $expr): string
+    {
+        // Split on AND / OR, but preserve phrases
+        // Split using AND, OR as delimiters (case-insensitive), but preserve phrases as "Danny's story"
+        // e.g. dramatic AND literature OR "Danny's story" -> [dramatic, AND, literature, OR, "Danny's story"]
+        $parts = preg_split(
+            '/\s+(AND|OR)\s+/i',
+            $expr,
+            -1,
+            PREG_SPLIT_DELIM_CAPTURE
+        );
 
-    $tokens = explode(' ', $expr);
-    $out = [];
-    foreach ($tokens as $t) {
-        if ($t === 'AND' || $t === 'OR') {
-            $out[] = $t;
-        } else {
-            $out[] = $this->escapeTerm($t);
+        print_r("Tokens >>>>>>>>>: " . json_encode($parts, JSON_UNESCAPED_UNICODE));
+
+        $out = [];
+
+        foreach ($parts as $p) {
+            $p = trim($p);
+
+            if ($p === '') {
+                continue;
+            }
+
+            if (strcasecmp($p, 'AND') === 0 || strcasecmp($p, 'OR') === 0) {
+                $out[] = strtoupper($p);
+            } else {
+                // If already a phrase, escape as phrase
+                if (
+                    strlen($p) >= 2 &&
+                    $p[0] === '"' &&
+                    substr($p, -1) === '"'
+                ) {
+                    $out[] = $this->escapePhrase($p);
+                } else {
+                    $out[] = $this->escapeTerm($p);
+                }
+            }
         }
-    }
 
     return implode(' ', $out);
-  }
+}
 
  /**
  * Escape a prefix query for Lucene prefix search. Use for: prefix*
@@ -775,6 +808,8 @@ class Solr
   private function __buildQueryString($structure, $values, $joiner = "OR") {
 
     $clauses = array();
+    print_r("structure >>>>>>>>>: " . json_encode($structure, JSON_UNESCAPED_UNICODE));
+    print_r("values >>>>>>>>>: " . json_encode($values, JSON_UNESCAPED_UNICODE));
     foreach ($structure as $field => $clausearray) {
 
       // is_numeric($field) is true if we've got an un-hashed array, used for grouping
@@ -957,8 +992,22 @@ class Solr
     // /"[^"]*"[~[0-9]+]* --> to capture fuzzy searches like "hello world"~5 - matches a double-quoted string followed by ~ and a number
     // "[^"]*" --> to capture exact phrases like "hello world" - matches a double-quoted string
     // [^ ]+ --> to capture single words like hello - matches sequences of non-space characters
+    // Poetry and nature -> ["Poetry", "nature"]
+    // Poetry AND nature -> ["Poetry AND nature"]
+    // "Poetry and nature" -> ["Poetry and nature"]
     preg_match_all('/"[^"]*"[~[0-9]+]*|"[^"]*"|[^ ]+/', $input, $words);
     $words = $words[0];
+
+    // Filter lowercase boolean words before the join loop.
+    $words = array_values(array_filter($words, function ($w) {
+    // Keep quoted phrases intact
+    if ($w[0] === '"') {
+        return true;
+    }
+
+    // Remove lowercase boolean words
+    return !in_array(strtolower($w), self::BOOLEAN_STOPWORDS, true);
+    }));
 
     // Join words with AND, OR, NOT
     $newWords = array();

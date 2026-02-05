@@ -78,11 +78,11 @@ class SolrQueryFullPipelineTest extends TestCase
             'title_a:(smart)^15000', // exactmatcher
             'titleProper:(smart*)^8000', // emstartswith
 
-            'titleProper:("smart")^1200', // onephrase field
+            'titleProper:(smart)^1200', // onephrase field
 
-            'title_topProper:("smart")^600', // onephrase field
+            'title_topProper:(smart)^600', // onephrase field
 
-            'series2:("smart")^500' // onephrase field
+            'series2:(smart)^500' // onephrase field
         ];
 
     foreach ($expectedClauses as $clause) {

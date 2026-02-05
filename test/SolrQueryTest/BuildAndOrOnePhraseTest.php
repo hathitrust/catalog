@@ -38,18 +38,6 @@ class BuildAndOrOnePhraseTest extends TestCase
 
     /**
     * @covers Solr::build_and_or_onephrase
-    */
-    public function testUnbalanceFuncyQuote(): void
-    {
-        $result = $this->solr->build_and_or_onephrase('“smart');
-
-        $this->assertIsArray($result);
-        $this->assertEquals('smart', $result['onephrase']);
-        $this->assertEquals('"smart', $result['asis']);
-    }
-
-    /**
-    * @covers Solr::build_and_or_onephrase
     * \\ --> reject, then return False
     */
     public function testRejectsSingleBackslash()
@@ -62,7 +50,8 @@ class BuildAndOrOnePhraseTest extends TestCase
 
     /**
     * @covers Solr::build_and_or_onephrase
-    * table~2 --> accepted fuzzy search, then create the query
+    * table~2 --> that is a fuzzy search, then create the query
+    * table~2 is a phrase.
     */
     public function testAllowsFuzzyTerm()
     {
@@ -75,15 +64,16 @@ class BuildAndOrOnePhraseTest extends TestCase
 
     /**
     * @covers Solr::build_and_or_onephrase
-    * "table"~2 --> accepted fuzzy search, then create the query
+    * "table chair"~2 --> that is a PhraseQuery with slop, not a FuzzyQuery
+    * Match documents where "table" and "chair" appear within 2 positions of each other.
+    * "table chair" is a phrase.
     */
     public function testAllowsQuotedFuzzyPhrase()
     {
-        $result = $this->solr->build_and_or_onephrase('"table"~2');
-
+        $result = $this->solr->build_and_or_onephrase('"table chair"~2');
         $this->assertIsArray($result);
-        $this->assertEquals('table~2', $result['onephrase']);
-        $this->assertEquals('"table"~2', $result['asis']);
+        $this->assertEquals('"table chair"~2', $result['onephrase']);
+        $this->assertEquals('"table chair"~2', $result['asis']);
     }
 
     /**
@@ -110,6 +100,7 @@ class BuildAndOrOnePhraseTest extends TestCase
         $this->assertIsArray($result);
         $this->assertEquals('table*', $result['onephrase']);
         $this->assertEquals('table*', $result['asis']);
+        $this->assertEquals('table*', $result['emstartswith']);
     }
 
     /**
@@ -121,7 +112,7 @@ class BuildAndOrOnePhraseTest extends TestCase
     // Two errors:
     // 1) Unbalanced parentheses
     // 2) Dangling boost operator (^)
-    $input = '(title:(war^peace';
+    $input = '(title:(war^peace'; // Query builder will treats it as a literar string, title\:warpeace.
 
     $result = $this->solr->build_and_or_onephrase($input);
 

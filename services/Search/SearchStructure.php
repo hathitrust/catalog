@@ -200,13 +200,22 @@ class SearchStructure
         $this->cleaned_up_original_search = $ss;
 
 
-        foreach ($ss as $i => $fkb) {
-            $val = $fkb[1];
-            $val = preg_replace('/AND\s*$/', "and", $val);
-            $val = preg_replace('/OR\s*$/', "or", $val);
-            $val = preg_replace('/NOT\s*$/', "not", $val);
-            $ss[$i][1] = $val;
-        }
+       foreach ($ss as $i => $fkb) {
+        $val = $fkb[1];
+
+        // Beginning token
+        $val = preg_replace('/^(\s*)AND\b/', '$1and', $val);
+        $val = preg_replace('/^(\s*)OR\b/',  '$1or',  $val);
+        $val = preg_replace('/^(\s*)NOT\b/', '$1not', $val);
+
+        // Ending token
+        $val = preg_replace('/\bAND(\s*)$/', 'and$1', $val);
+        $val = preg_replace('/\bOR(\s*)$/',  'or$1',  $val);
+        $val = preg_replace('/\bNOT(\s*)$/', 'not$1', $val);
+
+        $ss[$i][1] = $val;
+       }
+
 
 
         // The last bool need to be nil. Pop it off, change it, and

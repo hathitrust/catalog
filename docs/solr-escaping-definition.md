@@ -168,3 +168,19 @@ Before modifying escaping logic, confirm:
 
 ## Summary
 Semantics first. Escaping last. Always.
+
+
+## What “phrase” means in the pipeline
+
+A token should be considered a phrase if:
+
+- It is quoted → `"foo bar"`
+- It may optionally have a Lucene proximity / slop suffix → `"foo bar"~5`
+- We should not classify:
+   - machine~3 ❌ 
+   - learning~3 ❌ 
+   - machine learning~3 ❌ (not quoted, so not a phrase)
+- We must preserve safety:
+   - No partial quotes 
+   - No malformed slop 
+   - No boolean inference

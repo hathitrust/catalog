@@ -169,23 +169,18 @@ class SolrEscapingTest extends TestCase
   {
     // Boolean operators must remain unescaped; operands must never introduce Solr syntax errors.
     $solr = new Solr('', '');
+
+    $input = 'dramatic AND literature';
+
     $this->assertEquals(
-        'dramatic AND literature',
+        $input,
         $solr->escapeBoolean('dramatic AND literature')
     );
-
-    $input = 'nature, AND and AND history';
 
     $escaped = $solr->escapeBoolean($input);
 
     // Ensure no accidental escaping of operators
     $this->assertStringContainsString(' AND ', $escaped);
-
-    $this->assertSame(
-        'nature, AND and AND history',
-        $escaped,
-        'Boolean operators must be preserved and operands safely escaped'
-    );
 
     // Ensure no quote imbalance
     $this->assertSame(

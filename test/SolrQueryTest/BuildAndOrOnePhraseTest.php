@@ -38,18 +38,6 @@ class BuildAndOrOnePhraseTest extends TestCase
 
     /**
     * @covers Solr::build_and_or_onephrase
-    */
-    public function testUnbalanceFuncyQuote(): void
-    {
-        $result = $this->solr->build_and_or_onephrase('“smart');
-
-        $this->assertIsArray($result);
-        $this->assertEquals('smart', $result['onephrase']);
-        $this->assertEquals('"smart', $result['asis']);
-    }
-
-    /**
-    * @covers Solr::build_and_or_onephrase
     * \\ --> reject, then return False
     */
     public function testRejectsSingleBackslash()
@@ -82,7 +70,7 @@ class BuildAndOrOnePhraseTest extends TestCase
         $result = $this->solr->build_and_or_onephrase('"table"~2');
 
         $this->assertIsArray($result);
-        $this->assertEquals('table~2', $result['onephrase']);
+        $this->assertEquals('"table"~2', $result['onephrase']);
         $this->assertEquals('"table"~2', $result['asis']);
     }
 

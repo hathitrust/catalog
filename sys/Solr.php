@@ -856,48 +856,7 @@ class Solr
           continue;
         }
 
-        // Lianet's notes: Escapes based on semantic role. It is safe embedding in field:value syntax
-        switch ($val) {
-
-            case 'lcnormalized':
-                $escaped_value = $values[$val];
-                break;
-            case 'stdnum':
-                // 978-0-123-45678-9
-                $escaped_value = $values[$val];
-                break;
-            case 'onephrase':
-                // "\"dramatic literature, comprehending critical\""
-                $escaped_value = $this->escapePhrase($values[$val]);
-                break;
-            case 'and':
-            case 'or':
-                // and -- dramatic AND literature, AND comprehending AND critical
-                // or -- dramatic OR literature, OR comprehending OR critical
-                // \"dramatic AND literature\, AND comprehending AND critical\"
-                // See how $values[$var] looks war AND and AND peace AND war AND and AND rest
-                // Terms-only by construction
-                //$escaped_value = $this->escapeBoolean($values[$val]);
-                $escaped_value = $this->escapeTerm($values[$val]);
-                break;
-            case 'emstartswith':
-                // dramaticliteraturecomprehendingcritical*
-                $escaped_value = $this->escapePrefix($values[$val]);
-                break;
-            case 'compressed':
-                // dramaticliteraturecomprehendingcritical (no spaces)
-                $escaped_value = $this->escapeTerm($values[$val]);
-                break;
-            default:
-                // exactmatcher - dramaticliteraturecomprehendingcritical
-                $escaped_value = $this->escapeTerm($values[$val]);
-        }
-
-        if ($escaped_value === '""' || $escaped_value === '') {
-            continue;
-        }
-
-        $sstring = $field . ':(' . $escaped_value . ')';
+        $sstring = $field . ':(' . $values[$val] . ')';
         if (isset($weight) && $weight > 0) {
           $sstring .= '^' . $weight;
         }
@@ -1539,34 +1498,37 @@ class Solr
 
     print_r("Tokens : " . json_encode($tokens, JSON_UNESCAPED_UNICODE));
 
-    // Build semantic values from classified tokens
-    $phraseParts = [];
-    $termParts   = [];
+    // Build semantic values from classified tokens and escape them properly for their intended use
+    $escapedParts = [];
+    // $termParts   = [];
 
     foreach ($tokens as $t) {
         if ($t['type'] === 'phrase') {
-            $phraseParts[] = $t['value'];
+            
+            $escaped = $this->escapePhrase($t['value']['text']);
+            if ($t['value']['slop'] !== null) {
+                $escaped .= '~' . $t['value']['slop'];
+            }
+            if ($escaped === '""' || $escaped === '') {
+                continue;
+            }
+
+            $escapedParts[] = $escaped;
         } else {
-            $termParts[] = $t['value'];
+            $escapedParts[] = $this->escapeTerm($t['value']);
         }
     }
 
-    // Phrase search only if there is at least one phrase
-    if ($phraseParts) {
-        $values['onephrase'] = implode(' ', $phraseParts);
-    }
-    else {
-        // If no phrases, treat the whole input as one phrase for the onephrase field
-        // it's to ensure the field onephrase is created
-        // to preserve the original input as much as possible for the onephrase search type,
-        // which is important for relevance ranking
-        $values['onephrase'] = preg_replace('/"/', '', implode(' ', $termParts));
-    }
+    print_r("Escaped Parts : " . json_encode($escapedParts, JSON_UNESCAPED_UNICODE));
+
 
     // Boolean searches only operate on TERMS
-    if ($termParts) {
-        $values['and'] = implode(' AND ', $termParts);
-        $values['or']  = implode(' OR ',  $termParts);
+    if ($escapedParts) {
+        
+        // Phrase search only if there is at least one phrase
+        $values['onephrase'] = '"' . implode(' ', $escapedParts) . '"';
+        $values['and'] = implode(' AND ', $escapedParts);
+        $values['or']  = implode(' OR ',  $escapedParts);
     }
 
     // Phrase search - "dramatic literature, comprehending critical"
@@ -1576,15 +1538,15 @@ class Solr
     // OR search - dramatic OR literature, OR comprehending OR critical
     // $values['or'] = implode(' OR ', $tokenized);
     // As-is search - dramatic literature, comprehending critical
-    $values['asis'] = $lookfor;
+    $values['asis'] = $this->escapeTerm($lookfor);
     // Compressed search - dramaticliterature,comprehendingcritical
-    $values['compressed'] = preg_replace('/\s/', '', $lookfor);
+    $values['compressed'] = preg_replace('/\s/', '', $this->escapeTerm($lookfor));
     // Exactmatcher search - dramaticliteraturecomprehendingcritical
-    $values['exactmatcher'] = $this->exactmatcherify($lookfor);
+    $values['exactmatcher'] = $this->exactmatcherify($this->escapeTerm($lookfor));
     // Exactmatcher startswith search - dramaticliteraturecomprehendingcritical*
     $values['emstartswith'] = $values['exactmatcher'] . '*';
 
-    //print_r("Sematic Structure : " . json_encode($values, JSON_UNESCAPED_UNICODE));
+    print_r("Sematic Structure : " . json_encode($values, JSON_UNESCAPED_UNICODE));
 
     return $values;
   }

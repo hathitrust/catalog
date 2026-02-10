@@ -52,7 +52,7 @@
                   {/if}
                 {/foreach}
               {/foreach}
-              {if array_key_exists('vtitle', $record)}
+              {if isset($record.vtitle)}
                <br /><span>{$record.vtitle}</span>
               {/if}
             </h1>
@@ -158,14 +158,14 @@
             <div class="d-flex gap-3 p-3 mb-3 mt-3 shadow-sm rounded">
             <div class="container-fluid p-1">
               <h3 class="record-title h4 mb-3 fw-normal"><a href="{$url}/Record/{$similar.id}">{$similarTitle}</a></h3>
-              {if array_key_exists('author', $similar) or array_key_exists('publishDate', $similar)}
+              {if isset($similar.author) or isset($similar.publishDate)}
               <dl class="metadata mb-0">
               <div class="grid gap-2">
-                {if array_key_exists('author', $similar)}
+                {if isset($similar.author)}
                 <dt class="g-col-lg-4 g-col-12">Author</dt>
                 <dd class="g-col-lg-8 g-col-12">{$similar.author.0}</dd>
                 {/if}
-                {if array_key_exists('publishDate', $similar)}
+                {if isset($similar.publishDate)}
                 <dt class="g-col-lg-4 g-col-12">Published</dt>
                 <dd class="g-col-lg-8 g-col-12">{$similar.publishDate.0}</dd>
                 {/if}

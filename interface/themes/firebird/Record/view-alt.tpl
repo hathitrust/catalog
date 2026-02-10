@@ -46,7 +46,7 @@
                    {/if}
                  {/foreach}
                {/foreach}
-               {if array_key_exists('vtitle', $record) && $record.vtitle}
+               {if isset($record.vtitle) && $record.vtitle}
                 <br /><span>{$record.vtitle}</span>
                {/if}
              </h1>

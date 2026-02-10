@@ -50,7 +50,7 @@ FIREBIRD TODOS:
             <hathi-results-toolbar
               data-prop-first-record-number='{$recordStart}'
               data-prop-last-record-number='{$recordEnd}'
-              data-prop-total-records='{$recordCount|number_format:null:".":","}'
+              data-prop-total-records='{$recordCount|number_format:0:".":","}'
               data-prop-target='catalog'
               {* force 'Relevance' to appear in dropdown as default *}
               {if ! isset($sort) or $sort == ''}
@@ -76,12 +76,12 @@ FIREBIRD TODOS:
           {if $numPages gt 1}
             {assign var=pageLinks value=$pager->getLinks()}
             {assign var=pageLinksArray value=$pager->getPageLinksArray()}
-            {if array_key_exists('url', $pageLinks.linkTagsRaw.next)}
+            {if isset($pageLinks.linkTagsRaw.next.url)}
               {assign var=next_url value=$pageLinks.linkTagsRaw.next.url}
             {else}
               {assign var=next_url value=''}
             {/if}
-            {if array_key_exists('url', $pageLinks.linkTagsRaw.prev)}
+            {if isset($pageLinks.linkTagsRaw.prev.url)}
               {assign var=prev_url value=$pageLinks.linkTagsRaw.prev.url}
             {else}
               {assign var=prev_url value=''}

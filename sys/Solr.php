@@ -994,9 +994,9 @@ class Solr
     // /"[^"]*"[~[0-9]+]* --> to capture fuzzy searches like "hello world"~5 - matches a double-quoted string followed by ~ and a number
     // "[^"]*" --> to capture exact phrases like "hello world" - matches a double-quoted string
     // [^ ]+ --> to capture single words like hello - matches sequences of non-space characters
-    // Poetry and nature -> ["Poetry", "nature"]
-    // Poetry AND nature -> ["Poetry AND nature"]
-    // "Poetry and nature" -> ["Poetry and nature"]
+    // Poetry and nature -> ["Poetry", "nature"] - remove stop word "and", "or" and split the phrase
+    // Poetry AND nature -> ["Poetry AND nature"] - keep "AND" and join the phrase
+    // "Poetry and nature" -> ["Poetry and nature"] - quoted phrase, keep "and" and do not split the phrase
     preg_match_all('/"[^"]*"[~[0-9]+]*|"[^"]*"|[^ ]+/', $input, $words);
     $words = $words[0];
 
@@ -1007,7 +1007,6 @@ class Solr
     if ($w[0] === '"') {
         return true;
     }
-
     // Remove lowercase boolean words
     return !in_array($w, self::BOOLEAN_STOPWORDS, true);
     }));
@@ -1394,6 +1393,31 @@ class Solr
   public function isTerm(string $token): bool {
         return !$this->isPhrase($token) && !$this->isBooleanOperator($token);
     }
+  
+  /*
+    * Unwrap a phrase token into its text and optional slop
+    * Examples:
+    *   "foo bar" → ['text' => 'foo bar', 'slop' => null]
+    *   "foo bar"~5 → ['text' => 'foo bar', 'slop' => 5]
+    *   "nature and origins" → ['text' => 'nature and origins', 'slop' => null]
+    *   This is not a phrase -> foo"~3 → throws exception
+    * We will call this function only after confirming isPhrase($token) is true, so we can assume the input is well-formed. 
+    * The regex is a sanity check and to extract the text and slop.
+  */
+
+  public function unwrapPhrase(string $token): array {
+    // Matches:
+    // "table"
+    // "table"~2
+    if (!preg_match('/^"([^"]+)"(?:~(\d+))?$/', $token, $m)) {
+        throw new InvalidArgumentException("Not a valid phrase token");
+    }
+
+    return [
+        'text' => $m[1],          // table
+        'slop' => $m[2] ?? null,  // 2 or null
+    ];
+  }
 
 
   /**
@@ -1510,21 +1534,8 @@ class Solr
     $rawTokens = $this->tokenizeInput($lookfor);
     print_r("Tokenize : " . json_encode($rawTokens, JSON_UNESCAPED_UNICODE));
 
-    // Classify tokens into phrases and terms
-    $tokens = [];
-    foreach ($rawTokens as $t) {
-        if ($this->isPhrase($t)) {
-            $tokens[] = [
-                'type'  => 'phrase',
-                'value' => substr($t, 1, -1), // strip quotes once
-            ];
-        } else {
-            $tokens[] = [
-                'type'  => 'term',
-                'value' => $t,
-            ];
-        }
-    }
+     // Classify tokens into phrases and terms
+    $tokens =  $this->classifyTokens($rawTokens);
 
     print_r("Tokens : " . json_encode($tokens, JSON_UNESCAPED_UNICODE));
 
@@ -1577,7 +1588,24 @@ class Solr
 
     return $values;
   }
-
+  
+  function classifyTokens(array $tokens): array {
+    $classified = [];
+    foreach ($tokens as $t) {
+        if ($this->isPhrase($t)) {
+            $classified[] = [
+                'type'  => 'phrase',
+                'value' => $this->unwrapPhrase($t),
+            ];
+        } else {
+            $classified[] = [
+                'type'  => 'term',
+                'value' => $t,
+            ];
+        }
+    }
+    return $classified;
+  }
 
   /**
    * Construct, perform, and process the search

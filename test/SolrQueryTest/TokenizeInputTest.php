@@ -17,7 +17,7 @@ final class TokenizeInputTest extends TestCase
     }
 
     /**
-    * @covers Solr::tokenizeInput
+    * @covers Solr::tokenizeInput - two terms
     */
     public function testTokenizesSimpleWords()
     {
@@ -30,7 +30,7 @@ final class TokenizeInputTest extends TestCase
     }
 
     /**
-    * @covers Solr::tokenizeInput
+    * @covers Solr::tokenizeInput - quoted phrase
     */
     public function testTokenizesQuotedPhrase()
     {
@@ -43,7 +43,7 @@ final class TokenizeInputTest extends TestCase
     }
 
     /**
-    * @covers Solr::tokenizeInput
+    * @covers Solr::tokenizeInput - fuzzy phrase
     */
     public function testTokenizesFuzzyPhrase()
     {
@@ -57,7 +57,7 @@ final class TokenizeInputTest extends TestCase
     }
 
     /**
-    * @covers Solr::tokenizeInput
+    * @covers Solr::tokenizeInput - unquoted fuzzy term = 1 term/token
     */
     public function testTokenizesUnquotedFuzzyTerm()
     {
@@ -70,7 +70,7 @@ final class TokenizeInputTest extends TestCase
     }
 
     /**
-    * @covers Solr::tokenizeInput
+    * @covers Solr::tokenizeInput - mixed input with quoted fuzzy phrase = 3 terms/tokens
     */
     public function testTokenizesMixedInput()
     {
@@ -83,7 +83,7 @@ final class TokenizeInputTest extends TestCase
     }
 
     /**
-    * @covers Solr::tokenizeInput
+    * @covers Solr::tokenizeInput - mixed input with boolean operator = 1 term/token (boolean operators should not be split out as separate tokens)
     */
     public function testTokenizesBooleanOperators()
     {
@@ -96,7 +96,7 @@ final class TokenizeInputTest extends TestCase
     }
 
     /**
-    * @covers Solr::tokenizeInput
+    * @covers Solr::tokenizeInput - multiple quoted fuzzy phrases = 2 phrases
     */
     public function testTokenizesMultipleFuzzyPhrases()
     {
@@ -109,14 +109,14 @@ final class TokenizeInputTest extends TestCase
     }
 
     /**
-    * @covers Solr::tokenizeInput
+    * @covers Solr::tokenizeInput - unquoted wildcard term with spaces = 3 terms/tokens (wildcard operator will keep with the last token)
     */
-    public function testDoesNotSplitQuotedPhraseWithSpaces()
+    public function testSplitUnquotedWildcardsPhraseWithSpaces()
     {
-        $tokens = $this->solr->tokenizeInput('"a b c"~4');
+        $tokens = $this->solr->tokenizeInput('a b c*');
 
         $this->assertSame(
-            ['"a b c"~4'],
+            ['a', 'b', 'c*'],
             $tokens
         );
     }
@@ -132,6 +132,27 @@ final class TokenizeInputTest extends TestCase
             ['poetry', 'nature'],
             $tokens
         );
+    }
+
+    /**
+    * @covers Solr::tokenizeInput
+    */
+    public function testTokenizerDoesNotSplitBooleanPhrase()
+    {
+        $tokens = $this->solr->tokenizeInput('"poetry AND nature"');
+
+        $this->assertSame(
+            ['"poetry AND nature"'],
+            $tokens
+        );
+
+        $tokens = $this->solr->tokenizeInput('poetry AND nature');
+
+        $this->assertSame(
+            ['poetry AND nature'],
+            $tokens
+        );
+    
     }
 
 

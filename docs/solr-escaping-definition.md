@@ -22,11 +22,15 @@ The query builder has four distinct layers. Each layer has a strict responsibili
 
 1. Raw input
    ↓
-2. Normalization & tokenization 
+2. Validation
    ↓
-3. Semantic expansion
+3. Tokenization 
    ↓
-4. Context-aware escaping 
+4. Semantic Classification
+   ↓
+5. Escaping (character level only) 
+   ↓
+6. Rendering (syntax construction)
 
 ### Layer Responsibilities
 
@@ -51,6 +55,7 @@ Example: `nature, and history`
     - Allowed:
         - Splitting into tokens
         - Lowercasing (optional)
+        - Removing stop words
     - Forbidden:
         - Escaping tokens
         - Detecting boolean meaning
@@ -62,7 +67,27 @@ Lowercase boolean words are stopwords; uppercase boolean operators are syntax.
 * Uppercase boolean operators are syntax so thet are preserved. `Poetry AND nature` -> `["Poetry AND nature"]`
 * Tokenizer vener touch quoted phrases. `"nature and history"` -> `["nature and history"]`
 
-3. Semantic Expansion (NO ESCAPING)
+3. Semantic Classification (NO ESCAPING)
+
+**Input**: "table chair"~2 "wood table"~1
+**Outputs**: Tokens : [{"type":"phrase","value":{"text":"table chair","slop":"2"}},{"type":"phrase","value":{"text":"wood table","slop":"1"}}]
+
+* Determine is the input string is a Phrase or a Term
+* Classifies syntax
+* Runs before escaping
+* Does not modify input
+
+**Token    isPhrase    Purpose	**
+"machine learning"   Yes  Quoted phrase
+"machine learning"~3 Yes Proximity search/ Phrase with slop -> Search by machine and learning with a distant of 3
+table~2 Yes Fuzzy term
+"foo"~3    Yes  Proximity search
+"table"*    Yes    
+"table*"    Yes
+machine learning~3 No
+table*  No
+"broken No
+
 
 The semantic structure defines intent, not syntax.
 

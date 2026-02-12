@@ -55,7 +55,7 @@ final class IsPhraseTest extends TestCase
 
         $this->assertSame(
             [
-                ['type' => 'phrase', 'value' => ['text' => 'table chair', 'slop' => '2']]
+                ['type' => 'phrase_slop', 'value' => ['text' => 'table chair', 'slop' => '2']]
             ],
             $tokens,
             'Fuzzy phrase must be a single token'
@@ -71,7 +71,7 @@ final class IsPhraseTest extends TestCase
 
         $this->assertSame(
             [
-                ['type' => 'term', 'value' => 'table~2']
+                ['type' => 'term_fuzzy', 'value' => 'table~2']
                 ],
             $tokens
         );
@@ -87,7 +87,7 @@ final class IsPhraseTest extends TestCase
         $this->assertSame(
             [
                 ['type' => 'term', 'value' => 'table'],
-                ['type' => 'phrase', 'value' => ['text' => 'chair leg', 'slop' => '3']],
+                ['type' => 'phrase_slop', 'value' => ['text' => 'chair leg', 'slop' => '3']],
                 ['type' => 'term', 'value' => 'desk']
             ],
             $tokens
@@ -118,8 +118,8 @@ final class IsPhraseTest extends TestCase
 
         $this->assertSame(
             [
-                ['type' => 'phrase', 'value' => ['text' => 'table chair', 'slop' => '2']],
-                ['type' => 'phrase', 'value' => ['text' => 'wood table', 'slop' => '1']]
+                ['type' => 'phrase_slop', 'value' => ['text' => 'table chair', 'slop' => '2']],
+                ['type' => 'phrase_slop', 'value' => ['text' => 'wood table', 'slop' => '1']]
             ],
             $tokens
         );
@@ -135,7 +135,7 @@ final class IsPhraseTest extends TestCase
             [
                 ['type' => 'term', 'value' => 'a'],
                 ['type' => 'term', 'value' => 'b'],
-                ['type' => 'term', 'value' => 'c*']
+                ['type' => 'term_wildcard', 'value' => 'c*']
             ],
             $tokens
         );

@@ -22,11 +22,15 @@ The query builder has four distinct layers. Each layer has a strict responsibili
 
 1. Raw input
    ↓
-2. Normalization & tokenization 
+2. Validation
    ↓
-3. Semantic expansion
+3. Tokenization 
    ↓
-4. Context-aware escaping 
+4. Semantic Classification
+   ↓
+5. Escaping (character level only) 
+   ↓
+6. Rendering (syntax construction)
 
 ### Layer Responsibilities
 
@@ -46,17 +50,44 @@ Example: `nature, and history`
 2. Tokenization & Normalization
 
 **Input**: `nature, and history`
-**Tokens**: `["nature,", "and", "history"]`
+**Tokens**: `["nature,", "history"]`
 
     - Allowed:
         - Splitting into tokens
         - Lowercasing (optional)
+        - Removing stop words
     - Forbidden:
         - Escaping tokens
         - Detecting boolean meaning
         - Adding quotes
 
-3. Semantic Expansion (NO ESCAPING)
+Lowercase boolean words are stopwords; uppercase boolean operators are syntax. 
+
+* Tokenizer removes lowercase boolean words; e.g `Poetry and nature` -> `["Poetry", "nature"]`
+* Uppercase boolean operators are syntax so thet are preserved. `Poetry AND nature` -> `["Poetry AND nature"]`
+* Tokenizer vener touch quoted phrases. `"nature and history"` -> `["nature and history"]`
+
+3. Semantic Classification (NO ESCAPING)
+
+**Input**: "table chair"~2 "wood table"~1
+**Outputs**: Tokens : [{"type":"phrase","value":{"text":"table chair","slop":"2"}},{"type":"phrase","value":{"text":"wood table","slop":"1"}}]
+
+* Determine is the input string is a Phrase or a Term
+* Classifies syntax
+* Runs before escaping
+* Does not modify input
+
+**Token    isPhrase    Purpose	**
+"machine learning"   Yes  Quoted phrase
+"machine learning"~3 Yes Proximity search/ Phrase with slop -> Search by machine and learning with a distant of 3
+table~2 Yes Fuzzy term
+"foo"~3    Yes  Proximity search
+"table"*    Yes    
+"table*"    Yes
+machine learning~3 No
+table*  No
+"broken No
+
 
 The semantic structure defines intent, not syntax.
 
@@ -162,3 +193,19 @@ Before modifying escaping logic, confirm:
 
 ## Summary
 Semantics first. Escaping last. Always.
+
+
+## What “phrase” means in the pipeline
+
+A token should be considered a phrase if:
+
+- It is quoted → `"foo bar"`
+- It may optionally have a Lucene proximity / slop suffix → `"foo bar"~5`
+- We should not classify:
+   - machine~3 ❌ 
+   - learning~3 ❌ 
+   - machine learning~3 ❌ (not quoted, so not a phrase)
+- We must preserve safety:
+   - No partial quotes 
+   - No malformed slop 
+   - No boolean inference

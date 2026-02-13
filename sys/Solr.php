@@ -957,8 +957,8 @@ class Solr
   /**
    * Input Tokenizer
    *
-   * Tokenizes the user input based on spaces and quotes.  Then joins phrases
-   * together that have an AND, OR, NOT present.
+   * Tokenizes the user input based on spaces and quotes.
+   * Boolean operators are preserved as standalone tokens.
    *
    * @param string $input User's input string
    * @return  array               Tokenized array
@@ -972,13 +972,13 @@ class Solr
     // "[^"]*" --> to capture exact phrases like "hello world" - matches a double-quoted string
     // [^ ]+ --> to capture single words like hello - matches sequences of non-space characters
     // Poetry and nature -> ["Poetry", "nature"] - remove stop word "and", "or" and split the phrase
-    // Poetry AND nature -> ["Poetry AND nature"] - keep "AND" and join the phrase
+    // Poetry AND nature -> ["Poetry", "AND", "nature"] - keep uppercase boolean operator as a token
     // "Poetry and nature" -> ["Poetry and nature"] - quoted phrase, keep "and" and do not split the phrase
     preg_match_all('/"[^"]*"[~[0-9]+]*|"[^"]*"|[^ ]+/', $input, $words);
     $words = $words[0];
 
 
-    // Filter lowercase boolean words before the join loop.
+    // Filter lowercase boolean words.
     $words = array_values(array_filter($words, function ($w) {
     // Keep quoted phrases intact
     if ($w[0] === '"') {
@@ -988,50 +988,7 @@ class Solr
     return !in_array($w, self::BOOLEAN_STOPWORDS, true);
     }));
 
-    // Join words with AND, OR, NOT
-    $newWords = array();
-    for ($i = 0; $i < count($words); $i++) {
-
-     $w = $words[$i];
-
-      if (($w == 'OR') || ($w == 'AND') || ($w == 'NOT')) {
-
-        // Must have a previous term and a next token
-        if (!count($newWords) || !isset($words[$i + 1])) {
-            continue;
-        }
-
-        $next = $words[$i + 1];
-
-        // Do not join operators or lowercase boolean words
-        // Defensive check to avoid joining with another operator
-        // e.g. input: nature, AND and AND history -> after removing stop words: nature, AND AND history.
-        // We don't want to join nature, AND AND history to avoid a Solr parser error
-        if ($this->isBooleanOperator($next)) {
-            continue;
-        }
-
-        // Safe boolean join
-        $newWords[count($newWords) - 1] .= ' ' . $w . ' ' . $next;
-        $i++; // consume next token
-        continue;
-      }
-      // Normal token - just add it
-      $newWords[] = $words[$i];
-
-    }
-
-    # Pull out any trailing + or -
-    $fixedwords = array();
-    foreach ($newWords as &$word) {
-      // $word = preg_replace('/[^a-zA-Z0-9\'\"()]\s*$/', '', $word);
-      // if (!preg_match('/\S/', $word)) {
-      //   continue;
-      // }
-      $fixedwords[] = $word;
-    }
-
-    return $fixedwords;
+    return $words;
   }
 
 
@@ -1467,7 +1424,7 @@ class Solr
         $phrase .= '~' . $token['value']['slop'];
     }
 
-    print_r("Each Parts XXXXXX : " . json_encode($phrase, JSON_UNESCAPED_UNICODE));
+    // print_r("Each Parts XXXXXX : " . json_encode($phrase, JSON_UNESCAPED_UNICODE));
 
     return $phrase;
   }   
@@ -1499,6 +1456,9 @@ class Solr
                   $escapedParts[] = $this->escapeTerm($t['value']); // fallback safety
                 }
                 break;
+            case 'operator':
+                $escapedParts[] = strtoupper($t['value']);
+                break;
         }
     }
 
@@ -1520,6 +1480,7 @@ class Solr
             case 'term':
             case 'term_wildcard':
             case 'term_fuzzy':
+            case 'operator':
             default:
                 $parts[] = $t['value'];
                 break;
@@ -1558,7 +1519,7 @@ class Solr
     if ($unwrapped !== null) {
         $lookfor = $unwrapped;
     }
-    print_r("Unwrapped : " . json_encode($unwrapped, JSON_UNESCAPED_UNICODE));
+    // print_r("Unwrapped : " . json_encode($unwrapped, JSON_UNESCAPED_UNICODE));
 
 
     // Handles multiple issue in the query that make it invalid
@@ -1642,31 +1603,41 @@ class Solr
 
     // Tokenize Input
     $rawTokens = $this->tokenizeInput($lookfor);
-    print_r("Tokenize : " . json_encode($rawTokens, JSON_UNESCAPED_UNICODE));
+    // print_r("Tokenize : " . json_encode($rawTokens, JSON_UNESCAPED_UNICODE));
 
      // Classify tokens into phrases and terms
     $tokens =  $this->classifyTokens($rawTokens);
 
-    print_r("Tokens : " . json_encode($tokens, JSON_UNESCAPED_UNICODE));
+    // print_r("Tokens : " . json_encode($tokens, JSON_UNESCAPED_UNICODE));
 
     // Build semantic values from classified tokens and escape them properly for their intended use
     $escapedParts = [];
-    // $termParts   = [];
     
     // Create the escaped parts for phrases and terms, which will be used for building the different query types (onephrase, and, or)
     $escapedParts = $this->buildEscapedParts($tokens);
 
     // Create the flatten tokens for debugging and building the as-is, compressed, exactmatcher, and emstartswith queries
-    
     $flattenTokes = $this->flattenTokens($tokens);
 
-    print_r("Escaped Parts : " . json_encode($escapedParts, JSON_UNESCAPED_UNICODE));
+    // print_r("Escaped Parts : " . json_encode($escapedParts, JSON_UNESCAPED_UNICODE));
     
-    // The above are the escaped versions for their intended use in Solr queries, 
-    // Phrase search only if there is at least one phrase
+    // The above are the escaped versions for their intended use in Solr queries.
+    $hasOperator = false;
+    foreach ($tokens as $t) {
+      if ($t['type'] === 'operator') {
+        $hasOperator = true;
+        break;
+      }
+    }
     $values['onephrase'] = implode(' ', $escapedParts);
-    $values['and'] = implode(' AND ', $escapedParts);
-    $values['or']  = implode(' OR ',  $escapedParts);
+    if ($hasOperator) {
+      // Preserve explicit user boolean intent; do not auto-insert extra operators.
+      $values['and'] = $values['onephrase'];
+      $values['or'] = $values['onephrase'];
+    } else {
+      $values['and'] = implode(' AND ', $escapedParts);
+      $values['or']  = implode(' OR ',  $escapedParts);
+    }
     
 
     // Phrase search - "dramatic literature, comprehending critical"
@@ -1687,7 +1658,7 @@ class Solr
     // If the input is a phrase with a trailing wildcard, we want to preserve the wildcard in the exactmatcher startswith version. For example, "foo bar"* should become foo bar* for the startswith version, not foo bar*.
     $values['emstartswith'] = str_replace('*', '', $values['exactmatcher']) . '*';
 
-    print_r("Sematic Structure : " . json_encode($values, JSON_UNESCAPED_UNICODE));
+    // print_r("Sematic Structure : " . json_encode($values, JSON_UNESCAPED_UNICODE));
 
     return $values;
   }
@@ -1695,7 +1666,12 @@ class Solr
   function classifyTokens(array $tokens): array {
     $classified = [];
     foreach ($tokens as $t) {
-        if ($this->isPhraseSlop($t)) {
+        if ($this->isBooleanOperator($t)) {
+            $classified[] = [
+                'type'  => 'operator',
+                'value' => strtoupper($t),
+            ];
+        } elseif ($this->isPhraseSlop($t)) {
             $classified[] = [
                 'type'  => 'phrase_slop',
                 'value' => $this->unwrapPhrase($t),

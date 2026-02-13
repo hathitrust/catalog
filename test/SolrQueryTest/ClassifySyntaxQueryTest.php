@@ -95,15 +95,17 @@ final class IsPhraseTest extends TestCase
     }
 
     /**
-    * @covers Solr::classifyTokens - boolean operators should not be split into separate tokens
+    * @covers Solr::classifyTokens - boolean operators are classified as separate operator tokens
     */
     public function testClassifyBooleanOperators()
     {
-        $tokens = $this->solr->classifyTokens(['table AND "chair leg"~2']);
+        $tokens = $this->solr->classifyTokens(['table', 'AND', '"chair leg"~2']);
 
         $this->assertSame(
             [
-                ['type' => 'term', 'value' => 'table AND "chair leg"~2']
+                ['type' => 'term', 'value' => 'table'],
+                ['type' => 'operator', 'value' => 'AND'],
+                ['type' => 'phrase_slop', 'value' => ['text' => 'chair leg', 'slop' => '2']]
             ],
             $tokens
         );
@@ -157,7 +159,7 @@ final class IsPhraseTest extends TestCase
     }
 
     /**
-    * @covers Solr::classifyTokens - boolean operators should not be split into separate tokens, even if they are in a phrase
+    * @covers Solr::classifyTokens - boolean operators are preserved in phrases but split when standalone
     */
     public function testClassifyDoesNotSplitBooleanPhrase()
     {
@@ -169,12 +171,14 @@ final class IsPhraseTest extends TestCase
             $tokens
         );
 
-        $tokens = $this->solr->classifyTokens(['poetry AND nature']);
+        $tokens = $this->solr->classifyTokens(['poetry', 'AND', 'nature']);
 
 
         $this->assertSame(
             [
-                ['type' => 'term', 'value' => 'poetry AND nature']
+                ['type' => 'term', 'value' => 'poetry'],
+                ['type' => 'operator', 'value' => 'AND'],
+                ['type' => 'term', 'value' => 'nature']
             ],
             $tokens
         );

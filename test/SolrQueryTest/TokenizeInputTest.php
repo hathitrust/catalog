@@ -83,14 +83,14 @@ final class TokenizeInputTest extends TestCase
     }
 
     /**
-    * @covers Solr::tokenizeInput - mixed input with boolean operator = 1 term/token (boolean operators should not be split out as separate tokens)
+    * @covers Solr::tokenizeInput - mixed input with boolean operator keeps operator as a standalone token
     */
     public function testTokenizesBooleanOperators()
     {
         $tokens = $this->solr->tokenizeInput('table AND "chair leg"~2');
 
         $this->assertSame(
-            ['table AND "chair leg"~2'],
+            ['table', 'AND', '"chair leg"~2'],
             $tokens
         );
     }
@@ -149,7 +149,7 @@ final class TokenizeInputTest extends TestCase
         $tokens = $this->solr->tokenizeInput('poetry AND nature');
 
         $this->assertSame(
-            ['poetry AND nature'],
+            ['poetry', 'AND', 'nature'],
             $tokens
         );
     

@@ -346,6 +346,53 @@ final class ValidateQueryInputTest extends TestCase
         }
     }
 
+    /**
+    * This test is to check if the query input is a phrase.
+    * @covers Solr::isPhrase
+    */
+    public function testAcceptsIsPhrase(): void
+    {
+        $valid = [
+            '"foo"', // quote string is phrase
+            '"foo"~3', // valid slop is phrase
+            '"machine learning"', // quote phrase with 2 words
+            '"machine learning"~3', // valid slop with phrase
+            '"table*"', // wildcards inside phrase are allowed
+            '"table*"' // wildcards inside phrase are allowed even with extra quotes
+        ];
+
+        foreach ($valid as $input) {
+            $result = $this->solr->isPhrase($input);
+            $this->assertTrue(
+                $result,
+                "Expected phrase: {$input}"
+            );
+        }
+    }
+
+     /**
+    * This test is to check if the query input is a not phrase, so it is a term.
+    * @covers Solr::isPhrase
+    */
+    public function testsIsNotPhrase(): void
+    {
+        $valid = [
+            'foo', // unquote string is not phrase
+            'machine learning~3', // slop without quotes is not phrase
+            'natural AND language', // boolean operators are handled as non-phrase
+            'table*', // wildcards outside phrase are not phrase
+            '"table', // unbalanced quote is not phrase
+        ];
+
+        foreach ($valid as $input) {
+            $result = $this->solr->isPhrase($input);
+            $this->assertFalse(
+                $result,
+                "Expected non phrase: {$input}"
+            );
+        }
+    }
+
 
 
 }

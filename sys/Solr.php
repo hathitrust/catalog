@@ -61,6 +61,8 @@ class Solr
 
   public $fields = '*,score';
 
+  private const BOOLEAN_STOPWORDS = [ 'and', 'or', 'not'];
+
 
   /**
    * Constructor
@@ -127,7 +129,7 @@ class Solr
       $args = array_merge($args, $this->spellcheckComponents($ss));
     }
 
-    // print_r("----- Solr query ------: " . json_encode($args, JSON_UNESCAPED_UNICODE));
+    //print_r("----- Solr query ------: " . json_encode($args, JSON_UNESCAPED_UNICODE));
 
     // $raw is always false, so rawSolrSearch is never used
     if ($raw) {
@@ -258,7 +260,6 @@ class Solr
 
   function searchArguments($ss) {
     $ss->action = 'standard';
-    // print_r($this->standardSearchComponents($ss));
     return array_merge($this->standardSearchComponents($ss),
       $this->filterComponents($ss),
       $this->sortComponents($ss));
@@ -344,8 +345,9 @@ class Solr
     $specs = yaml_parse_file('conf/searchspecs.yaml');
     $query = '';
 
-    foreach ($ss->search as $tvb) { // Type, Value (keywords), Boolean AND or OR
+    // print("SS Search --- : " . json_encode($ss->search, JSON_UNESCAPED_UNICODE));
 
+    foreach ($ss->search as $tvb) { // Type, Value (keywords), Boolean AND or OR
       // $tvb looks like: ['title', 'nature, and history', 'AND']
       $type = $tvb[0];
 
@@ -354,8 +356,8 @@ class Solr
       // $values looks like:
       /**
       "onephrase":nature, and history,
-      "and":"nature, AND and AND history",
-      "or":"nature, OR and OR history",
+      "and":"nature, AND history",
+      "or":"nature, OR history",
       "asis":"nature, and history",
       "compressed":"nature,andhistory",
       "exactmatcher":"natureandhistory",
@@ -675,9 +677,9 @@ class Solr
      * A term is a single word.
      * All characters that have a special meaning in a Solr query are escaped.
      * It must never introduce quotes or phrases.
-    * Lucene's Standard Query Parser special characters are:
-    * + - && || ! ( ) { } [ ] ^ " ~ * ? : \ /
-    * Escape Lucene special characters for a literal term (NO operators)
+     * Lucene's Standard Query Parser special characters are:
+     * + - && || ! ( ) { } [ ] ^ " ~ * ? : \ /
+     * Escape Lucene special characters for a literal term (NO operators)
      *
      * @see https://solr.apache.org/guide/the-standard-query-parser.html#escaping-special-characters
      *
@@ -722,41 +724,25 @@ class Solr
             $input = substr($input, 1, -1);
         }
 
-    return '"' . $this->escapeLuceneLiteral($input) . '"';
+    return $this->escapeLuceneLiteral($input);
     }
-
-  /**
-    * Escape a boolean expression for Lucene boolean search. Use for: term1 AND term2 OR "phrase here"
-    * Use for: dramatic AND literature
-    * Operators AND, OR are preserved, everything else is escaped as literal (Terms). No accidental field injection
-  */
-  public function escapeBoolean(string $expr): string {
-    // Split using AND, OR as delimiters (case-insensitive)
-
-    $tokens = explode(' ', $expr);
-    $out = [];
-    foreach ($tokens as $t) {
-        if ($t === 'AND' || $t === 'OR') {
-            $out[] = $t;
-        } else {
-            $out[] = $this->escapeTerm($t);
-        }
-    }
-
-    return implode(' ', $out);
-  }
 
  /**
- * Escape a prefix query for Lucene prefix search. Use for: prefix*
- * Prevents *table
- * Escape only what Lucene requires inside a quoted phrase
- * Preserves prefix semantics
- * @return string The escaped prefix query
+ * Escape Lucene especial characters except * and ?. Use for: prefix*, table?, ta*ble
+ * @return string The escaped wildcard query
  */
- public function escapePrefix(string $prefix): string {
+ public function escapeTermKeepWildcardOperators(string $input): string {
 
-    $base = substr($prefix, 0, -1);
-    return $this->escapeLuceneLiteral($base) . '*';
+    // Escape backslash FIRST to avoid double-escaping
+    $s = str_replace('\\', '\\\\', $input);
+
+    // Use regex to catch all specials, including spaces, in one go
+    // The characters are: + - && || ! ( ) { } [ ] ^ " ~ * ? : /
+
+    // Note: && and || are handled as single chars & and | here
+    $pattern = '/([\+\-\!\(\)\{\}\[\]\^\"\~\:\/\&\|])/';
+
+    return preg_replace($pattern, '\\\\$1', $s);
  }
 
 
@@ -775,6 +761,7 @@ class Solr
   private function __buildQueryString($structure, $values, $joiner = "OR") {
 
     $clauses = array();
+
     foreach ($structure as $field => $clausearray) {
 
       // is_numeric($field) is true if we've got an un-hashed array, used for grouping
@@ -830,47 +817,7 @@ class Solr
           continue;
         }
 
-        // Lianet's notes: Escapes based on semantic role. It is safe embedding in field:value syntax
-        switch ($val) {
-
-            case 'lcnormalized':
-                $escaped_value = $values[$val];
-                break;
-            case 'stdnum':
-                // 978-0-123-45678-9
-                $escaped_value = $values[$val];
-                break;
-            case 'onephrase':
-                // "\"dramatic literature, comprehending critical\""
-                $escaped_value = $this->escapePhrase($values[$val]);
-                break;
-            case 'and':
-            case 'or':
-                // and -- dramatic AND literature, AND comprehending AND critical
-                // or -- dramatic OR literature, OR comprehending OR critical
-                // \"dramatic AND literature\, AND comprehending AND critical\"
-                // See how $values[$var] looks war AND and AND peace AND war AND and AND rest
-
-                $escaped_value = $this->escapeBoolean($values[$val]);
-                break;
-            case 'emstartswith':
-                // dramaticliteraturecomprehendingcritical*
-                $escaped_value = $this->escapePrefix($values[$val]);
-                break;
-            case 'compressed':
-                // dramaticliteraturecomprehendingcritical (no spaces)
-                $escaped_value = $this->escapeTerm($values[$val]);
-                break;
-            default:
-                // exactmatcher - dramaticliteraturecomprehendingcritical
-                $escaped_value = $this->escapeTerm($values[$val]);
-        }
-
-        if ($escaped_value === '""' || $escaped_value === '') {
-            continue;
-        }
-
-        $sstring = $field . ':(' . $escaped_value . ')';
+        $sstring = $field . ':(' . $values[$val] . ')';
         if (isset($weight) && $weight > 0) {
           $sstring .= '^' . $weight;
         }
@@ -940,11 +887,21 @@ class Solr
 
   }
 
+  private function isBooleanOperator(string $token): bool
+    {
+        return $token === 'AND'
+            || $token === 'OR'
+            || $token === 'NOT'
+            || $token === 'and'
+            || $token === 'or'
+            || $token === 'not';
+    }
+
   /**
    * Input Tokenizer
    *
-   * Tokenizes the user input based on spaces and quotes.  Then joins phrases
-   * together that have an AND, OR, NOT present.
+   * Tokenizes the user input based on spaces and quotes.
+   * Boolean operators are preserved as standalone tokens.
    *
    * @param string $input User's input string
    * @return  array               Tokenized array
@@ -957,36 +914,25 @@ class Solr
     // /"[^"]*"[~[0-9]+]* --> to capture fuzzy searches like "hello world"~5 - matches a double-quoted string followed by ~ and a number
     // "[^"]*" --> to capture exact phrases like "hello world" - matches a double-quoted string
     // [^ ]+ --> to capture single words like hello - matches sequences of non-space characters
+    // Poetry and nature -> ["Poetry", "nature"] - remove stop word "and", "or" and split the phrase
+    // Poetry AND nature -> ["Poetry", "AND", "nature"] - keep uppercase boolean operator as a token
+    // "Poetry and nature" -> ["Poetry and nature"] - quoted phrase, keep "and" and do not split the phrase
     preg_match_all('/"[^"]*"[~[0-9]+]*|"[^"]*"|[^ ]+/', $input, $words);
     $words = $words[0];
 
-    // Join words with AND, OR, NOT
-    $newWords = array();
-    for ($i = 0; $i < count($words); $i++) {
-      if (($words[$i] == 'OR') || ($words[$i] == 'AND') || ($words[$i] == 'NOT')) {
-        if (count($newWords)) {
-          // $newWords[count($newWords)-1] .= ' ' . $words[$i] . ' ' . strtolower($words[$i+1]);
-          $newWords[count($newWords) - 1] .= ' ' . $words[$i] . ' ' . $words[$i + 1];
-          $i = $i + 1;
-        }
-      }
-      else {
-        // $newWords[] = strtolower($words[$i]);
-        $newWords[] = $words[$i];
-      }
-    }
+    // print_r("Words : " . json_encode($words, JSON_UNESCAPED_UNICODE));
 
-    # Pull out any trailing + or -
-    $fixedwords = array();
-    foreach ($newWords as &$word) {
-      // $word = preg_replace('/[^a-zA-Z0-9\'\"()]\s*$/', '', $word);
-      // if (!preg_match('/\S/', $word)) {
-      //   continue;
-      // }
-      $fixedwords[] = $word;
+    // Filter lowercase boolean words.
+    $words = array_values(array_filter($words, function ($w) {
+    // Keep quoted phrases intact
+    if ($w[0] === '"') {
+        return true;
     }
+    // Remove lowercase boolean words
+    return !in_array($w, self::BOOLEAN_STOPWORDS, true);
+    }));
 
-    return $fixedwords;
+    return $words;
   }
 
 
@@ -1289,6 +1235,220 @@ class Solr
     return $s;
   }
 
+  /*
+    * Check if a token is a phrase
+    * A token is a phrase if it is wrapped in double quotes and may have an optional fuzzy operator and the length >= 2
+    *
+     * Examples:
+     *   "foo bar"
+     *   "foo bar"~5
+     *   "nature and origins"
+     *   nature AND origins
+     *.  nature and origins
+     *   This is not a phrase -> foo"~3
+     *    
+     */
+    // table~2 is currently not recognized as a phrase, but it could be considered a fuzzy phrase. We can enhance the regex to capture this case if needed.
+    // term
+    // term_wildcard
+    // term_fuzzy
+    // phrase
+    // phrase_slop
+  public function isPhrase(string $token): bool {
+        // ^" → must start with a quote
+        // [^"]+ → phrase content
+        // " → closing quote
+        // (?:~\d+|\*)? → optional slop OR wildcard
+        // $ → end of token
+        return (bool) preg_match(
+        '/^"[^"]+"(?:~\d+|\*)?$/',
+        $token
+        );
+    }
+
+  /*
+    * Check if a token is a term (not a phrase and not a boolean operator)
+     * A token is a term if it is not a phrase and not a boolean operator
+     * Examples:
+     *   foo
+     *   bar
+     *   AND (boolean operator, not a term)
+     *   "foo bar" (phrase, not a term)
+  */
+  
+  public function isTerm(string $token): bool {
+        return !$this->isPhrase($token) && !$this->isBooleanOperator($token);
+    }
+
+  /*
+    * Check if a token is a wildcard term (not a phrase and contains * or ?)
+     * A token is a wildcard term if it is not a phrase and contains * or ?
+     * Examples:
+     *   foo* (wildcard term)
+     *   ba? (wildcard term)
+     *   "foo bar" (phrase, not a wildcard term)
+     *   AND (boolean operator, not a wildcard term)
+     * wildcards are not valid inside quoted phrases, so "foo* bar" is not a wildcard term, it's a phrase with literal asterisk.
+     *  It will be treated as a phrase, not a wildcard term.
+  */
+  public function isWildcardTerm(string $token): bool {
+        // A wildcard term is a term that contains * or ?
+         return !$this->isPhrase($token) &&
+           preg_match('/[*?]/', $token);
+    }
+
+  /*
+     * Check if a token is a fuzzy term (not a phrase and contains ~ followed by a number)
+     * A token is a fuzzy term if it is not a phrase and contains ~ followed by a number
+     * Examples:
+     *   table~2 (fuzzy term)
+     *   "foo bar"~5 (phrase with slop, not a fuzzy term)
+     *   AND (boolean operator, not a fuzzy term)
+  */
+  public function isFuzzyTerm(string $token): bool {
+        // A fuzzy term is a term that contains ~ followed by a number, e.g. table~2
+         return !$this->isPhrase($token) &&
+           preg_match('/~\d+$/', $token);
+    }
+  
+  /*
+    * Check if a phrase token has slop
+    * A phrase with slop looks like "foo bar"~5
+    * We can extract the slop number using regex
+    * Examples:
+    *   "foo bar"~5 → slop 5
+    *   "nature and origins" → no slop
+    *   foo bar → not a phrase. It is a term, return null.
+  */
+  public function isPhraseSlop(string $token): ?int {
+    // A phrase with slop looks like "foo bar"~5
+    // We can extract the slop number using regex
+    if (preg_match('/^"[^"]+"~(\d+)$/', $token, $matches)) {
+        return (int)$matches[1];
+    }
+    return null;
+  }  
+  
+  /*
+    * Unwrap a phrase token into its text and optional slop
+    * Examples:
+    *   "foo bar" → ['text' => 'foo bar', 'slop' => null]
+    *   "foo bar"~5 → ['text' => 'foo bar', 'slop' => 5]
+    *   "nature and origins" → ['text' => 'nature and origins', 'slop' => null]
+    *   This is not a phrase -> foo"~3 → throws exception
+    * We will call this function only after confirming isPhrase($token) is true, so we can assume the input is well-formed. 
+    * The regex is a sanity check and to extract the text and slop.
+  */
+
+  public function unwrapPhrase(string $token): array {
+    // Matches:
+    // "table"
+    // "table"~2
+    if (!preg_match('/^"([^"]+)"(?:~(\d+))?$/', $token, $m)) {
+        throw new InvalidArgumentException("Not a valid phrase token");
+    }
+
+    return [
+        'text' => $m[1],          // table
+        'slop' => $m[2] ?? null,  // 2 or null
+    ];
+  }
+
+  /*
+    * Create a Phrase building
+    * Input: array of tokens (strings)
+  */
+  private function buildPhraseToken(array $token): string
+  {
+    $escaped = $this->escapePhrase($token['value']['text']);
+
+    $phrase = '"' . $escaped . '"';
+
+    if (!empty($token['value']['slop'])) {
+        $phrase .= '~' . $token['value']['slop'];
+    }
+
+    // print_r("Each Parts XXXXXX : " . json_encode($phrase, JSON_UNESCAPED_UNICODE));
+
+    return $phrase;
+  }   
+
+  /*
+    * Build escaped parts from tokens
+    * Input: array of tokens with type and value 
+    * Example:
+    *   ['type' => 'phrase_slop', 'value' => ['text' => 'climate "change" \\ policy', 'slop' => 2]]
+    * Output: array of escaped strings ready to be joined into a query 
+
+  */
+  private function buildEscapedParts(array $tokens): array
+  {
+    $escapedParts = [];
+
+    foreach ($tokens as $t) {
+
+        switch ($t['type']) {
+            
+            case 'phrase_slop':
+             $escapedParts[] = $this->buildPhraseToken($t);
+             break;
+            case 'phrase':
+                $escapedParts[] = $this->buildPhraseToken($t);
+                break;
+            case 'term':
+                $escapedParts[] = $this->escapeTerm($t['value']);
+                break;
+            case 'term_wildcard':
+                $escapedParts[] = $this->escapeTermKeepWildcardOperators($t['value']);
+                break;
+            case 'term_fuzzy':
+                if (preg_match('/^(.*?)(~\d+)$/', $t['value'], $m)) {
+                  $escapedParts[] = $this->escapeTerm($m[1]) . $m[2];
+                } else {
+                  $escapedParts[] = $this->escapeTerm($t['value']); // fallback safety
+                }
+                break;
+            case 'operator':
+                $escapedParts[] = strtoupper($t['value']);
+                break;
+        }
+    }
+
+    return $escapedParts;
+  }
+
+  /*
+    * Flatten tokens back into a query string (for debugging or final output)
+    * Input: array of tokens with type and value
+    * Output: string query with proper escaping and formatting
+  */
+    
+  private function flattenTokens(array $tokens): string
+  {
+    $parts = [];
+
+    foreach ($tokens as $t) {
+        switch ($t['type']) {
+            case 'phrase_slop':
+                $parts[] = '"' . $t['value']['text'] . '"~' . $t['value']['slop'];
+                break;
+            case 'phrase':
+                $parts[] = '"' . $t['value']['text'] . '"';
+                break;
+            case 'term':
+            case 'term_wildcard':
+            case 'term_fuzzy':
+            case 'operator':
+            default:
+                $parts[] = $t['value'];
+                break;
+        }
+    }
+
+    return implode(' ', $parts);
+  }
+
+
   /**
    * Build AND, OR, and Phrase queries
    *
@@ -1305,19 +1465,23 @@ class Solr
   public function build_and_or_onephrase($lookfor = null) {
     $values = array();
 
+    // print("Input Query --- : " . json_encode($lookfor, JSON_UNESCAPED_UNICODE));
+
+
     //$illegal = array('.', '{', '}', '/', '!', ':', ';', '[', ']', '(', ')', '+ ', '&', '- ');
     //$lookfor = trim(str_replace($illegal, '', $lookfor));
-
 
     // Replace fancy quotes
     $lookfor = str_replace(array('“', '”'), '"', $lookfor);
 
-
     // If it looks like "..."*, pull out the quotes
+    // Lucene does not allow wildcards on quoted phrases - "foo bar"* is converted to foo bar*
     $unwrapped = $this->unwrapQuotedWildcard($lookfor);
     if ($unwrapped !== null) {
         $lookfor = $unwrapped;
     }
+    // print_r("Unwrapped : " . json_encode($unwrapped, JSON_UNESCAPED_UNICODE));
+
 
     // Handles multiple issue in the query that make it invalid
     // Each pass fix one issue
@@ -1330,7 +1494,7 @@ class Solr
 
         $validation = $this->validateInput($lookfor);
 
-        //print("Validation Result --- : " . json_encode($validation, JSON_UNESCAPED_UNICODE));
+        // print("Validation Result --- : " . json_encode($validation, JSON_UNESCAPED_UNICODE));
 
 
         if ($validation['valid']) {
@@ -1390,8 +1554,7 @@ class Solr
                $lookfor = $this->sanitizeToTerms($lookfor);
                break;
         }
-        // print_r("SANITIZE Input string: " . $lookfor);
-        // print_r("Count pass" . $pass);
+
         $pass++;
     } while ($pass < $maxPasses);
 
@@ -1400,26 +1563,122 @@ class Solr
     }
 
     // Tokenize Input
-    $tokenized = $this->tokenizeInput($lookfor);
+    $rawTokens = $this->tokenizeInput($lookfor);
+    // print_r("Tokenize : " . json_encode($rawTokens, JSON_UNESCAPED_UNICODE));
 
+     // Classify tokens into phrases and terms
+    $tokens =  $this->classifyTokens($rawTokens);
+
+    // print_r("Tokens : " . json_encode($tokens, JSON_UNESCAPED_UNICODE));
+
+    // Build semantic values from classified tokens and escape them properly for their intended use
+    $escapedParts = [];
+    
+    // Create the escaped parts for phrases and terms, which will be used for building the different query types (onephrase, and, or)
+    $escapedParts = $this->buildEscapedParts($tokens);
+
+    // Create the flatten tokens for debugging and building the as-is, compressed, exactmatcher, and emstartswith queries
+    $flattenTokes = $this->flattenTokens($tokens);
+
+    // print_r("Escaped Parts : " . json_encode($escapedParts, JSON_UNESCAPED_UNICODE));
+    
+    // The above are the escaped versions for their intended use in Solr queries.
+    $hasOperator = false;
+    foreach ($tokens as $t) {
+      if ($t['type'] === 'operator') {
+        $hasOperator = true;
+        break;
+      }
+    }
     // Phrase search - "dramatic literature, comprehending critical"
-    $values['onephrase'] = preg_replace('/"/', '', implode(' ', $tokenized));
-    // AND search - dramatic AND literature, AND comprehending AND critical
-    $values['and'] = implode(' AND ', $tokenized);
-    // OR search - dramatic OR literature, OR comprehending OR critical
-    $values['or'] = implode(' OR ', $tokenized);
+    $values['onephrase'] = implode(' ', $escapedParts);
+    if ($hasOperator) {
+      // Preserve explicit user boolean intent; do not auto-insert extra operators.
+      // AND search - dramatic AND literature, AND comprehending AND critical
+      // OR search - dramatic OR literature, OR comprehending OR critical
+      $values['and'] = $values['onephrase'];
+      $values['or'] = $values['onephrase'];
+    } else {
+      $values['and'] = implode(' AND ', $escapedParts);
+      $values['or']  = implode(' OR ',  $escapedParts);
+    }
+    
+    // The below are the raw flattened versions for debugging and building other query types.
     // As-is search - dramatic literature, comprehending critical
-    $values['asis'] = $lookfor;
+    $values['asis'] = $flattenTokes;
     // Compressed search - dramaticliterature,comprehendingcritical
-    $values['compressed'] = preg_replace('/\s/', '', $lookfor);
+    $values['compressed'] = preg_replace('/\s/', '', $values['asis']);
     // Exactmatcher search - dramaticliteraturecomprehendingcritical
-    $values['exactmatcher'] = $this->exactmatcherify($lookfor);
+    $values['exactmatcher'] = $this->exactmatcherify($flattenTokes);
     // Exactmatcher startswith search - dramaticliteraturecomprehendingcritical*
-    $values['emstartswith'] = $values['exactmatcher'] . '*';
+    // If the input is a phrase with a trailing wildcard, we want to preserve the wildcard in the exactmatcher startswith version. For example, "foo bar"* should become foo bar* for the startswith version, not foo bar*.
+    $values['emstartswith'] = str_replace('*', '', $values['exactmatcher']) . '*';
+
+    // print_r("Sematic Structure : " . json_encode($values, JSON_UNESCAPED_UNICODE));
 
     return $values;
   }
-
+  
+  /*
+    * Classify tokens into types: operator, phrase with slop, phrase, wildcard term, fuzzy term, or regular term
+    * This is a crucial step for understanding the user's intent and building the appropriate Solr query.
+     * The classification is based on the token's syntax:
+     * - If it matches a boolean operator (AND, OR, NOT), classify as 'operator'
+     * - If it is a quoted phrase with a slop (e.g. "foo bar"~5), classify as 'phrase_slop'
+     * - If it is a quoted phrase without slop (e.g. "foo bar"), classify as 'phrase'
+     * - If it contains wildcard characters (* or ?) and is not a phrase, classify as 'term_wildcard'
+     * - If it contains a fuzzy operator (~ followed by a number) and is not a phrase, classify as 'term_fuzzy'
+     * - Otherwise, classify as a regular term ('term')
+     * The output is an array of tokens with their classified type and value, which can then be used for building the final query.
+     * Examples:
+     * Input: ['foo', 'AND', '"bar baz"~2', 'qux*', 'title:table~3']
+     * Output: [
+     *   ['type' => 'term', 'value' => 'foo'],
+     *   ['type' => 'operator', 'value' => 'AND'],
+     *   ['type' => 'phrase_slop', 'value' => ['text' => 'bar baz', 'slop' => 2]],
+     *   ['type' => 'term_wildcard', 'value' => 'qux*'],
+     *   ['type' => 'term_fuzzy', 'value' => 'title:table~3']
+     *   ]
+    * Input: array of raw tokens (strings)
+    * Output: array of classified tokens with type and value
+  */
+  function classifyTokens(array $tokens): array {
+    $classified = [];
+    foreach ($tokens as $t) {
+        if ($this->isBooleanOperator($t)) {
+            $classified[] = [
+                'type'  => 'operator',
+                'value' => strtoupper($t),
+            ];
+        } elseif ($this->isPhraseSlop($t)) {
+            $classified[] = [
+                'type'  => 'phrase_slop',
+                'value' => $this->unwrapPhrase($t),
+            ];
+        } elseif ($this->isPhrase($t)) {
+            $classified[] = [
+                'type'  => 'phrase',
+                'value' => $this->unwrapPhrase($t),
+            ];
+        } elseif ($this->isWildcardTerm($t)) {
+            $classified[] = [
+                'type'  => 'term_wildcard',
+                'value' => $t,
+            ];
+        } elseif ($this->isFuzzyTerm($t)) {
+            $classified[] = [
+                'type'  => 'term_fuzzy',
+                'value' => $t,
+            ];
+        } else {
+            $classified[] = [
+                'type'  => 'term',
+                'value' => $t,
+            ];
+        }
+    }
+    return $classified;
+  }
 
   /**
    * Construct, perform, and process the search

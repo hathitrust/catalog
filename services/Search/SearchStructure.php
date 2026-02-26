@@ -199,14 +199,41 @@ class SearchStructure
 
         $this->cleaned_up_original_search = $ss;
 
-
-        foreach ($ss as $i => $fkb) {
+        // Ensure that we don't have any boolean operators at the beginning or end of our search terms, and that we don't have any empty search terms as a result of this. This is to prevent things like:
+        // AND journal -> journal
+        // journal AND OR -> journal
+       // AND OR journal -> journal
+       // AND journal OR -> journal   
+       // table AND OR journal -> table AND journal
+       // and or journal -> journal
+       foreach ($ss as $i => $fkb) {
             $val = $fkb[1];
-            $val = preg_replace('/AND\s*$/', "and", $val);
-            $val = preg_replace('/OR\s*$/', "or", $val);
-            $val = preg_replace('/NOT\s*$/', "not", $val);
+
+            // /i makes the match case-insensitive, so you match "AND", "and", "Or", "oR", etc.
+            // Coalesce repeated boolean operators into the first instance.
+            $val = preg_replace('/\\b(AND|OR|NOT)\\s+((AND|OR|NOT)\\b\\s*)+/i', '${1} ', $val);          
+
+            // Remove one or more boolean operators at the beginning.
+            // The \b word boundary guarantees that you only match the whole words, not substrings like “ANDY”.
+            $val = preg_replace('/^\\s*(?:(?<!\\w)(?:AND|OR|NOT)\\b\\s*)+/i', '', $val);
+
+            // Remove one or more boolean operators at the end.
+            $val = preg_replace('/\\s*(?:(?<!\\w)(?:AND|OR|NOT)\\b\\s*)+$/i', '', $val);
+
+            // Normalize whitespace.
+            $val = trim(preg_replace("/\\s+/", ' ', $val));
+
+            // If nothing remains, drop this search clause.
+            if ($val === '') {
+            unset($ss[$i]);
+            continue;
+            }
+
             $ss[$i][1] = $val;
-        }
+            
+       }
+       // Reindex after unset
+       $ss = array_values($ss);
 
 
         // The last bool need to be nil. Pop it off, change it, and

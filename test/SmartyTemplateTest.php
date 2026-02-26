@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+use Smarty\Smarty;
 
 class VolumesApiTest extends TestCase
 {
@@ -15,10 +16,10 @@ class VolumesApiTest extends TestCase
         // Setup environment
         $_SERVER['HTTP_HOST'] = 'localhost';
 
-        // Verify Smarty 4.x class is available (no namespace)
-        $this->assertTrue(class_exists('Smarty'), 'Smarty class should be available without namespace');
+        // Verify the namespaced Smarty class loads
+        $this->assertTrue(class_exists(Smarty::class), 'Smarty\\Smarty class should be available');
 
-        // Create Smarty instance using Smarty 4.x syntax
+        // Create Smarty instance using the namespaced class
         $interface = new Smarty();
         $interface->setCompileDir(__DIR__ . '/../interface/compile');
         $interface->setTemplateDir(__DIR__ . '/../static/api/templates');

@@ -110,10 +110,10 @@
             {/foreach}
           </div>
           <div class="mt-3">
-            {if $counts.$cluster|@count gt 6}
+            {if $counts.$cluster|count gt 6}
             <button type="button" class="btn btn-sm btn-outline-dark" data-action="expand-filter" aria-expanded="false">
               Show 
-                <span class="not-expanded">all {$counts.$cluster|@count} </span>
+                <span class="not-expanded">all {$counts.$cluster|count} </span>
                 <span class="is-expanded">fewer </span>
                 {$facetConfig.$cluster} Filters
             </button> 

@@ -14,11 +14,11 @@ function smarty_function_css_link($params, $template)
   $root = dirname($_SERVER['DOCUMENT_ROOT']);
   $filename = FALSE;
   if ( is_dir("$root/common") ) {
-    $filename = "$root/${base_filename}";
+    $filename = "$root/{$base_filename}";
   } elseif ( is_dir("$root/../babel/common") ) {
-    $filename = "$root/../babel/${base_filename}";
+    $filename = "$root/../babel/{$base_filename}";
   }
   $modtime = ( $filename === FALSE ) ? time() : filemtime($filename);
-  return "<link rel=\"stylesheet\" type=\"text/css\" href=\"${params['href']}?_=${modtime}\" />";
+  return "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$params['href']}?_={$modtime}\" />";
 }
 ?>

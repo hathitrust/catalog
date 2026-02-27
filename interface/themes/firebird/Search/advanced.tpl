@@ -14,9 +14,9 @@
   <hathi-alert-banner></hathi-alert-banner>
   <main class="main-container" id="main">
     <hathi-advanced-search-form
-      data-prop-language-data="{$languageList|@json_encode|escape}" 
-       data-prop-format-data='{$formatList|@json_encode|escape}'
-       data-prop-location-data='{$locationsList|@json_encode|escape}'
+      data-prop-language-data="{$languageList|json_encode|escape}" 
+       data-prop-format-data='{$formatList|json_encode|escape}'
+       data-prop-location-data='{$locationsList|json_encode|escape}'
     ></hathi-advanced-search-form>
   </main>
 

@@ -12,8 +12,6 @@
   {/if}
 
 <article class="record d-flex gap-3 p-3 mb-3 mt-3 shadow-sm">
-  {* {$ld.handle|@var_dump}
-  {$record.title|@var_dump} *}
   <div class="cover d-none d-md-block" data-hdl="{$ld.handle}">
     {if $ld.handle}
     <img loading="lazy" class="bookCover border p-1 flex-grow-0 flex-shrink-0" aria-hidden="true" alt="" src="{$unicorn_root}/cgi/imgsrv/cover?id={$ld.handle};width=250" />
@@ -68,8 +66,7 @@
       </dl>
     </div>
     {assign var="dfields" value=$ru->displayable_ht_fields($record.marc)}
-   {* {$dfields|@var_dump}  *}
-    {if false && $dfields|@count gt 1}
+    {if false && $dfields|count gt 1}
       <p class="fs-7 text-secondary mb-1">
         Use the Catalog Record to view multiple volumes
       </p>
@@ -78,7 +75,7 @@
     <div class="resource-access-container">
       <div class="list-group list-group-horizontal-sm align-items-center">
         <a href="{$ss->asRecordURL($record.id)}" class="list-group-item list-group-item-action w-sm-50" aria-describedby="maintitle-{$i}"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></i>Catalog Record<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
-        {if $dfields|@count eq 1 && isset($ld) && is_array($ld)}
+        {if $dfields|count eq 1 && isset($ld) && is_array($ld)}
           {if ( $ld.is_resource_sharing ) }
             <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50" aria-describedby="maintitle-{$i}"><i aria-hidden="true" class="fa-solid fa-lock-open"></i>Registered Access<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
           {elseif ( $ld.role_name !== 'resourceSharing' && ! $ld.is_fullview && ( $ld.has_activated_role ) ) }
@@ -90,7 +87,7 @@
           {else}
             <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="list-group-item list-group-item-action list-group-item w-sm-50" aria-describedby="maintitle-{$i}"><i aria-hidden="true" class="fa-solid fa-lock"></i>Limited (search only)<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
           {/if}
-        {elseif $dfields|@count gt 1}
+        {elseif $dfields|count gt 1}
             <a href="{$ss->asRecordURL($record.id)}#viewability" class="list-group-item list-group-item-action w-sm-50" aria-describedby="maintitle-{$i}"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></i>Multiple Items<i aria-hidden="true" class="visited-link fa-solid fa-check-double"></i></a>
         {/if}
       </div>

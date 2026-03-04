@@ -261,7 +261,7 @@ class SolrEscapingTest extends TestCase
   }
 
   /**
-    * @covers Solr::buildEscapedParts
+   * @covers Solr::buildEscapedParts
   */
   public function testBuildEscapedPartsRealWorldQueryExample(): void
   {
@@ -278,10 +278,36 @@ class SolrEscapingTest extends TestCase
         'C\\+\\+',
         'OR',
         'title\\:history\\/*',
-        'NOT',
-        'library?',
+      'NOT',
+      'library?',
+    ],
+    $escapedParts
+    );
+  }
+
+  /**
+    * @covers Solr::buildEscapedParts
+  */
+  public function testBuildEscapedPartsProductivelyCompoundsPhrases(): void
+  {
+    $solr = new Solr('', '');
+
+    $tokens = [
+      [
+        'type'  => 'compound_phrase',
+        'value' => [
+          'tokens' => [
+            ['type' => 'phrase', 'value' => ['text' => 'its origin', 'slop' => null]],
+            ['type' => 'operator', 'value' => 'OR'],
+            ['type' => 'phrase', 'value' => ['text' => 'illustrant', 'slop' => null]],
+          ],
+        ],
       ],
-      $escapedParts
+    ];
+
+    $this->assertSame(
+      ['"its origin" OR "illustrant"'],
+      $this->invokeBuildEscapedParts($solr, $tokens)
     );
   }
 

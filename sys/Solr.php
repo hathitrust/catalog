@@ -1365,35 +1365,65 @@ class Solr
     $escapedParts = [];
 
     foreach ($tokens as $t) {
-
-        switch ($t['type']) {
-            
-            case 'phrase_slop':
-             $escapedParts[] = $this->buildPhraseToken($t);
-             break;
-            case 'phrase':
-                $escapedParts[] = $this->buildPhraseToken($t);
-                break;
-            case 'term':
-                $escapedParts[] = $this->escapeTerm($t['value']);
-                break;
-            case 'term_wildcard':
-                $escapedParts[] = $this->escapeTermKeepWildcardOperators($t['value']);
-                break;
-            case 'term_fuzzy':
-                if (preg_match('/^(.*?)(~\d+)$/', $t['value'], $m)) {
-                  $escapedParts[] = $this->escapeTerm($m[1]) . $m[2];
-                } else {
-                  $escapedParts[] = $this->escapeTerm($t['value']); // fallback safety
-                }
-                break;
-            case 'operator':
-                $escapedParts[] = strtoupper($t['value']);
-                break;
+        $part = $this->buildEscapedPart($t);
+        if ($part !== null) {
+            $escapedParts[] = $part;
         }
     }
 
     return $escapedParts;
+  }
+
+  private function buildEscapedPart(array $token): ?string
+  {
+    switch ($token['type']) {
+        case 'phrase_slop':
+        case 'phrase':
+            return $this->buildPhraseToken($token);
+        case 'term':
+            return $this->escapeTerm($token['value']);
+        case 'term_wildcard':
+            return $this->escapeTermKeepWildcardOperators($token['value']);
+        case 'term_fuzzy':
+            if (preg_match('/^(.*?)(~\d+)$/', $token['value'], $m)) {
+                return $this->escapeTerm($m[1]) . $m[2];
+            }
+            return $this->escapeTerm($token['value']);
+        case 'operator':
+            return strtoupper($token['value']);
+        case 'compound_phrase':
+            return $this->buildCompoundPhrasePart($token);
+        default:
+            return null;
+    }
+  }
+
+  private function buildCompoundPhrasePart(array $token): ?string
+  {
+    if (!isset($token['value']['tokens']) || !is_array($token['value']['tokens'])) {
+        return null;
+    }
+
+    $innerParts = $this->buildEscapedParts($token['value']['tokens']);
+    if (empty($innerParts)) {
+        return null;
+    }
+
+    return implode(' ', $innerParts);
+  }
+
+  /**
+   * Wrap the provided string with Lucene-compliant double quotes, escaping
+   * any literal quotes or backslashes inside.
+   */
+  private function quoteOnePhraseValue(string $value): string
+  {
+      $trimmed = trim($value);
+      if ($trimmed === '') {
+          return '';
+      }
+      $withoutQuotes = str_replace('"', '', $trimmed);
+      return '"' . $this->escapeLuceneLiteral($withoutQuotes) . '"';
   }
 
   /*
@@ -1413,6 +1443,11 @@ class Solr
                 break;
             case 'phrase':
                 $parts[] = '"' . $t['value']['text'] . '"';
+                break;
+            case 'compound_phrase':
+                if (isset($t['value']['tokens']) && is_array($t['value']['tokens'])) {
+                    $parts[] = '(' . $this->flattenTokens($t['value']['tokens']) . ')';
+                }
                 break;
             case 'term':
             case 'term_wildcard':
@@ -1545,8 +1580,11 @@ class Solr
     $rawTokens = $this->tokenizeInput($lookfor);
     // print_r("Tokenize : " . json_encode($rawTokens, JSON_UNESCAPED_UNICODE));
 
-     // Classify tokens into phrases and terms
-    $tokens =  $this->classifyTokens($rawTokens);
+    // Classify tokens into phrases and terms
+    $tokens = $this->classifyTokens($rawTokens);
+
+    // Collapse contiguous quoted phrase + operator sequences into compound phrases
+    $tokens = $this->collapseCompoundPhrases($tokens);
 
     // print_r("Tokens : " . json_encode($tokens, JSON_UNESCAPED_UNICODE));
 
@@ -1561,26 +1599,40 @@ class Solr
 
     // print_r("Escaped Parts : " . json_encode($escapedParts, JSON_UNESCAPED_UNICODE));
     
+    // TODO: In the future, $onephraseValue could be built in a more sophisticated way to preserve the original structure 
+    // of the query as much as possible, while still escaping special characters. 
+    // For example, we could keep the boolean operators in place for the onephrase version, 
+    // but escape the terms and phrases properly. 
+    // This would allow us to generate a more accurate onephrase query that reflects the user's original intent, 
+    // while still being safe for Solr. 
+    // For now, we will just join the escaped parts with spaces for the onephrase version, which is a simple approach that works for basic cases.
     // The above are the escaped versions for their intended use in Solr queries.
-    $hasOperator = false;
-    foreach ($tokens as $t) {
-      if ($t['type'] === 'operator') {
-        $hasOperator = true;
-        break;
-      }
-    }
+    $onephraseValue = implode(' ', $escapedParts);
+
+    // This line capture historic behavior of the application, which is to generate a 
+    // onephrase query by joining the escaped parts with spaces and wrapping the whole thing in quotes, 
+    // which is a simple approach to retrieve results that match all the terms in the query, regardless of their order or proximity.
+    // In the future, we could enhance this logic to preserve the original structure of the query as much as possible, 
+    // while still escaping special characters.
     // Phrase search - "dramatic literature, comprehending critical"
-    $values['onephrase'] = implode(' ', $escapedParts);
-    if ($hasOperator) {
-      // Preserve explicit user boolean intent; do not auto-insert extra operators.
-      // AND search - dramatic AND literature, AND comprehending AND critical
-      // OR search - dramatic OR literature, OR comprehending OR critical
-      $values['and'] = $values['onephrase'];
-      $values['or'] = $values['onephrase'];
-    } else {
-      $values['and'] = implode(' AND ', $escapedParts);
-      $values['or']  = implode(' OR ',  $escapedParts);
-    }
+    $values['onephrase'] = $this->quoteOnePhraseValue($onephraseValue);
+
+    // For AND and OR, we want to preserve the boolean operators as they are, but we want to remove 
+    // them from the terms when building the AND and OR versions. 
+    // For example, if the input is "dramatic AND literature OR comprehending NOT critical", 
+    // we want to keep the operators for the onephrase version, but for the 
+    // AND version we want "dramatic literature comprehending critical" with AND between the terms, 
+    //  We can achieve this by filtering out the operator tokens when building the AND and OR versions.
+    // This avoids to generate phrase like dramatic AND AND literature or dramatic OR OR literature, 
+    // which causes syntax errors in Solr. 
+    $operatorTokens = ['AND', 'OR', 'NOT'];
+    $termsOnlyParts = array_filter($escapedParts, function ($part) use ($operatorTokens) {
+      return !in_array(strtoupper($part), $operatorTokens, true);
+    });
+    // AND search - dramatic AND literature, AND comprehending AND critical
+    // OR search - dramatic OR literature, OR comprehending OR critical
+    $values['and'] = implode(' AND ', $termsOnlyParts);
+    $values['or']  = implode(' OR ',  $termsOnlyParts);
     
     // The below are the raw flattened versions for debugging and building other query types.
     // As-is search - dramatic literature, comprehending critical
@@ -1593,7 +1645,7 @@ class Solr
     // If the input is a phrase with a trailing wildcard, we want to preserve the wildcard in the exactmatcher startswith version. For example, "foo bar"* should become foo bar* for the startswith version, not foo bar*.
     $values['emstartswith'] = str_replace('*', '', $values['exactmatcher']) . '*';
 
-    // print_r("Sematic Structure : " . json_encode($values, JSON_UNESCAPED_UNICODE));
+    //print_r("Sematic Structure : " . json_encode($values, JSON_UNESCAPED_UNICODE));
 
     return $values;
   }
@@ -1657,6 +1709,57 @@ class Solr
         }
     }
     return $classified;
+  }
+
+  private function collapseCompoundPhrases(array $tokens): array
+  {
+    $collapsed = [];
+    $total = count($tokens);
+    $index = 0;
+
+    while ($index < $total) {
+      $current = $tokens[$index];
+
+      if ($this->isPhraseLikeToken($current)) {
+        $sequence = [$current];
+        $lookahead = $index + 1;
+
+        while ($lookahead + 1 < $total
+            && $this->isBooleanJoinOperator($tokens[$lookahead])
+            && $this->isPhraseLikeToken($tokens[$lookahead + 1])) {
+          $sequence[] = $tokens[$lookahead];
+          $sequence[] = $tokens[$lookahead + 1];
+          $lookahead += 2;
+        }
+
+        if (count($sequence) >= 3) {
+          $collapsed[] = [
+            'type'  => 'compound_phrase',
+            'value' => [
+              'tokens' => $sequence,
+            ],
+          ];
+          $index = $lookahead;
+          continue;
+        }
+      }
+
+      $collapsed[] = $current;
+      $index++;
+    }
+    // print("Collapsed Tokens : " . json_encode($collapsed, JSON_UNESCAPED_UNICODE));
+
+    return $collapsed;
+  }
+
+  private function isPhraseLikeToken(array $token): bool
+  {
+    return in_array($token['type'], ['phrase', 'phrase_slop'], true);
+  }
+
+  private function isBooleanJoinOperator(array $token): bool
+  {
+    return $token['type'] === 'operator' && in_array(strtoupper($token['value']), ['AND', 'OR', 'NOT'], true);
   }
 
   /**

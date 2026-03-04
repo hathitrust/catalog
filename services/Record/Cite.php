@@ -125,8 +125,6 @@ class Cite extends Record {
       // Use for lightbox
       $interface->assign('title', $_GET['message']);
       return $interface->fetch('Record/cite.tpl');
-      //$html = file_get_contents('http://www.worldcat.org/oclc/4670293?page=citation');
-      //return transform($html, 'services/Record/xsl/worldcat-cite.xsl');
     } else {
       // Display Page
       $interface->setPageTitle('Record Citations');
@@ -191,17 +189,6 @@ function title_case($str) {
   }
 
   return ucfirst(join(' ', $newwords));
-}
-
-function transform($xml, $xslFile) {
-  $style = new DOMDocument;
-  $style->load($xslFile);
-  $xsl = new XSLTProcessor();
-  $xsl->importStyleSheet($style);
-  $doc = new DOMDocument;
-  if ($doc->loadXML($xml)) {
-    return $xsl->transformToXML($xml);
-  }
 }
 
 ?>

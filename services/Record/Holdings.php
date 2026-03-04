@@ -36,7 +36,6 @@ class Holdings extends Record
 
         $interface->setPageTitle('Catalog Record: ' . $titleTitle);
 
-        $interface->assign('subTemplate', 'view-holdings.tpl');
         $interface->setTemplate('view.tpl');
 
         // Display Page

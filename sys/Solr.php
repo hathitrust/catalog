@@ -812,12 +812,11 @@ class Solr
    * Turn solr output into a record structure (which should probably be its own class...)
    *
    * @param string $result The XML returned by solr
-   * @param string $xslfile The path of the XSL file to use to convert the data
-   * @return array A structure representing the returned data after transformation via $xslfile
+   * @return array A structure representing the returned data after processing
    */
 
 
-  function _process($result, $xslfile = 'xsl/solr-convert.xsl') {
+  function _process($result) {
     global $configArray;
 
     if (is_string($result) && preg_match('/^<html/', $result)) {

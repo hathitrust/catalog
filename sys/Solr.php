@@ -1396,6 +1396,19 @@ class Solr
     return $escapedParts;
   }
 
+  /**
+   * Wrap the provided string with Lucene-compliant double quotes, escaping
+   * any literal quotes or backslashes inside.
+   */
+  private function quoteOnePhraseValue(string $value): string
+  {
+      $trimmed = trim($value);
+      if ($trimmed === '') {
+          return '';
+      }
+      return '"' . $this->escapeLuceneLiteral($trimmed) . '"';
+  }
+
   /*
     * Flatten tokens back into a query string (for debugging or final output)
     * Input: array of tokens with type and value
@@ -1569,14 +1582,15 @@ class Solr
         break;
       }
     }
+    $onephraseValue = implode(' ', $escapedParts);
     // Phrase search - "dramatic literature, comprehending critical"
-    $values['onephrase'] = implode(' ', $escapedParts);
+    $values['onephrase'] = $this->quoteOnePhraseValue($onephraseValue);
     if ($hasOperator) {
       // Preserve explicit user boolean intent; do not auto-insert extra operators.
       // AND search - dramatic AND literature, AND comprehending AND critical
       // OR search - dramatic OR literature, OR comprehending OR critical
-      $values['and'] = $values['onephrase'];
-      $values['or'] = $values['onephrase'];
+      $values['and'] = $onephraseValue;
+      $values['or'] = $onephraseValue;
     } else {
       $values['and'] = implode(' AND ', $escapedParts);
       $values['or']  = implode(' OR ',  $escapedParts);

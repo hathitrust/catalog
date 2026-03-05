@@ -1406,7 +1406,8 @@ class Solr
       if ($trimmed === '') {
           return '';
       }
-      return '"' . $this->escapeLuceneLiteral($trimmed) . '"';
+      $withoutQuotes = str_replace('"', '', $trimmed);
+      return '"' . $this->escapeLuceneLiteral($withoutQuotes) . '"';
   }
 
   /*

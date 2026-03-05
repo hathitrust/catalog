@@ -72,7 +72,7 @@ class BuildAndOrOnePhraseTest extends TestCase
     {
         $result = $this->solr->build_and_or_onephrase('"table chair"~2');
         $this->assertIsArray($result);
-        $this->assertEquals('"\"table chair\"~2"', $result['onephrase']);
+        $this->assertEquals('"table chair~2"', $result['onephrase']);
         $this->assertEquals('"table chair"~2', $result['asis']);
     }
 

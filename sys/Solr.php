@@ -1574,27 +1574,40 @@ class Solr
 
     // print_r("Escaped Parts : " . json_encode($escapedParts, JSON_UNESCAPED_UNICODE));
     
+    // TODO: In the future, $onephraseValue could be built in a more sophisticated way to preserve the original structure 
+    // of the query as much as possible, while still escaping special characters. 
+    // For example, we could keep the boolean operators in place for the onephrase version, 
+    // but escape the terms and phrases properly. 
+    // This would allow us to generate a more accurate onephrase query that reflects the user's original intent, 
+    // while still being safe for Solr. 
+    // For now, we will just join the escaped parts with spaces for the onephrase version, which is a simple approach that works for basic cases.
     // The above are the escaped versions for their intended use in Solr queries.
-    $hasOperator = false;
-    foreach ($tokens as $t) {
-      if ($t['type'] === 'operator') {
-        $hasOperator = true;
-        break;
-      }
-    }
     $onephraseValue = implode(' ', $escapedParts);
+
+    // This line capture historic behavior of the application, which is to generate a 
+    // onephrase query by joining the escaped parts with spaces and wrapping the whole thing in quotes, 
+    // which is a simple approach to retrieve results that match all the terms in the query, regardless of their order or proximity.
+    // In the future, we could enhance this logic to preserve the original structure of the query as much as possible, 
+    // while still escaping special characters.
     // Phrase search - "dramatic literature, comprehending critical"
     $values['onephrase'] = $this->quoteOnePhraseValue($onephraseValue);
-    if ($hasOperator) {
-      // Preserve explicit user boolean intent; do not auto-insert extra operators.
-      // AND search - dramatic AND literature, AND comprehending AND critical
-      // OR search - dramatic OR literature, OR comprehending OR critical
-      $values['and'] = $onephraseValue;
-      $values['or'] = $onephraseValue;
-    } else {
-      $values['and'] = implode(' AND ', $escapedParts);
-      $values['or']  = implode(' OR ',  $escapedParts);
-    }
+
+    // For AND and OR, we want to preserve the boolean operators as they are, but we want to remove 
+    // them from the terms when building the AND and OR versions. 
+    // For example, if the input is "dramatic AND literature OR comprehending NOT critical", 
+    // we want to keep the operators for the onephrase version, but for the 
+    // AND version we want "dramatic literature comprehending critical" with AND between the terms, 
+    //  We can achieve this by filtering out the operator tokens when building the AND and OR versions.
+    // This avoids to generate phrase like dramatic AND AND literature or dramatic OR OR literature, 
+    // which causes syntax errors in Solr. 
+    $operatorTokens = ['AND', 'OR', 'NOT'];
+    $termsOnlyParts = array_filter($escapedParts, function ($part) use ($operatorTokens) {
+      return !in_array(strtoupper($part), $operatorTokens, true);
+    });
+    // AND search - dramatic AND literature, AND comprehending AND critical
+    // OR search - dramatic OR literature, OR comprehending OR critical
+    $values['and'] = implode(' AND ', $termsOnlyParts);
+    $values['or']  = implode(' OR ',  $termsOnlyParts);
     
     // The below are the raw flattened versions for debugging and building other query types.
     // As-is search - dramatic literature, comprehending critical

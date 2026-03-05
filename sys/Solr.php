@@ -129,7 +129,7 @@ class Solr
       $args = array_merge($args, $this->spellcheckComponents($ss));
     }
 
-    print_r("----- Solr query ------: " . json_encode($args, JSON_UNESCAPED_UNICODE));
+    // print_r("----- Solr query ------: " . json_encode($args, JSON_UNESCAPED_UNICODE));
 
     // $raw is always false, so rawSolrSearch is never used
     if ($raw) {

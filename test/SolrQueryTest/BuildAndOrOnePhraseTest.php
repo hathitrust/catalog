@@ -58,7 +58,7 @@ class BuildAndOrOnePhraseTest extends TestCase
         $result = $this->solr->build_and_or_onephrase('table~2');
 
         $this->assertIsArray($result);
-        $this->assertEquals('table~2', $result['onephrase']);
+        $this->assertEquals('"table~2"', $result['onephrase']);
         $this->assertEquals('table~2', $result['asis']);
     }
 
@@ -72,7 +72,7 @@ class BuildAndOrOnePhraseTest extends TestCase
     {
         $result = $this->solr->build_and_or_onephrase('"table chair"~2');
         $this->assertIsArray($result);
-        $this->assertEquals('"table chair"~2', $result['onephrase']);
+        $this->assertEquals('"table chair~2"', $result['onephrase']);
         $this->assertEquals('"table chair"~2', $result['asis']);
     }
 
@@ -85,7 +85,7 @@ class BuildAndOrOnePhraseTest extends TestCase
         $result = $this->solr->build_and_or_onephrase('table');
 
         $this->assertIsArray($result);
-        $this->assertEquals('table', $result['onephrase']);
+        $this->assertEquals('"table"', $result['onephrase']);
         $this->assertEquals('table', $result['asis']);
     }
 
@@ -98,9 +98,22 @@ class BuildAndOrOnePhraseTest extends TestCase
         $result = $this->solr->build_and_or_onephrase('table*');
 
         $this->assertIsArray($result);
-        $this->assertEquals('table*', $result['onephrase']);
+        $this->assertEquals('"table*"', $result['onephrase']);
         $this->assertEquals('table*', $result['asis']);
         $this->assertEquals('table*', $result['emstartswith']);
+    }
+
+    /**
+    * @covers Solr::build_and_or_onephrase
+    */
+    public function testCompoundPhrasesKeepOperatorsInTermsOnly(): void
+    {
+        $result = $this->solr->build_and_or_onephrase('"its origin" OR "illustrant"');
+        $this->assertIsArray($result);
+        $expected = '"its origin" OR "illustrant"';
+        $this->assertSame($expected, $result['and']);
+        $this->assertSame($expected, $result['or']);
+        $this->assertStringContainsString('OR', $result['asis']);
     }
 
     /**

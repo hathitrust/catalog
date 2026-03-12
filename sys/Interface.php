@@ -138,7 +138,8 @@ class UInterface extends Smarty
             return;
         }
 
-        foreach (glob(rtrim($directory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '*.php') as $file) {
+        //foreach (glob(rtrim($directory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '*.php') as $file) {
+        foreach (glob($directory . '/*.php') as $file) {
             require_once $file;
             $basename = basename($file);
             if (!preg_match('/^(function|modifier)\\.([^\\.]+)\\.php$/', $basename, $matches)) {

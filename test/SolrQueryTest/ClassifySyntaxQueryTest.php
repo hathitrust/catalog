@@ -185,6 +185,84 @@ final class IsPhraseTest extends TestCase
     
     }
 
+    /**
+     * Ensure inline boolean connectors remain visible and combine correctly with phrases.
+     * @covers Solr::tokenizeInput
+     * @covers Solr::classifyTokens
+     * @covers Solr::collapseCompoundPhrases
+     * @covers Solr::buildEscapedParts
+     */
+    public function testTokenizerANDCollapseCompoundPhrases()
+    {
+        
+       // Checking tokenizer - Split input into tokens, incluing operators and phrases
+       $tokens = $this->solr->tokenizeInput('charles dickens OR "weekly"');
+
+       
+       $this->assertSame(
+                ['charles', 'dickens', 'OR', '"weekly"'],
+            $tokens
+       );
+
+       // Checking classifyTokens - Classify tokens into terms, operators, and phrases 
+       $classifiedTokens = $this->solr->classifyTokens(['charles', 'dickens', 'OR', '"weekly"']);
+
+        $this->assertSame([
+            [ 'type' => 'term', 'value' => 'charles'],
+            [ 'type' => 'term', 'value' => 'dickens'],
+            [ 'type' => 'operator', 'value' => 'OR'],
+            ['type' => 'phrase', 'value' => [ 'text' => 'weekly', 'slop' => null]]
+        ],
+             $classifiedTokens
+        );
+
+        // Checking collapseCompoundPhrases - Combine terms and operators into compound phrases where appropriate
+        $collapseTokens = $this->invokecollapseCompoundPhrases($this->solr, $classifiedTokens);
+        
+        $iCollapsedTokens = [
+        ['type' => 'term', 'value' => 'charles'],
+        [ "type" => "compound_phrase",
+        "value" => [
+            "tokens" => [
+                [ "type" => "term", "value" => "dickens" ],
+                [ "type" => "operator",  "value" => "OR" ],
+                [ "type" => "phrase", "value" => [ "text" => 'weekly', "slop" => null ] ]
+                  ]
+            ]
+      ]
+      ];
+
+        $this->assertSame(
+            $iCollapsedTokens,
+            $collapseTokens
+        );
+
+        // Checking buildEscapedParts - Build escaped parts for Solr query construction
+        $escapedParts = $this->invokebuildEscapedParts($this->solr, $collapseTokens);
+        $this->assertSame(
+             ['charles', 'dickens OR "weekly"'],
+             $escapedParts
+        );
+
+
+    }
+
+    private function invokecollapseCompoundPhrases($solr, $tokens): array
+    {
+        $reflection = new ReflectionClass($solr);
+        $method = $reflection->getMethod('collapseCompoundPhrases');
+
+        return $method->invoke($solr, $tokens);
+    }
+
+    private function invokebuildEscapedParts($solr, $tokens): array
+    {
+        $reflection = new ReflectionClass($solr);
+        $method = $reflection->getMethod('buildEscapedParts');
+
+        return $method->invoke($solr, $tokens);
+    }
+
 
 }
 ?>

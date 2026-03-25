@@ -35,6 +35,25 @@ docker compose build
 docker compose run --rm playwright
 ```
 
+## How to run a PHP script that shows the Solr query
+
+```bash
+docker compose run vufind php bin/PrintSolrQuery.php 'charles dickens OR "weekly"' title 
+```
+
+The output of this script loooks like:
+
+```bash
+
+----- Tokenized Search ----- : ["charles","dickens","OR","\"weekly\""]
+ ----- Classified Tokens ----- : [{"type":"term","value":"charles"},{"type":"term","value":"dickens"},{"type":"operator","value":"OR"},{"type":"phrase","value":{"text":"weekly","slop":null}}]
+ ----- Tokens after collapsing compound phrases ----- : [{"type":"term","value":"charles"},{"type":"compound_phrase","value":{"tokens":[{"type":"term","value":"dickens"},{"type":"operator","value":"OR"},{"type":"phrase","value":{"text":"weekly","slop":null}}]}}]
+ ----- Escaped Parts ----- : ["charles","dickens OR \"weekly\""]
+ ----- Semantic Structure ----- : {"onephrase":"\"charles dickens OR weekly\"","and":"charles AND dickens OR \"weekly\"","or":"charles OR dickens OR \"weekly\"","asis":"charles (dickens OR \"weekly\")","compressed":"charles\\(dickensOR\\\"weekly\\\"\\)","exactmatcher":"charlesdickensorweekly","emstartswith":"charlesdickensorweekly*"}
+ -----  Solr Search ----- : "(title_ab:(charlesdickensorweekly)^25000 OR title_a:(charlesdickensorweekly)^15000 OR titleProper:(charlesdickensorweekly*)^8000 OR titleProper:(\"charles dickens OR weekly\")^1200 OR titleProper:(charles AND dickens OR \"weekly\")^120 OR title_topProper:(\"charles dickens OR weekly\")^600 OR title_topProper:(charles AND dickens OR \"weekly\")^60 OR title_restProper:(\"charles dickens OR weekly\")^400 OR title_restProper:(charles AND dickens OR \"weekly\")^40 OR series:(\"charles dickens OR weekly\")^500 OR series:(charles AND dickens OR \"weekly\")^50 OR series2:(\"charles dickens OR weekly\")^500 OR series2:(charles AND dickens OR \"weekly\")^50 OR title:(charles AND dickens OR \"weekly\")^30 OR title_top:(charles AND dickens OR \"weekly\")^20 OR title_rest:(charles AND dickens OR \"weekly\")^1)"
+
+```
+
 ## What Works
 
 See all records with http://localhost:8080/Search/Home

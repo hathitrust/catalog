@@ -45,7 +45,6 @@ let $$assets = {firebird_manifest};
   <link rel="alternate" type="application/marc+xml" href="/Record/{$id|escape:"url"}.xml" >
   <link rel="alternate" type="application/x-Research-Info-Systems" href="/Record/{$id|escape:"url"}.ris" >
   <link rel="alternate" type="application/x-endnote-refer" href="/Record/{$id|escape:"url"}.endnote" >
-  <link rel="alternate" href="/Record/{$id|escape:"url"}.rdf" type="application/rdf+xml" >
   {/if}
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />

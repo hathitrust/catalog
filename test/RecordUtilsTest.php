@@ -153,6 +153,34 @@ class RecordUtilsTest extends TestCase
   }
 
   /**
+  * @covers RecordUtils::ht_link_data_from_json
+  * @runInSeparateProcess
+
+    ssduser results in activated role set to true but no role name, because ping
+    Clearly this is not optimal
+  */
+  public function test_ht_link_data_from_json_ssduser(): void {
+    global $htstatus;
+    # Setup for VFSession.php and DSession.php
+    $_SERVER['HTTP_HOST'] = 'localhost';
+    $_SERVER['SERVER_ADDR'] = '127.0.0.1';
+    $sample_json = array(
+      'rights' => 'ic',
+      'htid' => 'mdp.001',
+      'collection_code' => 'miu',
+      'enumcron' => 'v.1',
+      'heldby' => array('umich'),
+    );
+    $utils = new RecordUtils();
+    $htstatus->r = NULL;
+    $htstatus->u = true;
+    $htstatus->has_activated_role = true;
+    $data = $utils->ht_link_data_from_json($sample_json);
+    $this->assertEquals(true, $data['has_activated_role']);
+    $this->assertEquals(NULL, $data['role_name']);
+  }
+
+  /**
   * @covers RecordUtils::is_fullview
   */
   public function test_is_fullview(): void {

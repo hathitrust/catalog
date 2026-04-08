@@ -147,7 +147,16 @@ function items_from_raw_json($json_string) {
     $rv['has_activated_role'] = $htstatus->has_activated_role &&
                                      (!$rv['is_fullview'] &&
 				 (!$open_to_no_one));
-		$rv['role_name'] = $htstatus->has_activated_role ? array_keys($htstatus->r)[0] : NULL;
+		# has_activated_role can be true if sssduser, and r will not be set in that case.
+		# Hence the check on $htstatus->r
+		$rv['role_name'] = NULL; # default
+		if (
+		  $htstatus->has_activated_role
+		  && $htstatus->r
+		  && count(array_keys($htstatus->r)) > 0
+		) {
+		  $rv['role_name'] = array_keys($htstatus->r)[0];
+		}
 
     return $rv;
   }

@@ -43,7 +43,7 @@ jobs:
             dockerfile: Dockerfile
             img_tag: ${{ inputs.img_tag }}
             tag: ${{ inputs.ref }}
-            push_latest: ${{ inputs.push_latest}}
-            rebuild: ${{ inputs.rebuild }}
+            push_latest: ${{ inputs.push_latest || false }}
+            rebuild: ${{ inputs.rebuild || false }}
             platforms: ${{ inputs.platforms }}
         secrets: inherit

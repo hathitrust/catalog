@@ -87,31 +87,31 @@
                     {if (isset($record_is_tombstone) and $record_is_tombstone) }
                       This item is no longer available (<a href="//babel.hathitrust.org/cgi/pt?id={$ld.handle}">why not?</a>)
                     {elseif ( $ld.is_resource_sharing )}
-                      <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="gap-2">
+                      <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
                         <i aria-hidden="true" class="fa-solid fa-lock-open"></i> 
                         <span class="text-decoration-underline">Registered Access</span>
                         {if (isset($ld.enumchron) and $ld.enumchron)}<span class="IndItem">{$ld.enumchron}</span>{/if}
                       </a>
                     {elseif ( ! $ld.is_fullview && ( $ld.has_activated_role && $ld.role_name !== 'resourceSharing' ) ) }
-                      <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="gap-2">
+                      <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
                         <i aria-hidden="true" class="fa-solid fa-unlock"></i> 
                         <span class="text-decoration-underline">Limited (Access Permitted)</span>
                         {if (isset($ld.enumchron) and $ld.enumchron)}<span class="IndItem">{$ld.enumchron}</span>{/if}
                       </a>
                     {elseif ($ld.is_fullview )}
-                      <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="gap-2">
+                      <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
                         <i class="fa-regular fa-file-lines" aria-hidden="true"></i> 
                         <span class="text-decoration-underline">Full view</span>
                         {if (isset($ld.enumchron) and $ld.enumchron)}<span class="IndItem">{$ld.enumchron}</span>{/if}
                       </a>
                     {elseif $ld.is_emergency_access}
-                      <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="gap-2">
+                      <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
                         <i aria-hidden="true" class="fa-solid fa-unlock"></i> 
                         <span class="text-decoration-underline">Temporary access</span>
                         {if (isset($ld.enumchron) and $ld.enumchron)}<span class="IndItem">{$ld.enumchron}</span>{/if}
                       </a>
                     {else}
-                      <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url" class="gap-2">
+                      <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
                         <i aria-hidden="true" class="fa-solid fa-lock"></i> 
                         <span class="text-decoration-underline">Limited (search only)</span>
                         {if (isset($ld.enumchron) and $ld.enumchron)}<span class="IndItem">{$ld.enumchron}</span>{/if}

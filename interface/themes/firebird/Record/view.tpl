@@ -24,9 +24,7 @@
   {assign var=ld value=$ht_vals_from_json}
 
   <main class="main-container" id="main">
-    {* {include file="search_form.tpl"} *}
-
-    {* <div class="container container-medium flex-container flex-container-expanded container-boxed"> *}
+   
     <div class="twocol mt-1">
 
       <section class="twocol-main" id="section">
@@ -36,7 +34,6 @@
             <div class="cover d-none d-md-block">
               {if $ld.handle}
                 <img class="border p-1" aria-hidden="true" alt="" src="{$unicorn_root}/cgi/imgsrv/cover?id={$ld.handle};width=250" />
-                {* <img aria-hidden="true" alt="" src="https://preview.babel.hathitrust.org/cgi/imgsrv/cover?id=mdp.35112104694155" /> *}
               {else}
               <img class="bookCover" aria-hidden="true" alt="" src="https://catalog.hathitrust.org/images/nocover-thumbnail.png" />
               {/if}
@@ -71,14 +68,6 @@
                 </a>
             </div>
           </div>
-          {* <div class="article-actions" style="display: flex; align-items: center">
-            <h3 class="xx-offscreen" style="font-size: 1rem; margin-right: 1rem;">Tools</h3>
-            <ul>
-              <li><a href="/Record/{$id|escape:"url"}/Cite" class="cite"><i class="icomoon icomoon-bookmark" aria-hidden="true"></i> {translate text="Cite this"}</a></li>
-              <li><a download class="endnotelink" href="/Search/SearchExport?handpicked={$id|escape:"url"}&amp;method=ris" data-toggle="tracking" data-tracking-category="recordActions" data-tracking-action="Catalog Export" data-tracking-label="Endnote"><i class="icomoon icomoon-upload" aria-hidden="true"></i> Export citation file</a></li>
-            </ul>
-          </div> *}
-
           {include file="$module/view.summary.tpl"}
 
           <h2 id="viewability" class="mt-3">Viewability</h2>
@@ -93,29 +82,54 @@
               {foreach from=$htjson item=e}
                 {assign var=ld value=$ru->ht_link_data_from_json($e)}
                 {if (isset($record_is_tombstone) and $record_is_tombstone) || !($ld.is_tombstone)}
+                  {capture assign=enumchron}
+                    {if isset($ld.enumchron) and $ld.enumchron !== ''}
+                      <span class="IndItem">{$ld.enumchron}</span>
+                    {/if}
+                  {/capture}
                  <tr>
-                  <td>
-                   {if (isset($record_is_tombstone) and $record_is_tombstone) }
-                     This item is no longer available (<a href="//babel.hathitrust.org/cgi/pt?id={$ld.handle}">why not?</a>)
-                     {elseif ( $ld.is_resource_sharing )}
-              <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-lock-open"></i> <span>Registered Access</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
-         {elseif ( ! $ld.is_fullview && ( $ld.has_activated_role && $ld.role_name !== 'resourceSharing' ) ) }
-              <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-unlock"></i> <span>Limited (Access Permitted)</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
-                     {elseif ($ld.is_fullview )}
-            <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> <span>Full view</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
-	       {elseif $ld.is_emergency_access}
-	              <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-unlock"></i> <span>Temporary access</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
-          {else}
-            <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url"><i aria-hidden="true" class="fa-solid fa-lock"></i> <span>Limited (search only)</span> &nbsp; <span class="IndItem">{$ld.enumchron}</span></a>
-          {/if}
+                    <td>
+                    {if (isset($record_is_tombstone) and $record_is_tombstone) }
+                      This item is no longer available (<a href="//babel.hathitrust.org/cgi/pt?id={$ld.handle}">why not?</a>)
+                    {elseif ( $ld.is_resource_sharing )}
+                      <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
+                        <i aria-hidden="true" class="fa-solid fa-lock-open"></i> 
+                        <span class="text-decoration-underline">Registered Access</span>
+                        {$enumchron}
+                      </a>
+                    {elseif ( ! $ld.is_fullview && ( $ld.has_activated_role && $ld.role_name !== 'resourceSharing' ) ) }
+                      <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
+                        <i aria-hidden="true" class="fa-solid fa-unlock"></i> 
+                        <span class="text-decoration-underline">Limited (Access Permitted)</span>
+                        {$enumchron}
+                      </a>
+                    {elseif ($ld.is_fullview )}
+                      <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
+                        <i class="fa-regular fa-file-lines" aria-hidden="true"></i> 
+                        <span class="text-decoration-underline">Full view</span>
+                        {$enumchron}
+                      </a>
+                    {elseif $ld.is_emergency_access}
+                      <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
+                        <i aria-hidden="true" class="fa-solid fa-unlock"></i> 
+                        <span class="text-decoration-underline">Temporary access</span>
+                        {$enumchron}
+                      </a>
+                    {else}
+                      <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
+                        <i aria-hidden="true" class="fa-solid fa-lock"></i> 
+                        <span class="text-decoration-underline">Limited (search only)</span>
+                        {$enumchron}
+                      </a>
+                    {/if}
 
-                     </td>
-                     <td>
-                       {$ld.original_from}
-                      </td>
-                   </tr>
-                   {/if}
-                {/foreach}
+                    </td>
+                    <td>
+                      {$ld.original_from}
+                    </td>
+                  </tr>
+                {/if}
+              {/foreach}
 
             </tbody>
           </table>
@@ -126,18 +140,7 @@
 
         </article>
 
-
-
-
-                
       </section>
-      
-
-	
-
-
-
-
 
       {if is_array($similarRecords) or $lastsearch}
       <div class="twocol-side" id="sidebar">

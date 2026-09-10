@@ -82,6 +82,11 @@
               {foreach from=$htjson item=e}
                 {assign var=ld value=$ru->ht_link_data_from_json($e)}
                 {if (isset($record_is_tombstone) and $record_is_tombstone) || !($ld.is_tombstone)}
+                  {capture assign=enumchron}
+                    {if isset($ld.enumchron) and $ld.enumchron !== ''}
+                      <span class="IndItem">{$ld.enumchron}</span>
+                    {/if}
+                  {/capture}
                  <tr>
                     <td>
                     {if (isset($record_is_tombstone) and $record_is_tombstone) }
@@ -90,31 +95,31 @@
                       <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
                         <i aria-hidden="true" class="fa-solid fa-lock-open"></i> 
                         <span class="text-decoration-underline">Registered Access</span>
-                        {if (isset($ld.enumchron) and $ld.enumchron)}<span class="IndItem">{$ld.enumchron}</span>{/if}
+                        {$enumchron}
                       </a>
                     {elseif ( ! $ld.is_fullview && ( $ld.has_activated_role && $ld.role_name !== 'resourceSharing' ) ) }
                       <a data-activated-role="true" href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
                         <i aria-hidden="true" class="fa-solid fa-unlock"></i> 
                         <span class="text-decoration-underline">Limited (Access Permitted)</span>
-                        {if (isset($ld.enumchron) and $ld.enumchron)}<span class="IndItem">{$ld.enumchron}</span>{/if}
+                        {$enumchron}
                       </a>
                     {elseif ($ld.is_fullview )}
                       <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
                         <i class="fa-regular fa-file-lines" aria-hidden="true"></i> 
                         <span class="text-decoration-underline">Full view</span>
-                        {if (isset($ld.enumchron) and $ld.enumchron)}<span class="IndItem">{$ld.enumchron}</span>{/if}
+                        {$enumchron}
                       </a>
                     {elseif $ld.is_emergency_access}
                       <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
                         <i aria-hidden="true" class="fa-solid fa-unlock"></i> 
                         <span class="text-decoration-underline">Temporary access</span>
-                        {if (isset($ld.enumchron) and $ld.enumchron)}<span class="IndItem">{$ld.enumchron}</span>{/if}
+                        {$enumchron}
                       </a>
                     {else}
                       <a href="{$handle_prefix}{$ld.handle}" referrerpolicy="unsafe-url">
                         <i aria-hidden="true" class="fa-solid fa-lock"></i> 
                         <span class="text-decoration-underline">Limited (search only)</span>
-                        {if (isset($ld.enumchron) and $ld.enumchron)}<span class="IndItem">{$ld.enumchron}</span>{/if}
+                        {$enumchron}
                       </a>
                     {/if}
 

@@ -21,12 +21,12 @@ test('Zero full-view items but has limited-view items (non-mobile/fullwidth)', a
   const all_items_link = page.getByRole('link', { name: 'All Items' });
   const all_items_href = await all_items_link.getAttribute('href');
   await expect(all_items_link).toBeVisible;
-  await expect(all_items_href).toMatch(/lookfor.*&ft=$/)
+  await expect(all_items_href).toMatch(/lookfor.*&ft=&page=1$/)
 
   const full_view_link = page.getByRole('link', { name: 'Full View' });
   const full_view_href = await full_view_link.getAttribute('href');
   await expect(full_view_link).toBeVisible;
-  await expect(full_view_href).toMatch(/lookfor.*&ft=ft$/)
+  await expect(full_view_href).toMatch(/lookfor.*&ft=ft&page=1$/)
 
 
 });

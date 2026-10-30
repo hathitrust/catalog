@@ -31,8 +31,23 @@ class SearchStructureTest extends TestCase
     $this->assertEquals('norfolk', $ss->fix_unbalanced_quotes('"norfolk')); // 1 quote, unbalanced:
     $this->assertEquals('"norfolk"', $ss->fix_unbalanced_quotes('"norfolk"')); // 2 quotes, balanced:
     $this->assertEquals('"norfolk"', $ss->fix_unbalanced_quotes('"norfolk""')); // 3 quotes, unbalanced:
+  }
 
-   }
+  /**
+  * @covers SearchStructure::asFullURL
+  * @runInSeparateProcess
+  */
+  public function test_asFullURL(): void {
+    # Setup for VFSession.php and DSession.php
+    $_SERVER['HTTP_HOST'] = 'localhost';
+    $_SERVER['SERVER_ADDR'] = '127.0.0.1';
+    $ss = new SearchStructure;
+    $url = $ss->asFullURL();
+    # URL page is always 1
+    $this->assertStringContainsString('page=1', $url);
+    # URL contains exactly one page parameter
+    $this->assertEquals(1, substr_count($url, 'page='));
+  }
 }
 
 ?>

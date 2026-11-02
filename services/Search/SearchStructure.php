@@ -773,10 +773,13 @@ class SearchStructure
     }
 
 
-    function asFullURL($module = 'Home', $extra = array())
+    // Only used for the fullview_url and allitems_url in Search/Home.php.
+    // These links go to page 1 of the search results, lest jumping from
+    // all -> full send us to a nonexistent page.
+    function asFullURL($module = 'Home')
     {
         global $configArray;
-        $url = $configArray['Site']['url'] . '/Search/' . $module . '?' . $this->asURL($extra);
+        $url = $configArray['Site']['url'] . '/Search/' . $module . '?' . $this->asURL([['page', '1']], false);
         return $url;
     }
 

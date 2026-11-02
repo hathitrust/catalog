@@ -27,8 +27,13 @@ class Pager {
       return '';
     }
     $updatedParams = array_merge($_GET, ['page' => intval($this->current_page) + 1]);
-    $queryString = http_build_query($updatedParams);
-    return htmlspecialchars($this->base_url . $queryString, ENT_QUOTES, 'UTF-8');
+    # Get rid of module and action used in routing
+    unset($updatedParams['module']);
+    unset($updatedParams['action']);
+    $query = http_build_query($updatedParams);
+    # Replace [x] on array values with [] for the advanced search component
+    $query = preg_replace('/%5B[0-9]+%5D=/', '%5B%5D=', $query);
+    return htmlspecialchars($this->base_url . $query, ENT_QUOTES, 'UTF-8');
   }
 
   function previous_url() {
@@ -36,8 +41,13 @@ class Pager {
       return '';
     }
     $updatedParams = array_merge($_GET, ['page' => intval($this->current_page) - 1]);
-    $queryString = http_build_query($updatedParams);
-    return htmlspecialchars($this->base_url . $queryString, ENT_QUOTES, 'UTF-8');
+    # Get rid of module and action used in routing
+    unset($updatedParams['module']);
+    unset($updatedParams['action']);
+    $query = http_build_query($updatedParams);
+    # Replace [x] on array values with [] for the advanced search component
+    $query = preg_replace('/%5B[0-9]+%5D=/', '%5B%5D=', $query);
+    return htmlspecialchars($this->base_url . $query, ENT_QUOTES, 'UTF-8');
   }
 }
 

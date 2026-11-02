@@ -292,7 +292,7 @@ class Home extends Action {
         }
         $interface->assign('recordEnd', $recordEnd);
 
-        $pager_link = 'Home?' . $this->ss->asURL([], false) . '&pagesize='. $limit;
+        $pager_link = 'Home?';
         $pager = new Pager(
           base_url: $pager_link,
           total_records: $result['RecordCount'],

@@ -35,7 +35,9 @@ class Pager {
     if ($this->current_page == 1) {
       return '';
     }
-    return $this->base_url . "&page=" . intval($this->current_page - 1); 
+    $updatedParams = array_merge($_GET, ['page' => intval($this->current_page) - 1]);
+    $queryString = http_build_query($updatedParams);
+    return htmlspecialchars($this->base_url . $queryString, ENT_QUOTES, 'UTF-8');
   }
 }
 

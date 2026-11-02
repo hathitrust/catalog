@@ -72,28 +72,13 @@ FIREBIRD TODOS:
           {/if}
 
           <!-- pagination -->
-          {assign var=numPages value=$pager->numPages()}
-          {if $numPages gt 1}
-            {assign var=pageLinks value=$pager->getLinks()}
-            {assign var=pageLinksArray value=$pager->getPageLinksArray()}
-            {if isset($pageLinks.linkTagsRaw.next.url)}
-              {assign var=next_url value=$pageLinks.linkTagsRaw.next.url}
-            {else}
-              {assign var=next_url value=''}
-            {/if}
-            {if isset($pageLinks.linkTagsRaw.prev.url)}
-              {assign var=prev_url value=$pageLinks.linkTagsRaw.prev.url}
-            {else}
-              {assign var=prev_url value=''}
-            {/if}
-           
+          {if $pager->last_page() gt 1}
             <hathi-results-pagination
-            data-prop-max-pages='{$numPages}'
-            data-prop-next-href='{$next_url}'
-            data-prop-prev-href='{$prev_url}'
-            data-prop-value = '{$pager->_currentPage}'
+            data-prop-max-pages='{$pager->last_page()}'
+            data-prop-next-href='{$pager->next_url()}'
+            data-prop-prev-href='{$pager->previous_url()}'
+            data-prop-value = '{$pager->current_page}'
             ></hathi-results-pagination>
-
           {/if}
         </div>
       </section>

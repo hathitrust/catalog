@@ -9,7 +9,6 @@ class Pager {
   ) {}
 
   function last_page() {
-    
     $page_count = $this->total_records / ($this->records_per_page ?: 100);
     $last_page = 1;
     if ($page_count == intval($page_count)) {
@@ -39,3 +38,5 @@ class Pager {
     return $this->base_url . "&page=" . intval($this->current_page - 1); 
   }
 }
+
+?>

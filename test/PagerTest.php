@@ -76,11 +76,17 @@ class PagerTest extends TestCase
   * @runInSeparateProcess
   */
   public function test_next_url(): void {
-    $pager = new Pager(base_url: 'catalog?ft=&lookfor=journal', total_records: 1000, records_per_page: 100);
+    $_GET['ft'] = '';
+    $_GET['lookfor[1]'] = 'journal';
+    $_GET['lookfor[2]'] = 'conference';
+    $pager = new Pager(base_url: 'catalog?f', total_records: 1000, records_per_page: 100);
     $url = $pager->next_url();
     $this->assertStringContainsString('page=2', $url);
     # URL contains exactly one page parameter
     $this->assertEquals(1, substr_count($url, 'page='));
+    # URL contains no explicitly indexed parameters
+    $this->assertDoesNotMatchRegularExpression('/%5B\d+%5D/', $url);
+    $_GET = [];
   }
 
   /**
@@ -88,7 +94,7 @@ class PagerTest extends TestCase
   * @runInSeparateProcess
   */
   public function test_next_url_at_end(): void {
-    $pager = new Pager(base_url: "catalog?ft=&lookfor=journal", total_records: 1000, records_per_page: 100, current_page: 10);
+    $pager = new Pager(base_url: "catalog?", total_records: 1000, records_per_page: 100, current_page: 10);
     $this->assertEquals('', $pager->next_url());
   }
 
@@ -97,11 +103,17 @@ class PagerTest extends TestCase
   * @runInSeparateProcess
   */
   public function test_previous_url(): void {
-    $pager = new Pager(base_url: 'catalog?ft=&lookfor=journal', total_records: 1000, records_per_page: 100, current_page: 10);
+    $_GET['ft'] = '';
+    $_GET['lookfor[1]'] = 'journal';
+    $_GET['lookfor[2]'] = 'conference';
+    $pager = new Pager(base_url: 'catalog?', total_records: 1000, records_per_page: 100, current_page: 10);
     $url = $pager->previous_url();
     $this->assertStringContainsString('page=9', $url);
     # URL contains exactly one page parameter
     $this->assertEquals(1, substr_count($url, 'page='));
+    # URL contains no explicitly indexed parameters
+    $this->assertDoesNotMatchRegularExpression('/%5B\d+%5D/', $url);
+    $_GET = [];
   }
 
   /**
@@ -109,7 +121,7 @@ class PagerTest extends TestCase
   * @runInSeparateProcess
   */
   public function test_previous_url_at_beginning(): void {
-    $pager = new Pager(base_url: 'catalog?ft=&lookfor=journal', total_records: 1000, records_per_page: 100);
+    $pager = new Pager(base_url: 'catalog?', total_records: 1000, records_per_page: 100);
     $this->assertEquals('', $pager->previous_url());
   }
 }

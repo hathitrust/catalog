@@ -8,7 +8,7 @@ class Pager {
     public int $current_page = 1
   ) {}
 
-  function last_page() {
+  function last_page(): int {
     $page_count = $this->total_records / ($this->records_per_page ?: 100);
     $last_page = 1;
     if ($page_count == intval($page_count)) {
@@ -22,7 +22,7 @@ class Pager {
     return $last_page;
   }
 
-  function next_url() {
+  function next_url(): string {
     if ($this->current_page == $this->last_page()) {
       return '';
     }
@@ -36,7 +36,7 @@ class Pager {
     return htmlspecialchars($this->base_url . $query, ENT_QUOTES, 'UTF-8');
   }
 
-  function previous_url() {
+  function previous_url(): string {
     if ($this->current_page == 1) {
       return '';
     }

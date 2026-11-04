@@ -29,6 +29,21 @@ class PagerTest extends TestCase
   * @covers Pager::__construct
   * @runInSeparateProcess
   */
+  public function test_properties_with_bogus_values(): void {
+    $pager = new Pager(base_url: "example.com", total_records: 1000, records_per_page: -1);
+    $this->assertEquals(100, $pager->records_per_page);
+    $pager = new Pager(base_url: "example.com", total_records: 1000, records_per_page: 0);
+    $this->assertEquals(100, $pager->records_per_page);
+    $pager = new Pager(base_url: "example.com", total_records: 1000, records_per_page: 100, current_page: -1);
+    $this->assertEquals(1, $pager->current_page);
+    $pager = new Pager(base_url: "example.com", total_records: 1000, records_per_page: 100, current_page: 0);
+    $this->assertEquals(1, $pager->current_page);
+  }
+
+  /**
+  * @covers Pager::__construct
+  * @runInSeparateProcess
+  */
   public function test_default_properties(): void {
     $pager = new Pager(base_url: "example.com", total_records: 1000);
     $this->assertEquals(100, $pager->records_per_page);

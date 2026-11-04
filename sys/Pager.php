@@ -6,13 +6,22 @@ class Pager {
     public int $total_records,
     public int $records_per_page = 100,
     public int $current_page = 1
-  ) {}
+  ) {
+    // Search/Home.php should already have filtered out bogus records_per_page and current_page values,
+    // this is just insurance.
+    if ($this->records_per_page < 1) {
+      $this->records_per_page = 100;
+    }
+    if ($this->current_page < 1) {
+      $this->current_page = 1;
+    }
+  }
 
   function last_page(): int {
-    $page_count = $this->total_records / ($this->records_per_page ?: 100);
+    $page_count = $this->total_records / $this->records_per_page;
     $last_page = 1;
     if ($page_count == intval($page_count)) {
-      $last_page = $page_count;
+      $last_page = intval($page_count);
     } else {
       $last_page = 1 + intval($page_count);
     }

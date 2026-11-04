@@ -155,24 +155,23 @@ class Home extends Action {
         //******************************************************
         //    WHAT PAGE ARE WE ON? HOW MANY ITEMS SHOULD WE RETRIEVE?
         //******************************************************
-
+        // Set defaults and override if request params are well-behaved.
         $page = 1;
-        if (isset($_REQUEST['page']) && $_REQUEST['page'] > 1 ) {
-            $page = $_REQUEST['page'];
+        $limit = $configArray['Site']['itemsPerPage'];
+        if (isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) && intval($_REQUEST['page']) > 1) {
+            $page = intval($_REQUEST['page']);
         }
 
-        if (isset($_REQUEST['pagesize'])) {
-            $pagesize = $_REQUEST['pagesize'];
-	    $interface->assign('pagesize', $pagesize);
+        if (isset($_REQUEST['pagesize']) && is_numeric($_REQUEST['pagesize']) && intval($_REQUEST['pagesize']) > 1) {
+            $pagesize = intval($_REQUEST['pagesize']);
+            // Note: pagesize does not seem to be used in the interface. Remove?
+            $interface->assign('pagesize', $pagesize);
+            $limit = $pagesize;
+            // Max of 100
+            if ($limit > 100) {
+                $limit = 100;
+            }
         }
-
-        $limit = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : $configArray['Site']['itemsPerPage'];
-
-
-        // Max of 100
-	if ($limit > 100) {
-	  $limit = 100;
-	}
 
         //******************************************************
         //     ACTUALLY DO THE SEARCH

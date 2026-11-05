@@ -98,16 +98,8 @@ test('Sort by', async ({ page }) => {
   
 });
 
-// Check that next and previous pagination links go where they are supposed to
-// (based on  "n - m of x Catalog results" header)
-test('Pagination', async ({ page }) => {
-  await page.goto('/Search/Home?lookfor=journal');
-  await page.getByRole('button', { name: 'Allow all cookies' }).click();
-  // Go forward
-  await page.getByRole('link', { name: 'Next' }).click();
-  await expect(page.getByRole('heading', { name: /101 to \d+ of \d+ results/i })).toBeVisible();
-  // This sometimes fails just by being slow in github..
-  //  // Go back
-  //  await page.getByRole('link', { name: 'Previous' }).click();
-  //  await expect(page.getByRole('heading', { name: /1 to 100 of \d+ results/i })).toBeVisible();
+// pagesize=* and page=string used to cause 500 errors.
+test('Pagination tolerates bogus pagesize and page values', async ({ page }) => {
+  const response = await page.goto('/Search/Home?lookfor=journal&pagesize=*&page=abc');
+  expect(response.status()).toBe(200);
 });

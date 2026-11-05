@@ -6,7 +6,6 @@
     "pear/pear-core-minimal": "1.10.*",
     "pear/file_marc": "1.4.*",
     "pear/http_request2": "2.7.*",
-    "pear/pager": "2.5.*",
     "phpunit/phpunit": "9.6.*",
     "smarty/smarty": "^5.0"
   }

@@ -18,20 +18,19 @@
  *
  */
 
-require_once 'Action.php';
+
 
 require_once 'vendor/autoload.php';
-require_once 'sys/LoggingPager.php';
-require_once 'Pager/Pager.php';
-require_once 'services/Record/FilterFormat.php';
 
-require_once 'services/Search/SearchStructure.php';
-
-require_once 'sys/VFSession.php';
-
+require_once 'Action.php';
 require_once 'File/MARC.php';
 
+require_once 'services/Record/FilterFormat.php';
 require_once 'services/Record/RecordUtils.php';
+require_once 'services/Search/SearchStructure.php';
+
+require_once 'sys/Pager.php';
+require_once 'sys/VFSession.php';
 
 class Home extends Action {
 
@@ -156,24 +155,23 @@ class Home extends Action {
         //******************************************************
         //    WHAT PAGE ARE WE ON? HOW MANY ITEMS SHOULD WE RETRIEVE?
         //******************************************************
-
+        // Set defaults and override if request params are well-behaved.
         $page = 1;
-        if (isset($_REQUEST['page']) && $_REQUEST['page'] > 1 ) {
-            $page = $_REQUEST['page'];
+        $limit = $configArray['Site']['itemsPerPage'];
+        if (isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) && intval($_REQUEST['page']) > 1) {
+            $page = intval($_REQUEST['page']);
         }
 
-        if (isset($_REQUEST['pagesize'])) {
-            $pagesize = $_REQUEST['pagesize'];
-	    $interface->assign('pagesize', $pagesize);
+        if (isset($_REQUEST['pagesize']) && is_numeric($_REQUEST['pagesize']) && intval($_REQUEST['pagesize']) > 1) {
+            $pagesize = intval($_REQUEST['pagesize']);
+            // Note: pagesize does not seem to be used in the interface. Remove?
+            $interface->assign('pagesize', $pagesize);
+            $limit = $pagesize;
+            // Max of 100
+            if ($limit > 100) {
+                $limit = 100;
+            }
         }
-
-        $limit = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : $configArray['Site']['itemsPerPage'];
-
-
-        // Max of 100
-	if ($limit > 100) {
-	  $limit = 100;
-	}
 
         //******************************************************
         //     ACTUALLY DO THE SEARCH
@@ -293,33 +291,14 @@ class Home extends Action {
         }
         $interface->assign('recordEnd', $recordEnd);
 
-
-        // Process Paging
-        $link = 'Search/Home?' . $this->ss->asURL([], false) . '&pagesize='. $limit . '&page=%d';
-        $rlink = '/' . $link; 	// rlink used to build record-level paging urls
-        $options = array('totalItems' => $result['RecordCount'],
-                         'mode' => 'loggingPager',
-                         'path' =>  $configArray['Site']['fullurl'],
-                         'fileName' => $link,
-                         'delta' => 4,
-                         'perPage' => $limit,
-                         'nextImg' => 'Next Page <i aria-hidden="true" class="icomoon icomoon-arrow-right"></i>',
-                         'prevImg' => '<i aria-hidden="true" class="icomoon icomoon-arrow-left"></i> Previous Page',
-                         'separator' => '',
-                         'spacesBeforeSeparator' => 0,
-                         'spacesAfterSeparator' => 0,
-                         'append' => false,
-                         'clearIfVoid' => true,
-                         'urlVar' => 'page',
-                         'curPageSpanPre' => '<span><strong><span class="offscreen">Results page (current) </span>',
-                         'curPageSpanPost' => '</strong></span>',
-                         'altPage' => '<span class="offscreen">Results page</span> ');
-
-
-        $pager =& Pager::factory($options);
-
+        $pager_link = 'Home?';
+        $pager = new Pager(
+          base_url: $pager_link,
+          total_records: $result['RecordCount'],
+          records_per_page: $limit,
+          current_page: $page
+        );
         $interface->assign('pager', $pager);
-
 
 
         //******************************************************
